@@ -1,7 +1,7 @@
-export const getBackgroundStyle = (source: string) => ({
+export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundPosition: position,
     backgroundRepeat: 'no-repeat',
 });
 

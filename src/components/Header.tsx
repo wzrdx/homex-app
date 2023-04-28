@@ -4,8 +4,10 @@ import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { indexOf } from 'lodash';
+import { BsExclamation } from 'react-icons/bs';
 
 const ROUTE_WIDTH = 106;
+const HIGHLIGHTED_ROUTES = [2];
 
 function Header() {
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
@@ -17,39 +19,51 @@ function Header() {
     // Init
     useEffect(() => {
         setRoutes(serviceRoutes.slice(-3).map((route) => route.path));
-        setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
     }, []);
 
-    const onRouteClick = (route: string, index: number) => {
+    useEffect(() => {
+        console.log(location.pathname.slice(1));
+        setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
+    }, [location]);
+
+    const onRouteClick = (index: number) => {
         setOffset(index * ROUTE_WIDTH);
     };
 
     const getCssPxValue = (value: number): string => `${value}px`;
 
     return (
-        <Flex
-            flex={1}
-            backgroundColor="#393439"
-            borderBottom="2px solid header.gray"
-            borderBottomWidth="2px"
-            borderBottomColor="header.gray"
-        >
+        <Flex flex={1} position="relative" background="#00000070">
             <Flex width="100%" justifyContent="center" alignItems="flex-end">
                 <Flex position="relative">
                     {routes.map((route: string, index: number) => (
                         <Flex
-                            onClick={() => onRouteClick(route, index)}
+                            onClick={() => onRouteClick(index)}
                             key={index}
-                            justifyContent="center"
+                            flexDir="column"
+                            alignItems="center"
                             width={getCssPxValue(ROUTE_WIDTH)}
                         >
+                            <Box
+                                visibility={HIGHLIGHTED_ROUTES.includes(index) ? 'visible' : 'hidden'}
+                                borderWidth="2px"
+                                borderColor="header.gold"
+                                transform="rotate(45deg)"
+                                boxShadow="0 0 3px wheat"
+                                backgroundColor="#2f2f2f"
+                            >
+                                <Box color="header.gold" transform="rotate(-45deg)" fontSize="20px" margin="-3px">
+                                    <BsExclamation />
+                                </Box>
+                            </Box>
+
                             <NavLink to={route} onClick={() => playSound('navigate')}>
                                 <Text
                                     textTransform="capitalize"
                                     color="header.gray"
-                                    fontSize="18px"
+                                    fontSize="19px"
                                     transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                    py={2}
+                                    py={2.5}
                                     cursor="pointer"
                                     _hover={{ color: '#e3e3e3' }}
                                 >
@@ -59,7 +73,7 @@ function Header() {
                         </Flex>
                     ))}
 
-                    <Box position="absolute" left={0} bottom="-2px" right={0}>
+                    <Box position="absolute" left={0} bottom={0} right={0}>
                         <Box
                             transform={`translateX(${getCssPxValue(offset)})`}
                             backgroundColor="white"
@@ -71,6 +85,10 @@ function Header() {
                     </Box>
                 </Flex>
             </Flex>
+
+            <Box position="absolute" left={0} bottom={0} right={0}>
+                <Box width="100%" height="2px" backgroundColor="#71818138" boxShadow="0 0 12px #71818159"></Box>
+            </Box>
         </Flex>
     );
 }

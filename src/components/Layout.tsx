@@ -5,7 +5,8 @@ import { getBackgroundStyle } from '../services/helpers';
 import { QuestsProvider } from '../services/quests';
 import { ResourcesProvider } from '../services/resources';
 import { SoundsProvider } from '../services/sounds';
-import Background from '../assets/background.png';
+import Midjourney from '../assets/backgrounds/Midjourney_2.jpg';
+// import Dome_1 from '../assets/backgrounds/Dome_1.jpg';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
 
@@ -18,12 +19,22 @@ function Main() {
                 <QuestsProvider>
                     {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-                    <Flex style={getBackgroundStyle(Background)} height="100vh" flexDir="column">
+                    <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
                         <Header />
 
-                        <Box flex={10} backgroundColor="#705959">
+                        <Box flex={10}>
                             <Outlet />
                         </Box>
+
+                        <Box
+                            position="absolute"
+                            backgroundColor="#000000b9"
+                            zIndex={-1}
+                            top={0}
+                            right={0}
+                            bottom={0}
+                            left={0}
+                        ></Box>
                     </Flex>
                 </QuestsProvider>
             </ResourcesProvider>
