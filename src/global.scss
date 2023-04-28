@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
+
+body {
+    margin: 0;
+    min-width: 100vw;
+}
+
+#root {
+    min-width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(0deg, #330000, #1c0001);
+}
+
+// Mvx
+.Login-Button {
+    margin: 0 0 1rem !important;
+    padding: 13px 17px !important;
+    border: 0 !important;
+    outline: none !important;
+    background-color: rgb(194 0 9 / 50%) !important;
+
+    &:hover {
+        background-color: #c2000aec !important;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 0.15rem rgb(255 38 38 / 40%) !important;
+    }
+}
+
+// Dapp Tx Toasts
+.Tx-Toast {
+    font-family: 'IBM Plex Mono', monospace !important;
+    padding: 0.75rem 0.5rem !important;
+    overflow: hidden;
+
+    .dapp-core-component__transactionToast-styles__heading {
+        margin-bottom: 0.5rem;
+    }
+
+    .dapp-core-component__transactionDetails-styles__status {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0.5rem 0 0.5rem;
+    }
+
+    .dapp-core-component__transactionDetails-styles__container {
+        margin-bottom: 0;
+    }
+
+    h5 {
+        font-size: 17px;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    .dapp-core-component__progressStyles__progress .dapp-core-component__progressStyles__bar {
+        top: -0.75rem;
+        bottom: -0.75rem;
+    }
+}
+
+.Custom-Error-Toast-Icon {
+    background: #d9534f;
+}
+
+.dapp-failed-transaction-status-toast {
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.dapp-custom-toast {
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 0.5rem !important;
+
+    h5 {
+        font-size: 1.15rem;
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+}
