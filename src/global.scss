@@ -11,6 +11,14 @@ body {
     background: linear-gradient(0deg, #330000, #1c0001);
 }
 
+// Used for NavLinks
+.active {
+    p {
+        color: whitesmoke;
+        text-shadow: 0 0 10px white;
+    }
+}
+
 // Mvx
 .Login-Button {
     margin: 0 0 1rem !important;
@@ -60,7 +68,10 @@ body {
     }
 }
 
-.Custom-Error-Toast-Icon {
+.dapp-core-component__transactionToast-styles__content
+    .dapp-core-component__transactionToast-styles__left
+    .dapp-core-component__transactionToast-styles__icon
+    .Custom-Error-Toast-Icon {
     background: #d9534f;
 }
 
@@ -80,5 +91,11 @@ body {
         font-size: 1.15rem;
         margin-bottom: 0;
         font-weight: 700;
+    }
+
+    .dapp-core-component__transactionToast-styles__content
+        .dapp-core-component__transactionToast-styles__left
+        .dapp-core-component__transactionToast-styles__icon {
+        background: pink;
     }
 }

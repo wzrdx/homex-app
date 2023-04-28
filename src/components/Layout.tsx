@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
@@ -7,6 +7,7 @@ import { ResourcesProvider } from '../services/resources';
 import { SoundsProvider } from '../services/sounds';
 import Background from '../assets/background.png';
 import LoadingScreen from './LoadingScreen';
+import Header from './Header';
 
 function Main() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -17,15 +18,13 @@ function Main() {
                 <QuestsProvider>
                     {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-                    <div style={getBackgroundStyle(Background)}>
-                        <div>
-                            {/* TODO: Header */}
+                    <Flex style={getBackgroundStyle(Background)} height="100vh" flexDir="column">
+                        <Header />
 
-                            <Box>
-                                <Outlet />
-                            </Box>
-                        </div>
-                    </div>
+                        <Box flex={10} backgroundColor="#705959">
+                            <Outlet />
+                        </Box>
+                    </Flex>
                 </QuestsProvider>
             </ResourcesProvider>
         </SoundsProvider>

@@ -8,6 +8,9 @@ const colors = {
         essence: '#cd3b95',
         tickets: '#7927e2',
     },
+    header: {
+        gray: '#718181',
+    },
 };
 
 const fonts = {
