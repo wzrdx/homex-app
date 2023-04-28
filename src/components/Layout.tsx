@@ -25,16 +25,6 @@ function Main() {
                         <Box flex={10}>
                             <Outlet />
                         </Box>
-
-                        <Box
-                            position="absolute"
-                            backgroundColor="#000000b9"
-                            zIndex={-1}
-                            top={0}
-                            right={0}
-                            bottom={0}
-                            left={0}
-                        ></Box>
                     </Flex>
                 </QuestsProvider>
             </ResourcesProvider>

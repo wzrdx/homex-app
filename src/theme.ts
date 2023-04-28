@@ -10,6 +10,7 @@ const colors = {
     },
     header: {
         gray: '#718181',
+        lightgray: '#8e9e9e',
         gold: 'wheat',
     },
 };

@@ -4,7 +4,10 @@ import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { indexOf } from 'lodash';
-import { BsExclamation } from 'react-icons/bs';
+import { BsExclamation, BsQuestionCircle } from 'react-icons/bs';
+import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
+import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
+import Wallet from '../shared/Wallet';
 
 const ROUTE_WIDTH = 106;
 const HIGHLIGHTED_ROUTES = [2];
@@ -26,6 +29,14 @@ function Header() {
         setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
     }, [location]);
 
+    const toggleSounds = () => {
+        setAreSoundsOn(!areSoundsOn);
+    };
+
+    const toggleMusic = () => {
+        setIsMusicOn(!isMusicOn);
+    };
+
     const onRouteClick = (index: number) => {
         setOffset(index * ROUTE_WIDTH);
     };
@@ -34,6 +45,7 @@ function Header() {
 
     return (
         <Flex flex={1} position="relative" background="#00000070">
+            {/* Routes */}
             <Flex width="100%" justifyContent="center" alignItems="flex-end">
                 <Flex position="relative">
                     {routes.map((route: string, index: number) => (
@@ -62,8 +74,9 @@ function Header() {
                                     textTransform="capitalize"
                                     color="header.gray"
                                     fontSize="19px"
+                                    lineHeight="19px"
                                     transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                    py={2.5}
+                                    py={3.5}
                                     cursor="pointer"
                                     _hover={{ color: '#e3e3e3' }}
                                 >
@@ -84,6 +97,62 @@ function Header() {
                         ></Box>
                     </Box>
                 </Flex>
+            </Flex>
+
+            {/* Left and right */}
+            <Flex
+                position="absolute"
+                top={0}
+                right={0}
+                bottom={0}
+                left={0}
+                justifyContent="space-between"
+                alignItems="center"
+                px={7}
+                py={3.5}
+                pointerEvents="none"
+            >
+                <Flex alignItems="center" pointerEvents="all">
+                    {isMusicOn ? (
+                        <Box cursor="pointer" color="whitesmoke" px={2.5} ml={-2.5}>
+                            <TbMusic fontSize="20px" onClick={toggleMusic} />
+                        </Box>
+                    ) : (
+                        <Box cursor="pointer" color="header.lightgray" px={2.5} ml={-2.5}>
+                            <TbMusicOff fontSize="20px" onClick={toggleMusic} />
+                        </Box>
+                    )}
+
+                    {areSoundsOn ? (
+                        <Box cursor="pointer" color="whitesmoke" px={2.5}>
+                            <IoVolumeHighOutline fontSize="21px" onClick={toggleSounds} />
+                        </Box>
+                    ) : (
+                        <Box cursor="pointer" color="header.lightgray" px={2.5}>
+                            <IoVolumeMuteOutline fontSize="21px" onClick={toggleSounds} />
+                        </Box>
+                    )}
+
+                    <Flex
+                        ml={2.5}
+                        alignItems="center"
+                        padding="7px 16px"
+                        borderRadius="9999px"
+                        backgroundColor="#7c2d1233"
+                        cursor="pointer"
+                        transition="all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                        _hover={{ backgroundColor: '#7c2d1260' }}
+                    >
+                        <TbBook fontSize="20px" color="rgb(249 115 22)" />
+                        <Text ml={2} color="white">
+                            Gameplay
+                        </Text>
+                    </Flex>
+                </Flex>
+
+                <Box pointerEvents="all">
+                    <Wallet />
+                </Box>
             </Flex>
 
             <Box position="absolute" left={0} bottom={0} right={0}>

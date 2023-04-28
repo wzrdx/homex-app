@@ -11,15 +11,15 @@ function Wallet({ callback }: { callback?: () => void }) {
     const navigate = useNavigate();
 
     return (
-        <Box display="flex" alignItems="center" background="#6f2a2ebd" padding="0.5rem 0.75rem" borderRadius="16px">
+        <Box display="flex" alignItems="center">
             <Box mr="0.6rem">
-                <IoWalletOutline color="white" fontSize="18px" />
+                <IoWalletOutline color="whitesmoke" fontSize="18px" />
             </Box>
-            <Text color="white" fontSize="14px">
+            <Text color="whitesmoke" fontSize="14px">
                 {getShortAddress(address)}
             </Text>
             <Link
-                color="white"
+                color="whitesmoke"
                 onClick={() => {
                     if (callback) {
                         callback();
@@ -30,7 +30,7 @@ function Wallet({ callback }: { callback?: () => void }) {
                     });
                 }}
             >
-                <Box ml="0.5rem" mt="1px" mr="-2px" color="white" _hover={{ color: '#ffffffad' }} cursor="pointer">
+                <Box ml="0.5rem" mt="1px" mr="-2px" color="whitesmoke" _hover={{ color: '#ffffffad' }} cursor="pointer">
                     <MdClose fontSize="17px" />
                 </Box>
             </Link>
