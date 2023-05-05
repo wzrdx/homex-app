@@ -30,8 +30,15 @@ const styles = {
     },
 };
 
+const layerStyles = {
+    layout: {
+        width: '1220px',
+    },
+};
+
 export const theme = extendTheme({
     colors,
     fonts,
     styles,
+    layerStyles,
 });

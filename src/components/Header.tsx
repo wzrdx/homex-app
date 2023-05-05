@@ -107,6 +107,7 @@ function Header() {
 
                 {/* Left and right */}
                 <Flex
+                    layerStyle="layout"
                     position="absolute"
                     top={0}
                     right={0}
@@ -114,10 +115,8 @@ function Header() {
                     left={0}
                     justifyContent="space-between"
                     alignItems="center"
-                    px={7}
                     py={3.5}
                     pointerEvents="none"
-                    maxWidth="1520px"
                     margin="0 auto"
                 >
                     <Flex alignItems="center" pointerEvents="all">
@@ -146,10 +145,10 @@ function Header() {
                             alignItems="center"
                             padding="7px 16px"
                             borderRadius="9999px"
-                            backgroundColor="#7c2d1260"
+                            backgroundColor="#7c2d1250"
                             cursor="pointer"
                             transition="all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#7c2d1290' }}
+                            _hover={{ backgroundColor: '#7c2d1280' }}
                         >
                             <TbBook fontSize="20px" color="rgb(249 115 22)" />
                             <Text ml={2} color="white">
@@ -183,16 +182,15 @@ function Header() {
 
                 {/* Left and right */}
                 <Flex
+                    layerStyle="layout"
                     position="absolute"
                     top={0}
                     right={0}
                     bottom={0}
                     left={0}
                     alignItems="center"
-                    px={7}
                     py={3.5}
                     pointerEvents="none"
-                    maxWidth="1520px"
                     margin="0 auto"
                 >
                     <Box>
