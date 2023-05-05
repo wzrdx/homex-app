@@ -5,7 +5,7 @@ import {
     WalletConnectLoginButton,
 } from '@multiversx/sdk-dapp/UI';
 import { Box, Text, Spinner, Flex, Stack, Image } from '@chakra-ui/react';
-import { useGetIsLoggedIn } from '@multiversx/sdk-dapp/hooks';
+import { useGetIsLoggedIn, useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContextType, getTokenCount, useAuthenticationContext } from '../services/authentication';
@@ -26,7 +26,9 @@ const Unlock = () => {
     const [error, setError] = useState<AuthenticationError>();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
 
-    const isLoggedInWithWallet = useGetIsLoggedIn();
+    // const isLoggedInWithWallet = useGetIsLoggedIn();
+    const { isLoggedIn } = useGetLoginInfo();
+
     const navigate = useNavigate();
 
     const checkAuthentication = async () => {
@@ -58,10 +60,12 @@ const Unlock = () => {
     };
 
     useEffect(() => {
-        if (isLoggedInWithWallet) {
+        if (isLoggedIn) {
             checkAuthentication();
+        } else {
+            console.log('User is not logged in');
         }
-    }, [isLoggedInWithWallet]);
+    }, [isLoggedIn]);
 
     const commonProps = {
         nativeAuth: true,
@@ -104,7 +108,7 @@ const Unlock = () => {
                 py="6"
                 px="8"
             >
-                {!error && !isLoggedInWithWallet && (
+                {!error && !isLoggedIn && (
                     <Text
                         textTransform="uppercase"
                         fontSize="21px"
@@ -119,7 +123,7 @@ const Unlock = () => {
                 )}
 
                 <Stack width="100%">
-                    {!isLoggedInWithWallet ? (
+                    {!isLoggedIn ? (
                         <>
                             <ExtensionLoginButton buttonClassName="Login-Button" {...commonProps}>
                                 <Box display="flex" alignItems="center" justifyContent="space-between">

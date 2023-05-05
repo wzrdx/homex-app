@@ -10,50 +10,61 @@ import { theme } from './theme';
 import { ProtectedRoute } from './shared/ProtectedRoute';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
+import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
+import { useEffect } from 'react';
+import { ResourcesProvider } from './services/resources';
 
 function App() {
+    const { isLoggedIn } = useGetLoginInfo();
+
+    useEffect(() => {
+        console.log('[App.tsx] isLoggedIn', isLoggedIn);
+    }, [isLoggedIn]);
+
     return (
         <ChakraBaseProvider theme={theme}>
-            <DappProvider
-                environment={EnvironmentsEnum.devnet}
-                customNetworkConfig={{
-                    name: 'customConfig',
-                    apiTimeout,
-                    walletConnectV2ProjectId,
-                    apiAddress: API_URL,
-                }}
-            >
-                <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
-                <NotificationModal />
-                <SignTransactionsModals />
+            <ResourcesProvider>
+                <DappProvider
+                    environment={EnvironmentsEnum.devnet}
+                    customNetworkConfig={{
+                        name: 'customConfig',
+                        apiTimeout,
+                        walletConnectV2ProjectId,
+                        apiAddress: API_URL,
+                    }}
+                >
+                    <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
+                    <NotificationModal />
+                    <SignTransactionsModals />
 
-                <AuthenticationProvider>
-                    <Routes>
-                        {/* Authentication */}
-                        <Route path={routeNames.unlock} element={<Unlock />} />
+                    <AuthenticationProvider>
+                        <Routes>
+                            {/* Authentication */}
+                            <Route path={routeNames.unlock} element={<Unlock />} />
 
-                        {/* Main routing */}
-                        <Route
-                            path={routeNames.main}
-                            element={
-                                <ProtectedRoute>
-                                    <Layout />
-                                </ProtectedRoute>
-                            }
-                        >
-                            <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
+                            {/* Main routing */}
+                            <Route
+                                path={routeNames.main}
+                                element={
+                                    <ProtectedRoute>
+                                        <Layout />
+                                    </ProtectedRoute>
+                                }
+                            >
+                                <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
-                            {routes.map((route, index) => (
-                                <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
-                            ))}
+                                {routes.map((route, index) => (
+                                    <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
+                                ))}
 
-                            <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
-                        </Route>
+                                <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
+                            </Route>
 
-                        <Route path="*" element={<Navigate to={routeNames.main} replace />} />
-                    </Routes>
-                </AuthenticationProvider>
-            </DappProvider>
+                            <Route path="*" element={<Navigate to={routeNames.main} replace />} />
+                        </Routes>
+                    </AuthenticationProvider>
+                </DappProvider>
+            </ResourcesProvider>
         </ChakraBaseProvider>
     );
 }

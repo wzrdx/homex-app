@@ -11,7 +11,8 @@ import HerbsImage from '../assets/resources/images/herbs.jpg';
 import GemsImage from '../assets/resources/images/gems.jpg';
 import EssenceImage from '../assets/resources/images/essence.jpg';
 
-import Ticket from '../assets/ticket.jpg';
+import TicketsIcon from '../assets/resources/icons/tickets.png';
+import TicketsImage from '../assets/ticket.jpg';
 
 import {
     API_URL,
@@ -59,7 +60,8 @@ export const RESOURCE_ELEMENTS: any = {
     },
     tickets: {
         name: 'Tickets',
-        image: Ticket,
+        image: TicketsImage,
+        icon: TicketsIcon,
         tokenId: TICKETS_TOKEN_ID,
     },
 };

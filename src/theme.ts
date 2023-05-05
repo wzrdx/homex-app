@@ -24,6 +24,7 @@ const fonts = {
 const styles = {
     global: {
         body: {
+            color: 'whitesmoke',
             bg: 'linear-gradient(0deg, #330000, #1c0001)',
         },
     },
