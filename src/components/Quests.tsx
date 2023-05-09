@@ -25,7 +25,14 @@ function Quests() {
         <Flex flexDir="column" py={5} _last={{ paddingBottom: 0 }}>
             {_(QUESTS)
                 .filter((quest) => quest.type === type)
-                .map((quest) => <QuestCard key={quest.id} quest={quest} callback={onQuestClick} />)
+                .map((quest) => (
+                    <QuestCard
+                        key={quest.id}
+                        quest={quest}
+                        isActive={quest.id === currentQuest.id}
+                        callback={onQuestClick}
+                    />
+                ))
                 .value()}
         </Flex>
     );
@@ -34,7 +41,7 @@ function Quests() {
         <Flex height="100%">
             {/* Quest list */}
             <Flex flex={1} justifyContent="center" overflowY="scroll">
-                <Flex flexDir="column">
+                <Flex flexDir="column" width="100%" pl="2px">
                     <Text layerStyle="header1">Basic</Text>
                     {getQuestCards('basic')}
 

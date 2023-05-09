@@ -1,26 +1,68 @@
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { Flex, Box, Text, Image } from '@chakra-ui/react';
 import { getBackgroundStyle } from '../services/helpers';
 import { getQuestImage } from '../services/quests';
+import { Timer } from './Timer';
+import { RESOURCE_ELEMENTS } from '../services/resources';
 
-function QuestCard({ quest, callback }) {
+function QuestCard({ quest, isActive, callback }) {
     return (
-        <Flex
-            onClick={() => callback(quest.id)}
-            style={getBackgroundStyle(getQuestImage(quest.id))}
-            borderRadius="2px"
-            boxShadow="1px 1px 2px rgb(0 0 0 / 40%)"
-            padding={5}
-            justifyContent="center"
-            _notLast={{ marginBottom: 3 }}
-        >
-            <div>
-                <div className="Flex-Center-All Relative">
-                    <div>{quest.name}</div>
-                    <div></div>
-                </div>
-            </div>
+        <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 3 }}>
+            <Flex
+                onClick={() => callback(quest.id)}
+                style={getBackgroundStyle(getQuestImage(quest.id))}
+                flex={1}
+                position="relative"
+                borderRadius="2px"
+                boxShadow="1px 1px 2px rgb(0 0 0 / 40%)"
+                px={4}
+                py={4}
+                justifyContent="center"
+                cursor="pointer"
+                outline={isActive ? '2px solid #d29835' : 'none'}
+            >
+                <Box position="relative" zIndex={1} pointerEvents="none">
+                    <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000">
+                        {quest.name}
+                    </Text>
 
-            <div></div>
+                    {/* Blurred rectangle */}
+                    <Box
+                        position="absolute"
+                        top={0}
+                        right={-2}
+                        bottom={0}
+                        left={-2}
+                        background="black"
+                        filter="blur(9px)"
+                        opacity="0.15"
+                    ></Box>
+                </Box>
+
+                {/* Overlay */}
+                <Flex position="absolute" top={0} right={0} bottom={0} left={0}>
+                    <Box width="50%"></Box>
+                    <Box width="50%" backdropFilter="grayscale(1) brightness(0.75) contrast(1.15)"></Box>
+                </Flex>
+
+                {/* Hover Overlay */}
+                <Flex
+                    position="absolute"
+                    top={0}
+                    right={0}
+                    bottom={0}
+                    left={0}
+                    transition="all 0.25s cubic-bezier(0.25, 0.45, 0.45, 0.95)"
+                    _hover={{ backdropFilter: 'brightness(1.2) contrast(0.85)' }}
+                ></Flex>
+            </Flex>
+
+            <Box mx={6}>
+                {quest.rewards.map((reward: { resource: string }, index: number) => (
+                    <Box key={index}>
+                        <Image width="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                    </Box>
+                ))}
+            </Box>
         </Flex>
     );
 }

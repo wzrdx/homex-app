@@ -38,6 +38,10 @@ const layerStyles = {
         textTransform: 'uppercase',
         fontSize: '20px',
         fontWeight: 600,
+        letterSpacing: '0.75px',
+    },
+    energy: {
+        color: '#287ece',
     },
 };
 

@@ -11,8 +11,8 @@ export const round = (value, places) => {
 
 export const getShortAddress = (address: string, size = 4) => `${address.slice(0, size)}...${address.slice(-size)}`;
 
-export const hDisplay = (h) => (h > 0 ? (h < 10 ? '0' + h + ':' : h + ':') : '00:');
-export const mDisplay = (m) => (m > 0 ? (m < 10 ? '0' + m + ':' : m + ':') : '00:');
+export const hDisplay = (h) => (h > 0 ? (h < 10 ? '0' + h : h) : '00');
+export const mDisplay = (m) => (m > 0 ? (m < 10 ? '0' + m : m) : '00');
 export const sDisplay = (s) => (s > 0 ? (s < 10 ? '0' + s : s) : '00');
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

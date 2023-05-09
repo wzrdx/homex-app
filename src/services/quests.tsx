@@ -10,6 +10,7 @@ import Quest_8 from '../assets/quests/8.jpg';
 import Quest_9 from '../assets/quests/9.jpg';
 import Ticket from '../assets/ticket.jpg';
 import { createContext, useContext } from 'react';
+import { Text } from '@chakra-ui/react';
 
 const BASE_DURATION = 30;
 const BASE_COST = 10;
@@ -23,11 +24,14 @@ export const QUESTS: any[] = [
         type: 'basic',
         name: 'Scout the city',
         description: (
-            <div>
+            <Text>
                 You have been drawn to explore the city, hoping to uncover its secrets. The journey will take{' '}
                 <span className="Weight-700 Time-Color">30 SECONDS</span> and will require{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> to keep you focused on your path.
-            </div>
+                <Text layerStyle="energy" as="span">
+                    1 ENERGY
+                </Text>{' '}
+                to keep you focused on your path.
+            </Text>
         ),
         requirements: {
             energy: BASE_COST,
@@ -194,7 +198,7 @@ export const QUESTS: any[] = [
     {
         id: 8,
         type: 'essence',
-        name: 'Retrieve the labyrinth treasure',
+        name: 'The labyrinth treasure',
         description: (
             <div>
                 After <span className="Weight-700 Time-Color">45 SECONDS</span> of exploring the city, you come across
