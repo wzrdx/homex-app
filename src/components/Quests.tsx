@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import _ from 'lodash';
 import { QUESTS, QuestsContextType, getQuest, getQuestImage, useQuestsContext } from '../services/quests';
@@ -9,6 +10,13 @@ import { ResourcesContextType, getResourceElements, useResourcesContext } from '
 import Requirement from '../shared/Requirement';
 
 function Quests() {
+    const [ongoingQuests, setOngoingQuests] = useState<
+        Array<{
+            id: number;
+            timestamp: Date;
+        }>
+    >([]);
+
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
     const { resources, getEnergy, getHerbs, getGems, getEssence } = useResourcesContext() as ResourcesContextType;
@@ -31,11 +39,17 @@ function Quests() {
                         quest={quest}
                         isActive={quest.id === currentQuest.id}
                         callback={onQuestClick}
+                        timestamp={ongoingQuests.find((ongoingQuest) => ongoingQuest.id === quest.id)?.timestamp}
                     />
                 ))
                 .value()}
         </Flex>
     );
+
+    // Init
+    useEffect(() => {
+        // TODO: Get all quest states from the sc
+    }, []);
 
     return (
         <Flex height="100%">
