@@ -24,46 +24,36 @@ function App() {
     return (
         <ChakraBaseProvider theme={theme}>
             <ResourcesProvider>
-                <DappProvider
-                    environment={EnvironmentsEnum.devnet}
-                    customNetworkConfig={{
-                        name: 'customConfig',
-                        apiTimeout,
-                        walletConnectV2ProjectId,
-                        apiAddress: API_URL,
-                    }}
-                >
-                    <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
-                    <NotificationModal />
-                    <SignTransactionsModals />
+                <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
+                <NotificationModal />
+                <SignTransactionsModals />
 
-                    <AuthenticationProvider>
-                        <Routes>
-                            {/* Authentication */}
-                            <Route path={routeNames.unlock} element={<Unlock />} />
+                <AuthenticationProvider>
+                    <Routes>
+                        {/* Authentication */}
+                        <Route path={routeNames.unlock} element={<Unlock />} />
 
-                            {/* Main routing */}
-                            <Route
-                                path={routeNames.main}
-                                element={
-                                    <ProtectedRoute>
-                                        <Layout />
-                                    </ProtectedRoute>
-                                }
-                            >
-                                <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
+                        {/* Main routing */}
+                        <Route
+                            path={routeNames.main}
+                            element={
+                                <ProtectedRoute>
+                                    <Layout />
+                                </ProtectedRoute>
+                            }
+                        >
+                            <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
-                                {routes.map((route, index) => (
-                                    <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
-                                ))}
+                            {routes.map((route, index) => (
+                                <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
+                            ))}
 
-                                <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
-                            </Route>
+                            <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
+                        </Route>
 
-                            <Route path="*" element={<Navigate to={routeNames.main} replace />} />
-                        </Routes>
-                    </AuthenticationProvider>
-                </DappProvider>
+                        <Route path="*" element={<Navigate to={routeNames.main} replace />} />
+                    </Routes>
+                </AuthenticationProvider>
             </ResourcesProvider>
         </ChakraBaseProvider>
     );

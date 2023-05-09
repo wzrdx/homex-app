@@ -51,6 +51,7 @@ const Unlock = () => {
     const onAuthenticationResult = (isSuccessful: boolean) => {
         if (isSuccessful) {
             console.log('Authentication successful');
+            console.log('* User is logged in', isLoggedIn);
             setAuthentication(true);
             setTimeout(() => navigate('/'), 250);
         } else {

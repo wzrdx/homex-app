@@ -67,7 +67,7 @@ function Quests() {
 
             {/* Quest details */}
             <Flex flex={1} justifyContent="center">
-                <Text>{currentQuest.description}</Text>
+                <Box>{currentQuest.description}</Box>
             </Flex>
         </Flex>
     );
