@@ -21,29 +21,30 @@ function Quests() {
         navigate('/quests');
     };
 
-    const getQuestCards = (type: string) =>
-        _(QUESTS)
-            .filter((quest) => quest.type === type)
-            .map((quest) => <QuestCard key={quest.id} quest={quest} callback={onQuestClick} />)
-            .value();
+    const getQuestCards = (type: string) => (
+        <Flex flexDir="column" py={5} _last={{ paddingBottom: 0 }}>
+            {_(QUESTS)
+                .filter((quest) => quest.type === type)
+                .map((quest) => <QuestCard key={quest.id} quest={quest} callback={onQuestClick} />)
+                .value()}
+        </Flex>
+    );
 
     return (
-        <Flex>
+        <Flex height="100%">
             {/* Quest list */}
-            <Flex flex={1} justifyContent="center">
+            <Flex flex={1} justifyContent="center" overflowY="scroll">
                 <Flex flexDir="column">
-                    <Text fontSize="22px">Quests</Text>
-
-                    <Text fontSize="20px">Basic</Text>
+                    <Text layerStyle="header1">Basic</Text>
                     {getQuestCards('basic')}
 
-                    <Text fontSize="20px">Exchange</Text>
+                    <Text layerStyle="header1">Exchange</Text>
                     {getQuestCards('exchange')}
 
-                    <Text fontSize="20px">Essence</Text>
+                    <Text layerStyle="header1">Essence</Text>
                     {getQuestCards('essence')}
 
-                    <Text fontSize="20px">Mission</Text>
+                    <Text layerStyle="header1">Mission</Text>
                     {getQuestCards('final')}
                 </Flex>
             </Flex>

@@ -34,6 +34,11 @@ const layerStyles = {
     layout: {
         width: '1220px',
     },
+    header1: {
+        textTransform: 'uppercase',
+        fontSize: '20px',
+        fontWeight: 600,
+    },
 };
 
 export const theme = extendTheme({

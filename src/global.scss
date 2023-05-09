@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
+$scrollbar-thumb-color: #d29835;
+$scrollbar-track-color: #d4d4d466;
 
 body {
     margin: 0;
     min-width: 100vw;
     color: whitesmoke;
+    overflow: hidden;
 }
 
 #root {
@@ -99,4 +102,29 @@ body {
         .dapp-core-component__transactionToast-styles__icon {
         background: pink;
     }
+}
+
+// Scrollbar
+/* Firefox */
+* {
+    scrollbar-width: none;
+    scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: $scrollbar-track-color;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-thumb-color;
+    border-radius: 0px;
+    border: 0;
 }

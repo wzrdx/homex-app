@@ -47,7 +47,7 @@ function Header() {
     const getCssPxValue = (value: number): string => `${value}px`;
 
     return (
-        <Flex flex={1} flexDir="column">
+        <Flex height="15%" flexDir="column">
             {/* Main header */}
             <Flex flex={1} position="relative" background="#00000070">
                 {/* Routes */}

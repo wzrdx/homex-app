@@ -30,7 +30,7 @@ function Main() {
                 <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
                     <Header />
 
-                    <Box layerStyle="layout" flex={6} margin="0 auto" pt={8}>
+                    <Box layerStyle="layout" height="85%" margin="0 auto" py={14}>
                         <Outlet />
                     </Box>
                 </Flex>
