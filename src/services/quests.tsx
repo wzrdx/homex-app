@@ -48,29 +48,6 @@ export const QUESTS: any[] = [
     {
         id: 2,
         type: 'basic',
-        name: 'Craft a compass',
-        description: (
-            <div>
-                You have been drawn to explore the city, hoping to uncover its secrets. The journey will take{' '}
-                <span className="Weight-700 Time-Color">30 SECONDS</span> and will require{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> to keep you focused on your path.
-            </div>
-        ),
-        requirements: {
-            energy: 2 * BASE_COST,
-        },
-        duration: 2 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 4 * BASE_COST,
-            },
-        ],
-    },
-    {
-        id: 3,
-        type: 'basic',
         name: 'Reach the high point',
         description: (
             <div>
@@ -88,6 +65,29 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: BASE_COST,
+            },
+        ],
+    },
+    {
+        id: 3,
+        type: 'basic',
+        name: 'Craft a compass',
+        description: (
+            <div>
+                You have been drawn to explore the city, hoping to uncover its secrets. The journey will take{' '}
+                <span className="Weight-700 Time-Color">30 SECONDS</span> and will require{' '}
+                <span className="Weight-700 Energy-Color">1 ENERGY</span> to keep you focused on your path.
+            </div>
+        ),
+        requirements: {
+            energy: 2 * BASE_COST,
+        },
+        duration: 2 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 4 * BASE_COST,
             },
         ],
     },

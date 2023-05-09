@@ -6,7 +6,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 
 function QuestCard({ quest, isActive, callback }) {
     return (
-        <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 3 }}>
+        <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
             <Flex
                 onClick={() => callback(quest.id)}
                 style={getBackgroundStyle(getQuestImage(quest.id))}
