@@ -41,6 +41,14 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
 
     return (
         <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
+            <Box mr={8}>
+                {quest.rewards.map((reward: { resource: string }, index: number) => (
+                    <Box key={index}>
+                        <Image width="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                    </Box>
+                ))}
+            </Box>
+
             <Flex
                 onClick={() => callback(quest.id)}
                 style={getBackgroundStyle(getQuestImage(quest.id))}
@@ -50,6 +58,7 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                 boxShadow="1px 1px 2px rgb(0 0 0 / 40%)"
                 px={4}
                 py={4}
+                mr={8}
                 justifyContent="center"
                 cursor="pointer"
                 outline={isActive ? '2px solid #d29835' : 'none'}
@@ -89,14 +98,6 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                     _hover={{ backdropFilter: 'brightness(1.2) contrast(0.85)' }}
                 ></Flex>
             </Flex>
-
-            <Box mx={6}>
-                {quest.rewards.map((reward: { resource: string }, index: number) => (
-                    <Box key={index}>
-                        <Image width="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
-                    </Box>
-                ))}
-            </Box>
         </Flex>
     );
 }

@@ -32,7 +32,7 @@ const styles = {
 
 const layerStyles = {
     layout: {
-        width: '1220px',
+        width: '1320px',
     },
     header1: {
         textTransform: 'uppercase',
