@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
-function Rewards() {
+function Leaderboard() {
     return <Box></Box>;
 }
 
-export default Rewards;
+export default Leaderboard;

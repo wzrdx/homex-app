@@ -1,0 +1,66 @@
+.actionButton {
+    padding: 0.4rem 4rem;
+    border-radius: 8px;
+    font-size: 17px;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    color: whitesmoke;
+    text-shadow: 1px 1px 3px rgb(0 0 0 / 50%);
+    transition: all 0.1s ease-in;
+}
+
+.default {
+    background: linear-gradient(0deg, #8d1c21 10%, #bf2e32 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, #b11a22 10%, #ec2d34 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #80171c 10%, #b4262b 100%);
+    }
+}
+
+.lore {
+    background: linear-gradient(0deg, #522c1a 10%, #623723 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, #723e26 10%, #7b452c 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #542b19 10%, #653722 100%);
+    }
+}
+
+.blue {
+    background: linear-gradient(0deg, rgb(13, 107, 201) 10%, rgb(20, 126, 232) 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, rgb(22, 125, 229) 10%, rgb(31, 142, 253) 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, rgb(11, 94, 178) 10%, rgb(15, 113, 211) 100%);
+    }
+}
+
+.orange {
+    background: linear-gradient(0deg, #d36505 10%, #f5821d 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, #f3770a 10%, #f98f30 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #c05b03 10%, #e7720c 100%);
+    }
+}
+
+.disabled {
+    background: gray;
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 25%);
+
+    &:hover {
+        background: gray;
+    }
+}

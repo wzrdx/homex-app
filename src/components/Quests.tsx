@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import _ from 'lodash';
-import { QUESTS, QuestsContextType, getQuest, getQuestImage, useQuestsContext } from '../services/quests';
+import {
+    QUESTS,
+    QuestsContextType,
+    getQuest,
+    getQuestImage,
+    meetsRequirements,
+    useQuestsContext,
+} from '../services/quests';
 import Frame from '../assets/frame.png';
 import { getBackgroundStyle } from '../services/helpers';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +16,7 @@ import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import Requirement from '../shared/Requirement';
+import { ActionButton } from '../shared/ActionButton/ActionButton';
 
 function Quests() {
     const [ongoingQuests, setOngoingQuests] = useState<
@@ -30,6 +38,8 @@ function Quests() {
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
     const { resources, getEnergy, getHerbs, getGems, getEssence } = useResourcesContext() as ResourcesContextType;
+
+    const isQuestDefault = () => true;
 
     const navigate = useNavigate();
 
@@ -60,6 +70,8 @@ function Quests() {
     useEffect(() => {
         // TODO: Get all quest states from the sc
     }, []);
+
+    const startQuest = async () => {};
 
     return (
         <Flex height="100%">
@@ -116,7 +128,7 @@ function Quests() {
                         />
                     </Flex>
 
-                    <Flex>
+                    <Flex mb={9}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
                             <Flex key={resource} width="102px" justifyContent="center">
                                 <Requirement
@@ -128,7 +140,18 @@ function Quests() {
                         ))}
                     </Flex>
 
-                    <Button colorScheme="red">Start</Button>
+                    <Box>
+                        {/* Normal - The quest hasn't started */}
+                        {isQuestDefault() && (
+                            <ActionButton
+                                isLoading={false}
+                                disabled={!meetsRequirements(resources, currentQuest.id)}
+                                onClick={startQuest}
+                            >
+                                <Text>Start</Text>
+                            </ActionButton>
+                        )}
+                    </Box>
                 </Flex>
             </Flex>
 

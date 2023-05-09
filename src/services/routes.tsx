@@ -1,7 +1,7 @@
 import Energy from '../components/Energy';
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
-import Rewards from '../components/Rewards';
+import Leaderboard from '../components/Leaderboard';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -9,7 +9,7 @@ export const routeNames = {
     gameplay: 'gameplay',
     energy: 'energy',
     quests: 'quests',
-    rewards: 'rewards',
+    leaderboard: 'leaderboard',
 };
 
 // Main routes after login
@@ -30,8 +30,8 @@ export const routes = [
         authenticatedRoute: true,
     },
     {
-        path: routeNames.rewards,
-        component: Rewards,
+        path: routeNames.leaderboard,
+        component: Leaderboard,
         authenticatedRoute: true,
     },
 ];

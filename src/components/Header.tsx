@@ -11,7 +11,7 @@ import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 
-const ROUTE_WIDTH = 112;
+const ROUTE_WIDTH = 138;
 const HIGHLIGHTED_ROUTES = [2];
 
 function Header() {
