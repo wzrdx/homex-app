@@ -1,6 +1,7 @@
 .actionButton {
-    padding: 0.4rem 4rem;
-    border-radius: 8px;
+    width: 200px;
+    padding: 0.5rem;
+    border-radius: 4px;
     font-size: 17px;
     transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
     color: whitesmoke;
@@ -21,10 +22,10 @@
 }
 
 .lore {
-    background: linear-gradient(0deg, #522c1a 10%, #623723 100%);
+    background: linear-gradient(0deg, #3b1d0e 10%, #623723 100%);
 
     &:hover {
-        background: linear-gradient(0deg, #723e26 10%, #7b452c 100%);
+        background: linear-gradient(0deg, #452313 10%, #774127 100%);
     }
 
     &:active {

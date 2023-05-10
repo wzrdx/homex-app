@@ -33,7 +33,7 @@ export const ActionButton: FunctionComponent<
             alignItems="center"
             justifyContent="center"
             cursor={isLoading || disabled ? 'not-allowed' : 'pointer'}
-            style={buttonWidth === 'small' ? { padding: '0.4rem 2rem' } : {}}
+            style={buttonWidth === 'small' ? { width: '160px' } : {}}
         >
             {isLoading && (
                 <Flex

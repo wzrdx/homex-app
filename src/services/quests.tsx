@@ -22,15 +22,11 @@ export const QUESTS: any[] = [
     {
         id: 1,
         type: 'basic',
-        name: 'Scout the city',
+        name: 'Explore',
         description: (
-            <Text>
-                You have been drawn to explore the city, hoping to uncover its secrets. The journey will take{' '}
-                <span className="Weight-700 Time-Color">30 SECONDS</span> and will require{' '}
-                <Text layerStyle="energy" as="span">
-                    1 ENERGY
-                </Text>{' '}
-                to keep you focused on your path.
+            <Text layerStyle="questDescription">
+                Uncover the city's secrets through a daring expedition, conquering obstacles and discovering hidden
+                treasures. Preserve your energy to unearth ancient artifacts and unravel mysteries.
             </Text>
         ),
         requirements: {
@@ -48,13 +44,13 @@ export const QUESTS: any[] = [
     {
         id: 2,
         type: 'basic',
-        name: 'Reach the high point',
+        name: 'Stellarforge',
         description: (
-            <div>
-                You feel disoriented after reaching a crossroads and you need to craft a compass to find your way. It
-                will take <span className="Weight-700 Time-Color">30 SECONDS</span> and{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> to construct it.
-            </div>
+            <Text layerStyle="questDescription">
+                Illuminate the path ahead by constructing a celestial lantern, harnessing the power of the stars.
+                Dedicate your energy and time to this intricate task, for its radiant glow will reveal hidden treasures
+                and guide you through the darkness.
+            </Text>
         ),
         requirements: {
             energy: BASE_COST,
@@ -71,13 +67,13 @@ export const QUESTS: any[] = [
     {
         id: 3,
         type: 'basic',
-        name: 'Craft a compass',
+        name: 'Beneath the Depths',
         description: (
-            <div>
-                You have been drawn to explore the city, hoping to uncover its secrets. The journey will take{' '}
-                <span className="Weight-700 Time-Color">30 SECONDS</span> and will require{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> to keep you focused on your path.
-            </div>
+            <Text layerStyle="questDescription">
+                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and
+                unravel cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient
+                mysteries concealed in the depths, rewarding those who dare to explore.
+            </Text>
         ),
         requirements: {
             energy: 2 * BASE_COST,
@@ -94,13 +90,13 @@ export const QUESTS: any[] = [
     {
         id: 4,
         type: 'basic',
-        name: 'Share tales of your travels',
+        name: 'Taleweaver',
         description: (
-            <div>
-                You feel disoriented after reaching a crossroads and you need to craft a compass to find your way. It
-                will take <span className="Weight-700 Time-Color">30 SECONDS</span> and{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> to construct it.
-            </div>
+            <Text layerStyle="questDescription">
+                Embark on a quest to captivate the hearts and minds of the people of Menhir with your exciting stories.
+                Gather a crowd, enthralling them with tales of your daring exploits and mesmerizing adventures. In
+                return for your storytelling prowess, be rewarded with gleaming gems as a token of their appreciation.
+            </Text>
         ),
         requirements: {
             energy: 2 * BASE_COST,
@@ -119,15 +115,12 @@ export const QUESTS: any[] = [
     {
         id: 5,
         type: 'exchange',
-        name: 'Meet the vendor',
+        name: 'Whispering Bargain',
         description: (
-            <div>
-                After <span className="Weight-700 Time-Color">45 SECONDS</span> of exploring the city, you come across
-                an old vendor and trade <span className="Weight-700 Herbs-Color">2 HERBS</span> for the blueprints of
-                Menhir. In order to decipher the blueprints you use{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> and{' '}
-                <span className="Weight-700 Gems-Color">1 GEMS</span> to reveal the location of an ancient artifact.
-            </div>
+            <Text layerStyle="questDescription">
+                In the city's depths, you chance upon an enigmatic creature, the Whispering Sentinel. It promises hidden
+                knowledge if you part with a precious possession. The choice is yours: risk loss for potential gain.
+            </Text>
         ),
         requirements: {
             herbs: 2 * BASE_COST,
@@ -144,15 +137,13 @@ export const QUESTS: any[] = [
     {
         id: 6,
         type: 'exchange',
-        name: 'Shady silhouette',
+        name: 'Marketplace Encounter',
         description: (
-            <div>
-                After <span className="Weight-700 Time-Color">45 SECONDS</span> of exploring the city, you come across
-                an old vendor and trade <span className="Weight-700 Herbs-Color">2 HERBS</span> for the blueprints of
-                Menhir. In order to decipher the blueprints you use{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> and{' '}
-                <span className="Weight-700 Gems-Color">1 GEMS</span> to reveal the location of an ancient artifact.
-            </div>
+            <Text layerStyle="questDescription">
+                Within the hidden marketplace, you stumble upon a mystical stall. Bartering your possessions, you
+                acquire a potent elixir, invigorating your spirit. The transaction bestows newfound vitality, fueling
+                your path ahead.
+            </Text>
         ),
         requirements: {
             gems: BASE_COST,
@@ -171,15 +162,13 @@ export const QUESTS: any[] = [
     {
         id: 7,
         type: 'essence',
-        name: 'Ancient mine diagram',
+        name: 'Lost Mine',
         description: (
-            <div>
-                After <span className="Weight-700 Time-Color">45 SECONDS</span> of exploring the city, you come across
-                an old vendor and trade <span className="Weight-700 Herbs-Color">2 HERBS</span> for the blueprints of
-                Menhir. In order to decipher the blueprints you use{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> and{' '}
-                <span className="Weight-700 Gems-Color">1 GEMS</span> to reveal the location of an ancient artifact.
-            </div>
+            <Text layerStyle="questDescription">
+                You embark on a perilous quest to recover a forgotten artifact hidden in treacherous ruins. Overcoming
+                daunting obstacles and displaying unwavering resolve, you'll secure the long-lost relic and attain a
+                valuable essence as your reward.
+            </Text>
         ),
         requirements: {
             energy: 2 * BASE_COST,
@@ -198,15 +187,13 @@ export const QUESTS: any[] = [
     {
         id: 8,
         type: 'essence',
-        name: 'The labyrinth treasure',
+        name: 'Enchanted Sanctuary',
         description: (
-            <div>
-                After <span className="Weight-700 Time-Color">45 SECONDS</span> of exploring the city, you come across
-                an old vendor and trade <span className="Weight-700 Herbs-Color">2 HERBS</span> for the blueprints of
-                Menhir. In order to decipher the blueprints you use{' '}
-                <span className="Weight-700 Energy-Color">1 ENERGY</span> and{' '}
-                <span className="Weight-700 Gems-Color">1 GEMS</span> to reveal the location of an ancient artifact.
-            </div>
+            <Text layerStyle="questDescription">
+                Exploring the uncharted realms of the outside world, you chance upon a forgotten sanctuary veiled in
+                mystery. Overcoming perilous trials and deciphering cryptic clues, you unearth an ancient artifact of
+                profound significance.
+            </Text>
         ),
         requirements: {
             energy: 4 * BASE_COST,
@@ -228,16 +215,12 @@ export const QUESTS: any[] = [
         id: 9,
         type: 'final',
         isFinal: true,
-        name: 'Adraka narcotic',
+        name: 'The Sacred Scarab',
         description: (
-            <div>
-                You use up <span className="Weight-700 Energy-Color">1 ENERGY</span> to guide yourself through the
-                winding streets for <span className="Weight-700 Time-Color">60 SECONDS</span>. You encounter a secret
-                society and trade <span className="Weight-700 Herbs-Color">2 HERBS</span> and{' '}
-                <span className="Weight-700 Gems-Color">1 GEMS</span> for a unique item. It takes{' '}
-                <span className="Weight-700 Essence-Color">1 ESSENCE OF THE DESERT</span> to safely transport the vessel
-                to safety.
-            </div>
+            <Text layerStyle="questDescription">
+                You discovered the Sacred Scarab, a powerful artifact hidden in a desert temple. It is guarded by a
+                powerful sandstorm so use your resources to face it and retrieve the artifact back to the Monolith.
+            </Text>
         ),
         requirements: {
             energy: 4 * BASE_COST,

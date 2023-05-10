@@ -11,7 +11,7 @@ const colors = {
     header: {
         gray: '#718181',
         lightgray: '#8e9e9e',
-        gold: 'wheat',
+        gold: '#f4d091',
     },
 };
 
@@ -32,7 +32,7 @@ const styles = {
 
 const layerStyles = {
     layout: {
-        width: '1320px',
+        width: '1420px',
     },
     header1: {
         textTransform: 'uppercase',
@@ -40,8 +40,8 @@ const layerStyles = {
         fontWeight: 600,
         letterSpacing: '0.75px',
     },
-    energy: {
-        color: '#287ece',
+    questDescription: {
+        textAlign: 'justify',
     },
 };
 

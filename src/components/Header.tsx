@@ -11,7 +11,7 @@ import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 
-const ROUTE_WIDTH = 138;
+const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
 
 function Header() {
@@ -64,12 +64,12 @@ function Header() {
                                 <Box
                                     visibility={HIGHLIGHTED_ROUTES.includes(index) ? 'visible' : 'hidden'}
                                     borderWidth="2px"
-                                    borderColor="header.gold"
+                                    borderColor="wheat"
                                     transform="rotate(45deg)"
                                     boxShadow="0 0 3px wheat"
                                     backgroundColor="#2f2f2f"
                                 >
-                                    <Box color="header.gold" transform="rotate(-45deg)" fontSize="20px" margin="-3px">
+                                    <Box color="wheat" transform="rotate(-45deg)" fontSize="20px" margin="-3px">
                                         <BsExclamation />
                                     </Box>
                                 </Box>
