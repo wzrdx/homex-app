@@ -42,6 +42,7 @@ const layerStyles = {
     },
     questDescription: {
         textAlign: 'justify',
+        fontSize: '15px',
     },
 };
 

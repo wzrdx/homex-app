@@ -40,10 +40,23 @@ body {
     }
 }
 
+// Dapp Sign Tx Modal
+.Sign-Tx-Modal {
+    .dapp-modal-dialog-content-body {
+        background-color: #191919 !important;
+    }
+
+    .dapp-modal-dialog-content {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+    }
+}
+
 // Dapp Tx Toasts
 .Tx-Toast {
     font-family: 'IBM Plex Mono', monospace !important;
     padding: 0.75rem 0.5rem !important;
+    background-color: #191919 !important;
     overflow: hidden;
 
     .dapp-core-component__transactionToast-styles__heading {
@@ -69,6 +82,10 @@ body {
     .dapp-core-component__progressStyles__progress .dapp-core-component__progressStyles__bar {
         top: -0.75rem;
         bottom: -0.75rem;
+    }
+
+    .dapp-core-component__transactionToast-styles__close {
+        color: #fff;
     }
 }
 

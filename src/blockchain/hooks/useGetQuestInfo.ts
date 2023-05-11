@@ -4,21 +4,10 @@ import { useState } from 'react';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
-import BigNumber from 'bignumber.js';
 import { isAfter } from 'date-fns';
+import { QuestInfo, QuestStatus } from '../types';
 
 const resultsParser = new ResultsParser();
-
-export enum QuestStatus {
-    Default,
-    Ongoing,
-    Complete,
-}
-
-export interface QuestInfo {
-    status: QuestStatus;
-    timestamp: Date | undefined;
-}
 
 export const useGetQuestInfo = () => {
     const [questInfo, setQuestInfo] = useState<QuestInfo>();

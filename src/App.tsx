@@ -26,7 +26,7 @@ function App() {
             <ResourcesProvider>
                 <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
                 <NotificationModal />
-                <SignTransactionsModals />
+                <SignTransactionsModals className="Sign-Tx-Modal" />
 
                 <AuthenticationProvider>
                     <Routes>

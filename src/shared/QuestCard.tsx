@@ -22,6 +22,9 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                 // console.log(quest.id, 'Updating width');
                 setWidths(getOverlayWidths());
             }, REFRESH_TIME);
+        } else {
+            console.log('QuestCard', quest.id, 'resetting widths');
+            setWidths(['0%', '100%']);
         }
 
         return () => {
@@ -55,13 +58,13 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                 flex={1}
                 position="relative"
                 borderRadius="2px"
-                boxShadow="1px 1px 2px rgb(0 0 0 / 40%)"
+                boxShadow={isActive ? '0 0 8px 1px rgb(255 170 20 / 70%)' : '1px 1px 2px rgb(0 0 0 / 40%)'}
                 px={4}
                 py={4}
                 mr={8}
                 justifyContent="center"
                 cursor="pointer"
-                outline={isActive ? '2px solid #d29835' : 'none'}
+                outline={isActive ? '2px solid #d29835' : widths[0] === '100%' ? '2px solid #128712' : 'none'}
             >
                 <Box position="relative" zIndex={1} pointerEvents="none">
                     <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000">

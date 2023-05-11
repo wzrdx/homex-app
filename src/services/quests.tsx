@@ -14,6 +14,7 @@ import { Text } from '@chakra-ui/react';
 
 const BASE_DURATION = 4;
 const BASE_COST = 10;
+export const QUEST_DURATION_INTERVAL = 'minutes';
 
 const QUEST_IMAGES = [Quest_1, Quest_2, Quest_3, Quest_4, Quest_5, Quest_6, Quest_7, Quest_8, Quest_9];
 

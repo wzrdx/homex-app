@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import _ from 'lodash';
+import _, { find, findIndex, includes } from 'lodash';
 import {
     QUESTS,
+    QUEST_DURATION_INTERVAL,
     QuestsContextType,
     getQuest,
     getQuestImage,
@@ -21,32 +22,187 @@ import {
     useResourcesContext,
 } from '../services/resources';
 import Requirement from '../shared/Requirement';
+import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
+import { useGetAccountInfo, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import { useGetQuestInfo } from '../blockchain/hooks/useGetQuestInfo';
+import { PendingTx, QuestStatus, TxResolution } from '../blockchain/types';
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { smartContract } from '../blockchain/smartContract';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { Timer } from '../shared/Timer';
+import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
+import { isAfter, isBefore } from 'date-fns';
 
 function Quests() {
-    const [ongoingQuests, setOngoingQuests] = useState<
-        Array<{
-            id: number;
-            timestamp: Date;
-        }>
-    >([
-        {
-            id: 1,
-            timestamp: new Date('2023-05-09T16:46:51.771Z'),
-        },
-        {
-            id: 5,
-            timestamp: new Date('2023-05-09T15:16:51.771Z'),
-        },
-    ]);
+    const navigate = useNavigate();
+    const { address } = useGetAccountInfo();
 
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
     const { resources, getEnergy, getHerbs, getGems, getEssence } = useResourcesContext() as ResourcesContextType;
 
-    const isQuestDefault = () => true;
+    const [isStartButtonLoading, setStartButtonLoading] = useState(false);
+    const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
 
-    const navigate = useNavigate();
+    const { ongoingQuests, getOngoingQuests } = useGetOngoingQuests();
+
+    const isQuestDefault = () => findIndex(ongoingQuests, (q) => q.id === currentQuest.id) < 0;
+    const isQuestOngoing = () =>
+        findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
+    const isQuestComplete = () =>
+        findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
+
+    const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
+    const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
+
+    // Init
+    useEffect(() => {
+        getOngoingQuests();
+    }, []);
+
+    // Current quest
+    useEffect(() => {
+        if (currentQuest) {
+        }
+    }, [currentQuest]);
+
+    // Tx tracker
+    useEffect(() => {
+        if (hasSuccessfulTransactions) {
+            successfulTransactionsArray.forEach((tx: [string, any]) => {
+                const pendingTx = _.find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
+
+                if (pendingTx) {
+                    console.log('TxResolution', pendingTx);
+
+                    setPendingTxs((array) => _.filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
+
+                    switch (pendingTx.resolution) {
+                        case TxResolution.UpdateResources:
+                            const resources: string[] = pendingTx.data.resources;
+
+                            getOngoingQuests();
+
+                            const calls = _.map(resources, (resource) => getResourceCall(resource));
+                            _.forEach(calls, (call) => call());
+                            break;
+
+                        default:
+                            console.error('Unknown txResolution type');
+                    }
+                }
+            });
+        }
+    }, [successfulTransactionsArray]);
+
+    const startQuest = async () => {
+        if (isStartButtonLoading || !meetsRequirements(resources, currentQuest.id)) {
+            return;
+        }
+
+        setStartButtonLoading(true);
+        playSound('start_quest');
+
+        const user = new Address(address);
+
+        try {
+            const tx = smartContract.methods
+                .startQuest([currentQuest.id])
+                .withMultiESDTNFTTransfer(
+                    Object.keys(currentQuest.requirements).map((resource) =>
+                        TokenTransfer.fungibleFromAmount(
+                            RESOURCE_ELEMENTS[resource].tokenId,
+                            currentQuest.requirements[resource],
+                            6
+                        )
+                    )
+                )
+                .withSender(user)
+                .withChainID('D')
+                .withGasLimit(6000000)
+                .buildTransaction();
+
+            console.log(tx.getData().toString());
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setStartButtonLoading(false);
+
+            setPendingTxs((array) => [
+                ...array,
+                {
+                    sessionId,
+                    resolution: TxResolution.UpdateResources,
+                    data: {
+                        resources: Object.keys(currentQuest.requirements),
+                    },
+                },
+            ]);
+        } catch (err) {
+            console.error('Error occured during startQuest', err);
+        }
+    };
+
+    const completeQuest = async () => {
+        if (isFinishButtonLoading) {
+            return;
+        }
+
+        const user = new Address(address);
+
+        setFinishButtonLoading(true);
+        playSound('complete_quest');
+
+        try {
+            const tx = smartContract.methods
+                .completeQuest([currentQuest.id])
+                .withSender(user)
+                .withChainID('D')
+                .withGasLimit(7000000)
+                .buildTransaction();
+
+            console.log(tx.getData().toString());
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setFinishButtonLoading(false);
+
+            setPendingTxs((array) => [
+                ...array,
+                {
+                    sessionId,
+                    resolution: TxResolution.UpdateResources,
+                    data: {
+                        resources: _.map(currentQuest.rewards, (reward) => reward.resource),
+                    },
+                },
+            ]);
+        } catch (err) {
+            console.error('Error occured during completeQuest', err);
+        }
+    };
 
     const onQuestClick = (id: number | undefined) => {
         playSound('select_quest');
@@ -64,19 +220,32 @@ function Quests() {
                         quest={quest}
                         isActive={quest.id === currentQuest.id}
                         callback={onQuestClick}
-                        timestamp={ongoingQuests.find((ongoingQuest) => ongoingQuest.id === quest.id)?.timestamp}
+                        timestamp={find(ongoingQuests, (ongoingQuest) => ongoingQuest.id === quest.id)?.timestamp}
                     />
                 ))
                 .value()}
         </Flex>
     );
 
-    // Init
-    useEffect(() => {
-        // TODO: Get all quest states from the sc
-    }, []);
+    const getResourceCall = (resource: string): (() => Promise<void>) => {
+        switch (resource) {
+            case 'energy':
+                return getEnergy;
 
-    const startQuest = async () => {};
+            case 'herbs':
+                return getHerbs;
+
+            case 'gems':
+                return getGems;
+
+            case 'essence':
+                return getEssence;
+
+            default:
+                console.error('getResourceCall(): Unknown resource type');
+                return async () => {};
+        }
+    };
 
     return (
         <Flex height="100%">
@@ -106,7 +275,7 @@ function Quests() {
                         position="relative"
                         width="400px"
                         height="400px"
-                        mb={9}
+                        mb={7}
                     >
                         <Flex
                             justifyContent="center"
@@ -129,7 +298,7 @@ function Quests() {
                         />
                     </Flex>
 
-                    <Flex mb={9}>
+                    <Flex mb={7}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
                             <Flex key={resource} width="102px" justifyContent="center">
                                 <Requirement
@@ -141,7 +310,7 @@ function Quests() {
                         ))}
                     </Flex>
 
-                    <Box>
+                    <Box mb={2}>
                         {/* Normal - The quest hasn't started */}
                         {isQuestDefault() && (
                             <ActionButton
@@ -151,6 +320,49 @@ function Quests() {
                             >
                                 <Text>Start</Text>
                             </ActionButton>
+                        )}
+
+                        {/* Ongoing - A quest is ongoing but is not completed */}
+                        {isQuestOngoing() && (
+                            <ActionButton disabled>
+                                <Text>Ongoing</Text>
+                            </ActionButton>
+                        )}
+
+                        {/* Complete - A quest is completed and its rewards must be claimed */}
+                        {isQuestComplete() && (
+                            <ActionButton isLoading={isFinishButtonLoading} colorScheme="green" onClick={completeQuest}>
+                                <Text>Complete</Text>
+                            </ActionButton>
+                        )}
+                    </Box>
+
+                    <Box>
+                        {isQuestDefault() && (
+                            <Flex alignItems="center">
+                                <TimeIcon boxSize={4} color="white.500" />
+                                <Text ml={2}>{`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}`}</Text>
+                            </Flex>
+                        )}
+
+                        {isQuestOngoing() && (
+                            <Timer
+                                isActive={true}
+                                timestamp={
+                                    _.find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date
+                                }
+                                callback={() => {
+                                    setTimeout(() => getOngoingQuests());
+                                }}
+                                isDescending
+                            />
+                        )}
+
+                        {isQuestComplete() && (
+                            <Flex alignItems="center">
+                                <CheckIcon boxSize={4} color="white.500" />
+                                <Text ml={2}>Finished</Text>
+                            </Flex>
                         )}
                     </Box>
                 </Flex>

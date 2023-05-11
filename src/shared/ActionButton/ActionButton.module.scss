@@ -10,6 +10,18 @@
 }
 
 .default {
+    background: linear-gradient(0deg, #925c33 10%, #cc8a4d 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, #a86b3c 10%, #d8904d 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #7a4a25 10%, #b17742 100%);
+    }
+}
+
+.red {
     background: linear-gradient(0deg, #8d1c21 10%, #bf2e32 100%);
 
     &:hover {
@@ -54,6 +66,18 @@
 
     &:active {
         background: linear-gradient(0deg, #c05b03 10%, #e7720c 100%);
+    }
+}
+
+.green {
+    background: linear-gradient(0deg, #007e28 10%, #0bb140 100%);
+
+    &:hover {
+        background: linear-gradient(0deg, #019630 10%, #0cc948 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #037a29 10%, #0ea13c 100%);
     }
 }
 
