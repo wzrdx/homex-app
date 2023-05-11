@@ -25,7 +25,6 @@ import Requirement from '../shared/Requirement';
 import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { useGetQuestInfo } from '../blockchain/hooks/useGetQuestInfo';
 import { PendingTx, QuestStatus, TxResolution } from '../blockchain/types';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
@@ -121,7 +120,7 @@ function Quests() {
                 )
                 .withSender(user)
                 .withChainID('D')
-                .withGasLimit(6000000)
+                .withGasLimit(9000000)
                 .buildTransaction();
 
             console.log(tx.getData().toString());
@@ -341,7 +340,11 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="white.500" />
-                                <Text ml={2}>{`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}`}</Text>
+                                <Text ml={3}>
+                                    {`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}${
+                                        currentQuest.duration > 1 ? 's' : ''
+                                    }`}
+                                </Text>
                             </Flex>
                         )}
 
@@ -361,7 +364,7 @@ function Quests() {
                         {isQuestComplete() && (
                             <Flex alignItems="center">
                                 <CheckIcon boxSize={4} color="white.500" />
-                                <Text ml={2}>Finished</Text>
+                                <Text ml={3}>Finished</Text>
                             </Flex>
                         )}
                     </Box>
@@ -476,7 +479,7 @@ function Quests() {
                                 Vision
                             </Text>
 
-                            <Flex mt={2}>
+                            <Flex mt={3.5}>
                                 <ActionButton colorScheme="lore">
                                     <Flex alignItems="center">
                                         <AiOutlineEye fontSize="18px" />

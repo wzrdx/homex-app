@@ -12,9 +12,9 @@ import Ticket from '../assets/ticket.jpg';
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 
-const BASE_DURATION = 4;
-const BASE_COST = 10;
-export const QUEST_DURATION_INTERVAL = 'minutes';
+const BASE_DURATION = 1;
+const BASE_COST = 1;
+export const QUEST_DURATION_INTERVAL = 'minute';
 
 const QUEST_IMAGES = [Quest_1, Quest_2, Quest_3, Quest_4, Quest_5, Quest_6, Quest_7, Quest_8, Quest_9];
 
@@ -229,11 +229,11 @@ export const QUESTS: any[] = [
             gems: 4 * BASE_COST,
             essence: (2 * BASE_COST) / 10,
         },
-        duration: 60,
+        duration: 8 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',
-                name: 'Home X Ticket',
+                name: 'Ticket',
                 value: 1,
             },
         ],
@@ -259,7 +259,21 @@ export const meetsRequirements = (resources: { [x: string]: number }, questId: n
 };
 
 export interface QuestsContextType {
-    quest: any;
+    quest: {
+        id: number;
+        type: string;
+        name: string;
+        description: JSX.Element;
+        requirements: {
+            energy: number;
+        };
+        duration: number;
+        rewards: Array<{
+            resource: string;
+            name: string;
+            value: number;
+        }>;
+    };
     setQuest: React.Dispatch<any>;
 }
 

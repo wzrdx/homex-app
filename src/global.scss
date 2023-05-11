@@ -85,7 +85,7 @@ body {
     }
 
     .dapp-core-component__transactionToast-styles__close {
-        color: #fff;
+        color: #fff !important;
     }
 }
 
@@ -100,6 +100,11 @@ body {
     font-family: 'IBM Plex Mono', monospace !important;
     font-size: 14px;
     font-weight: 600;
+    background-color: #191919 !important;
+
+    .dapp-core-component__customToast-styles__close {
+        color: #fff !important;
+    }
 }
 
 .dapp-custom-toast {
@@ -107,6 +112,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem 0.5rem !important;
+    background-color: #191919 !important;
 
     h5 {
         font-size: 1.15rem;
@@ -118,6 +124,10 @@ body {
         .dapp-core-component__transactionToast-styles__left
         .dapp-core-component__transactionToast-styles__icon {
         background: pink;
+    }
+
+    .dapp-core-component__customToast-styles__close {
+        color: #fff !important;
     }
 }
 

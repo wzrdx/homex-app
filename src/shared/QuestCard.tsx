@@ -3,9 +3,9 @@ import { getBackgroundStyle } from '../services/helpers';
 import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useEffect, useState } from 'react';
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes, differenceInSeconds } from 'date-fns';
 
-const REFRESH_TIME = 60000;
+const REFRESH_TIME = 1000;
 
 function QuestCard({ quest, isActive, callback, timestamp }) {
     const [widths, setWidths] = useState<[string, string]>(['0%', '100%']);
@@ -23,7 +23,7 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                 setWidths(getOverlayWidths());
             }, REFRESH_TIME);
         } else {
-            console.log('QuestCard', quest.id, 'resetting widths');
+            // console.log('QuestCard', quest.id, 'resetting widths');
             setWidths(['0%', '100%']);
         }
 
@@ -33,10 +33,10 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
     }, [timestamp]);
 
     const getOverlayWidths = (): [string, string] => {
-        const remainingMinutes = differenceInMinutes(timestamp, new Date());
-        const durationInMinutes = quest.duration * 60;
+        const remainingSeconds = differenceInSeconds(timestamp, new Date());
+        const durationInSeconds = quest.duration * 60;
 
-        const remainingPercentage = Math.max(0, (remainingMinutes * 100) / durationInMinutes);
+        const remainingPercentage = Math.max(0, (remainingSeconds * 100) / durationInSeconds);
         const elapsedPercentage = 100 - remainingPercentage;
 
         return [`${elapsedPercentage}%`, `${remainingPercentage}%`];
@@ -74,13 +74,13 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
                     {/* Blurred rectangle */}
                     <Box
                         position="absolute"
-                        top={0}
-                        right={-2}
-                        bottom={0}
-                        left={-2}
+                        top="7px"
+                        right={-1}
+                        bottom={'2px'}
+                        left={-1}
                         background="black"
-                        filter="blur(9px)"
-                        opacity="0.15"
+                        filter="blur(5px)"
+                        opacity="0.2"
                     ></Box>
                 </Box>
 

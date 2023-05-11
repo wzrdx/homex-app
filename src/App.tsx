@@ -1,9 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ChakraBaseProvider } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
-import { apiTimeout, API_URL, walletConnectV2ProjectId } from './blockchain/config';
 import { AuthenticationProvider } from './services/authentication';
 import { TransactionsToastList, NotificationModal, SignTransactionsModals } from '@multiversx/sdk-dapp/UI';
 import { theme } from './theme';
@@ -24,7 +21,7 @@ function App() {
     return (
         <ChakraBaseProvider theme={theme}>
             <ResourcesProvider>
-                <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
+                <TransactionsToastList successfulToastLifetime={20000} transactionToastClassName="Tx-Toast" />
                 <NotificationModal />
                 <SignTransactionsModals className="Sign-Tx-Modal" />
 

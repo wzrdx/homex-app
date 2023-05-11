@@ -7,6 +7,8 @@ import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { isAfter } from 'date-fns';
 import { QuestInfo, QuestStatus } from '../types';
 
+// TODO: Deprecated
+
 const resultsParser = new ResultsParser();
 
 export const useGetQuestInfo = () => {
