@@ -8,9 +8,9 @@ import Quest_6 from '../assets/quests/6.jpg';
 import Quest_7 from '../assets/quests/7.jpg';
 import Quest_8 from '../assets/quests/8.jpg';
 import Quest_9 from '../assets/quests/9.jpg';
-import Ticket from '../assets/ticket.jpg';
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
+import { Quest } from '../shared/types';
 
 const BASE_DURATION = 1;
 const BASE_COST = 1;
@@ -259,22 +259,8 @@ export const meetsRequirements = (resources: { [x: string]: number }, questId: n
 };
 
 export interface QuestsContextType {
-    quest: {
-        id: number;
-        type: string;
-        name: string;
-        description: JSX.Element;
-        requirements: {
-            energy: number;
-        };
-        duration: number;
-        rewards: Array<{
-            resource: string;
-            name: string;
-            value: number;
-        }>;
-    };
-    setQuest: React.Dispatch<any>;
+    quest: Quest;
+    setQuest: React.Dispatch<Quest>;
 }
 
 const QuestsContext = createContext<QuestsContextType | null>(null);
@@ -282,6 +268,6 @@ const QuestsContext = createContext<QuestsContextType | null>(null);
 export const useQuestsContext = () => useContext(QuestsContext);
 
 export const QuestsProvider = ({ children }) => {
-    const [quest, setQuest] = useState(getQuest());
+    const [quest, setQuest] = useState<Quest>(getQuest());
     return <QuestsContext.Provider value={{ quest, setQuest }}>{children}</QuestsContext.Provider>;
 };

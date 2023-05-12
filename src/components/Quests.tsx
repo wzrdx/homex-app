@@ -34,6 +34,12 @@ import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
 
+const LARGE_FRAME_SIZE = 315;
+const LARGE_IMAGE_SIZE = 420;
+
+const MEDIUM_FRAME_SIZE = 246;
+const MEDIUM_IMAGE_SIZE = 328;
+
 function Quests() {
     const navigate = useNavigate();
     const { address } = useGetAccountInfo();
@@ -267,14 +273,13 @@ function Quests() {
 
             {/* Quest requirements */}
             <Flex flex={7} justifyContent="center">
-                <Flex pb={4} flexDir="column" justifyContent="center" alignItems="center">
+                <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
                     <Flex
                         justifyContent="center"
                         alignItems="center"
                         position="relative"
-                        width="400px"
-                        height="400px"
-                        mb={7}
+                        width={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
+                        height={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
                     >
                         <Flex
                             justifyContent="center"
@@ -285,21 +290,26 @@ function Quests() {
                             bottom={0}
                             left={0}
                         >
-                            <Image src={Frame} alt="Frame" zIndex={3} width="300px" />
+                            <Image
+                                src={Frame}
+                                alt="Frame"
+                                zIndex={3}
+                                width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
+                            />
                         </Flex>
 
                         <Image
                             src={getQuestImage(currentQuest.id)}
                             alt="Quest-Image"
                             zIndex={2}
-                            width="400px"
+                            width={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
                             clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
                         />
                     </Flex>
 
-                    <Flex mb={7}>
+                    <Flex my={{ md: 5, lg: 8 }}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
-                            <Flex key={resource} width="102px" justifyContent="center">
+                            <Flex key={resource} width={{ md: '86px', lg: '102px' }} justifyContent="center">
                                 <Requirement
                                     elements={getResourceElements(resource)}
                                     valueRequired={currentQuest.requirements[resource]}
@@ -340,7 +350,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="white.500" />
-                                <Text ml={3}>
+                                <Text ml={2}>
                                     {`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}${
                                         currentQuest.duration > 1 ? 's' : ''
                                     }`}
@@ -364,7 +374,7 @@ function Quests() {
                         {isQuestComplete() && (
                             <Flex alignItems="center">
                                 <CheckIcon boxSize={4} color="white.500" />
-                                <Text ml={3}>Finished</Text>
+                                <Text ml={2}>Finished</Text>
                             </Flex>
                         )}
                     </Box>
@@ -388,7 +398,7 @@ function Quests() {
                         <Box>
                             {currentQuest.rewards.map((reward: { resource: string }, index: number) => (
                                 <Box key={index}>
-                                    <Image width="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                                    <Image height="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
                                 </Box>
                             ))}
                         </Box>

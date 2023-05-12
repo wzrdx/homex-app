@@ -13,12 +13,19 @@ const colors = {
         lightgray: '#8e9e9e',
         gold: '#f4d091',
     },
+    almostWhite: 'gainsboro',
 };
 
+// const fonts = {
+//     body: 'IBM Plex Mono, monospace',
+//     heading: 'IBM Plex Mono, monospace',
+//     mono: 'IBM Plex Mono, monospace',
+// };
+
 const fonts = {
-    body: 'IBM Plex Mono, monospace',
-    heading: 'IBM Plex Mono, monospace',
-    mono: 'IBM Plex Mono, monospace',
+    body: "'Space Grotesk', sans-serif",
+    heading: "'Space Grotesk', sans-serif",
+    mono: "'Space Grotesk', sans-serif",
 };
 
 const styles = {
@@ -56,8 +63,8 @@ const breakpoints = {
     sm: '696px',
     md: '960px',
     lg: '1736px',
-    xl: '1900px',
-    '2xl': '2136px',
+    xl: '2026px',
+    '2xl': '2436px',
 };
 
 export const theme = extendTheme({

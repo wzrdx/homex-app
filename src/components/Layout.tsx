@@ -30,12 +30,11 @@ function Layout() {
                 {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
                 <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
-                    {/* height={{ base: '18%', lg: '15%' }} */}
-                    <Box height="18%">
+                    <Box height={{ md: '18%', lg: '15%' }}>
                         <Header />
                     </Box>
 
-                    <Box height="82%" layerStyle="layout" margin="0 auto" py={14}>
+                    <Box height={{ md: '82%', lg: '85%' }} layerStyle="layout" margin="0 auto" py={{ md: 8, lg: 12 }}>
                         <Outlet />
                     </Box>
                 </Flex>

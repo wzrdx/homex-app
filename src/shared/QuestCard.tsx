@@ -2,12 +2,22 @@ import { Flex, Box, Text, Image } from '@chakra-ui/react';
 import { getBackgroundStyle } from '../services/helpers';
 import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
-import { useEffect, useState } from 'react';
-import { differenceInMinutes, differenceInSeconds } from 'date-fns';
+import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
+import { differenceInSeconds } from 'date-fns';
+import { first } from 'lodash';
+import { Quest, QuestReward } from './types';
+import { TimeIcon } from '@chakra-ui/icons';
 
 const REFRESH_TIME = 1000;
 
-function QuestCard({ quest, isActive, callback, timestamp }) {
+export const QuestCard: FunctionComponent<
+    PropsWithChildren<{
+        quest: Quest;
+        isActive: boolean;
+        callback: (arg0: number) => void;
+        timestamp?: Date;
+    }>
+> = ({ quest, isActive, callback, timestamp }) => {
     const [widths, setWidths] = useState<[string, string]>(['0%', '100%']);
 
     // On timestamp change
@@ -33,7 +43,7 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
     }, [timestamp]);
 
     const getOverlayWidths = (): [string, string] => {
-        const remainingSeconds = differenceInSeconds(timestamp, new Date());
+        const remainingSeconds = differenceInSeconds(timestamp as Date, new Date());
         const durationInSeconds = quest.duration * 60;
 
         const remainingPercentage = Math.max(0, (remainingSeconds * 100) / durationInSeconds);
@@ -42,14 +52,19 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
         return [`${elapsedPercentage}%`, `${remainingPercentage}%`];
     };
 
+    const isQuestOngoing = (): boolean => !!timestamp && differenceInSeconds(timestamp, new Date()) > 0;
+
     return (
         <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
             <Box mr={8}>
-                {quest.rewards.map((reward: { resource: string }, index: number) => (
-                    <Box key={index}>
-                        <Image width="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
-                    </Box>
-                ))}
+                {isQuestOngoing() ? (
+                    <TimeIcon mr="0.5rem" boxSize="28px" color="almostWhite" />
+                ) : (
+                    <Image
+                        width="28px"
+                        src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon}
+                    />
+                )}
             </Box>
 
             <Flex
@@ -103,6 +118,6 @@ function QuestCard({ quest, isActive, callback, timestamp }) {
             </Flex>
         </Flex>
     );
-}
+};
 
 export default QuestCard;

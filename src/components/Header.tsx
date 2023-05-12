@@ -79,7 +79,7 @@ function Header() {
             {/* Main header */}
             <Flex flex={1} position="relative" background="#00000070">
                 {/* Routes */}
-                <Flex pt={4} width="100%" justifyContent="center" alignItems="flex-end">
+                <Flex pt={{ md: 4, lg: 5 }} width="100%" justifyContent="center" alignItems="flex-end">
                     <Flex position="relative">
                         {routes.map((route: string, index: number) => (
                             <Flex
@@ -106,8 +106,8 @@ function Header() {
                                     <Text
                                         textTransform="capitalize"
                                         color="header.gray"
-                                        fontSize="20px"
-                                        lineHeight="20px"
+                                        fontSize={{ md: '18px', lg: '20px ' }}
+                                        lineHeight={{ md: '18px', lg: '20px ' }}
                                         transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                         pt={3}
                                         pb={4}

@@ -12,7 +12,7 @@ import GemsImage from '../assets/resources/images/gems.jpg';
 import EssenceImage from '../assets/resources/images/essence.jpg';
 
 import TicketsIcon from '../assets/resources/icons/tickets.png';
-import TicketsImage from '../assets/ticket.jpg';
+import TicketsImage from '../assets/ticket_pattern.jpg';
 
 import {
     API_URL,

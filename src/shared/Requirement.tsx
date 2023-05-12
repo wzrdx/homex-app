@@ -13,11 +13,22 @@ function Requirement({ elements, valueRequired, value }: RequirementProps) {
     return (
         <Flex flexDir="column" justifyContent="center" alignItems="center">
             <Flex position="relative" justifyContent="center" alignItems="center" mb={2}>
-                <Image position="relative" zIndex={3} width={SIZE} src={elements.icon} alt="Resource" />
+                <Image
+                    position="relative"
+                    zIndex={3}
+                    width={{ md: calc(SIZE).subtract('10px').toString(), lg: SIZE }}
+                    src={elements.icon}
+                    alt="Resource"
+                />
 
                 {/* Background */}
                 <Box zIndex={2} position="absolute" top={0} right={0} bottom={0} left={0}>
-                    <Box width={SIZE} height={SIZE} borderRadius="50%" backgroundColor="black"></Box>
+                    <Box
+                        width={{ md: calc(SIZE).subtract('10px').toString(), lg: SIZE }}
+                        height={{ md: calc(SIZE).subtract('10px').toString(), lg: SIZE }}
+                        borderRadius="50%"
+                        backgroundColor="black"
+                    ></Box>
                 </Box>
             </Flex>
 
