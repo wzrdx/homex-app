@@ -23,6 +23,8 @@ function Header() {
     const [routes, setRoutes] = useState<Array<string>>([]);
     const [offset, setOffset] = useState<number>(0);
 
+    const size = useWindowSize();
+
     // Init
     useEffect(() => {
         setRoutes(serviceRoutes.slice(-3).map((route) => route.path));
@@ -46,12 +48,38 @@ function Header() {
 
     const getCssPxValue = (value: number): string => `${value}px`;
 
+    function useWindowSize() {
+        // Initialize state with undefined width/height so server and client renders match
+        // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+        const [windowSize, setWindowSize] = useState({
+            width: 0,
+            height: 0,
+        });
+        useEffect(() => {
+            // Handler to call on window resize
+            function handleResize() {
+                // Set window width/height to state
+                setWindowSize({
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                });
+            }
+            // Add event listener
+            window.addEventListener('resize', handleResize);
+            // Call handler right away so state gets updated with initial window size
+            handleResize();
+            // Remove event listener on cleanup
+            return () => window.removeEventListener('resize', handleResize);
+        }, []); // Empty array ensures that effect is only run on mount
+        return windowSize;
+    }
+
     return (
         <Flex flexDir="column">
             {/* Main header */}
             <Flex flex={1} position="relative" background="#00000070">
                 {/* Routes */}
-                <Flex width="100%" justifyContent="center" alignItems="flex-end">
+                <Flex pt={4} width="100%" justifyContent="center" alignItems="flex-end">
                     <Flex position="relative">
                         {routes.map((route: string, index: number) => (
                             <Flex
@@ -202,82 +230,87 @@ function Header() {
 
                         {/* TODO: Debug */}
                         <Box
-                            visibility={{
-                                base: 'visible',
-                                sm: 'hidden',
-                                md: 'hidden',
-                                lg: 'hidden',
-                                xl: 'hidden',
-                                '2xl': 'hidden',
+                            display={{
+                                base: 'block',
+                                sm: 'none',
+                                md: 'none',
+                                lg: 'none',
+                                xl: 'none',
+                                '2xl': 'none',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"Base"' }} ml={6}></Text>
                         </Box>
 
                         <Box
-                            visibility={{
-                                base: 'hidden',
-                                sm: 'visible',
-                                md: 'hidden',
-                                lg: 'hidden',
-                                xl: 'hidden',
-                                '2xl': 'hidden',
+                            display={{
+                                base: 'none',
+                                sm: 'block',
+                                md: 'none',
+                                lg: 'none',
+                                xl: 'none',
+                                '2xl': 'none',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"Small"' }} ml={6}></Text>
                         </Box>
 
                         <Box
-                            visibility={{
-                                base: 'hidden',
-                                sm: 'hidden',
-                                md: 'visible',
-                                lg: 'hidden',
-                                xl: 'hidden',
-                                '2xl': 'hidden',
+                            display={{
+                                base: 'none',
+                                sm: 'none',
+                                md: 'block',
+                                lg: 'none',
+                                xl: 'none',
+                                '2xl': 'none',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"Medium"' }} ml={6}></Text>
                         </Box>
 
                         <Box
-                            visibility={{
-                                base: 'hidden',
-                                sm: 'hidden',
-                                md: 'hidden',
-                                lg: 'visible',
-                                xl: 'hidden',
-                                '2xl': 'hidden',
+                            display={{
+                                base: 'none',
+                                sm: 'none',
+                                md: 'none',
+                                lg: 'block',
+                                xl: 'none',
+                                '2xl': 'none',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"Large"' }} ml={6}></Text>
                         </Box>
 
                         <Box
-                            visibility={{
-                                base: 'hidden',
-                                sm: 'hidden',
-                                md: 'hidden',
-                                lg: 'hidden',
-                                xl: 'visible',
-                                '2xl': 'hidden',
+                            display={{
+                                base: 'none',
+                                sm: 'none',
+                                md: 'none',
+                                lg: 'none',
+                                xl: 'block',
+                                '2xl': 'none',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"XL"' }} ml={6}></Text>
                         </Box>
 
                         <Box
-                            visibility={{
-                                base: 'hidden',
-                                sm: 'hidden',
-                                md: 'hidden',
-                                lg: 'hidden',
-                                xl: 'hidden',
-                                '2xl': 'visible',
+                            display={{
+                                base: 'none',
+                                sm: 'none',
+                                md: 'none',
+                                lg: 'none',
+                                xl: 'none',
+                                '2xl': 'block',
                             }}
                         >
                             <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
                         </Box>
+
+                        {/* Size */}
+                        <Text layerStyle="responsive" ml={2}>
+                            {size.width}px / {size.height}px
+                        </Text>
                     </Flex>
                 </Flex>
             </Flex>

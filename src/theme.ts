@@ -55,7 +55,7 @@ const layerStyles = {
 const breakpoints = {
     sm: '696px',
     md: '960px',
-    lg: '1536px',
+    lg: '1736px',
     xl: '1900px',
     '2xl': '2136px',
 };
