@@ -9,17 +9,19 @@ import Midjourney from '../assets/backgrounds/Midjourney_2.jpg';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
 
-function Main() {
+function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
 
-    // Initialize resources
+    // Init
     useEffect(() => {
         getEnergy();
         getHerbs();
         getGems();
         getEssence();
         getTickets();
+
+        console.log(window.innerWidth);
     }, []);
 
     return (
@@ -28,9 +30,12 @@ function Main() {
                 {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
                 <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
-                    <Header />
+                    {/* height={{ base: '18%', lg: '15%' }} */}
+                    <Box>
+                        <Header />
+                    </Box>
 
-                    <Box layerStyle="layout" height="85%" margin="0 auto" py={14}>
+                    <Box layerStyle="layout" margin="0 auto" py={14}>
                         <Outlet />
                     </Box>
                 </Flex>
@@ -39,4 +44,4 @@ function Main() {
     );
 }
 
-export default Main;
+export default Layout;

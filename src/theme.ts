@@ -44,6 +44,20 @@ const layerStyles = {
         textAlign: 'justify',
         fontSize: '15px',
     },
+    responsive: {
+        background: 'orangered',
+        color: 'whitesmoke',
+        zIndex: 5,
+        px: 1,
+    },
+};
+
+const breakpoints = {
+    sm: '696px',
+    md: '960px',
+    lg: '1536px',
+    xl: '1900px',
+    '2xl': '2136px',
 };
 
 export const theme = extendTheme({
@@ -51,4 +65,5 @@ export const theme = extendTheme({
     fonts,
     styles,
     layerStyles,
+    breakpoints,
 });

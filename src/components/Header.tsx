@@ -47,7 +47,7 @@ function Header() {
     const getCssPxValue = (value: number): string => `${value}px`;
 
     return (
-        <Flex height="15%" flexDir="column">
+        <Flex flexDir="column">
             {/* Main header */}
             <Flex flex={1} position="relative" background="#00000070">
                 {/* Routes */}
@@ -193,13 +193,92 @@ function Header() {
                     pointerEvents="none"
                     margin="0 auto"
                 >
-                    <Box>
+                    <Flex alignItems="center">
                         <Resource
                             imageSrc={RESOURCE_ELEMENTS['tickets'].icon}
                             value={resources.tickets}
                             height="46px"
                         />
-                    </Box>
+
+                        {/* TODO: Debug */}
+                        <Box
+                            visibility={{
+                                base: 'visible',
+                                sm: 'hidden',
+                                md: 'hidden',
+                                lg: 'hidden',
+                                xl: 'hidden',
+                                '2xl': 'hidden',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"Base"' }} ml={6}></Text>
+                        </Box>
+
+                        <Box
+                            visibility={{
+                                base: 'hidden',
+                                sm: 'visible',
+                                md: 'hidden',
+                                lg: 'hidden',
+                                xl: 'hidden',
+                                '2xl': 'hidden',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"Small"' }} ml={6}></Text>
+                        </Box>
+
+                        <Box
+                            visibility={{
+                                base: 'hidden',
+                                sm: 'hidden',
+                                md: 'visible',
+                                lg: 'hidden',
+                                xl: 'hidden',
+                                '2xl': 'hidden',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"Medium"' }} ml={6}></Text>
+                        </Box>
+
+                        <Box
+                            visibility={{
+                                base: 'hidden',
+                                sm: 'hidden',
+                                md: 'hidden',
+                                lg: 'visible',
+                                xl: 'hidden',
+                                '2xl': 'hidden',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"Large"' }} ml={6}></Text>
+                        </Box>
+
+                        <Box
+                            visibility={{
+                                base: 'hidden',
+                                sm: 'hidden',
+                                md: 'hidden',
+                                lg: 'hidden',
+                                xl: 'visible',
+                                '2xl': 'hidden',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"XL"' }} ml={6}></Text>
+                        </Box>
+
+                        <Box
+                            visibility={{
+                                base: 'hidden',
+                                sm: 'hidden',
+                                md: 'hidden',
+                                lg: 'hidden',
+                                xl: 'hidden',
+                                '2xl': 'visible',
+                            }}
+                        >
+                            <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
+                        </Box>
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>
