@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Flex,
+    Image,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    Text,
+    useDisclosure,
+} from '@chakra-ui/react';
 import _, { find, findIndex, includes } from 'lodash';
 import {
     QUESTS,
@@ -11,6 +23,7 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Frame from '../assets/frame.png';
+import Vision from '../assets/vision.jpg';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -33,6 +46,7 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
+import { getBackgroundStyle } from '../services/helpers';
 
 const LARGE_FRAME_SIZE = 315;
 const LARGE_IMAGE_SIZE = 420;
@@ -42,6 +56,8 @@ const MEDIUM_IMAGE_SIZE = 328;
 
 function Quests() {
     const navigate = useNavigate();
+    const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
+
     const { address } = useGetAccountInfo();
 
     const { playSound } = useSoundsContext() as SoundsContextType;
@@ -112,11 +128,13 @@ function Quests() {
 
         const user = new Address(address);
 
+        const requiredResources: string[] = Object.keys(currentQuest.requirements);
+
         try {
             const tx = smartContract.methods
                 .startQuest([currentQuest.id])
                 .withMultiESDTNFTTransfer(
-                    Object.keys(currentQuest.requirements).map((resource) =>
+                    requiredResources.map((resource) =>
                         TokenTransfer.fungibleFromAmount(
                             RESOURCE_ELEMENTS[resource].tokenId,
                             currentQuest.requirements[resource],
@@ -126,7 +144,7 @@ function Quests() {
                 )
                 .withSender(user)
                 .withChainID('D')
-                .withGasLimit(9000000)
+                .withGasLimit(4000000 + requiredResources.length * 1000000)
                 .buildTransaction();
 
             console.log(tx.getData().toString());
@@ -387,7 +405,7 @@ function Quests() {
                     <Flex justifyContent="space-between" alignItems="flex-end">
                         <Text
                             fontSize="20px"
-                            lineHeight="20px"
+                            lineHeight="22px"
                             fontWeight={600}
                             letterSpacing="0.5px"
                             color="header.gold"
@@ -490,7 +508,13 @@ function Quests() {
                             </Text>
 
                             <Flex mt={3.5}>
-                                <ActionButton colorScheme="lore">
+                                <ActionButton
+                                    colorScheme="lore"
+                                    onClick={() => {
+                                        playSound('mystery');
+                                        onVisionOpen();
+                                    }}
+                                >
                                     <Flex alignItems="center">
                                         <AiOutlineEye fontSize="18px" />
                                         <Text ml="1">Story</Text>
@@ -501,6 +525,21 @@ function Quests() {
                     )}
                 </Flex>
             </Flex>
+
+            {/* Vision */}
+            <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalBody style={getBackgroundStyle(Vision)}>
+                        <Box position="absolute" bottom="16px" right="24px">
+                            <Button onClick={onVisionClose} colorScheme="red">
+                                Close
+                            </Button>
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }

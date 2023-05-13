@@ -1,4 +1,15 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Flex,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    Text,
+    useDisclosure,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -15,6 +26,8 @@ const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
 
 function Header() {
+    const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
+
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
 
@@ -82,13 +95,7 @@ function Header() {
                 <Flex pt={{ md: 4, lg: 5 }} width="100%" justifyContent="center" alignItems="flex-end">
                     <Flex position="relative">
                         {routes.map((route: string, index: number) => (
-                            <Flex
-                                onClick={() => onRouteClick(index)}
-                                key={index}
-                                flexDir="column"
-                                alignItems="center"
-                                width={getCssPxValue(ROUTE_WIDTH)}
-                            >
+                            <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
                                     visibility={HIGHLIGHTED_ROUTES.includes(index) ? 'visible' : 'hidden'}
                                     borderWidth="2px"
@@ -102,7 +109,13 @@ function Header() {
                                     </Box>
                                 </Box>
 
-                                <NavLink to={route} onClick={() => playSound('navigate')}>
+                                <NavLink
+                                    to={route}
+                                    onClick={() => {
+                                        onRouteClick(index);
+                                        playSound('navigate');
+                                    }}
+                                >
                                     <Text
                                         textTransform="capitalize"
                                         color="header.gray"
@@ -111,6 +124,7 @@ function Header() {
                                         transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                         pt={3}
                                         pb={4}
+                                        px={3}
                                         cursor="pointer"
                                         _hover={{ color: '#e3e3e3' }}
                                     >
@@ -173,10 +187,14 @@ function Header() {
                             alignItems="center"
                             padding="7px 16px"
                             borderRadius="9999px"
-                            backgroundColor="#7c2d1250"
+                            backgroundColor="#7c2d1260"
                             cursor="pointer"
-                            transition="all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#7c2d1280' }}
+                            transition="all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                            _hover={{ backgroundColor: '#7c2d1298' }}
+                            onClick={() => {
+                                playSound('mystery');
+                                onGameplayOpen();
+                            }}
                         >
                             <TbBook fontSize="20px" color="rgb(249 115 22)" />
                             <Text ml={2} color="white">
@@ -314,6 +332,21 @@ function Header() {
                     </Flex>
                 </Flex>
             </Flex>
+
+            {/* Gameplay */}
+            <Modal size="full" onClose={onGameplayClose} isOpen={isGameplayOpen}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalBody backgroundColor="gainsboro">
+                        <Box position="absolute" bottom="16px" right="24px">
+                            <Button onClick={onGameplayClose} colorScheme="red">
+                                Close
+                            </Button>
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }

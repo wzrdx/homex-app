@@ -16,12 +16,6 @@ const colors = {
     almostWhite: 'gainsboro',
 };
 
-// const fonts = {
-//     body: 'IBM Plex Mono, monospace',
-//     heading: 'IBM Plex Mono, monospace',
-//     mono: 'IBM Plex Mono, monospace',
-// };
-
 const fonts = {
     body: "'Space Grotesk', sans-serif",
     heading: "'Space Grotesk', sans-serif",

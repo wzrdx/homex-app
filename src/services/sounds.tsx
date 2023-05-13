@@ -65,8 +65,8 @@ export const SoundsProvider = ({ children }) => {
         volume,
     });
 
-    const goToQuests = new Howl({
-        src: ['/go_to.mp3'],
+    const mystery = new Howl({
+        src: ['/mystery.mp3'],
         volume,
     });
 
@@ -119,8 +119,8 @@ export const SoundsProvider = ({ children }) => {
                 click.play();
                 break;
 
-            case 'go_to_quests':
-                goToQuests.play();
+            case 'mystery':
+                mystery.play();
                 break;
 
             case 'raffle':
