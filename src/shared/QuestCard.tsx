@@ -101,10 +101,10 @@ export const QuestCard: FunctionComponent<
 
                 {/* Overlay */}
                 <Flex position="absolute" top={0} right={0} bottom={0} left={0}>
-                    <Box width={widths[0]} transition="all 1s ease-in"></Box>
+                    <Box width={widths[0]} transition="all 0.25s ease-in"></Box>
                     <Box
                         width={widths[1]}
-                        transition="all 1s ease-in"
+                        transition="all 0.25s ease-in"
                         backdropFilter="grayscale(1) brightness(0.75) contrast(1.15)"
                     ></Box>
                 </Flex>

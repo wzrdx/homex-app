@@ -23,6 +23,8 @@ import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '..
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 
+const DEBUG = false;
+
 const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
 
@@ -247,89 +249,93 @@ function Header() {
                             height="46px"
                         />
 
-                        {/* TODO: Debug */}
-                        <Box
-                            display={{
-                                base: 'block',
-                                sm: 'none',
-                                md: 'none',
-                                lg: 'none',
-                                xl: 'none',
-                                '2xl': 'none',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"Base"' }} ml={6}></Text>
-                        </Box>
+                        {!!DEBUG && (
+                            <Flex alignItems="center">
+                                {/* TODO: Debug */}
+                                <Box
+                                    display={{
+                                        base: 'block',
+                                        sm: 'none',
+                                        md: 'none',
+                                        lg: 'none',
+                                        xl: 'none',
+                                        '2xl': 'none',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"Base"' }} ml={6}></Text>
+                                </Box>
 
-                        <Box
-                            display={{
-                                base: 'none',
-                                sm: 'block',
-                                md: 'none',
-                                lg: 'none',
-                                xl: 'none',
-                                '2xl': 'none',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"Small"' }} ml={6}></Text>
-                        </Box>
+                                <Box
+                                    display={{
+                                        base: 'none',
+                                        sm: 'block',
+                                        md: 'none',
+                                        lg: 'none',
+                                        xl: 'none',
+                                        '2xl': 'none',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"Small"' }} ml={6}></Text>
+                                </Box>
 
-                        <Box
-                            display={{
-                                base: 'none',
-                                sm: 'none',
-                                md: 'block',
-                                lg: 'none',
-                                xl: 'none',
-                                '2xl': 'none',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"Medium"' }} ml={6}></Text>
-                        </Box>
+                                <Box
+                                    display={{
+                                        base: 'none',
+                                        sm: 'none',
+                                        md: 'block',
+                                        lg: 'none',
+                                        xl: 'none',
+                                        '2xl': 'none',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"Medium"' }} ml={6}></Text>
+                                </Box>
 
-                        <Box
-                            display={{
-                                base: 'none',
-                                sm: 'none',
-                                md: 'none',
-                                lg: 'block',
-                                xl: 'none',
-                                '2xl': 'none',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"Large"' }} ml={6}></Text>
-                        </Box>
+                                <Box
+                                    display={{
+                                        base: 'none',
+                                        sm: 'none',
+                                        md: 'none',
+                                        lg: 'block',
+                                        xl: 'none',
+                                        '2xl': 'none',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"Large"' }} ml={6}></Text>
+                                </Box>
 
-                        <Box
-                            display={{
-                                base: 'none',
-                                sm: 'none',
-                                md: 'none',
-                                lg: 'none',
-                                xl: 'block',
-                                '2xl': 'none',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"XL"' }} ml={6}></Text>
-                        </Box>
+                                <Box
+                                    display={{
+                                        base: 'none',
+                                        sm: 'none',
+                                        md: 'none',
+                                        lg: 'none',
+                                        xl: 'block',
+                                        '2xl': 'none',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"XL"' }} ml={6}></Text>
+                                </Box>
 
-                        <Box
-                            display={{
-                                base: 'none',
-                                sm: 'none',
-                                md: 'none',
-                                lg: 'none',
-                                xl: 'none',
-                                '2xl': 'block',
-                            }}
-                        >
-                            <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
-                        </Box>
+                                <Box
+                                    display={{
+                                        base: 'none',
+                                        sm: 'none',
+                                        md: 'none',
+                                        lg: 'none',
+                                        xl: 'none',
+                                        '2xl': 'block',
+                                    }}
+                                >
+                                    <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
+                                </Box>
 
-                        {/* Size */}
-                        <Text layerStyle="responsive" ml={2}>
-                            {size.width}px / {size.height}px
-                        </Text>
+                                {/* Size */}
+                                <Text layerStyle="responsive" ml={2}>
+                                    {size.width}px / {size.height}px
+                                </Text>
+                            </Flex>
+                        )}
                     </Flex>
                 </Flex>
             </Flex>

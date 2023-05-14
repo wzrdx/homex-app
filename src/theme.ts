@@ -15,7 +15,9 @@ const colors = {
     },
     almostWhite: 'gainsboro',
     dark: '#191919',
+    lightDark: '#212121',
     brightBlue: '#88ddff',
+    lightOrange: '#ee8b1c',
 };
 
 const fonts = {

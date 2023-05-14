@@ -49,8 +49,8 @@ import { isAfter, isBefore } from 'date-fns';
 import { getBackgroundStyle } from '../services/helpers';
 import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
 
-const LARGE_FRAME_SIZE = 345;
-const LARGE_IMAGE_SIZE = 460;
+const LARGE_FRAME_SIZE = 318;
+const LARGE_IMAGE_SIZE = 424;
 
 const MEDIUM_FRAME_SIZE = 246;
 const MEDIUM_IMAGE_SIZE = 328;
