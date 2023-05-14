@@ -15,7 +15,7 @@ function Wallet({ callback }: { callback?: () => void }) {
             <Box mr="0.6rem">
                 <IoWalletOutline color="whitesmoke" fontSize="18px" />
             </Box>
-            <Text color="whitesmoke" fontSize="14px">
+            <Text color="whitesmoke" fontSize="15px">
                 {getShortAddress(address)}
             </Text>
             <Link
