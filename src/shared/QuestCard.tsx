@@ -58,7 +58,7 @@ export const QuestCard: FunctionComponent<
         <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
             <Box mr={8}>
                 {isQuestOngoing() ? (
-                    <TimeIcon mr="0.5rem" boxSize="28px" color="almostWhite" />
+                    <TimeIcon boxSize="28px" color="almostWhite" />
                 ) : (
                     <Image
                         width="28px"
