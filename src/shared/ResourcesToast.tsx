@@ -45,8 +45,15 @@ function ResourcesToast({ title, rewards }) {
             <Flex mt={2} flexDir="column">
                 {map(questRewards, (reward) => (
                     <Flex _notLast={{ marginBottom: '0.125rem' }} alignItems="center" key={reward.resource}>
-                        <Image height="28px" mr={2.5} src={reward.icon} alt="Resource" />
-                        <Text style={{ color: reward.color }}>+{reward.value}</Text>
+                        <Image height="28px" mr={1.5} src={reward.icon} alt="Resource" />
+                        <Text fontSize="18px" style={{ color: reward.color }}>
+                            <Text as="span" mr={0.5}>
+                                +
+                            </Text>
+                            <Text as="span" fontWeight={600}>
+                                {reward.value}
+                            </Text>
+                        </Text>
                     </Flex>
                 ))}
             </Flex>

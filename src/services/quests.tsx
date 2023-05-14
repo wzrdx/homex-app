@@ -240,7 +240,7 @@ export const QUESTS: any[] = [
     },
 ];
 
-export const getQuest = (id = 1) => {
+export const getQuest = (id = 1): Quest => {
     return QUESTS.find((m) => m.id === id);
 };
 

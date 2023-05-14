@@ -26,6 +26,11 @@ function App() {
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { successfulTransactionsArray } = useGetSuccessfulTransactions();
 
+    // TODO: DEBUG
+    // useEffect(() => {
+    //     displayResourcesToast('Quest complete!', getQuest(1).rewards);
+    // }, []);
+
     useEffect(() => {
         removeTxs(
             map(failedTransactionsArray, (tx) => head(tx)),
@@ -52,7 +57,7 @@ function App() {
                 filter(txs, (tx: Transaction) => {
                     if (resolution === 'successful') {
                         if (tx.type === TransactionType.CompleteQuest) {
-                            console.log('Quest complete', tx.questId);
+                            console.log('Quest complete!', tx.questId);
                             const quest: Quest = getQuest(tx.questId);
                             displayResourcesToast('Quest complete', quest.rewards);
                         }
