@@ -21,6 +21,7 @@ import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
+import Gameplay from './Gameplay';
 
 const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
@@ -338,7 +339,9 @@ function Header() {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
-                    <ModalBody backgroundColor="gainsboro">
+                    <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
+                        <Gameplay />
+
                         <Box position="absolute" bottom="16px" right="24px">
                             <Button onClick={onGameplayClose} colorScheme="red">
                                 Close

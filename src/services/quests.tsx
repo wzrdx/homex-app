@@ -163,12 +163,12 @@ export const QUESTS: any[] = [
     {
         id: 7,
         type: 'essence',
-        name: 'Lost Mine',
+        name: 'The Lost Mine',
         description: (
             <Text layerStyle="questDescription">
-                You embark on a perilous quest to recover a forgotten artifact hidden in treacherous ruins. Overcoming
-                daunting obstacles and displaying unwavering resolve, you'll secure the long-lost relic and attain a
-                valuable essence as your reward.
+                You embark on a perilous quest to recover a forgotten artifact hidden in the treacherous ruins of an
+                abandoned mine. Overcoming daunting obstacles and displaying unwavering resolve, you'll secure the
+                long-lost relic and attain a valuable essence as your reward.
             </Text>
         ),
         requirements: {

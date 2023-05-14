@@ -14,6 +14,8 @@ const colors = {
         gold: '#f4d091',
     },
     almostWhite: 'gainsboro',
+    dark: '#191919',
+    brightBlue: '#88ddff',
 };
 
 const fonts = {

@@ -39,24 +39,28 @@ export const RESOURCE_ELEMENTS: any = {
         icon: EnergyIcon,
         image: EnergyImage,
         tokenId: ENERGY_TOKEN_ID,
+        color: '#287ece',
     },
     herbs: {
         name: 'Herbs',
         icon: HerbsIcon,
         image: HerbsImage,
         tokenId: HERBS_TOKEN_ID,
+        color: '#20b361',
     },
     gems: {
         name: 'Gems',
         icon: GemsIcon,
         image: GemsImage,
         tokenId: GEMS_TOKEN_ID,
+        color: '#e24e06',
     },
     essence: {
         name: 'Essence',
         icon: EssenceIcon,
         image: EssenceImage,
         tokenId: ESSENCE_TOKEN_ID,
+        color: '#cd3b95',
     },
     tickets: {
         name: 'Tickets',
