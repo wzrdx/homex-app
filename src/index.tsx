@@ -6,6 +6,7 @@ import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 import { apiTimeout, walletConnectV2ProjectId, API_URL } from './blockchain/config';
 import { TransactionsProvider } from './services/transactions';
+import { SoundsProvider } from './services/sounds';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -20,7 +21,9 @@ root.render(
             }}
         >
             <TransactionsProvider>
-                <App />
+                <SoundsProvider>
+                    <App />
+                </SoundsProvider>
             </TransactionsProvider>
         </DappProvider>
     </BrowserRouter>

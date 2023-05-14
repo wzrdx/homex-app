@@ -116,7 +116,6 @@ function Quests() {
 
     const startQuest = async () => {
         setStartButtonLoading(true);
-        playSound('start_quest');
 
         const user = new Address(address);
 
@@ -189,7 +188,6 @@ function Quests() {
         const user = new Address(address);
 
         setFinishButtonLoading(true);
-        playSound('complete_quest');
 
         try {
             const tx = smartContract.methods
