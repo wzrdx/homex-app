@@ -7,17 +7,9 @@ import { theme } from './theme';
 import { ProtectedRoute } from './shared/ProtectedRoute';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
-import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
-import { useEffect } from 'react';
 import { ResourcesProvider } from './services/resources';
 
 function App() {
-    const { isLoggedIn } = useGetLoginInfo();
-
-    useEffect(() => {
-        console.log('[App.tsx] isLoggedIn', isLoggedIn);
-    }, [isLoggedIn]);
-
     return (
         <ChakraBaseProvider theme={theme}>
             <ResourcesProvider>

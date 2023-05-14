@@ -35,11 +35,11 @@ const Unlock = () => {
         try {
             const address = await getAddress();
 
-            console.log('Logging in with address', address);
+            // console.log('Logging in with address', address);
 
             const { data } = await getTokenCount(address);
 
-            console.log(`User owns ${data} NFTs`);
+            // console.log(`User owns ${data} NFTs`);
 
             onAuthenticationResult(data > 0);
         } catch (err) {
@@ -50,8 +50,7 @@ const Unlock = () => {
 
     const onAuthenticationResult = (isSuccessful: boolean) => {
         if (isSuccessful) {
-            console.log('Authentication successful');
-            console.log('* User is logged in', isLoggedIn);
+            // console.log('* User is logged in', isLoggedIn);
             setAuthentication(true);
             setTimeout(() => navigate('/'), 250);
         } else {
@@ -64,7 +63,7 @@ const Unlock = () => {
         if (isLoggedIn) {
             checkAuthentication();
         } else {
-            console.log('User is not logged in');
+            // console.log('User is not logged in');
         }
     }, [isLoggedIn]);
 

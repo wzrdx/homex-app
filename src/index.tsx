@@ -1,10 +1,11 @@
+import './global.scss';
+import App from './App';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import './global.scss';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 import { apiTimeout, walletConnectV2ProjectId, API_URL } from './blockchain/config';
+import { TransactionsProvider } from './services/transactions';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -18,7 +19,9 @@ root.render(
                 apiAddress: API_URL,
             }}
         >
-            <App />
+            <TransactionsProvider>
+                <App />
+            </TransactionsProvider>
         </DappProvider>
     </BrowserRouter>
 );

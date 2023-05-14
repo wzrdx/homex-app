@@ -37,7 +37,7 @@ export const useGetOngoingQuests = () => {
                 timestamp: new Date(quest.end_timestamp.toNumber() * 1000),
             }));
 
-            console.log('getOngoingQuests', parsedArray);
+            // console.log('getOngoingQuests', parsedArray);
             setOngoingQuests(parsedArray);
         } catch (err) {
             console.error('Unable to call getOngoingQuests', err);

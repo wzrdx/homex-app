@@ -47,6 +47,7 @@ import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
 import { getBackgroundStyle } from '../services/helpers';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
 
 const LARGE_FRAME_SIZE = 315;
 const LARGE_IMAGE_SIZE = 420;
@@ -60,6 +61,7 @@ function Quests() {
 
     const { address } = useGetAccountInfo();
 
+    const { setTxs, isQuestTxPending } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
     const { resources, getEnergy, getHerbs, getGems, getEssence } = useResourcesContext() as ResourcesContextType;
@@ -82,12 +84,6 @@ function Quests() {
     useEffect(() => {
         getOngoingQuests();
     }, []);
-
-    // Current quest
-    useEffect(() => {
-        if (currentQuest) {
-        }
-    }, [currentQuest]);
 
     // Tx tracker
     useEffect(() => {
@@ -119,10 +115,6 @@ function Quests() {
     }, [successfulTransactionsArray]);
 
     const startQuest = async () => {
-        if (isStartButtonLoading || !meetsRequirements(resources, currentQuest.id)) {
-            return;
-        }
-
         setStartButtonLoading(true);
         playSound('start_quest');
 
@@ -161,7 +153,18 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
+            console.log('startQuest', sessionId);
+
             setStartButtonLoading(false);
+
+            setTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.StartQuest,
+                    questId: currentQuest.id,
+                },
+            ]);
 
             setPendingTxs((array) => [
                 ...array,
@@ -210,7 +213,18 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
+            console.log('completeQuest', sessionId);
+
             setFinishButtonLoading(false);
+
+            setTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.CompleteQuest,
+                    questId: currentQuest.id,
+                },
+            ]);
 
             setPendingTxs((array) => [
                 ...array,
@@ -341,7 +355,10 @@ function Quests() {
                         {/* Normal - The quest hasn't started */}
                         {isQuestDefault() && (
                             <ActionButton
-                                isLoading={false}
+                                isLoading={
+                                    isStartButtonLoading ||
+                                    isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
+                                }
                                 disabled={!meetsRequirements(resources, currentQuest.id)}
                                 onClick={startQuest}
                             >
@@ -358,7 +375,14 @@ function Quests() {
 
                         {/* Complete - A quest is completed and its rewards must be claimed */}
                         {isQuestComplete() && (
-                            <ActionButton isLoading={isFinishButtonLoading} colorScheme="green" onClick={completeQuest}>
+                            <ActionButton
+                                isLoading={
+                                    isFinishButtonLoading ||
+                                    isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
+                                }
+                                colorScheme="green"
+                                onClick={completeQuest}
+                            >
                                 <Text>Complete</Text>
                             </ActionButton>
                         )}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
 import { QuestsProvider } from '../services/quests';
-import { ResourcesContextType, ResourcesProvider, useResourcesContext } from '../services/resources';
+import { ResourcesContextType, useResourcesContext } from '../services/resources';
 import { SoundsProvider } from '../services/sounds';
 import Midjourney from '../assets/backgrounds/Midjourney_2.jpg';
 import LoadingScreen from './LoadingScreen';
@@ -20,8 +20,6 @@ function Layout() {
         getGems();
         getEssence();
         getTickets();
-
-        console.log(window.innerWidth);
     }, []);
 
     return (
