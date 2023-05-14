@@ -52,7 +52,7 @@ const Unlock = () => {
         if (isSuccessful) {
             // console.log('* User is logged in', isLoggedIn);
             setAuthentication(true);
-            setTimeout(() => navigate('/'), 250);
+            setTimeout(() => navigate('/'), 0);
         } else {
             console.log('User is not Holder');
             setError(AuthenticationError.NotHolding);
@@ -87,7 +87,7 @@ const Unlock = () => {
 
     return (
         <Flex
-            bgGradient="linear(to-t, #330000, #1c0001)"
+            backgroundColor="dark"
             height="100vh"
             width="100vw"
             justifyContent="center"
@@ -100,11 +100,9 @@ const Unlock = () => {
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
-                bg="blackAlpha.200"
                 width="394px"
                 borderRadius="md"
                 overflow="hidden"
-                boxShadow="md"
                 py="6"
                 px="8"
             >
@@ -193,9 +191,7 @@ const Unlock = () => {
                             {error === AuthenticationError.RequestError &&
                                 getText('Error occurred while fetching NFTs, please reload this page')}
 
-                            {!error && (
-                                <Spinner thickness="3px" speed="1.5s" emptyColor="gray.200" color="red.600" size="lg" />
-                            )}
+                            {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>
                     )}
                 </Stack>

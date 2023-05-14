@@ -1,7 +1,8 @@
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getResourceElements } from '../services/resources';
+import { Box } from '@chakra-ui/react';
 
 function LoadingScreen({ setIsLoaded }) {
     const [isReady, setIsReady] = useState(false);
@@ -28,17 +29,21 @@ function LoadingScreen({ setIsLoaded }) {
         }, 400);
     };
 
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
+
     return (
-        <div>
-            <div>
+        <Box>
+            {/* <div>
                 <video autoPlay={true} muted={true} onEnded={onVideoEnd}>
                     <source src={Unlocker} type="video/webm" />
                 </video>
             </div>
 
             <div style={isReady ? { transform: `translateX(-${getTransitionValue()}px)`, opacity: 0.25 } : {}}></div>
-            <div style={isReady ? { transform: `translateX(${getTransitionValue()}px)`, opacity: 0.25 } : {}}></div>
-        </div>
+            <div style={isReady ? { transform: `translateX(${getTransitionValue()}px)`, opacity: 0.25 } : {}}></div> */}
+        </Box>
     );
 }
 

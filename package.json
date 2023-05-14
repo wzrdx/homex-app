@@ -14,6 +14,7 @@
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.1",
         "date-fns": "^2.29.3",
+        "firebase": "^9.22.0",
         "framer-motion": "^8.5.5",
         "howler": "^2.2.3",
         "lodash": "^4.17.21",
@@ -28,7 +29,8 @@
     },
     "scripts": {
         "start": "GENERATE_SOURCEMAP=false react-scripts start",
-        "build": "react-scripts build"
+        "build": "react-scripts build",
+        "deploy": "firebase deploy --only hosting:homex-new"
     },
     "eslintConfig": {
         "extends": [
