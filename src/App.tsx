@@ -16,6 +16,7 @@ import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
 import { getQuest } from './services/quests';
 import { Quest } from './shared/types';
+import { FAUCET_REWARD } from './components/Energy';
 
 function App() {
     const toast = useToast();
@@ -57,14 +58,18 @@ function App() {
                 filter(txs, (tx: Transaction) => {
                     if (resolution === 'successful') {
                         if (tx.type === TransactionType.CompleteQuest) {
-                            console.log('Quest complete!', tx.questId);
+                            console.log('Quest complete', tx.questId);
                             const quest: Quest = getQuest(tx.questId);
-                            displayResourcesToast('Quest complete', quest.rewards);
+                            displayResourcesToast('Quest complete!', quest.rewards);
                         }
 
                         if (tx.type === TransactionType.StartQuest) {
                             console.log('Quest started', tx.questId);
                             playSound('start_quest');
+                        }
+
+                        if (tx.type === TransactionType.Faucet) {
+                            displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
                         }
                     }
 

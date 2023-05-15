@@ -87,3 +87,8 @@
         background: gray;
     }
 }
+
+.loading {
+    pointer-events: none;
+    user-select: none;
+}

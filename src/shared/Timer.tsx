@@ -77,7 +77,7 @@ export const Timer: FunctionComponent<
 
     return (
         <Flex alignItems="center" justifyContent="center">
-            <TimeIcon mr="0.5rem" boxSize={4} color="white.500" />
+            <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />
             {isCompact ? (
                 <div>{`${hDisplay(timeStaked.hours)}:${mDisplay(timeStaked.minutes)}`}</div>
             ) : (

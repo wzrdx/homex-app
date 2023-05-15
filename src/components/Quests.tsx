@@ -64,7 +64,8 @@ function Quests() {
     const { setTxs, isQuestTxPending } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
-    const { resources, getEnergy, getHerbs, getGems, getEssence } = useResourcesContext() as ResourcesContextType;
+    const { resources, getEnergy, getHerbs, getGems, getEssence, getTickets } =
+        useResourcesContext() as ResourcesContextType;
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
@@ -276,6 +277,9 @@ function Quests() {
             case 'essence':
                 return getEssence;
 
+            case 'tickets':
+                return getTickets;
+
             default:
                 console.error('getResourceCall(): Unknown resource type');
                 return async () => {};
@@ -389,7 +393,7 @@ function Quests() {
                     <Box>
                         {isQuestDefault() && (
                             <Flex alignItems="center">
-                                <TimeIcon boxSize={4} color="white.500" />
+                                <TimeIcon boxSize={4} color="whitesmoke" />
                                 <Text ml={2}>
                                     {`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}${
                                         currentQuest.duration > 1 ? 's' : ''
@@ -413,7 +417,7 @@ function Quests() {
 
                         {isQuestComplete() && (
                             <Flex alignItems="center">
-                                <CheckIcon boxSize={4} color="white.500" />
+                                <CheckIcon boxSize={4} color="whitesmoke" />
                                 <Text ml={2}>Finished</Text>
                             </Flex>
                         )}
@@ -474,7 +478,7 @@ function Quests() {
                                         <Image
                                             src={image}
                                             alt="Reward"
-                                            borderRadius="18px"
+                                            borderRadius="16px"
                                             width="100px"
                                             height="100px"
                                             boxShadow="0 0 6px 3px #0000008c"
@@ -483,7 +487,7 @@ function Quests() {
                                         {/* Inner shadow */}
                                         <Box
                                             position="absolute"
-                                            borderRadius="18px"
+                                            borderRadius="16px"
                                             zIndex={1}
                                             top={0}
                                             right={0}

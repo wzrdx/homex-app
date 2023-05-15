@@ -23,7 +23,7 @@ import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '..
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 
-const DEBUG = false;
+const DEBUG = true;
 
 const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];

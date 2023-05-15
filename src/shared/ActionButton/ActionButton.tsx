@@ -23,7 +23,7 @@ export const ActionButton: FunctionComponent<
 
     return (
         <Flex
-            className={`${style.actionButton} ${getColorScheme()}`}
+            className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
             position="relative"
             width={[160, 160, 160, 200]}
             padding={['0.4rem', '0.4rem', '0.4rem', '0.5rem']}

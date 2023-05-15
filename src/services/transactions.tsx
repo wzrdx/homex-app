@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 export enum TransactionType {
     StartQuest,
     CompleteQuest,
+    Faucet,
 }
 
 export interface Transaction {
@@ -18,6 +19,7 @@ export interface TransactionsContextType {
     txs: Array<Transaction>;
     setTxs: React.Dispatch<React.SetStateAction<Transaction[]>>;
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
+    isFaucetTxPending: () => boolean;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | null>(null);
@@ -31,8 +33,12 @@ export const TransactionsProvider = ({ children }) => {
         return findIndex(txs, (tx) => tx.type === type && tx.questId === questId) > -1;
     };
 
+    const isFaucetTxPending = (): boolean => {
+        return findIndex(txs, (tx) => tx.type === TransactionType.Faucet) > -1;
+    };
+
     return (
-        <TransactionsContext.Provider value={{ txs, setTxs, isQuestTxPending }}>
+        <TransactionsContext.Provider value={{ txs, setTxs, isQuestTxPending, isFaucetTxPending }}>
             {children}
         </TransactionsContext.Provider>
     );
