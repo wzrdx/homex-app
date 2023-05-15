@@ -11,9 +11,10 @@ export const Timer: FunctionComponent<
         callback?: () => void;
         isDescending?: boolean;
         isCompact?: boolean;
+        displayDays?: boolean;
     }>
-> = ({ isActive, timestamp, callback, isDescending = false, isCompact = false }) => {
-    const [timeStaked, setTimeStaked] = useState<Duration>({
+> = ({ isActive, timestamp, callback, isDescending = false, isCompact = false, displayDays = false }) => {
+    const [duration, setDuration] = useState<Duration>({
         seconds: 0,
         minutes: 0,
         hours: 0,
@@ -26,7 +27,7 @@ export const Timer: FunctionComponent<
         let timer: string | number | NodeJS.Timer | undefined;
 
         if (!isActive) {
-            setTimeStaked({
+            setDuration({
                 seconds: 0,
                 minutes: 0,
                 hours: 0,
@@ -39,7 +40,7 @@ export const Timer: FunctionComponent<
         } else {
             clearInterval(timer);
 
-            setTimeStaked(
+            setDuration(
                 intervalToDuration({
                     start: timestamp,
                     end: new Date(),
@@ -47,13 +48,6 @@ export const Timer: FunctionComponent<
             );
 
             timer = setInterval(() => {
-                setTimeStaked(
-                    intervalToDuration({
-                        start: timestamp,
-                        end: new Date(),
-                    })
-                );
-
                 if (isDescending) {
                     const difference = differenceInSeconds(timestamp, new Date());
 
@@ -67,6 +61,13 @@ export const Timer: FunctionComponent<
                         return;
                     }
                 }
+
+                setDuration(
+                    intervalToDuration({
+                        start: timestamp,
+                        end: new Date(),
+                    })
+                );
             }, 1000);
         }
 
@@ -79,11 +80,14 @@ export const Timer: FunctionComponent<
         <Flex alignItems="center" justifyContent="center">
             <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />
             {isCompact ? (
-                <div>{`${hDisplay(timeStaked.hours)}:${mDisplay(timeStaked.minutes)}`}</div>
+                <Text>{`${hDisplay(duration.hours)}:${mDisplay(duration.minutes)}`}</Text>
             ) : (
-                <div>{`${timeStaked.days} days, ${hDisplay(timeStaked.hours)}:${mDisplay(
-                    timeStaked.minutes
-                )}:${sDisplay(timeStaked.seconds)}`}</div>
+                <Text minWidth={displayDays ? '128px' : '70px'}>
+                    {displayDays && <Text as="span">{`${duration.days} days, `}</Text>}
+                    <Text as="span">
+                        {`${hDisplay(duration.hours)}:${mDisplay(duration.minutes)}:${sDisplay(duration.seconds)}`}
+                    </Text>
+                </Text>
             )}
         </Flex>
     );

@@ -123,23 +123,12 @@ function Energy() {
                         <Image
                             src={image}
                             alt="Reward"
-                            borderRadius="16px"
+                            borderRadius="50%"
                             width="100px"
                             height="100px"
                             boxShadow="0 0 6px 3px #0000008c"
+                            backgroundColor="black"
                         />
-
-                        {/* Inner shadow */}
-                        <Box
-                            position="absolute"
-                            borderRadius="16px"
-                            zIndex={1}
-                            top={0}
-                            right={0}
-                            bottom={0}
-                            left={0}
-                            boxShadow="inset 0 0 12px 4px #0000003d"
-                        ></Box>
                     </Box>
 
                     <Flex flexDir="column" ml={4}>

@@ -6,10 +6,10 @@ import HerbsIcon from '../assets/resources/icons/herbs.png';
 import GemsIcon from '../assets/resources/icons/gems.png';
 import EssenceIcon from '../assets/resources/icons/essence.png';
 
-import EnergyImage from '../assets/resources/images/energy.jpg';
-import HerbsImage from '../assets/resources/images/herbs.jpg';
-import GemsImage from '../assets/resources/images/gems.jpg';
-import EssenceImage from '../assets/resources/images/essence.jpg';
+import EnergyImage from '../assets/resources/images/energy.png';
+import HerbsImage from '../assets/resources/images/herbs.png';
+import GemsImage from '../assets/resources/images/gems.png';
+import EssenceImage from '../assets/resources/images/essence.png';
 
 import TicketsIcon from '../assets/resources/icons/tickets.png';
 import TicketsImage from '../assets/ticket_pattern.jpg';

@@ -23,7 +23,8 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Frame from '../assets/frame.png';
-import Vision from '../assets/vision.jpg';
+// import Vision from '../assets/vision.jpg';
+import Vision from '../assets/videos/vision.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -93,7 +94,7 @@ function Quests() {
                 const pendingTx = _.find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
 
                 if (pendingTx) {
-                    console.log('TxResolution', pendingTx);
+                    // console.log('TxResolution', pendingTx);
 
                     setPendingTxs((array) => _.filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
 
@@ -139,7 +140,7 @@ function Quests() {
                 .withGasLimit(4000000 + requiredResources.length * 1000000)
                 .buildTransaction();
 
-            console.log(tx.getData().toString());
+            // console.log(tx.getData().toString());
 
             await refreshAccount();
 
@@ -153,7 +154,7 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
-            console.log('startQuest', sessionId);
+            // console.log('startQuest', sessionId);
 
             setStartButtonLoading(false);
 
@@ -198,7 +199,7 @@ function Quests() {
                 .withGasLimit(7000000)
                 .buildTransaction();
 
-            console.log(tx.getData().toString());
+            // console.log(tx.getData().toString());
 
             await refreshAccount();
 
@@ -212,7 +213,7 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
-            console.log('completeQuest', sessionId);
+            // console.log('completeQuest', sessionId);
 
             setFinishButtonLoading(false);
 
@@ -409,7 +410,7 @@ function Quests() {
                                     _.find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date
                                 }
                                 callback={() => {
-                                    setTimeout(() => getOngoingQuests());
+                                    getOngoingQuests();
                                 }}
                                 isDescending
                             />
@@ -478,28 +479,17 @@ function Quests() {
                                         <Image
                                             src={image}
                                             alt="Reward"
-                                            borderRadius="16px"
+                                            borderRadius="50%"
                                             width="100px"
                                             height="100px"
                                             boxShadow="0 0 6px 3px #0000008c"
+                                            backgroundColor="black"
                                         />
-
-                                        {/* Inner shadow */}
-                                        <Box
-                                            position="absolute"
-                                            borderRadius="16px"
-                                            zIndex={1}
-                                            top={0}
-                                            right={0}
-                                            bottom={0}
-                                            left={0}
-                                            boxShadow="inset 0 0 12px 4px #0000003d"
-                                        ></Box>
                                     </Box>
 
                                     <Flex flexDir="column" ml={4}>
                                         <Text mb={1} fontSize="18px">
-                                            {reward.name}
+                                            {name}
                                         </Text>
 
                                         <Flex alignItems="center">
@@ -556,10 +546,29 @@ function Quests() {
             <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
-                    <ModalBody style={getBackgroundStyle(Vision)}>
+                    <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalBody padding={0}>
+                        <Box>
+                            <video
+                                style={{
+                                    position: 'fixed',
+                                    right: 0,
+                                    bottom: 0,
+                                    minWidth: '100%',
+                                    minHeight: '100%',
+                                    transform: 'translateX(calc((100% - 100vw) / 2))',
+                                    maxWidth: 'fit-content',
+                                }}
+                                autoPlay={true}
+                                muted={true}
+                                loop={true}
+                            >
+                                <source src={Vision} type="video/webm" />
+                            </video>
+                        </Box>
+
                         <Box position="absolute" bottom="16px" right="24px">
-                            <Button onClick={onVisionClose} colorScheme="red">
+                            <Button onClick={onVisionClose} colorScheme="orange">
                                 Close
                             </Button>
                         </Box>

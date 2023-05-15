@@ -52,19 +52,19 @@ function App() {
         const hasTxsToRemove = victimSessionIds.some((id) => includes(sessionIds, id));
 
         if (hasTxsToRemove) {
-            console.log('Removing', victimSessionIds);
+            // console.log('Removing', victimSessionIds);
 
             setTxs((txs: Transaction[]) =>
                 filter(txs, (tx: Transaction) => {
                     if (resolution === 'successful') {
                         if (tx.type === TransactionType.CompleteQuest) {
-                            console.log('Quest complete', tx.questId);
+                            // console.log('Quest complete', tx.questId);
                             const quest: Quest = getQuest(tx.questId);
                             displayResourcesToast('Quest complete!', quest.rewards);
                         }
 
                         if (tx.type === TransactionType.StartQuest) {
-                            console.log('Quest started', tx.questId);
+                            // console.log('Quest started', tx.questId);
                             playSound('start_quest');
                         }
 
