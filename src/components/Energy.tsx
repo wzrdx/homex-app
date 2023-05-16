@@ -12,7 +12,6 @@ import { useTransactionsContext, TransactionsContextType, TransactionType } from
 import { TimeIcon } from '@chakra-ui/icons';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { filter, find } from 'lodash';
-import { useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -26,16 +25,10 @@ function Energy() {
     const { setTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
     const { getEnergy } = useResourcesContext() as ResourcesContextType;
 
-    const { earners, getTicketEarners } = useGetTicketEarners();
-
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
     const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
 
     const { name, icon, image } = getResourceElements('energy');
-
-    useEffect(() => {
-        getTicketEarners();
-    }, []);
 
     // Tx tracker
     useEffect(() => {
@@ -121,10 +114,12 @@ function Energy() {
                 />
 
                 <Text my={4} layerStyle="questDescription">
-                    Embark on a quest to captivate the hearts and minds of the people of Menhir with your exciting
-                    stories. Gather a crowd, enthralling them with tales of your daring exploits and mesmerizing
-                    adventures. In return for your storytelling prowess, be rewarded with gleaming gems as a token of
-                    their appreciation.
+                    Deep within the secluded realms of Menhir lies the enigmatic lore of a clandestine, time-weathered
+                    tribe known as the First Travelers. Revered as elusive beings of arcane prowess, they embraced an
+                    ancient rite—a solemn, mystique-laden ritual. Within this ritual, they beseeched ethereal forces for
+                    the coveted essence named Energy. This elixir granted everlasting vitality to the chosen few who
+                    ventured into the ritualistic labyrinth, enveloping them in ageless wisdom and empowering their
+                    mortal bodies with unyielding fortitude against the passage of time.
                 </Text>
 
                 <Flex mt={1} mb={6} alignItems="center">
@@ -166,7 +161,7 @@ function Energy() {
                         colorScheme="blue"
                         onClick={faucet}
                     >
-                        <Text>Faucet</Text>
+                        <Text>Begin Ritual</Text>
                     </ActionButton>
 
                     <Flex mt={2} alignItems="center">

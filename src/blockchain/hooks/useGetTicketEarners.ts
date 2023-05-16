@@ -1,19 +1,23 @@
-import { ResultsParser, ContractFunction, Address } from '@multiversx/sdk-core/out';
+import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { useState } from 'react';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { map } from 'lodash';
+import { sleep } from '../../services/helpers';
 
 const resultsParser = new ResultsParser();
 
+export interface TicketEarner {
+    address: string;
+    ticketsEarned: number;
+}
+
 export const useGetTicketEarners = () => {
-    const [earners, setEarners] = useState<Array<any>>();
+    const [earners, setEarners] = useState<TicketEarner[] | undefined>(undefined);
     const proxy = new ProxyNetworkProvider(API_URL);
 
     const call = async () => {
-        setEarners([]);
-
         try {
             const query = smartContract.createQuery({
                 func: new ContractFunction('getTicketEarners'),
@@ -24,11 +28,16 @@ export const useGetTicketEarners = () => {
             const endpointDefinition = smartContract.getEndpoint('getTicketEarners');
 
             const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-            const value: any = firstValue?.valueOf();
+            const value = firstValue?.valueOf();
 
-            console.log('getTicketEarners', value);
+            const parsedArray: TicketEarner[] = map(value, (item) => ({
+                address: item?.address?.bech32(),
+                ticketsEarned: item?.tickets_earned?.toNumber(),
+            }));
 
-            setEarners([]);
+            console.log('getTicketEarners', parsedArray);
+
+            setEarners(parsedArray);
         } catch (err) {
             console.error('Unable to call getTicketEarners', err);
         }

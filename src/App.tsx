@@ -15,7 +15,7 @@ import { useTransactionsContext, TransactionsContextType, TransactionType, Trans
 import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
 import { getQuest } from './services/quests';
-import { Quest } from './shared/types';
+import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
 
 function App() {

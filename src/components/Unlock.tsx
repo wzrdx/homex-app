@@ -5,7 +5,7 @@ import {
     WalletConnectLoginButton,
 } from '@multiversx/sdk-dapp/UI';
 import { Box, Text, Spinner, Flex, Stack, Image } from '@chakra-ui/react';
-import { useGetIsLoggedIn, useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo, useGetIsLoggedIn, useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContextType, getTokenCount, useAuthenticationContext } from '../services/authentication';
@@ -27,13 +27,17 @@ const Unlock = () => {
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
 
     // const isLoggedInWithWallet = useGetIsLoggedIn();
+    let { address } = useGetAccountInfo();
+
     const { isLoggedIn } = useGetLoginInfo();
 
     const navigate = useNavigate();
 
     const checkAuthentication = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
 
             // console.log('Logging in with address', address);
 

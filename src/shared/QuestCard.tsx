@@ -5,7 +5,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { differenceInSeconds } from 'date-fns';
 import { first } from 'lodash';
-import { Quest, QuestReward } from './types';
+import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 
 const REFRESH_TIME = 1000;

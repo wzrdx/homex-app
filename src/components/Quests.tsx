@@ -47,7 +47,6 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
-import { getBackgroundStyle } from '../services/helpers';
 import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
 
 const LARGE_FRAME_SIZE = 318;

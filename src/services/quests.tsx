@@ -10,7 +10,7 @@ import Quest_8 from '../assets/quests/8.jpg';
 import Quest_9 from '../assets/quests/9.jpg';
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
-import { Quest } from '../shared/types';
+import { Quest } from '../types';
 
 const BASE_DURATION = 1;
 const BASE_COST = 1;

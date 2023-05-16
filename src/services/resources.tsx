@@ -24,6 +24,7 @@ import {
 } from '../blockchain/config';
 import axios from 'axios';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
 export const INITIAL_RESOURCES_STATE = {
     energy: 0,
@@ -96,10 +97,14 @@ export const useResourcesContext = () => useContext(ResourcesContext);
 
 export const ResourcesProvider = ({ children }) => {
     const [resources, setResources] = useState(INITIAL_RESOURCES_STATE);
+    let { address } = useGetAccountInfo();
 
     const getEnergy = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
+
             const result = await axios.get(`accounts/${address}/tokens/${ENERGY_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -124,7 +129,10 @@ export const ResourcesProvider = ({ children }) => {
 
     const getHerbs = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
+
             const result = await axios.get(`accounts/${address}/tokens/${HERBS_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -149,7 +157,10 @@ export const ResourcesProvider = ({ children }) => {
 
     const getGems = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
+
             const result = await axios.get(`accounts/${address}/tokens/${GEMS_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -174,7 +185,10 @@ export const ResourcesProvider = ({ children }) => {
 
     const getEssence = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
+
             const result = await axios.get(`accounts/${address}/tokens/${ESSENCE_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -199,7 +213,10 @@ export const ResourcesProvider = ({ children }) => {
 
     const getTickets = async () => {
         try {
-            const address = await getAddress();
+            if (!address) {
+                address = await getAddress();
+            }
+
             const result = await axios.get(`accounts/${address}/nfts/${TICKETS_TOKEN_ID}-01`, {
                 baseURL: API_URL,
             });
