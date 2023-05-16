@@ -79,7 +79,7 @@ export const QuestCard: FunctionComponent<
                 mr={8}
                 justifyContent="center"
                 cursor="pointer"
-                outline={isActive ? '2px solid #d29835' : widths[0] === '100%' ? '2px solid #128712' : 'none'}
+                outline={isActive ? '2.5px solid #d29835' : widths[0] === '100%' ? '2.5px solid #128712' : 'none'}
             >
                 <Box position="relative" zIndex={1} pointerEvents="none">
                     <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000">

@@ -12,6 +12,7 @@ import { useTransactionsContext, TransactionsContextType, TransactionType } from
 import { TimeIcon } from '@chakra-ui/icons';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { filter, find } from 'lodash';
+import { useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -21,12 +22,20 @@ export const FAUCET_REWARD = {
 
 function Energy() {
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
+
     const { setTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
     const { getEnergy } = useResourcesContext() as ResourcesContextType;
+
+    const { earners, getTicketEarners } = useGetTicketEarners();
+
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
     const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
 
     const { name, icon, image } = getResourceElements('energy');
+
+    useEffect(() => {
+        getTicketEarners();
+    }, []);
 
     // Tx tracker
     useEffect(() => {
@@ -63,7 +72,7 @@ function Energy() {
                 .faucet()
                 .withSender(user)
                 .withChainID('D')
-                .withGasLimit(5000000)
+                .withGasLimit(9000000)
                 .buildTransaction();
 
             await refreshAccount();

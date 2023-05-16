@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.69.0-nightly",
-            "commitHash": "31f858d9a511f24fedb8ed997b28304fec809630",
-            "commitDate": "2023-02-28",
+            "version": "1.68.0-nightly",
+            "commitHash": "3020239de947ec52677e9b4e853a6a9fc073d1f9",
+            "commitDate": "2023-01-09",
             "channel": "Nightly",
-            "short": "rustc 1.69.0-nightly (31f858d9a 2023-02-28)"
+            "short": "rustc 1.68.0-nightly (3020239de 2023-01-09)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -279,21 +279,12 @@
             ]
         },
         {
-            "name": "getOngoingQuestTimestamp",
+            "name": "getTicketEarners",
             "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                },
-                {
-                    "name": "id",
-                    "type": "u8"
-                }
-            ],
+            "inputs": [],
             "outputs": [
                 {
-                    "type": "u64"
+                    "type": "List<TicketEarner>"
                 }
             ]
         },
@@ -488,6 +479,32 @@
             ]
         },
         {
+            "name": "getTicketsEarned",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getTicketEarnersAddresses",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getTestVector",
             "mutability": "readonly",
             "inputs": [],
@@ -554,6 +571,19 @@
                 {
                     "name": "nonces",
                     "type": "List<u64>"
+                }
+            ]
+        },
+        "TicketEarner": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "tickets_earned",
+                    "type": "u32"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
                 }
             ]
         }
