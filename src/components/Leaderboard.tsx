@@ -25,8 +25,6 @@ function Leaderboard() {
     const parseEarners = async () => {
         const sorted = _.orderBy(earners, 'ticketsEarned', 'desc');
 
-        console.log(sorted);
-
         const parsedEarners = await Promise.all(
             _(sorted)
                 .map(async (earner) => ({
@@ -78,11 +76,11 @@ function Leaderboard() {
                     <Flex flexDir="column">
                         {/* Header */}
                         <Flex mb={2}>
-                            <Text minWidth="154px" textAlign="left" fontWeight={600} fontSize="17px">
+                            <Text minWidth="151px" textAlign="left" fontWeight={600} fontSize="17px">
                                 Player
                             </Text>
 
-                            <Text minWidth="120px" textAlign="left" fontWeight={600} fontSize="17px">
+                            <Text minWidth="122px" textAlign="left" fontWeight={600} fontSize="17px">
                                 Tickets
                             </Text>
 
