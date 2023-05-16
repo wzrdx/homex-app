@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { GATEWAY_URL } from '../blockchain/config';
+
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
     backgroundSize: 'cover',
@@ -21,4 +24,20 @@ export const getRandomInt = (min: number, max: number): number => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const getUsername = async (address: string): Promise<string> => {
+    let result = getShortAddress(address);
+
+    const response = await axios.get(`address/${address}/username`, {
+        baseURL: GATEWAY_URL,
+    });
+
+    const username: string | undefined = response?.data?.data?.username;
+
+    if (username) {
+        result = username.slice(0, username.indexOf('.elrond'));
+    }
+
+    return result;
 };

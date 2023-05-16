@@ -12,6 +12,7 @@ import { useTransactionsContext, TransactionsContextType, TransactionType } from
 import { TimeIcon } from '@chakra-ui/icons';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { filter, find } from 'lodash';
+import Typewriter from 'typewriter-effect';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -104,7 +105,7 @@ function Energy() {
 
     return (
         <Flex height="100%" justifyContent="center" alignItems="center">
-            <Flex width={{ md: '892px', lg: '510px' }} flexDir="column" justifyContent="center" alignItems="center">
+            <Flex width={{ md: '898px', lg: '510px' }} flexDir="column" justifyContent="center" alignItems="center">
                 <Image
                     width={{ md: '330px', lg: '100%' }}
                     src={Praying}
@@ -113,13 +114,19 @@ function Energy() {
                     border="2px solid #dadada3d"
                 />
 
-                <Text my={4} layerStyle="questDescription">
-                    Deep within the secluded realms of Menhir lies the enigmatic lore of a clandestine, time-weathered
-                    tribe known as the First Travelers. Revered as elusive beings of arcane prowess, they embraced an
-                    ancient rite—a solemn, mystique-laden ritual. Within this ritual, they beseeched ethereal forces for
-                    the coveted essence named Energy. This elixir granted everlasting vitality to the chosen few who
-                    ventured into the ritualistic labyrinth, enveloping them in ageless wisdom and empowering their
-                    mortal bodies with unyielding fortitude against the passage of time.
+                <Text my={4} layerStyle="questDescription" minHeight={{ md: '110px', lg: '198px' }}>
+                    <Typewriter
+                        onInit={(typewriter) => {
+                            typewriter
+                                .typeString(
+                                    'Deep within the secluded realms of Menhir lies the enigmatic lore of a clandestine, time-weathered tribe known as the First Travelers. Revered as elusive beings of arcane prowess, they embraced an ancient rite—a solemn, mystique-laden ritual. Within this ritual, they beseeched ethereal forces for the coveted essence named Energy. This elixir granted everlasting vitality to the chosen few who ventured into the ritualistic labyrinth, enveloping them in ageless wisdom and empowering their mortal bodies with unyielding fortitude against the passage of time.'
+                                )
+                                .start();
+                        }}
+                        options={{
+                            delay: 0.2,
+                        }}
+                    />
                 </Text>
 
                 <Flex mb={6} alignItems="center">
