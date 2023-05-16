@@ -31,7 +31,7 @@ function Leaderboard() {
                 ) : (
                     <Flex flexDir="column">
                         {map(earners, (earner: TicketEarner, index: number) => (
-                            <Flex mt={1} alignItems="center" key={index}>
+                            <Flex mt={2} alignItems="center" key={index}>
                                 <Text>{getShortAddress(earner.address)}</Text>
                                 <Text mx={6}>{earner.ticketsEarned}</Text>
                                 {getRoleTag(earner.ticketsEarned)}

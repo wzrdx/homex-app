@@ -35,8 +35,6 @@ export const useGetTicketEarners = () => {
                 ticketsEarned: item?.tickets_earned?.toNumber(),
             }));
 
-            console.log('getTicketEarners', parsedArray);
-
             setEarners(parsedArray);
         } catch (err) {
             console.error('Unable to call getTicketEarners', err);

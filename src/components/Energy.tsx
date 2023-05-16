@@ -103,14 +103,14 @@ function Energy() {
     };
 
     return (
-        <Flex height={{ md: '100%', lg: '90%' }} justifyContent="center" alignItems="center">
-            <Flex width={{ md: '442px', lg: '512px' }} flexDir="column" justifyContent="center" alignItems="center">
+        <Flex height="100%" justifyContent="center" alignItems="center">
+            <Flex width={{ md: '892px', lg: '510px' }} flexDir="column" justifyContent="center" alignItems="center">
                 <Image
+                    width={{ md: '330px', lg: '100%' }}
                     src={Praying}
-                    alt="Dome"
+                    alt="Energy"
                     borderRadius="1px"
-                    border="2px solid #8ec2dd3d"
-                    boxShadow="0 0 6px #1e90ff69"
+                    border="2px solid #dadada3d"
                 />
 
                 <Text my={4} layerStyle="questDescription">
@@ -122,7 +122,7 @@ function Energy() {
                     mortal bodies with unyielding fortitude against the passage of time.
                 </Text>
 
-                <Flex mt={1} mb={6} alignItems="center">
+                <Flex mb={6} alignItems="center">
                     <Box position="relative">
                         <Image
                             src={image}

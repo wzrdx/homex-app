@@ -556,7 +556,7 @@ function Quests() {
                                     minWidth: '100%',
                                     minHeight: '100%',
                                     transform: 'translateX(calc((100% - 100vw) / 2))',
-                                    maxWidth: 'fit-content',
+                                    maxWidth: '-webkit-fill-available',
                                 }}
                                 autoPlay={true}
                                 muted={true}

@@ -47,6 +47,7 @@ const layerStyles = {
     },
     questDescription: {
         textAlign: 'justify',
+        lineHeight: '22px',
     },
     responsive: {
         background: 'orangered',

@@ -28,9 +28,10 @@ function App() {
     const { successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     // TODO: DEBUG
-    // useEffect(() => {
-    //     displayResourcesToast('Quest complete!', getQuest(1).rewards);
-    // }, []);
+    useEffect(() => {
+        console.log('#Env', process.env.NODE_ENV);
+        // displayResourcesToast('Quest complete!', getQuest(1).rewards);
+    }, []);
 
     useEffect(() => {
         removeTxs(
