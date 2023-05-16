@@ -7,11 +7,17 @@ import { theme } from './theme';
 import { ProtectedRoute } from './shared/ProtectedRoute';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
-import { ResourcesProvider } from './services/resources';
+import { ResourcesContextType, ResourcesProvider, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, filter } from 'lodash';
+import { map, head, includes, filter, find, cloneDeep, remove } from 'lodash';
 import { useEffect } from 'react';
-import { useTransactionsContext, TransactionsContextType, TransactionType, Transaction } from './services/transactions';
+import {
+    useTransactionsContext,
+    TransactionsContextType,
+    TransactionType,
+    Transaction,
+    TxResolution,
+} from './services/transactions';
 import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
 import { getQuest } from './services/quests';
@@ -21,17 +27,37 @@ import { FAUCET_REWARD } from './components/Energy';
 function App() {
     const toast = useToast();
 
-    const { txs, setTxs } = useTransactionsContext() as TransactionsContextType;
+    const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
-    const { successfulTransactionsArray } = useGetSuccessfulTransactions();
+    const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
-    // TODO: DEBUG
-    useEffect(() => {
-        console.log('#Env', process.env.NODE_ENV);
-        // displayResourcesToast('Quest complete!', getQuest(1).rewards);
-    }, []);
+    const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
+
+    // TODO: Univeral resolution resolver
+    // useEffect(() => {
+    //     if (hasSuccessfulTransactions) {
+    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
+    //             const pendingTx = find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
+
+    //             if (pendingTx) {
+    //                 console.log('TxResolution', pendingTx);
+
+    //                 setPendingTxs((array) => filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
+
+    //                 switch (pendingTx.resolution) {
+    //                     case TxResolution.UpdateEnergy:
+    //                         getEnergy();
+    //                         break;
+
+    //                     default:
+    //                         console.error('Unknown txResolution type');
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [successfulTransactionsArray]);
 
     useEffect(() => {
         removeTxs(
@@ -48,35 +74,31 @@ function App() {
     }, [successfulTransactionsArray]);
 
     const removeTxs = (victimSessionIds: string[], resolution: string) => {
-        const sessionIds: string[] = map(txs, (tx) => tx.sessionId);
-
-        const hasTxsToRemove = victimSessionIds.some((id) => includes(sessionIds, id));
+        const pendingSessionIds: string[] = map(pendingTxs, (tx) => tx.sessionId);
+        const hasTxsToRemove = victimSessionIds.some((id) => includes(pendingSessionIds, id));
 
         if (hasTxsToRemove) {
-            // console.log('Removing', victimSessionIds);
+            const txs = cloneDeep(pendingTxs);
+            const victims = remove(txs, (tx) => includes(victimSessionIds, tx.sessionId));
 
-            setTxs((txs: Transaction[]) =>
-                filter(txs, (tx: Transaction) => {
-                    if (resolution === 'successful') {
-                        if (tx.type === TransactionType.CompleteQuest) {
-                            // console.log('Quest complete', tx.questId);
-                            const quest: Quest = getQuest(tx.questId);
-                            displayResourcesToast('Quest complete!', quest.rewards);
-                        }
+            console.log('Txs', txs, 'Victims', victims);
 
-                        if (tx.type === TransactionType.StartQuest) {
-                            // console.log('Quest started', tx.questId);
-                            playSound('start_quest');
-                        }
+            // TODO: Split function from this point
+            if (resolution === 'successful') {
+                // TODO: Iterate over the victims
+                // if (tx.type === TransactionType.CompleteQuest) {
+                //     const quest: Quest = getQuest(tx.questId);
+                //     displayResourcesToast('Quest complete!', quest.rewards);
+                // }
+                // if (tx.type === TransactionType.StartQuest) {
+                //     playSound('start_quest');
+                // }
+                // if (tx.type === TransactionType.Faucet) {
+                //     displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
+                // }
+            }
 
-                        if (tx.type === TransactionType.Faucet) {
-                            displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
-                        }
-                    }
-
-                    return !includes(victimSessionIds, tx.sessionId);
-                })
-            );
+            setPendingTxs(txs);
         }
     };
 
@@ -102,38 +124,36 @@ function App() {
 
     return (
         <ChakraBaseProvider theme={theme}>
-            <ResourcesProvider>
-                <TransactionsToastList successfulToastLifetime={20000} transactionToastClassName="Tx-Toast" />
-                <NotificationModal />
-                <SignTransactionsModals className="Sign-Tx-Modal" />
+            <TransactionsToastList successfulToastLifetime={20000} transactionToastClassName="Tx-Toast" />
+            <NotificationModal />
+            <SignTransactionsModals className="Sign-Tx-Modal" />
 
-                <AuthenticationProvider>
-                    <Routes>
-                        {/* Authentication */}
-                        <Route path={routeNames.unlock} element={<Unlock />} />
+            <AuthenticationProvider>
+                <Routes>
+                    {/* Authentication */}
+                    <Route path={routeNames.unlock} element={<Unlock />} />
 
-                        {/* Main routing */}
-                        <Route
-                            path={routeNames.main}
-                            element={
-                                <ProtectedRoute>
-                                    <Layout />
-                                </ProtectedRoute>
-                            }
-                        >
-                            <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
+                    {/* Main routing */}
+                    <Route
+                        path={routeNames.main}
+                        element={
+                            <ProtectedRoute>
+                                <Layout />
+                            </ProtectedRoute>
+                        }
+                    >
+                        <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
-                            {routes.map((route, index) => (
-                                <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
-                            ))}
+                        {routes.map((route, index) => (
+                            <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
+                        ))}
 
-                            <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
-                        </Route>
+                        <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
+                    </Route>
 
-                        <Route path="*" element={<Navigate to={routeNames.main} replace />} />
-                    </Routes>
-                </AuthenticationProvider>
-            </ResourcesProvider>
+                    <Route path="*" element={<Navigate to={routeNames.main} replace />} />
+                </Routes>
+            </AuthenticationProvider>
         </ChakraBaseProvider>
     );
 }

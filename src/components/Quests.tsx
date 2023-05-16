@@ -39,7 +39,6 @@ import Requirement from '../shared/Requirement';
 import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { PendingTx, QuestStatus, TxResolution } from '../blockchain/types';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
@@ -61,7 +60,7 @@ function Quests() {
 
     const { address } = useGetAccountInfo();
 
-    const { setTxs, isQuestTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { isQuestTxPending } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
     const { resources, getEnergy, getHerbs, getGems, getEssence, getTickets } =
@@ -78,42 +77,42 @@ function Quests() {
     const isQuestComplete = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
 
-    const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
-    const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
+    // const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
+    // const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
 
-    // Init
-    useEffect(() => {
-        getOngoingQuests();
-    }, []);
+    // // Init
+    // useEffect(() => {
+    //     getOngoingQuests();
+    // }, []);
 
-    // Tx tracker
-    useEffect(() => {
-        if (hasSuccessfulTransactions) {
-            successfulTransactionsArray.forEach((tx: [string, any]) => {
-                const pendingTx = _.find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
+    // // Tx tracker
+    // useEffect(() => {
+    //     if (hasSuccessfulTransactions) {
+    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
+    //             const pendingTx = _.find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
 
-                if (pendingTx) {
-                    // console.log('TxResolution', pendingTx);
+    //             if (pendingTx) {
+    //                 // console.log('TxResolution', pendingTx);
 
-                    setPendingTxs((array) => _.filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
+    //                 setPendingTxs((array) => _.filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
 
-                    switch (pendingTx.resolution) {
-                        case TxResolution.UpdateResources:
-                            const resources: string[] = pendingTx.data.resources;
+    //                 switch (pendingTx.resolution) {
+    //                     case TxResolution.UpdateResources:
+    //                         const resources: string[] = pendingTx.data.resources;
 
-                            getOngoingQuests();
+    //                         getOngoingQuests();
 
-                            const calls = _.map(resources, (resource) => getResourceCall(resource));
-                            _.forEach(calls, (call) => call());
-                            break;
+    //                         const calls = _.map(resources, (resource) => getResourceCall(resource));
+    //                         _.forEach(calls, (call) => call());
+    //                         break;
 
-                        default:
-                            console.error('Unknown txResolution type');
-                    }
-                }
-            });
-        }
-    }, [successfulTransactionsArray]);
+    //                     default:
+    //                         console.error('Unknown txResolution type');
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [successfulTransactionsArray]);
 
     const startQuest = async () => {
         setStartButtonLoading(true);
@@ -153,29 +152,27 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
-            // console.log('startQuest', sessionId);
-
             setStartButtonLoading(false);
 
-            setTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.StartQuest,
-                    questId: currentQuest.id,
-                },
-            ]);
+            // setTxs((txs) => [
+            //     ...txs,
+            //     {
+            //         sessionId,
+            //         type: TransactionType.StartQuest,
+            //         questId: currentQuest.id,
+            //     },
+            // ]);
 
-            setPendingTxs((array) => [
-                ...array,
-                {
-                    sessionId,
-                    resolution: TxResolution.UpdateResources,
-                    data: {
-                        resources: Object.keys(currentQuest.requirements),
-                    },
-                },
-            ]);
+            // setPendingTxs((array) => [
+            //     ...array,
+            //     {
+            //         sessionId,
+            //         resolution: TxResolution.UpdateResources,
+            //         data: {
+            //             resources: Object.keys(currentQuest.requirements),
+            //         },
+            //     },
+            // ]);
         } catch (err) {
             console.error('Error occured during startQuest', err);
         }
@@ -212,29 +209,27 @@ function Quests() {
                 redirectAfterSign: false,
             });
 
-            // console.log('completeQuest', sessionId);
-
             setFinishButtonLoading(false);
 
-            setTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.CompleteQuest,
-                    questId: currentQuest.id,
-                },
-            ]);
+            // setTxs((txs) => [
+            //     ...txs,
+            //     {
+            //         sessionId,
+            //         type: TransactionType.CompleteQuest,
+            //         questId: currentQuest.id,
+            //     },
+            // ]);
 
-            setPendingTxs((array) => [
-                ...array,
-                {
-                    sessionId,
-                    resolution: TxResolution.UpdateResources,
-                    data: {
-                        resources: _.map(currentQuest.rewards, (reward) => reward.resource),
-                    },
-                },
-            ]);
+            // setPendingTxs((array) => [
+            //     ...array,
+            //     {
+            //         sessionId,
+            //         resolution: TxResolution.UpdateResources,
+            //         data: {
+            //             resources: _.map(currentQuest.rewards, (reward) => reward.resource),
+            //         },
+            //     },
+            // ]);
         } catch (err) {
             console.error('Error occured during completeQuest', err);
         }

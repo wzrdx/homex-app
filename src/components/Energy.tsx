@@ -6,7 +6,6 @@ import { Address } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { getAddress, refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
-import { PendingTx, TxResolution } from '../blockchain/types';
 import { useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
 import { useTransactionsContext, TransactionsContextType, TransactionType } from '../services/transactions';
 import { TimeIcon } from '@chakra-ui/icons';
@@ -23,37 +22,37 @@ export const FAUCET_REWARD = {
 function Energy() {
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
 
-    const { setTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { setPendingTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
     const { getEnergy } = useResourcesContext() as ResourcesContextType;
-
-    const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
-    const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
 
     const { name, icon, image } = getResourceElements('energy');
 
-    // Tx tracker
-    useEffect(() => {
-        if (hasSuccessfulTransactions) {
-            successfulTransactionsArray.forEach((tx: [string, any]) => {
-                const pendingTx = find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
+    // const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
+    // const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
 
-                if (pendingTx) {
-                    console.log('TxResolution', pendingTx);
+    // // Tx tracker
+    // useEffect(() => {
+    //     if (hasSuccessfulTransactions) {
+    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
+    //             const pendingTx = find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
 
-                    setPendingTxs((array) => filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
+    //             if (pendingTx) {
+    //                 console.log('TxResolution', pendingTx);
 
-                    switch (pendingTx.resolution) {
-                        case TxResolution.UpdateEnergy:
-                            getEnergy();
-                            break;
+    //                 setPendingTxs((array) => filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
 
-                        default:
-                            console.error('Unknown txResolution type');
-                    }
-                }
-            });
-        }
-    }, [successfulTransactionsArray]);
+    //                 switch (pendingTx.resolution) {
+    //                     case TxResolution.UpdateEnergy:
+    //                         getEnergy();
+    //                         break;
+
+    //                     default:
+    //                         console.error('Unknown txResolution type');
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [successfulTransactionsArray]);
 
     const faucet = async () => {
         setEnergyButtonLoading(true);
@@ -83,7 +82,7 @@ function Energy() {
 
             setEnergyButtonLoading(false);
 
-            setTxs((txs) => [
+            setPendingTxs((txs) => [
                 ...txs,
                 {
                     sessionId,
@@ -91,13 +90,13 @@ function Energy() {
                 },
             ]);
 
-            setPendingTxs((array) => [
-                ...array,
-                {
-                    sessionId,
-                    resolution: TxResolution.UpdateEnergy,
-                },
-            ]);
+            // setPendingTxs((array) => [
+            //     ...array,
+            //     {
+            //         sessionId,
+            //         resolution: TxResolution.UpdateEnergy,
+            //     },
+            // ]);
         } catch (err) {
             console.error('Error occured while calling faucet', err);
         }
