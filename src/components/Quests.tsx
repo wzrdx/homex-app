@@ -47,6 +47,7 @@ import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
+import Reward from '../shared/Reward';
 
 const LARGE_FRAME_SIZE = 318;
 const LARGE_IMAGE_SIZE = 424;
@@ -466,41 +467,7 @@ function Quests() {
                     <Flex flexDir="column" mt={3.5}>
                         {_.map(currentQuest.rewards, (reward, index) => {
                             const { name, color, icon, image } = getResourceElements(reward.resource);
-
-                            return (
-                                <Flex key={index} alignItems="center">
-                                    <Box position="relative">
-                                        <Image
-                                            src={image}
-                                            alt="Reward"
-                                            borderRadius="50%"
-                                            width="100px"
-                                            height="100px"
-                                            boxShadow="0 0 6px 3px #0000008c"
-                                            backgroundColor="black"
-                                        />
-                                    </Box>
-
-                                    <Flex flexDir="column" ml={4}>
-                                        <Text mb={1} fontSize="18px">
-                                            {name}
-                                        </Text>
-
-                                        <Flex alignItems="center">
-                                            <Text fontSize="18px" mr={2}>
-                                                <Text as="span" mr={1}>
-                                                    +
-                                                </Text>
-                                                <Text as="span" fontWeight={600}>
-                                                    {reward.value}
-                                                </Text>
-                                            </Text>
-
-                                            {!!icon && <Image width="28px" mr={2} src={icon} alt="Icon" />}
-                                        </Flex>
-                                    </Flex>
-                                </Flex>
-                            );
+                            return <Reward key={index} image={image} name={name} value={reward.value} icon={icon} />;
                         })}
                     </Flex>
 

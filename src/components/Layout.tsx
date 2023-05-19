@@ -5,6 +5,7 @@ import { getBackgroundStyle } from '../services/helpers';
 import { QuestsProvider } from '../services/quests';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
 import Midjourney from '../assets/backgrounds/Midjourney_2.jpg';
+import Elder from '../assets/backgrounds/Elder.png';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
 
@@ -25,7 +26,7 @@ function Layout() {
         <QuestsProvider>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
+            <Flex style={getBackgroundStyle(Elder)} position="relative" height="100vh" flexDir="column">
                 <Box height={{ md: '18%', lg: '14%' }}>
                     <Header />
                 </Box>

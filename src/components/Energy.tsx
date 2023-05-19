@@ -12,6 +12,7 @@ import { TimeIcon } from '@chakra-ui/icons';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { filter, find } from 'lodash';
 import Typewriter from 'typewriter-effect';
+import Reward from '../shared/Reward';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -104,21 +105,22 @@ function Energy() {
 
     return (
         <Flex height="100%" justifyContent="center" alignItems="center">
-            <Flex width={{ md: '898px', lg: '510px' }} flexDir="column" justifyContent="center" alignItems="center">
+            <Flex width={{ md: '898px', lg: '710px' }} flexDir="column" justifyContent="center" alignItems="center">
                 <Image
-                    width={{ md: '330px', lg: '100%' }}
+                    width={{ md: '330px', lg: '460px' }}
+                    minHeight={{ md: '200px', lg: '320px' }}
                     src={Praying}
                     alt="Energy"
                     borderRadius="1px"
                     border="2px solid #dadada3d"
                 />
 
-                <Text my={4} layerStyle="questDescription" minHeight={{ md: '110px', lg: '198px' }}>
+                <Text my={4} layerStyle="questDescription" minHeight={{ md: '110px', lg: '154px' }}>
                     <Typewriter
                         onInit={(typewriter) => {
                             typewriter
                                 .typeString(
-                                    'Deep within the secluded realms of Menhir lies the enigmatic lore of a clandestine, time-weathered tribe known as the First Travelers. Revered as elusive beings of arcane prowess, they embraced an ancient rite—a solemn, mystique-laden ritual. Within this ritual, they beseeched ethereal forces for the coveted essence named Energy. This elixir granted everlasting vitality to the chosen few who ventured into the ritualistic labyrinth, enveloping them in ageless wisdom and empowering their mortal bodies with unyielding fortitude against the passage of time.'
+                                    'Hidden deep within the desert, there exists a mysterious tribe called the The First Travelers. They are revered as secretive and powerful beings, skilled in ancient magic. These enigmatic individuals practiced a special ceremony, full of intrigue and wonder, where they sought a highly sought-after potion called "Energy." This magical elixir, which granted everlasting life, was given only to a select few who dared to explore a complex labyrinth during the ritual. Those who received it gained eternal vigor, enveloped in an aura of timeless wisdom, and possessed unwavering strength that defied the passing of years.'
                                 )
                                 .start();
                         }}
@@ -128,40 +130,9 @@ function Energy() {
                     />
                 </Text>
 
-                <Flex mb={6} alignItems="center">
-                    <Box position="relative">
-                        <Image
-                            src={image}
-                            alt="Reward"
-                            borderRadius="50%"
-                            width="100px"
-                            height="100px"
-                            boxShadow="0 0 6px 3px #0000008c"
-                            backgroundColor="black"
-                        />
-                    </Box>
+                <Reward image={image} name={name} value={FAUCET_REWARD.value} icon={icon} />
 
-                    <Flex flexDir="column" ml={4}>
-                        <Text mb={1} fontSize="18px">
-                            {name}
-                        </Text>
-
-                        <Flex alignItems="center">
-                            <Text fontSize="18px" mr={2}>
-                                <Text as="span" mr={1}>
-                                    +
-                                </Text>
-                                <Text as="span" fontWeight={600}>
-                                    {FAUCET_REWARD.value}
-                                </Text>
-                            </Text>
-
-                            {!!icon && <Image width="28px" mr={2} src={icon} alt="Icon" />}
-                        </Flex>
-                    </Flex>
-                </Flex>
-
-                <Flex flexDir="column" justifyContent="center" alignItems="center">
+                <Flex mt={6} flexDir="column" justifyContent="center" alignItems="center">
                     <ActionButton
                         isLoading={isEnergyButtonLoading || isFaucetTxPending()}
                         colorScheme="blue"
