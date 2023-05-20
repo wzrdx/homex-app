@@ -19,3 +19,5 @@ export const GEMS_TOKEN_ID = 'GEMS-274ae8';
 export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
 export const YIELD_PER_HOUR = 0.3;
+
+export const START_OF_CONTEST = new Date('2023-05-20');

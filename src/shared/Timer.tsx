@@ -1,7 +1,7 @@
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
-import { hDisplay, mDisplay, sDisplay } from '../services/helpers';
+import { hDisplay, mDisplay, sDisplay, zeroPad } from '../services/helpers';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 
 export const Timer: FunctionComponent<
@@ -80,12 +80,12 @@ export const Timer: FunctionComponent<
         <Flex alignItems="center" justifyContent="center">
             <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />
             {isCompact ? (
-                <Text>{`${hDisplay(duration.hours)}:${mDisplay(duration.minutes)}`}</Text>
+                <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
                 <Text minWidth={displayDays ? '128px' : '70px'}>
                     {displayDays && <Text as="span">{`${duration.days} days, `}</Text>}
                     <Text as="span">
-                        {`${hDisplay(duration.hours)}:${mDisplay(duration.minutes)}:${sDisplay(duration.seconds)}`}
+                        {`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
                     </Text>
                 </Text>
             )}

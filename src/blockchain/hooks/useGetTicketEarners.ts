@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 import { map } from 'lodash';
-import { sleep } from '../../services/helpers';
 
 const resultsParser = new ResultsParser();
 
 export interface TicketEarner {
     address: string;
     ticketsEarned: number;
+    timestamp: Date;
+    time?: string;
 }
 
 export const useGetTicketEarners = () => {
@@ -33,7 +34,10 @@ export const useGetTicketEarners = () => {
             const parsedArray: TicketEarner[] = map(value, (item) => ({
                 address: item?.address?.bech32(),
                 ticketsEarned: item?.tickets_earned?.toNumber(),
+                timestamp: new Date(item?.last_timestamp?.toNumber() * 1000),
             }));
+
+            console.log(parsedArray);
 
             setEarners(parsedArray);
         } catch (err) {

@@ -2,9 +2,12 @@ import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { TicketEarner, useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
 import _ from 'lodash';
-import { getShortAddress, getUsername } from '../services/helpers';
+import { getShortAddress, getUsername, zeroPad } from '../services/helpers';
 import { Role, RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
+import { differenceInSeconds, intervalToDuration } from 'date-fns';
+import { START_OF_CONTEST } from '../blockchain/config';
+import { TimeIcon } from '@chakra-ui/icons';
 
 function Leaderboard() {
     const { earners, getTicketEarners } = useGetTicketEarners();
@@ -23,18 +26,33 @@ function Leaderboard() {
     }, [earners]);
 
     const parseEarners = async () => {
-        const sorted = _.orderBy(earners, 'ticketsEarned', 'desc');
+        const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
 
         const parsedEarners = await Promise.all(
             _(sorted)
                 .map(async (earner) => ({
+                    ...earner,
                     address: await getUsername(earner.address),
-                    ticketsEarned: earner.ticketsEarned,
+                    time: getDuration(earner.timestamp),
                 }))
                 .value()
         );
 
         setTicketEarners(parsedEarners);
+    };
+
+    const getDuration = (timestamp: Date): string => {
+        const difference = differenceInSeconds(timestamp, START_OF_CONTEST);
+
+        if (difference < 0) {
+            return '';
+        }
+
+        const duration = intervalToDuration({ start: 0, end: difference * 1000 });
+
+        console.log(duration);
+
+        return [duration.hours, duration.minutes, duration.seconds].map(zeroPad).join(':');
     };
 
     const getRoleTag = (ticketsEarned: number, index: number) => {
@@ -47,9 +65,9 @@ function Leaderboard() {
         }
 
         return (
-            <Box ml="64px">
+            <Flex ml="64px" width="246px">
                 <RoleTag role={role} />
-            </Box>
+            </Flex>
         );
     };
 
@@ -58,8 +76,8 @@ function Leaderboard() {
     return (
         <Flex justifyContent="center">
             <Flex flexDir="column" alignItems="center">
-                <Flex mb={6} flexDir="column">
-                    <Text mb={1} fontSize="lg" fontWeight={600}>
+                <Flex mb={7} flexDir="column">
+                    <Text mb={1.5} fontSize="lg" fontWeight={600}>
                         Tickets Leaderboard
                     </Text>
 
@@ -84,8 +102,12 @@ function Leaderboard() {
                                 Tickets
                             </Text>
 
-                            <Text minWidth="96px" textAlign="left" fontWeight={600} fontSize="17px">
+                            <Text minWidth="246px" textAlign="left" fontWeight={600} fontSize="17px">
                                 Role
+                            </Text>
+
+                            <Text minWidth="100px" textAlign="left" fontWeight={600} fontSize="17px">
+                                Time
                             </Text>
                         </Flex>
 
@@ -104,6 +126,13 @@ function Leaderboard() {
                                 </Flex>
 
                                 {getRoleTag(earner.ticketsEarned, index)}
+
+                                <Flex alignItems="center">
+                                    <TimeIcon boxSize={4} color="whitesmoke" />
+                                    <Text ml={2} minWidth="220x" textAlign="right">
+                                        {earner.time}
+                                    </Text>
+                                </Flex>
                             </Flex>
                         ))}
                     </Flex>
