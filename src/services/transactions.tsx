@@ -8,8 +8,8 @@ export enum TransactionType {
 }
 
 export enum TxResolution {
-    UpdateResources,
-    UpdateEnergy,
+    UpdateResources = 'UpdateResources',
+    UpdateEnergy = 'UpdateEnergy',
 }
 
 export interface Transaction {

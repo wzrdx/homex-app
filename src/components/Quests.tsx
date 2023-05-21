@@ -12,7 +12,7 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import _, { find, findIndex, includes } from 'lodash';
+import _, { find, findIndex, includes, map } from 'lodash';
 import {
     QUESTS,
     QUEST_DURATION_INTERVAL,
@@ -38,7 +38,7 @@ import {
 import Requirement from '../shared/Requirement';
 import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
-import { useGetAccountInfo, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
@@ -46,7 +46,12 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
-import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
+import {
+    TransactionType,
+    TransactionsContextType,
+    TxResolution,
+    useTransactionsContext,
+} from '../services/transactions';
 import Reward from '../shared/Reward';
 
 const LARGE_FRAME_SIZE = 318;
@@ -61,11 +66,10 @@ function Quests() {
 
     const { address } = useGetAccountInfo();
 
-    const { isQuestTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { isQuestTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
-    const { resources, getEnergy, getHerbs, getGems, getEssence, getTickets } =
-        useResourcesContext() as ResourcesContextType;
+    const { resources } = useResourcesContext() as ResourcesContextType;
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
@@ -78,42 +82,10 @@ function Quests() {
     const isQuestComplete = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
 
-    // const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
-    // const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
-
-    // // Init
-    // useEffect(() => {
-    //     getOngoingQuests();
-    // }, []);
-
-    // // Tx tracker
-    // useEffect(() => {
-    //     if (hasSuccessfulTransactions) {
-    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
-    //             const pendingTx = _.find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
-
-    //             if (pendingTx) {
-    //                 // console.log('TxResolution', pendingTx);
-
-    //                 setPendingTxs((array) => _.filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
-
-    //                 switch (pendingTx.resolution) {
-    //                     case TxResolution.UpdateResources:
-    //                         const resources: string[] = pendingTx.data.resources;
-
-    //                         getOngoingQuests();
-
-    //                         const calls = _.map(resources, (resource) => getResourceCall(resource));
-    //                         _.forEach(calls, (call) => call());
-    //                         break;
-
-    //                     default:
-    //                         console.error('Unknown txResolution type');
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [successfulTransactionsArray]);
+    // Init
+    useEffect(() => {
+        getOngoingQuests();
+    }, []);
 
     const startQuest = async () => {
         setStartButtonLoading(true);
@@ -139,8 +111,6 @@ function Quests() {
                 .withGasLimit(4000000 + requiredResources.length * 1000000)
                 .buildTransaction();
 
-            // console.log(tx.getData().toString());
-
             await refreshAccount();
 
             const { sessionId } = await sendTransactions({
@@ -155,25 +125,18 @@ function Quests() {
 
             setStartButtonLoading(false);
 
-            // setTxs((txs) => [
-            //     ...txs,
-            //     {
-            //         sessionId,
-            //         type: TransactionType.StartQuest,
-            //         questId: currentQuest.id,
-            //     },
-            // ]);
-
-            // setPendingTxs((array) => [
-            //     ...array,
-            //     {
-            //         sessionId,
-            //         resolution: TxResolution.UpdateResources,
-            //         data: {
-            //             resources: Object.keys(currentQuest.requirements),
-            //         },
-            //     },
-            // ]);
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.StartQuest,
+                    questId: currentQuest.id,
+                    resolution: TxResolution.UpdateResources,
+                    data: {
+                        resources: Object.keys(currentQuest.requirements),
+                    },
+                },
+            ]);
         } catch (err) {
             console.error('Error occured during startQuest', err);
         }
@@ -212,25 +175,18 @@ function Quests() {
 
             setFinishButtonLoading(false);
 
-            // setTxs((txs) => [
-            //     ...txs,
-            //     {
-            //         sessionId,
-            //         type: TransactionType.CompleteQuest,
-            //         questId: currentQuest.id,
-            //     },
-            // ]);
-
-            // setPendingTxs((array) => [
-            //     ...array,
-            //     {
-            //         sessionId,
-            //         resolution: TxResolution.UpdateResources,
-            //         data: {
-            //             resources: _.map(currentQuest.rewards, (reward) => reward.resource),
-            //         },
-            //     },
-            // ]);
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.CompleteQuest,
+                    questId: currentQuest.id,
+                    resolution: TxResolution.UpdateResources,
+                    data: {
+                        resources: map(currentQuest.rewards, (reward) => reward.resource),
+                    },
+                },
+            ]);
         } catch (err) {
             console.error('Error occured during completeQuest', err);
         }
@@ -258,29 +214,6 @@ function Quests() {
                 .value()}
         </Flex>
     );
-
-    const getResourceCall = (resource: string): (() => Promise<void>) => {
-        switch (resource) {
-            case 'energy':
-                return getEnergy;
-
-            case 'herbs':
-                return getHerbs;
-
-            case 'gems':
-                return getGems;
-
-            case 'essence':
-                return getEssence;
-
-            case 'tickets':
-                return getTickets;
-
-            default:
-                console.error('getResourceCall(): Unknown resource type');
-                return async () => {};
-        }
-    };
 
     return (
         <Flex height="100%">
@@ -402,7 +335,7 @@ function Quests() {
                             <Timer
                                 isActive={true}
                                 timestamp={
-                                    _.find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date
+                                    find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date
                                 }
                                 callback={() => {
                                     getOngoingQuests();
@@ -465,7 +398,7 @@ function Quests() {
                     </Text>
 
                     <Flex flexDir="column" mt={3.5}>
-                        {_.map(currentQuest.rewards, (reward, index) => {
+                        {map(currentQuest.rewards, (reward, index) => {
                             const { name, color, icon, image } = getResourceElements(reward.resource);
                             return <Reward key={index} image={image} name={name} value={reward.value} icon={icon} />;
                         })}
@@ -481,7 +414,7 @@ function Quests() {
                                 color="header.gold"
                                 mt={10}
                             >
-                                Vision
+                                Location
                             </Text>
 
                             <Flex mt={3.5}>
@@ -494,7 +427,7 @@ function Quests() {
                                 >
                                     <Flex alignItems="center">
                                         <AiOutlineEye fontSize="18px" />
-                                        <Text ml="1">Story</Text>
+                                        <Text ml="1">Vision</Text>
                                     </Flex>
                                 </ActionButton>
                             </Flex>

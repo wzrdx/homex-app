@@ -50,9 +50,8 @@ function Leaderboard() {
 
         const duration = intervalToDuration({ start: 0, end: difference * 1000 });
 
-        console.log(duration);
-
-        return [duration.hours, duration.minutes, duration.seconds].map(zeroPad).join(':');
+        const days = duration.days ? duration.days.toString() + (duration.days > 1 ? ' days' : ' day') + ', ' : '';
+        return days + [duration.hours, duration.minutes, duration.seconds].map(zeroPad).join(':');
     };
 
     const getRoleTag = (ticketsEarned: number, index: number) => {

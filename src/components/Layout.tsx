@@ -26,7 +26,7 @@ function Layout() {
         <QuestsProvider>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex style={getBackgroundStyle(Elder)} position="relative" height="100vh" flexDir="column">
+            <Flex style={getBackgroundStyle(Midjourney)} position="relative" height="100vh" flexDir="column">
                 <Box height={{ md: '18%', lg: '14%' }}>
                     <Header />
                 </Box>

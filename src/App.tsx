@@ -23,6 +23,7 @@ import ResourcesToast from './shared/ResourcesToast';
 import { getQuest } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
+import { useGetOngoingQuests } from './blockchain/hooks/useGetOngoingQuests';
 
 function App() {
     const toast = useToast();
@@ -34,30 +35,7 @@ function App() {
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
-
-    // TODO: Univeral resolution resolver
-    // useEffect(() => {
-    //     if (hasSuccessfulTransactions) {
-    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
-    //             const pendingTx = find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
-
-    //             if (pendingTx) {
-    //                 console.log('TxResolution', pendingTx);
-
-    //                 setPendingTxs((array) => filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
-
-    //                 switch (pendingTx.resolution) {
-    //                     case TxResolution.UpdateEnergy:
-    //                         getEnergy();
-    //                         break;
-
-    //                     default:
-    //                         console.error('Unknown txResolution type');
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [successfulTransactionsArray]);
+    const { getOngoingQuests } = useGetOngoingQuests();
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
@@ -121,8 +99,39 @@ function App() {
                 getEnergy();
                 break;
 
+            case TxResolution.UpdateResources:
+                const resources: string[] = tx.data.resources;
+                getOngoingQuests();
+
+                const calls = map(resources, (resource) => getResourceCall(resource));
+                forEach(calls, (call) => call());
+                break;
+
             default:
                 console.error('Unknown TxResolution');
+        }
+    };
+
+    const getResourceCall = (resource: string): (() => Promise<void>) => {
+        switch (resource) {
+            case 'energy':
+                return getEnergy;
+
+            case 'herbs':
+                return getHerbs;
+
+            case 'gems':
+                return getGems;
+
+            case 'essence':
+                return getEssence;
+
+            case 'tickets':
+                return getTickets;
+
+            default:
+                console.error('getResourceCall(): Unknown resource type');
+                return async () => {};
         }
     };
 

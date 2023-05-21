@@ -8,6 +8,7 @@ import {
     ModalContent,
     ModalOverlay,
     Text,
+    Image,
     useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -15,13 +16,14 @@ import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { indexOf } from 'lodash';
-import { BsExclamation, BsQuestionCircle } from 'react-icons/bs';
+import { BsExclamation } from 'react-icons/bs';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
+import Logo from '../assets/logo_small_white.png';
 
 const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
@@ -163,6 +165,10 @@ function Header() {
                     margin="0 auto"
                 >
                     <Flex alignItems="center" pointerEvents="all">
+                        <Box mr={5} ml="-1px">
+                            <Image width="64px" opacity={0.85} src={Logo} />
+                        </Box>
+
                         {isMusicOn ? (
                             <Box cursor="pointer" color="whitesmoke" px={2.5} ml={-2.5}>
                                 <TbMusic fontSize="20px" onClick={toggleMusic} />
