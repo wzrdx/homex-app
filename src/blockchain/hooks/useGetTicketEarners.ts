@@ -37,7 +37,7 @@ export const useGetTicketEarners = () => {
                 timestamp: new Date(item?.last_timestamp?.toNumber() * 1000),
             }));
 
-            console.log(parsedArray);
+            // console.log(parsedArray);
 
             setEarners(parsedArray);
         } catch (err) {

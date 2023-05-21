@@ -1,16 +1,19 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 import Praying from '../assets/images/energy.jpg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { Address } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { getAddress, refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
-import { useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { useTransactionsContext, TransactionsContextType, TransactionType } from '../services/transactions';
+import {
+    useTransactionsContext,
+    TransactionsContextType,
+    TransactionType,
+    TxResolution,
+} from '../services/transactions';
 import { TimeIcon } from '@chakra-ui/icons';
-import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
-import { filter, find } from 'lodash';
+import { getResourceElements } from '../services/resources';
 import Typewriter from 'typewriter-effect';
 import Reward from '../shared/Reward';
 
@@ -24,36 +27,7 @@ function Energy() {
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
 
     const { setPendingTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
-    const { getEnergy } = useResourcesContext() as ResourcesContextType;
-
     const { name, icon, image } = getResourceElements('energy');
-
-    // const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
-    // const [pendingTxs, setPendingTxs] = useState<PendingTx[]>([]);
-
-    // // Tx tracker
-    // useEffect(() => {
-    //     if (hasSuccessfulTransactions) {
-    //         successfulTransactionsArray.forEach((tx: [string, any]) => {
-    //             const pendingTx = find(pendingTxs, (pTx) => pTx.sessionId === tx[0]);
-
-    //             if (pendingTx) {
-    //                 console.log('TxResolution', pendingTx);
-
-    //                 setPendingTxs((array) => filter(array, (pTx) => pTx.sessionId !== pendingTx.sessionId));
-
-    //                 switch (pendingTx.resolution) {
-    //                     case TxResolution.UpdateEnergy:
-    //                         getEnergy();
-    //                         break;
-
-    //                     default:
-    //                         console.error('Unknown txResolution type');
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [successfulTransactionsArray]);
 
     const faucet = async () => {
         setEnergyButtonLoading(true);
@@ -61,6 +35,7 @@ function Energy() {
         const address = await getAddress();
         const user = new Address(address);
 
+        // TODO: Less gas limit
         try {
             const tx = smartContract.methods
                 .faucet()
@@ -88,16 +63,9 @@ function Energy() {
                 {
                     sessionId,
                     type: TransactionType.Faucet,
+                    resolution: TxResolution.UpdateEnergy,
                 },
             ]);
-
-            // setPendingTxs((array) => [
-            //     ...array,
-            //     {
-            //         sessionId,
-            //         resolution: TxResolution.UpdateEnergy,
-            //     },
-            // ]);
         } catch (err) {
             console.error('Error occured while calling faucet', err);
         }

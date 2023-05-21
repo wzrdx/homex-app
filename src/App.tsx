@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, ResourcesProvider, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, filter, find, cloneDeep, remove } from 'lodash';
+import { map, head, includes, filter, find, cloneDeep, remove, forEach } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -60,45 +60,69 @@ function App() {
     // }, [successfulTransactionsArray]);
 
     useEffect(() => {
-        removeTxs(
-            map(failedTransactionsArray, (tx) => head(tx)),
-            'failed'
-        );
+        removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
     }, [failedTransactionsArray]);
 
     useEffect(() => {
-        removeTxs(
-            map(successfulTransactionsArray, (tx) => head(tx)),
-            'successful'
-        );
+        if (hasSuccessfulTransactions) {
+            const txs = removeTxs(map(successfulTransactionsArray, (tx) => head(tx)));
+
+            forEach(txs, (tx) => {
+                if (tx.resolution) {
+                    applyTxResolution(tx);
+                }
+
+                console.log('[App.tsx] sucessful Tx', tx);
+
+                switch (tx.type) {
+                    case TransactionType.CompleteQuest:
+                        const quest: Quest = getQuest(tx.questId);
+                        displayResourcesToast('Quest complete!', quest.rewards);
+                        break;
+
+                    case TransactionType.StartQuest:
+                        playSound('start_quest');
+                        break;
+
+                    case TransactionType.Faucet:
+                        displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
+                        break;
+
+                    default:
+                        console.error('Unknown TransactionType');
+                }
+            });
+        }
     }, [successfulTransactionsArray]);
 
-    const removeTxs = (victimSessionIds: string[], resolution: string) => {
+    const removeTxs = (victimSessionIds: string[]): Transaction[] => {
+        let victims: Transaction[] = [];
+
         const pendingSessionIds: string[] = map(pendingTxs, (tx) => tx.sessionId);
         const hasTxsToRemove = victimSessionIds.some((id) => includes(pendingSessionIds, id));
 
         if (hasTxsToRemove) {
             const txs = cloneDeep(pendingTxs);
-            const victims = remove(txs, (tx) => includes(victimSessionIds, tx.sessionId));
+            victims = remove(txs, (tx) => includes(victimSessionIds, tx.sessionId));
 
-            console.log('Txs', txs, 'Victims', victims);
-
-            // TODO: Split function from this point
-            if (resolution === 'successful') {
-                // TODO: Iterate over the victims
-                // if (tx.type === TransactionType.CompleteQuest) {
-                //     const quest: Quest = getQuest(tx.questId);
-                //     displayResourcesToast('Quest complete!', quest.rewards);
-                // }
-                // if (tx.type === TransactionType.StartQuest) {
-                //     playSound('start_quest');
-                // }
-                // if (tx.type === TransactionType.Faucet) {
-                //     displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
-                // }
-            }
+            console.log('[App.tsx] removeTxs', victims);
 
             setPendingTxs(txs);
+        }
+
+        return victims;
+    };
+
+    const applyTxResolution = (tx: Transaction) => {
+        console.log('[App.tsx] applyTxResolution', tx);
+
+        switch (tx.resolution) {
+            case TxResolution.UpdateEnergy:
+                getEnergy();
+                break;
+
+            default:
+                console.error('Unknown TxResolution');
         }
     };
 
