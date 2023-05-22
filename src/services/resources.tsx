@@ -23,7 +23,7 @@ import {
     TICKETS_TOKEN_ID,
 } from '../blockchain/config';
 import axios from 'axios';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { getAddress, logout } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
 export const INITIAL_RESOURCES_STATE = {
@@ -103,6 +103,11 @@ export const ResourcesProvider = ({ children }) => {
         try {
             if (!address) {
                 address = await getAddress();
+            }
+
+            if (!address) {
+                console.log('[ResourcesProvider] No address, logging out');
+                logout(`/unlock`);
             }
 
             const result = await axios.get(`accounts/${address}/tokens/${ENERGY_TOKEN_ID}`, {

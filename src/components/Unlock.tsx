@@ -50,6 +50,8 @@ const Unlock = () => {
             if (!address) {
                 console.log('[Unlock.tsx] No address, logging out');
                 logout(`/unlock`);
+            } else {
+                console.log('[Unlock.tsx] User logged in with address', address);
             }
 
             const { data } = await getTokenCount(address);
