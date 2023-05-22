@@ -25,6 +25,7 @@ import {
 import axios from 'axios';
 import { getAddress, logout } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useDisclosure } from '@chakra-ui/react';
 
 export const INITIAL_RESOURCES_STATE = {
     energy: 0,
@@ -89,6 +90,9 @@ export interface ResourcesContextType {
     getGems: () => Promise<void>;
     getEssence: () => Promise<void>;
     getTickets: () => Promise<void>;
+    isTicketModalOpen: boolean;
+    onTicketModalOpen: () => void;
+    onTicketModalClose: () => void;
 }
 
 const ResourcesContext = createContext<ResourcesContextType | null>(null);
@@ -98,6 +102,8 @@ export const useResourcesContext = () => useContext(ResourcesContext);
 export const ResourcesProvider = ({ children }) => {
     const [resources, setResources] = useState(INITIAL_RESOURCES_STATE);
     let { address } = useGetAccountInfo();
+
+    const { isOpen: isTicketModalOpen, onOpen: onTicketModalOpen, onClose: onTicketModalClose } = useDisclosure();
 
     const getEnergy = async () => {
         try {
@@ -246,7 +252,18 @@ export const ResourcesProvider = ({ children }) => {
 
     return (
         <ResourcesContext.Provider
-            value={{ resources, setResources, getEnergy, getHerbs, getGems, getEssence, getTickets }}
+            value={{
+                resources,
+                setResources,
+                getEnergy,
+                getHerbs,
+                getGems,
+                getEssence,
+                getTickets,
+                isTicketModalOpen,
+                onTicketModalOpen,
+                onTicketModalClose,
+            }}
         >
             {children}
         </ResourcesContext.Provider>

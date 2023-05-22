@@ -85,6 +85,11 @@ export const SoundsProvider = ({ children }) => {
         volume: volume,
     });
 
+    const ticket = new Howl({
+        src: ['/ticket.mp3'],
+        volume: volume,
+    });
+
     const playSound = (type: any) => {
         if (!areSoundsOn) {
             return;
@@ -129,6 +134,10 @@ export const SoundsProvider = ({ children }) => {
 
             case 'swap':
                 swap.play();
+                break;
+
+            case 'ticket':
+                ticket.play();
                 break;
 
             default:

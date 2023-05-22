@@ -1,4 +1,9 @@
-import { extendTheme } from '@chakra-ui/react';
+import { ThemeConfig, extendTheme } from '@chakra-ui/react';
+
+const config: ThemeConfig = {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+};
 
 const colors = {
     resources: {
@@ -15,6 +20,7 @@ const colors = {
     },
     almostWhite: 'gainsboro',
     dark: '#191919',
+    darkBlue: '#23242a',
     lightDark: '#212121',
     brightBlue: '#88ddff',
     lightOrange: '#ee8b1c',
@@ -66,6 +72,7 @@ const breakpoints = {
 };
 
 export const theme = extendTheme({
+    config,
     colors,
     fonts,
     styles,

@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import {
     Box,
     Button,
+    DarkMode,
     Flex,
     Image,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
+    ModalHeader,
     ModalOverlay,
     Text,
     useDisclosure,
@@ -51,7 +53,7 @@ import {
     useTransactionsContext,
 } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame } from '../services/assets';
+import { getFrame, getFullTicket } from '../services/assets';
 
 const LARGE_FRAME_SIZE = 352;
 const MEDIUM_FRAME_SIZE = 296;
@@ -65,7 +67,7 @@ function Quests() {
     const { isQuestTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
-    const { resources } = useResourcesContext() as ResourcesContextType;
+    const { resources, isTicketModalOpen, onTicketModalClose } = useResourcesContext() as ResourcesContextType;
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
@@ -426,6 +428,29 @@ function Quests() {
                     )}
                 </Flex>
             </Flex>
+
+            {/* Ticket */}
+            <Modal size="md" onClose={onTicketModalClose} isOpen={isTicketModalOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent backgroundColor="darkBlue">
+                    <ModalHeader>Congratulations!</ModalHeader>
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ outline: 0 }}
+                        _hover={{ background: 'blackAlpha.300' }}
+                        borderRadius="3px"
+                    />
+                    <ModalBody>
+                        <Flex flexDir="column" justifyContent="center" alignItems="center" py={2}>
+                            <Image width={{ md: '210px', lg: '224px' }} src={getFullTicket()} alt="Ticket" />
+                            <Text mt={1.5} fontSize="lg">
+                                You have earned 1 ticket!
+                            </Text>
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
 
             {/* Vision */}
             <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>

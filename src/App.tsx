@@ -29,7 +29,6 @@ import { getQuest } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
 import { useGetOngoingQuests } from './blockchain/hooks/useGetOngoingQuests';
-import { logout } from '@multiversx/sdk-dapp/utils';
 
 function App() {
     const toast = useToast();
@@ -40,7 +39,8 @@ function App() {
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
-    const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
+    const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
+        useResourcesContext() as ResourcesContextType;
     const { getOngoingQuests } = useGetOngoingQuests();
 
     const { address } = useGetAccountInfo();
@@ -65,12 +65,17 @@ function App() {
                     applyTxResolution(tx);
                 }
 
-                console.log('[App.tsx] sucessful Tx', tx);
-
                 switch (tx.type) {
                     case TransactionType.CompleteQuest:
                         const quest: Quest = getQuest(tx.questId);
-                        displayResourcesToast('Quest complete!', quest.rewards);
+                        const isMission = quest.type === 'final';
+
+                        displayResourcesToast(`${isMission ? 'Mission' : 'Quest'} complete!`, quest.rewards, isMission);
+
+                        if (isMission) {
+                            onTicketModalOpen();
+                        }
+
                         break;
 
                     case TransactionType.StartQuest:
@@ -155,9 +160,10 @@ function App() {
         gains: {
             resource: string;
             value: number;
-        }[]
+        }[],
+        isMission: boolean = false
     ) => {
-        playSound('complete_quest');
+        playSound(isMission ? 'ticket' : 'complete_quest');
 
         toast({
             position: 'top-right',
