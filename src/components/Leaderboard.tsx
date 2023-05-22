@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Spinner, Text, Image, ResponsiveValue } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { TicketEarner, useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
 import _ from 'lodash';
@@ -8,6 +8,34 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
 import { TimeIcon } from '@chakra-ui/icons';
+
+const COLUMNS = [
+    {
+        name: 'Rank',
+        width: '86px',
+        align: 'left',
+    },
+    {
+        name: 'Player',
+        width: '162px',
+        align: 'left',
+    },
+    {
+        name: 'Tickets',
+        width: '116px',
+        align: 'left',
+    },
+    {
+        name: 'Role',
+        width: '234px',
+        align: 'left',
+    },
+    {
+        name: 'Time',
+        width: '100px',
+        align: 'left',
+    },
+];
 
 function Leaderboard() {
     const { earners, getTicketEarners } = useGetTicketEarners();
@@ -63,11 +91,7 @@ function Leaderboard() {
             role = Role.OGTravelers;
         }
 
-        return (
-            <Flex ml="64px" width="246px">
-                <RoleTag role={role} />
-            </Flex>
-        );
+        return <RoleTag role={role} />;
     };
 
     const hasContestEnded = (): boolean => false;
@@ -93,40 +117,33 @@ function Leaderboard() {
                     <Flex flexDir="column">
                         {/* Header */}
                         <Flex mb={2}>
-                            <Text minWidth="151px" textAlign="left" fontWeight={600} fontSize="17px">
-                                Player
-                            </Text>
-
-                            <Text minWidth="122px" textAlign="left" fontWeight={600} fontSize="17px">
-                                Tickets
-                            </Text>
-
-                            <Text minWidth="246px" textAlign="left" fontWeight={600} fontSize="17px">
-                                Role
-                            </Text>
-
-                            <Text minWidth="100px" textAlign="left" fontWeight={600} fontSize="17px">
-                                Time
-                            </Text>
+                            {_.map(COLUMNS, (column: any, index: number) => (
+                                <Text
+                                    key={index}
+                                    minWidth={column.width}
+                                    textAlign={column.align}
+                                    fontWeight={600}
+                                    fontSize="17px"
+                                >
+                                    {column.name}
+                                </Text>
+                            ))}
                         </Flex>
 
                         {_.map(ticketEarners, (earner: TicketEarner, index: number) => (
                             <Flex mt={2} alignItems="center" key={index}>
-                                <Text minWidth="140px" textAlign="left">
-                                    {earner.address}
-                                </Text>
+                                <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
 
-                                <Text minWidth="44px" textAlign="right">
-                                    {earner.ticketsEarned}
-                                </Text>
+                                <Text minWidth={COLUMNS[1].width}>{earner.address}</Text>
 
-                                <Flex minWidth="26px" justifyContent="flex-end">
+                                <Flex minWidth={COLUMNS[2].width}>
+                                    <Text minWidth="24px">{earner.ticketsEarned}</Text>
                                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                                 </Flex>
 
-                                {getRoleTag(earner.ticketsEarned, index)}
+                                <Flex minWidth={COLUMNS[3].width}>{getRoleTag(earner.ticketsEarned, index)}</Flex>
 
-                                <Flex alignItems="center">
+                                <Flex minWidth={COLUMNS[4].width} alignItems="center">
                                     <TimeIcon boxSize={4} color="whitesmoke" />
                                     <Text ml={2} minWidth="220x" textAlign="right">
                                         {earner.time}

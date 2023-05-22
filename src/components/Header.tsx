@@ -23,7 +23,7 @@ import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
-import Logo from '../assets/logo_small_white.png';
+import Logo from '../assets/logo_small.png';
 
 const ROUTE_WIDTH = 144;
 const HIGHLIGHTED_ROUTES = [2];
@@ -93,7 +93,7 @@ function Header() {
     return (
         <Flex flexDir="column">
             {/* Main header */}
-            <Flex flex={1} position="relative" background="#00000070">
+            <Flex flex={1} position="relative" background="#00000036">
                 {/* Routes */}
                 <Flex pt={{ md: 4, lg: 5 }} width="100%" justifyContent="center" alignItems="flex-end">
                     <Flex position="relative">
@@ -165,8 +165,8 @@ function Header() {
                     margin="0 auto"
                 >
                     <Flex alignItems="center" pointerEvents="all">
-                        <Box mr={5} ml="-1px">
-                            <Image width="64px" opacity={0.85} src={Logo} />
+                        <Box mr={8} ml="-1px">
+                            <Image width="64px" opacity={0.95} src={Logo} />
                         </Box>
 
                         {isMusicOn ? (
