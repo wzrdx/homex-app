@@ -36,6 +36,7 @@ const Unlock = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log('[Unlock.tsx] isLoggedIn', isLoggedIn, 'address', address);
         if (isLoggedIn && address) {
             checkAuthentication();
         }

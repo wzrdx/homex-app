@@ -1,9 +1,11 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
 import { getLayoutBackground, getFrame, getFaucetImage } from '../services/assets';
 import { getQuestImage } from '../services/quests';
+import { isAfter } from 'date-fns';
+import { START_OF_CONTEST } from '../blockchain/config';
 
 function LoadingScreen({ setIsLoaded }) {
     const [isReady, setIsReady] = useState(false);
@@ -40,28 +42,36 @@ function LoadingScreen({ setIsLoaded }) {
 
     return (
         <Flex position="fixed" top={0} right={0} bottom={0} left={0} zIndex={5} pointerEvents="none" userSelect="none">
-            <Flex justifyContent="center" position="absolute" top={0} right={0} bottom={0} left={0} zIndex={6}>
-                <video style={{ height: '100%' }} autoPlay={true} muted={true} onEnded={onVideoEnd}>
-                    <source src={Unlocker} type="video/webm" />
-                </video>
-            </Flex>
+            {isAfter(new Date(), START_OF_CONTEST) ? (
+                <Flex>
+                    <Text>Waiting for the contest to start</Text>
+                </Flex>
+            ) : (
+                <>
+                    <Flex justifyContent="center" position="absolute" top={0} right={0} bottom={0} left={0} zIndex={6}>
+                        <video style={{ height: '100%' }} autoPlay={true} muted={true} onEnded={onVideoEnd}>
+                            <source src={Unlocker} type="video/webm" />
+                        </video>
+                    </Flex>
 
-            <Box
-                width="50%"
-                height="100vh"
-                opacity={1}
-                transition="all 0.5s ease-in-out"
-                backgroundColor="dark"
-                style={isReady ? { transform: `translateX(-${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
-            ></Box>
-            <Box
-                width="50%"
-                height="100vh"
-                opacity={1}
-                transition="all 0.5s ease-in-out"
-                backgroundColor="dark"
-                style={isReady ? { transform: `translateX(${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
-            ></Box>
+                    <Box
+                        width="50%"
+                        height="100vh"
+                        opacity={1}
+                        transition="all 0.5s ease-in-out"
+                        backgroundColor="dark"
+                        style={isReady ? { transform: `translateX(-${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
+                    ></Box>
+                    <Box
+                        width="50%"
+                        height="100vh"
+                        opacity={1}
+                        transition="all 0.5s ease-in-out"
+                        backgroundColor="dark"
+                        style={isReady ? { transform: `translateX(${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
+                    ></Box>
+                </>
+            )}
         </Flex>
     );
 }
