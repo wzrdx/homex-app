@@ -25,6 +25,7 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
+import Q1 from '../assets/videos/Q1_glow.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -236,31 +237,11 @@ function Quests() {
             <Flex flex={7} justifyContent="center">
                 <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
                     <Flex justifyContent="center" alignItems="center" position="relative">
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            position="absolute"
-                            top={0}
-                            right={0}
-                            bottom={0}
-                            left={0}
-                        >
-                            <Image
-                                src={getQuestImage(currentQuest.id)}
-                                alt="Quest-Image"
-                                zIndex={2}
-                                transform="scale(1.2)"
-                                mt="16px"
-                                clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
-                            />
-                        </Flex>
-
-                        <Image
-                            src={getFrame()}
-                            alt="Frame"
-                            zIndex={3}
-                            width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
-                        />
+                        <Box>
+                            <video style={{ height: '520px' }} autoPlay={true} muted={true} loop={true}>
+                                <source src={Q1} type="video/webm" />
+                            </video>
+                        </Box>
                     </Flex>
 
                     <Flex my={{ md: 5, lg: 8 }}>
