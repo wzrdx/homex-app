@@ -9,7 +9,7 @@ import { useGetAccountInfo, useGetIsLoggedIn, useGetLoginInfo } from '@multivers
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContextType, getTokenCount, useAuthenticationContext } from '../services/authentication';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { getAddress, logout } from '@multiversx/sdk-dapp/utils';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
@@ -45,6 +45,11 @@ const Unlock = () => {
         try {
             if (!address) {
                 address = await getAddress();
+            }
+
+            if (!address) {
+                console.log('[Unlock.tsx] No address, logging out');
+                logout(`/unlock`);
             }
 
             const { data } = await getTokenCount(address);

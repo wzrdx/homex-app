@@ -8,7 +8,12 @@ import { ProtectedRoute } from './shared/ProtectedRoute';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, ResourcesProvider, useResourcesContext } from './services/resources';
-import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import {
+    useGetAccountInfo,
+    useGetFailedTransactions,
+    useGetLoginInfo,
+    useGetSuccessfulTransactions,
+} from '@multiversx/sdk-dapp/hooks';
 import { map, head, includes, filter, find, cloneDeep, remove, forEach } from 'lodash';
 import { useEffect } from 'react';
 import {
@@ -24,6 +29,7 @@ import { getQuest } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
 import { useGetOngoingQuests } from './blockchain/hooks/useGetOngoingQuests';
+import { logout } from '@multiversx/sdk-dapp/utils';
 
 function App() {
     const toast = useToast();
@@ -36,6 +42,16 @@ function App() {
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { getOngoingQuests } = useGetOngoingQuests();
+
+    const { address } = useGetAccountInfo();
+    const { isLoggedIn } = useGetLoginInfo();
+
+    useEffect(() => {
+        if (!isLoggedIn && !address) {
+            console.log('[App.tsx] notLoggedIn & no address, calling logout()');
+            logout(`/unlock`);
+        }
+    }, [address, isLoggedIn]);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
