@@ -36,10 +36,10 @@ const Unlock = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn && address) {
             checkAuthentication();
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, address]);
 
     const checkAuthentication = async () => {
         try {
@@ -63,8 +63,6 @@ const Unlock = () => {
 
     const onAuthenticationResult = (isSuccessful: boolean) => {
         if (isSuccessful) {
-            console.log('# Double checking if address is available', address);
-
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
         } else {

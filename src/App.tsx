@@ -48,8 +48,7 @@ function App() {
 
     useEffect(() => {
         if (!isLoggedIn && !address) {
-            console.log('[App.tsx] notLoggedIn & no address, calling logout()');
-            logout(`/unlock`);
+            console.log('[App.tsx] notLoggedIn & no address');
         }
     }, [address, isLoggedIn]);
 
