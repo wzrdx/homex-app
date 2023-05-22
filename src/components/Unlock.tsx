@@ -23,15 +23,23 @@ enum AuthenticationError {
 }
 
 const Unlock = () => {
+    const commonProps = {
+        nativeAuth: true,
+        redirectAfterLogin: false,
+    };
+
     const [error, setError] = useState<AuthenticationError>();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
 
-    // const isLoggedInWithWallet = useGetIsLoggedIn();
     let { address } = useGetAccountInfo();
-
     const { isLoggedIn } = useGetLoginInfo();
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            checkAuthentication();
+        }
+    }, [isLoggedIn]);
 
     const checkAuthentication = async () => {
         try {
@@ -39,11 +47,7 @@ const Unlock = () => {
                 address = await getAddress();
             }
 
-            // console.log('Logging in with address', address);
-
             const { data } = await getTokenCount(address);
-
-            // console.log(`User owns ${data} NFTs`);
 
             onAuthenticationResult(data > 0);
         } catch (err) {
@@ -54,26 +58,14 @@ const Unlock = () => {
 
     const onAuthenticationResult = (isSuccessful: boolean) => {
         if (isSuccessful) {
-            // console.log('* User is logged in', isLoggedIn);
+            console.log('# Double checking if address is available', address);
+
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
         } else {
             console.log('User is not Holder');
             setError(AuthenticationError.NotHolding);
         }
-    };
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            checkAuthentication();
-        } else {
-            // console.log('User is not logged in');
-        }
-    }, [isLoggedIn]);
-
-    const commonProps = {
-        nativeAuth: true,
-        redirectAfterLogin: false,
     };
 
     const getText = (text: string) => (

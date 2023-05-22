@@ -254,7 +254,7 @@ function Header() {
                         />
 
                         {process.env.NODE_ENV === 'development' && (
-                            <Flex alignItems="center">
+                            <Flex alignItems="center" zIndex={4}>
                                 {/* TODO: Debug */}
                                 <Box
                                     display={{

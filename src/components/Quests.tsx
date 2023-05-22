@@ -22,8 +22,6 @@ import {
     meetsRequirements,
     useQuestsContext,
 } from '../services/quests';
-import Frame from '../assets/frame.png';
-// import Vision from '../assets/vision.jpg';
 import Vision from '../assets/videos/vision.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
@@ -53,12 +51,10 @@ import {
     useTransactionsContext,
 } from '../services/transactions';
 import Reward from '../shared/Reward';
+import { getFrame } from '../services/assets';
 
-const LARGE_FRAME_SIZE = 318;
-const LARGE_IMAGE_SIZE = 424;
-
-const MEDIUM_FRAME_SIZE = 246;
-const MEDIUM_IMAGE_SIZE = 328;
+const LARGE_FRAME_SIZE = 352;
+const MEDIUM_FRAME_SIZE = 296;
 
 function Quests() {
     const navigate = useNavigate();
@@ -237,13 +233,7 @@ function Quests() {
             {/* Quest requirements */}
             <Flex flex={7} justifyContent="center">
                 <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
-                    <Flex
-                        justifyContent="center"
-                        alignItems="center"
-                        position="relative"
-                        width={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
-                        height={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
-                    >
+                    <Flex justifyContent="center" alignItems="center" position="relative">
                         <Flex
                             justifyContent="center"
                             alignItems="center"
@@ -254,19 +244,20 @@ function Quests() {
                             left={0}
                         >
                             <Image
-                                src={Frame}
-                                alt="Frame"
-                                zIndex={3}
-                                width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
+                                src={getQuestImage(currentQuest.id)}
+                                alt="Quest-Image"
+                                zIndex={2}
+                                transform="scale(1.2)"
+                                mt="16px"
+                                clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
                             />
                         </Flex>
 
                         <Image
-                            src={getQuestImage(currentQuest.id)}
-                            alt="Quest-Image"
-                            zIndex={2}
-                            width={[null, MEDIUM_IMAGE_SIZE, MEDIUM_IMAGE_SIZE, LARGE_IMAGE_SIZE]}
-                            clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
+                            src={getFrame()}
+                            alt="Frame"
+                            zIndex={3}
+                            width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
                         />
                     </Flex>
 

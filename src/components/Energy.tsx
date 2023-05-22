@@ -1,5 +1,4 @@
 import { Flex, Image, Text } from '@chakra-ui/react';
-import Praying from '../assets/images/energy.jpg';
 import { useState } from 'react';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { Address } from '@multiversx/sdk-core/out';
@@ -16,6 +15,7 @@ import { TimeIcon } from '@chakra-ui/icons';
 import { getResourceElements } from '../services/resources';
 import Typewriter from 'typewriter-effect';
 import Reward from '../shared/Reward';
+import { getFaucetImage } from '../services/assets';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -77,7 +77,7 @@ function Energy() {
                 <Image
                     width={{ md: '330px', lg: '460px' }}
                     minHeight={{ md: '200px', lg: '320px' }}
-                    src={Praying}
+                    src={getFaucetImage()}
                     alt="Energy"
                     borderRadius="1px"
                     border="2px solid #dadada3d"

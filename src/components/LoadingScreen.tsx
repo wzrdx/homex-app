@@ -1,18 +1,21 @@
+import { Box, Flex } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
-import { useEffect, useState } from 'react';
-import { getResourceElements } from '../services/resources';
-import { Box } from '@chakra-ui/react';
+import { getLayoutBackground, getFrame, getFaucetImage } from '../services/assets';
+import { getQuestImage } from '../services/quests';
 
 function LoadingScreen({ setIsLoaded }) {
     const [isReady, setIsReady] = useState(false);
 
-    const { image: TicketImage } = getResourceElements('tickets');
-    const { image: EnergyImage } = getResourceElements('energy');
+    const { imagesPreloaded: _imagesPreloaded } = useImagePreloader([
+        getFrame(),
+        getLayoutBackground(),
+        getQuestImage(1),
+        getFaucetImage(),
+    ]);
 
-    const { imagesPreloaded } = useImagePreloader([TicketImage, EnergyImage]);
-
-    const getTransitionValue = () => window.innerWidth / 2 + 200;
+    const getTranslateDistance = () => window.innerWidth / 2 + 250;
 
     const onVideoEnd = () => {
         /**
@@ -26,24 +29,40 @@ function LoadingScreen({ setIsLoaded }) {
          */
         setTimeout(() => {
             setIsLoaded(true);
-        }, 400);
+        }, 500);
     };
 
     useEffect(() => {
-        setIsLoaded(true);
+        if (process.env.NODE_ENV === 'development') {
+            setIsLoaded(true);
+        }
     }, []);
 
     return (
-        <Box>
-            {/* <div>
-                <video autoPlay={true} muted={true} onEnded={onVideoEnd}>
+        <Flex position="fixed" top={0} right={0} bottom={0} left={0} zIndex={5} pointerEvents="none" userSelect="none">
+            <Flex justifyContent="center" position="absolute" top={0} right={0} bottom={0} left={0} zIndex={6}>
+                <video style={{ height: '100%' }} autoPlay={true} muted={true} onEnded={onVideoEnd}>
                     <source src={Unlocker} type="video/webm" />
                 </video>
-            </div>
+            </Flex>
 
-            <div style={isReady ? { transform: `translateX(-${getTransitionValue()}px)`, opacity: 0.25 } : {}}></div>
-            <div style={isReady ? { transform: `translateX(${getTransitionValue()}px)`, opacity: 0.25 } : {}}></div> */}
-        </Box>
+            <Box
+                width="50%"
+                height="100vh"
+                opacity={1}
+                transition="all 0.5s ease-in-out"
+                backgroundColor="dark"
+                style={isReady ? { transform: `translateX(-${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
+            ></Box>
+            <Box
+                width="50%"
+                height="100vh"
+                opacity={1}
+                transition="all 0.5s ease-in-out"
+                backgroundColor="dark"
+                style={isReady ? { transform: `translateX(${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
+            ></Box>
+        </Flex>
     );
 }
 

@@ -4,11 +4,9 @@ import { Outlet } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
 import { QuestsProvider } from '../services/quests';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
-import Midjourney from '../assets/backgrounds/Midjourney_2.jpg';
-import Elder from '../assets/backgrounds/Elder.png';
-import Elder_2 from '../assets/backgrounds/Elder_2.png';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
+import { getLayoutBackground } from '../services/assets';
 
 function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -27,7 +25,7 @@ function Layout() {
         <QuestsProvider>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex style={getBackgroundStyle(Elder_2)} position="relative" height="100vh" flexDir="column">
+            <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" height="100vh" flexDir="column">
                 <Box height={{ md: '18%', lg: '14%' }}>
                     <Header />
                 </Box>
