@@ -42,7 +42,7 @@ function LoadingScreen({ setIsLoaded }) {
 
     return (
         <Flex position="fixed" top={0} right={0} bottom={0} left={0} zIndex={5} pointerEvents="none" userSelect="none">
-            {isAfter(new Date(), START_OF_CONTEST) ? (
+            {!isAfter(new Date(), START_OF_CONTEST) ? (
                 <Flex>
                     <Text>Waiting for the contest to start</Text>
                 </Flex>
