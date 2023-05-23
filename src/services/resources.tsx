@@ -107,15 +107,6 @@ export const ResourcesProvider = ({ children }) => {
 
     const getEnergy = async () => {
         try {
-            if (!address) {
-                address = await getAddress();
-            }
-
-            if (!address) {
-                console.log('[ResourcesProvider] No address, logging out');
-                logout(`/unlock`);
-            }
-
             const result = await axios.get(`accounts/${address}/tokens/${ENERGY_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -140,10 +131,6 @@ export const ResourcesProvider = ({ children }) => {
 
     const getHerbs = async () => {
         try {
-            if (!address) {
-                address = await getAddress();
-            }
-
             const result = await axios.get(`accounts/${address}/tokens/${HERBS_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -168,10 +155,6 @@ export const ResourcesProvider = ({ children }) => {
 
     const getGems = async () => {
         try {
-            if (!address) {
-                address = await getAddress();
-            }
-
             const result = await axios.get(`accounts/${address}/tokens/${GEMS_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -196,10 +179,6 @@ export const ResourcesProvider = ({ children }) => {
 
     const getEssence = async () => {
         try {
-            if (!address) {
-                address = await getAddress();
-            }
-
             const result = await axios.get(`accounts/${address}/tokens/${ESSENCE_TOKEN_ID}`, {
                 baseURL: API_URL,
             });
@@ -224,10 +203,6 @@ export const ResourcesProvider = ({ children }) => {
 
     const getTickets = async () => {
         try {
-            if (!address) {
-                address = await getAddress();
-            }
-
             const result = await axios.get(`accounts/${address}/nfts/${TICKETS_TOKEN_ID}-01`, {
                 baseURL: API_URL,
             });

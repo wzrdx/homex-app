@@ -37,27 +37,30 @@ const Unlock = () => {
 
     useEffect(() => {
         console.log('[Unlock.tsx] isLoggedIn', isLoggedIn, 'address', address);
-        if (isLoggedIn && address) {
+
+        if (isUserLoggedIn()) {
             checkAuthentication();
+        } else {
+            console.warn('[Unlock.tsx] Logging out without /unlock');
+            logout();
         }
     }, [isLoggedIn, address]);
 
     const checkAuthentication = async () => {
         try {
             if (!address) {
-                address = await getAddress();
-            }
-
-            if (!address) {
                 console.log('[Unlock.tsx] No address, logging out');
-                logout(`/unlock`);
+
+                setTimeout(() => {
+                    logout(`/unlock`);
+                }, 3000);
             } else {
                 console.log('[Unlock.tsx] User logged in with address', address);
+
+                const { data } = await getTokenCount(address);
+
+                onAuthenticationResult(data > 0);
             }
-
-            const { data } = await getTokenCount(address);
-
-            onAuthenticationResult(data > 0);
         } catch (err) {
             console.error('Unable to fetch NFTs of user');
             setError(AuthenticationError.RequestError);
@@ -73,6 +76,8 @@ const Unlock = () => {
             setError(AuthenticationError.NotHolding);
         }
     };
+
+    const isUserLoggedIn = (): boolean => isLoggedIn && !!address;
 
     const getText = (text: string) => (
         <Box display="flex" flexDir="column" alignItems="center">
@@ -108,7 +113,7 @@ const Unlock = () => {
                 py="6"
                 px="8"
             >
-                {!error && !isLoggedIn && (
+                {!error && !isUserLoggedIn() && (
                     <Text
                         textTransform="uppercase"
                         fontSize="21px"
@@ -123,7 +128,7 @@ const Unlock = () => {
                 )}
 
                 <Stack width="100%">
-                    {!isLoggedIn ? (
+                    {!isUserLoggedIn() ? (
                         <>
                             <ExtensionLoginButton buttonClassName="Login-Button" {...commonProps}>
                                 <Box display="flex" alignItems="center" justifyContent="space-between">
