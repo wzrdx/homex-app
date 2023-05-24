@@ -238,18 +238,18 @@ function Quests() {
             <Flex flex={7} justifyContent="center">
                 <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
                     <Flex justifyContent="center" alignItems="center" position="relative">
-                        <Flex layerStyle="absoluteCentered" zIndex={4}>
-                            <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={Q1_Layer} type="video/webm" />
-                            </video>
-                        </Flex>
-
                         <Image
                             src={getFrame()}
                             alt="Frame"
-                            zIndex={3}
+                            zIndex={4}
                             width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
                         />
+
+                        <Flex layerStyle="absoluteCentered" zIndex={3}>
+                            <video style={{ maxWidth: '116%' }} autoPlay={true} muted={true} loop={true}>
+                                <source src={Q1_Layer} type="video/webm" />
+                            </video>
+                        </Flex>
 
                         <Flex layerStyle="absoluteCentered">
                             <Image
