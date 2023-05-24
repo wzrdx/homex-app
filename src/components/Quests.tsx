@@ -445,8 +445,13 @@ function Quests() {
                     />
                     <ModalBody minHeight="500px">
                         <Flex flexDir="column" justifyContent="center" alignItems="center" py={2}>
-                            <Box width="300px" my={-14}>
-                                <video autoPlay={true} muted={true} loop={false}>
+                            <Box width="300px" mt={-16} mb={-12}>
+                                <video
+                                    autoPlay={true}
+                                    muted={true}
+                                    loop={false}
+                                    onClick={(e) => (e.target as any).play()}
+                                >
                                     <source src={getSpinningTicket()} type="video/webm" />
                                 </video>
                             </Box>
