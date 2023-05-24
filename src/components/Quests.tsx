@@ -451,7 +451,6 @@ function Quests() {
                                 </video>
                             </Box>
 
-                            {/* <Image width={{ md: '210px', lg: '224px' }} src={getFullTicket()} alt="Ticket" /> */}
                             <Text mt={1.5} fontSize="lg">
                                 You have earned 1 ticket!
                             </Text>
