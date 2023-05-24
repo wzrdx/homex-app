@@ -3,7 +3,6 @@ export const contractAddress = 'erd1qqqqqqqqqqqqqpgq9459wl67kadq47jq8xqwp56musky
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
 export const apiTimeout = 15000;
-export const transactionSize = 15;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 
@@ -20,4 +19,4 @@ export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
 export const YIELD_PER_HOUR = 0.3;
 
-export const START_OF_CONTEST = new Date('2023-05-20');
+export const START_OF_CONTEST = new Date('2023-06-01T12:30:15.000Z');

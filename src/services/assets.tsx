@@ -7,6 +7,8 @@ import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
 
 export const getLayoutBackground = () => Midjourney;
+export const getUnlockBackground = () => Elder;
+
 export const getFrame = () => Frame_3;
 export const getFaucetImage = () => Praying;
 export const getFullTicket = () => Ticket;

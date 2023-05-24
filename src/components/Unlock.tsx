@@ -14,12 +14,17 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { walletConnectV2ProjectId } from '../blockchain/config';
+import { START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
+import { isAfter } from 'date-fns';
+import { Timer } from '../shared/Timer';
+import { getUnlockBackground } from '../services/assets';
+import { getBackgroundStyle } from '../services/helpers';
 
 enum AuthenticationError {
     NotHolding = 'NotHolding',
     RequestError = 'RequestError',
+    ContestNotStarted = 'ContestNotStarted',
 }
 
 const Unlock = () => {
@@ -37,10 +42,14 @@ const Unlock = () => {
     useEffect(() => {
         console.log('[Unlock] address', address);
 
+        console.log(new Date().toISOString());
+
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
     }, [address]);
+
+    const isContestReady = (): boolean => isAfter(new Date(), START_OF_CONTEST);
 
     const checkAuthentication = async () => {
         try {
@@ -51,7 +60,7 @@ const Unlock = () => {
                 console.log('[Unlock] User logged in with address', address);
 
                 // const { data } = await getTokenCount(address);
-                onAuthenticationResult(true);
+                onAuthenticationResult(isContestReady());
             }
         } catch (err) {
             console.error('Unable to fetch NFTs of user');
@@ -64,29 +73,45 @@ const Unlock = () => {
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
         } else {
-            console.log('User is not Holder');
-            setError(AuthenticationError.NotHolding);
+            setError(AuthenticationError.ContestNotStarted);
+            // setError(AuthenticationError.NotHolding);
         }
     };
 
     const isUserLoggedIn = (): boolean => !!address;
 
-    const getText = (text: string) => (
-        <Box display="flex" flexDir="column" alignItems="center">
-            <Text color="white" mb={6} textAlign="center">
+    const getText = (text: string, displayTimer = false) => (
+        <Flex flexDir="column" alignItems="center">
+            <Text fontSize="17px" fontWeight={500} color="white" textAlign="center">
                 {text}
             </Text>
-            <Wallet
-                callback={() => {
-                    setError(undefined);
-                }}
-            />
-        </Box>
+
+            {displayTimer && (
+                <Box mt={3}>
+                    <Timer
+                        timestamp={START_OF_CONTEST}
+                        callback={() => onAuthenticationResult(true)}
+                        isActive
+                        isDescending
+                        displayDays
+                    />
+                </Box>
+            )}
+
+            <Box mt={5}>
+                <Wallet
+                    callback={() => {
+                        setError(undefined);
+                    }}
+                />
+            </Box>
+        </Flex>
     );
 
     return (
         <Flex
             backgroundColor="dark"
+            style={getBackgroundStyle(getUnlockBackground())}
             height="100vh"
             width="100vw"
             justifyContent="center"
@@ -108,7 +133,7 @@ const Unlock = () => {
                 {!error && !isUserLoggedIn() && (
                     <Text
                         textTransform="uppercase"
-                        fontSize="21px"
+                        fontSize="22px"
                         fontWeight="500"
                         letterSpacing="0.5px"
                         mb="1.5rem"
@@ -189,6 +214,9 @@ const Unlock = () => {
 
                             {error === AuthenticationError.RequestError &&
                                 getText('Error occurred while fetching NFTs, please reload this page')}
+
+                            {error === AuthenticationError.ContestNotStarted &&
+                                getText('Waiting for the game to start', true)}
 
                             {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>

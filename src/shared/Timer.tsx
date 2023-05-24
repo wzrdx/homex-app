@@ -76,14 +76,16 @@ export const Timer: FunctionComponent<
         };
     }, [isActive, timestamp]);
 
+    const isDisplayingDays = (): boolean => !!displayDays && (duration.days as number) > 0;
+
     return (
         <Flex alignItems="center" justifyContent="center">
             <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />
             {isCompact ? (
                 <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
-                <Text minWidth={displayDays ? '128px' : '70px'}>
-                    {displayDays && <Text as="span">{`${duration.days} days, `}</Text>}
+                <Text minWidth={isDisplayingDays() ? '128px' : '70px'}>
+                    {isDisplayingDays() && <Text as="span">{`${duration.days} days, `}</Text>}
                     <Text as="span">
                         {`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
                     </Text>

@@ -1,4 +1,4 @@
-import { Box, Link, Text } from '@chakra-ui/react';
+import { Box, Link, Text, Flex } from '@chakra-ui/react';
 import { logout } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getShortAddress } from '../services/helpers';
@@ -14,7 +14,7 @@ function Wallet({ callback }: { callback?: () => void }) {
     const navigate = useNavigate();
 
     return (
-        <Box display="flex" alignItems="center">
+        <Flex alignItems="center" backgroundColor="#1f1f1f" borderRadius="9999px" padding="9px 16px">
             <Box mr="0.6rem">
                 <IoWalletOutline color="whitesmoke" fontSize="18px" />
             </Box>
@@ -39,7 +39,7 @@ function Wallet({ callback }: { callback?: () => void }) {
                     <MdClose fontSize="17px" />
                 </Box>
             </Link>
-        </Box>
+        </Flex>
     );
 }
 
