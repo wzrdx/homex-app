@@ -25,7 +25,8 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
-import Q1 from '../assets/videos/Q1_glow.webm';
+import Q1_Glow from '../assets/videos/q1_glow.webm';
+import Q1_Layer from '../assets/videos/q1_layer.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -239,7 +240,13 @@ function Quests() {
                     <Flex justifyContent="center" alignItems="center" position="relative">
                         <Box>
                             <video style={{ height: '520px' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={Q1} type="video/webm" />
+                                <source src={Q1_Layer} type="video/webm" />
+                            </video>
+                        </Box>
+
+                        <Box position="absolute" top={0} right={0} bottom={0} left={0}>
+                            <video style={{ height: '520px' }} autoPlay={true} muted={true} loop={true}>
+                                <source src={Q1_Glow} type="video/webm" />
                             </video>
                         </Box>
                     </Flex>
