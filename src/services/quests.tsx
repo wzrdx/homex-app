@@ -19,6 +19,7 @@ import Q4L1 from '../assets/quests/videos/4-1.webm';
 import Q5L1 from '../assets/quests/videos/5-1.webm';
 import Q6L1 from '../assets/quests/videos/6-1.webm';
 import Q7L1 from '../assets/quests/videos/7-1.webm';
+import Q8L1 from '../assets/quests/videos/8-1.webm';
 
 const BASE_DURATION = 1;
 const BASE_COST = 1;
@@ -265,7 +266,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q3L1,
+                source: Q8L1,
                 mode: 'normal',
             },
         ],
