@@ -61,6 +61,15 @@ const layerStyles = {
         zIndex: 5,
         px: 1,
     },
+    absoluteCentered: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+    },
 };
 
 const breakpoints = {

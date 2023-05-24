@@ -25,8 +25,8 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
-import Q1_Glow from '../assets/videos/q1_glow.webm';
-import Q1_Layer from '../assets/videos/q1_layer.webm';
+import Q1_Glow from '../assets/videos/glow.webm';
+import Q1_Layer from '../assets/videos/layer.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -238,17 +238,35 @@ function Quests() {
             <Flex flex={7} justifyContent="center">
                 <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
                     <Flex justifyContent="center" alignItems="center" position="relative">
-                        <Box>
-                            <video style={{ height: '520px' }} autoPlay={true} muted={true} loop={true}>
+                        <Flex layerStyle="absoluteCentered" zIndex={4}>
+                            <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
                                 <source src={Q1_Layer} type="video/webm" />
                             </video>
-                        </Box>
+                        </Flex>
 
-                        <Box position="absolute" top={0} right={0} bottom={0} left={0}>
-                            <video style={{ height: '520px' }} autoPlay={true} muted={true} loop={true}>
+                        <Image
+                            src={getFrame()}
+                            alt="Frame"
+                            zIndex={3}
+                            width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
+                        />
+
+                        <Flex layerStyle="absoluteCentered">
+                            <Image
+                                src={getQuestImage(currentQuest.id)}
+                                alt="Quest-Image"
+                                zIndex={2}
+                                transform="scale(1.2)"
+                                mt="16px"
+                                clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
+                            />
+                        </Flex>
+
+                        <Flex layerStyle="absoluteCentered" zIndex={1}>
+                            <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
                                 <source src={Q1_Glow} type="video/webm" />
                             </video>
-                        </Box>
+                        </Flex>
                     </Flex>
 
                     <Flex my={{ md: 5, lg: 8 }}>
