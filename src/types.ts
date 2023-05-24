@@ -8,6 +8,10 @@ export interface Quest {
     };
     duration: number;
     rewards: Array<QuestReward>;
+    layers: Array<{
+        source: string;
+        mode: string;
+    }>;
 }
 
 export interface QuestReward {

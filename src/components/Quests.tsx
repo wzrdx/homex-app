@@ -11,6 +11,7 @@ import {
     ModalContent,
     ModalHeader,
     ModalOverlay,
+    ResponsiveValue,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
@@ -25,8 +26,7 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
-import Q1_Glow from '../assets/videos/glow.webm';
-import Q1_Layer from '../assets/videos/layer.webm';
+import FrameGlow from '../assets/videos/glow.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -245,11 +245,23 @@ function Quests() {
                             width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
                         />
 
-                        <Flex layerStyle="absoluteCentered" zIndex={3}>
-                            <video style={{ maxWidth: '116%' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={Q1_Layer} type="video/webm" />
-                            </video>
-                        </Flex>
+                        {map(currentQuest.layers, (layer, index) => (
+                            <Flex
+                                key={layer.source}
+                                layerStyle="absoluteCentered"
+                                mixBlendMode={layer.mode as any}
+                                zIndex={3}
+                            >
+                                <video
+                                    style={{ maxWidth: '120%', marginTop: '4px' }}
+                                    autoPlay={true}
+                                    muted={true}
+                                    loop={true}
+                                >
+                                    <source src={layer.source} type="video/webm" />
+                                </video>
+                            </Flex>
+                        ))}
 
                         <Flex layerStyle="absoluteCentered">
                             <Image
@@ -264,7 +276,7 @@ function Quests() {
 
                         <Flex layerStyle="absoluteCentered" zIndex={1}>
                             <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={Q1_Glow} type="video/webm" />
+                                <source src={FrameGlow} type="video/webm" />
                             </video>
                         </Flex>
                     </Flex>

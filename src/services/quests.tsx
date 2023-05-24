@@ -11,6 +11,11 @@ import Quest_9 from '../assets/quests/9.jpg';
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
+import Q1L1 from '../assets/quests/videos/1-1.webm';
+import Q2L1 from '../assets/quests/videos/2-1.webm';
+import Q2L2 from '../assets/quests/videos/2-2.webm';
+import Q3L1 from '../assets/quests/videos/3-1.webm';
+import Q4L1 from '../assets/quests/videos/4-1.webm';
 
 const BASE_DURATION = 1;
 const BASE_COST = 1;
@@ -41,6 +46,12 @@ export const QUESTS: any[] = [
                 value: 2 * BASE_COST,
             },
         ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
+            },
+        ],
     },
     {
         id: 2,
@@ -62,6 +73,16 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: BASE_COST,
+            },
+        ],
+        layers: [
+            {
+                source: Q2L1,
+                mode: 'normal',
+            },
+            {
+                source: Q2L2,
+                mode: 'screen',
             },
         ],
     },
@@ -87,6 +108,12 @@ export const QUESTS: any[] = [
                 value: 4 * BASE_COST,
             },
         ],
+        layers: [
+            {
+                source: Q3L1,
+                mode: 'normal',
+            },
+        ],
     },
     {
         id: 4,
@@ -108,6 +135,12 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 2 * BASE_COST,
+            },
+        ],
+        layers: [
+            {
+                source: Q4L1,
+                mode: 'normal',
             },
         ],
     },
@@ -134,6 +167,12 @@ export const QUESTS: any[] = [
                 value: BASE_COST / 2,
             },
         ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
+            },
+        ],
     },
     {
         id: 6,
@@ -155,6 +194,12 @@ export const QUESTS: any[] = [
                 resource: 'energy',
                 name: 'Focus',
                 value: BASE_COST / 2,
+            },
+        ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
             },
         ],
     },
@@ -184,6 +229,12 @@ export const QUESTS: any[] = [
                 value: 1,
             },
         ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
+            },
+        ],
     },
     {
         id: 8,
@@ -207,6 +258,12 @@ export const QUESTS: any[] = [
                 resource: 'essence',
                 name: 'Nimbus Orb',
                 value: 2,
+            },
+        ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
             },
         ],
     },
@@ -235,6 +292,12 @@ export const QUESTS: any[] = [
                 resource: 'tickets',
                 name: 'Ticket',
                 value: 1,
+            },
+        ],
+        layers: [
+            {
+                source: Q1L1,
+                mode: 'normal',
             },
         ],
     },
