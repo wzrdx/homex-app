@@ -40,8 +40,6 @@ function Layout() {
 
     // Init
     useEffect(() => {
-        console.log(window);
-
         getEnergy();
         getHerbs();
         getGems();

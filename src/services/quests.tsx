@@ -172,7 +172,7 @@ export const QUESTS: any[] = [
         layers: [
             {
                 source: Q5L1,
-                mode: 'normal',
+                mode: 'hard-light',
             },
         ],
     },

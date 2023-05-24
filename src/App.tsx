@@ -44,7 +44,7 @@ function App() {
     const { getOngoingQuests } = useGetOngoingQuests();
 
     useEffect(() => {
-        // onTicketModalOpen();
+        onTicketModalOpen();
     }, []);
 
     useEffect(() => {

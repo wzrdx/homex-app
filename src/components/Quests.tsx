@@ -54,7 +54,7 @@ import {
     useTransactionsContext,
 } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame, getFrameGlow, getFullTicket } from '../services/assets';
+import { getFrame, getFrameGlow, getFullTicket, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
 
 const LARGE_FRAME_SIZE = 352;
@@ -443,9 +443,15 @@ function Quests() {
                         _hover={{ background: 'blackAlpha.300' }}
                         borderRadius="3px"
                     />
-                    <ModalBody>
+                    <ModalBody minHeight="500px">
                         <Flex flexDir="column" justifyContent="center" alignItems="center" py={2}>
-                            <Image width={{ md: '210px', lg: '224px' }} src={getFullTicket()} alt="Ticket" />
+                            <Box width="300px" my={-14}>
+                                <video autoPlay={true} muted={true} loop={false}>
+                                    <source src={getSpinningTicket()} type="video/webm" />
+                                </video>
+                            </Box>
+
+                            {/* <Image width={{ md: '210px', lg: '224px' }} src={getFullTicket()} alt="Ticket" /> */}
                             <Text mt={1.5} fontSize="lg">
                                 You have earned 1 ticket!
                             </Text>
