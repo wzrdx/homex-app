@@ -1,11 +1,66 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 function Gameplay() {
     return (
         <Box pb={4}>
-            <Flex alignItems="center">
+            <Flex flexDir="column" justifyContent="center" alignItems="center">
+                <Text maxWidth="663px" textAlign="justify" mb={5}>
+                    In order to participate in the Beta Testing you need{' '}
+                    <Text as="span" color="brightBlue">
+                        xEGLD
+                    </Text>{' '}
+                    for gas fees.{' '}
+                    <Text as="span" color="brightBlue">
+                        xEGLD
+                    </Text>{' '}
+                    is the token used on the MultiversX devnet and can be obtained through the official faucet.
+                </Text>
+
+                <Text fontSize="17px">
+                    Steps to obtain{' '}
+                    <Text as="span" color="brightBlue">
+                        xEGLD
+                    </Text>
+                </Text>
+
+                <Box
+                    mt={0.5}
+                    mb={3}
+                    width="214px"
+                    height="1px"
+                    background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
+                ></Box>
+
+                <Flex flexDir="column">
+                    <Flex alignItems="center">
+                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
+                        <Text ml={1} whiteSpace="nowrap">
+                            Connect your wallet to{' '}
+                            <Link color="brightBlue" href="https://devnet-wallet.multiversx.com" target="_blank">
+                                https://devnet-wallet.multiversx.com
+                            </Link>
+                        </Text>
+                    </Flex>
+
+                    <Flex alignItems="center">
+                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
+                        <Text ml={1} whiteSpace="nowrap">
+                            On the menu to the left click on Faucet
+                        </Text>
+                    </Flex>
+
+                    <Flex alignItems="center">
+                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
+                        <Text ml={1} whiteSpace="nowrap">
+                            A window will open where you can press Request Tokens
+                        </Text>
+                    </Flex>
+                </Flex>
+            </Flex>
+
+            <Flex mt={7} alignItems="center">
                 <Flex flex={1} flexDir="column">
                     <Flex alignItems="center">
                         <Image width="64px" src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
@@ -22,9 +77,9 @@ function Gameplay() {
                         <Flex alignItems="center">
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
-                                Earned through{' '}
+                                Earned by performing{' '}
                                 <Text as="span" color="brightBlue">
-                                    staking
+                                    Rituals
                                 </Text>
                             </Text>
                         </Flex>
@@ -32,17 +87,7 @@ function Gameplay() {
                         <Flex alignItems="center">
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
-                                Used in-game to perform weekly quests
-                            </Text>
-                        </Flex>
-
-                        <Flex alignItems="center">
-                            <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                            <Text ml={1} whiteSpace="nowrap">
-                                Can be traded for{' '}
-                                <Text as="span" color="brightBlue">
-                                    $EGLD
-                                </Text>
+                                Used in-game to complete quests
                             </Text>
                         </Flex>
                     </Flex>
@@ -81,7 +126,7 @@ function Gameplay() {
                             ))}
                     </Flex>
 
-                    <Text mt={4} fontSize="17px">
+                    <Text mt={4} fontWeight={500} fontSize="17px">
                         In-game tokens
                     </Text>
 
@@ -90,7 +135,7 @@ function Gameplay() {
                         <Text as="span" color="brightBlue">
                             in-game
                         </Text>{' '}
-                        to complete missions and earn quest rewards
+                        to complete quests and earn rewards
                     </Text>
                 </Flex>
             </Flex>
@@ -127,7 +172,7 @@ function Gameplay() {
 
                         <Flex mt={8} px={4} flexDir="column">
                             <Text mb={3} fontSize="18px" fontWeight={500} textAlign="center" color="brightBlue">
-                                Staking
+                                Energy
                             </Text>
 
                             <Flex alignItems="flex-start">
@@ -135,18 +180,12 @@ function Gameplay() {
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
                                 <Text>
+                                    Perform{' '}
                                     <Text as="span" color="brightBlue">
-                                        Stake
+                                        Rituals
                                     </Text>{' '}
-                                    your NFT
+                                    in order to gain energy
                                 </Text>
-                            </Flex>
-
-                            <Flex alignItems="flex-start" mt={1}>
-                                <Flex alignItems="center" height="24px" mr={1}>
-                                    <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                                </Flex>
-                                <Text>Earn the $ENERGY token</Text>
                             </Flex>
                         </Flex>
                     </Flex>
@@ -191,7 +230,7 @@ function Gameplay() {
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
                                 <Text>
-                                    Complete weekly{' '}
+                                    Complete{' '}
                                     <Text as="span" color="lightOrange">
                                         quests
                                     </Text>{' '}
@@ -208,7 +247,7 @@ function Gameplay() {
                                     <Text as="span" color="lightOrange">
                                         mission
                                     </Text>{' '}
-                                    using the collected tokens and unlock Prize NFT Tickets
+                                    using the collected tokens and unlock NFT Tickets
                                 </Text>
                             </Flex>
                         </Flex>
@@ -246,25 +285,19 @@ function Gameplay() {
 
                         <Flex mt={8} px={4} flexDir="column">
                             <Text mb={3} fontSize="18px" fontWeight={500} textAlign="center" color="orangered">
-                                Rewards
+                                Leaderboard
                             </Text>
-
-                            <Flex alignItems="flex-start">
-                                <Flex alignItems="center" height="24px" mr={1}>
-                                    <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                                </Flex>
-                                <Text>Swap $ENERGY for $EGLD</Text>
-                            </Flex>
 
                             <Flex alignItems="flex-start" mt={1}>
                                 <Flex alignItems="center" height="24px" mr={1}>
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
                                 <Text>
-                                    Use NFT Prize Tickets to earn larger{' '}
+                                    Advance your{' '}
                                     <Text as="span" color="orangered">
-                                        prizes
-                                    </Text>
+                                        ranking
+                                    </Text>{' '}
+                                    in the leaderboard in order to win prizes
                                 </Text>
                             </Flex>
                         </Flex>
