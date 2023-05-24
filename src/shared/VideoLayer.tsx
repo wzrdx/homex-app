@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
 export const VideoLayer = ({ source, mode }) => {
     const [fade, setFade] = useState<boolean>(false);
 
-    useEffect(() => {
-        setFade(true);
-    }, []);
+    // useEffect(() => {
+    //     setFade(true);
+    // }, []);
 
     return (
         <Flex layerStyle="absoluteCentered" mixBlendMode={mode} zIndex={3}>
@@ -16,6 +16,7 @@ export const VideoLayer = ({ source, mode }) => {
                 autoPlay={true}
                 muted={true}
                 loop={true}
+                onPlay={() => setFade(true)}
             >
                 <source src={source} type="video/webm" />
             </video>
