@@ -13,7 +13,6 @@ body {
 #root {
     min-width: 100vw;
     min-height: 100vh;
-    // background: linear-gradient(0deg, #330000, #1c0001);
 }
 
 // Used for NavLinks
@@ -22,6 +21,10 @@ body {
         color: whitesmoke;
         text-shadow: 0 0 10px white;
     }
+}
+
+.Fade-In {
+    transition: all 0.25s ease-in;
 }
 
 // Mvx

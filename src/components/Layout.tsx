@@ -28,7 +28,7 @@ function Layout() {
                     midtoneColor: 0xf59318,
                     lowlightColor: 0xffffff,
                     baseColor: 0x11000000,
-                    speed: 1.6,
+                    speed: 1.8,
                     zoom: 1.2,
                 })
             );

@@ -55,6 +55,7 @@ import {
 } from '../services/transactions';
 import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getFullTicket } from '../services/assets';
+import { VideoLayer } from '../shared/VideoLayer';
 
 const LARGE_FRAME_SIZE = 352;
 const MEDIUM_FRAME_SIZE = 296;
@@ -158,8 +159,6 @@ function Quests() {
                 .withGasLimit(7000000)
                 .buildTransaction();
 
-            // console.log(tx.getData().toString());
-
             await refreshAccount();
 
             const { sessionId } = await sendTransactions({
@@ -244,22 +243,8 @@ function Quests() {
                             width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
                         />
 
-                        {map(currentQuest.layers, (layer, index) => (
-                            <Flex
-                                key={layer.source}
-                                layerStyle="absoluteCentered"
-                                mixBlendMode={layer.mode as any}
-                                zIndex={3}
-                            >
-                                <video
-                                    style={{ maxWidth: '120%', marginTop: '4px' }}
-                                    autoPlay={true}
-                                    muted={true}
-                                    loop={true}
-                                >
-                                    <source src={layer.source} type="video/webm" />
-                                </video>
-                            </Flex>
+                        {map(currentQuest.layers, (layer) => (
+                            <VideoLayer source={layer.source} mode={layer.mode} key={layer.source} />
                         ))}
 
                         <Flex layerStyle="absoluteCentered">

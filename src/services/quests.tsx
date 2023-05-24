@@ -16,6 +16,8 @@ import Q2L1 from '../assets/quests/videos/2-1.webm';
 import Q2L2 from '../assets/quests/videos/2-2.webm';
 import Q3L1 from '../assets/quests/videos/3-1.webm';
 import Q4L1 from '../assets/quests/videos/4-1.webm';
+import Q5L1 from '../assets/quests/videos/5-1.webm';
+import Q6L1 from '../assets/quests/videos/6-1.webm';
 
 const BASE_DURATION = 1;
 const BASE_COST = 1;
@@ -169,7 +171,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q3L1,
+                source: Q5L1,
                 mode: 'normal',
             },
         ],
@@ -198,7 +200,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q3L1,
+                source: Q6L1,
                 mode: 'normal',
             },
         ],
