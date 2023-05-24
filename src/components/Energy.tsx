@@ -16,6 +16,7 @@ import { getResourceElements } from '../services/resources';
 import Typewriter from 'typewriter-effect';
 import Reward from '../shared/Reward';
 import { getFaucetImage } from '../services/assets';
+import { useLayout } from './Layout';
 
 export const FAUCET_REWARD = {
     resource: 'energy',
@@ -24,6 +25,7 @@ export const FAUCET_REWARD = {
 };
 
 function Energy() {
+    const { checkEgldBalance } = useLayout();
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
 
     const { setPendingTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
@@ -31,6 +33,11 @@ function Energy() {
 
     const faucet = async () => {
         setEnergyButtonLoading(true);
+
+        if (!(await checkEgldBalance())) {
+            setEnergyButtonLoading(false);
+            return;
+        }
 
         const address = await getAddress();
         const user = new Address(address);

@@ -24,6 +24,7 @@ const colors = {
     lightDark: '#212121',
     brightBlue: '#88ddff',
     lightOrange: '#ee8b1c',
+    redClrs: '#FF4136',
 };
 
 const fonts = {

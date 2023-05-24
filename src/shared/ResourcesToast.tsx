@@ -1,8 +1,8 @@
-import { CheckCircleIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { map } from 'lodash';
 import { getResourceElements } from '../services/resources';
 import { Flex, Image, Text } from '@chakra-ui/react';
+import { CustomToast } from './CustomToast';
 
 function ResourcesToast({ title, rewards }) {
     const [questRewards, setQuestRewards] = useState<any[]>([]);
@@ -23,21 +23,7 @@ function ResourcesToast({ title, rewards }) {
     }, [rewards]);
 
     return (
-        <Flex
-            flexDir="column"
-            backgroundColor="#191919"
-            borderInlineStartWidth="4px"
-            borderInlineStartColor="#ca2f34"
-            padding="12px 32px 12px 12px"
-            borderRadius={3}
-        >
-            <Flex alignItems="center">
-                <CheckCircleIcon boxSize={5} color="green.500" />
-                <Text ml={2} fontSize="lg" fontWeight={600}>
-                    {title}
-                </Text>
-            </Flex>
-
+        <CustomToast type="success" title={title} color="#ca2f34">
             <Text mt={2} fontWeight={500}>
                 You've earned:
             </Text>
@@ -57,7 +43,7 @@ function ResourcesToast({ title, rewards }) {
                     </Flex>
                 ))}
             </Flex>
-        </Flex>
+        </CustomToast>
     );
 }
 

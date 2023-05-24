@@ -50,8 +50,8 @@ const Unlock = () => {
             } else {
                 console.log('[Unlock] User logged in with address', address);
 
-                const { data } = await getTokenCount(address);
-                onAuthenticationResult(data > 0);
+                // const { data } = await getTokenCount(address);
+                onAuthenticationResult(true);
             }
         } catch (err) {
             console.error('Unable to fetch NFTs of user');

@@ -13,7 +13,6 @@ import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
 import Q1L1 from '../assets/quests/videos/1-1.webm';
 import Q2L1 from '../assets/quests/videos/2-1.webm';
-import Q2L2 from '../assets/quests/videos/2-2.webm';
 import Q3L1 from '../assets/quests/videos/3-1.webm';
 import Q4L1 from '../assets/quests/videos/4-1.webm';
 import Q5L1 from '../assets/quests/videos/5-1.webm';
@@ -82,10 +81,6 @@ export const QUESTS: any[] = [
         layers: [
             {
                 source: Q2L1,
-                mode: 'normal',
-            },
-            {
-                source: Q2L2,
                 mode: 'screen',
             },
         ],

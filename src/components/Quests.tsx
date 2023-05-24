@@ -41,7 +41,7 @@ import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { getAccountBalance, refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
@@ -56,11 +56,13 @@ import {
 import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getFullTicket, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
+import { useLayout } from './Layout';
 
 const LARGE_FRAME_SIZE = 352;
 const MEDIUM_FRAME_SIZE = 296;
 
 function Quests() {
+    const { checkEgldBalance } = useLayout();
     const navigate = useNavigate();
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
 
@@ -90,8 +92,12 @@ function Quests() {
     const startQuest = async () => {
         setStartButtonLoading(true);
 
-        const user = new Address(address);
+        if (!(await checkEgldBalance())) {
+            setStartButtonLoading(false);
+            return;
+        }
 
+        const user = new Address(address);
         const requiredResources: string[] = Object.keys(currentQuest.requirements);
 
         try {
@@ -143,13 +149,14 @@ function Quests() {
     };
 
     const completeQuest = async () => {
-        if (isFinishButtonLoading) {
+        setFinishButtonLoading(true);
+
+        if (!(await checkEgldBalance())) {
+            setFinishButtonLoading(false);
             return;
         }
 
         const user = new Address(address);
-
-        setFinishButtonLoading(true);
 
         try {
             const tx = smartContract.methods
