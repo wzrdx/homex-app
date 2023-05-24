@@ -41,8 +41,8 @@ const Unlock = () => {
         if (isUserLoggedIn()) {
             checkAuthentication();
         } else {
-            console.warn('[Unlock.tsx] Logging out without /unlock');
-            logout();
+            console.warn('[Unlock.tsx] Logging out to /unlock');
+            logout('/unlock');
         }
     }, [isLoggedIn, address]);
 

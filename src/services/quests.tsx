@@ -169,7 +169,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q3L1,
                 mode: 'normal',
             },
         ],
@@ -198,7 +198,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q3L1,
                 mode: 'normal',
             },
         ],
@@ -231,7 +231,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q3L1,
                 mode: 'normal',
             },
         ],
@@ -262,7 +262,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q3L1,
                 mode: 'normal',
             },
         ],
@@ -296,7 +296,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q3L1,
                 mode: 'normal',
             },
         ],

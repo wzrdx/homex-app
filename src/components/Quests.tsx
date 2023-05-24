@@ -26,7 +26,6 @@ import {
     useQuestsContext,
 } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
-import FrameGlow from '../assets/videos/glow.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -55,7 +54,7 @@ import {
     useTransactionsContext,
 } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame, getFullTicket } from '../services/assets';
+import { getFrame, getFrameGlow, getFullTicket } from '../services/assets';
 
 const LARGE_FRAME_SIZE = 352;
 const MEDIUM_FRAME_SIZE = 296;
@@ -276,7 +275,7 @@ function Quests() {
 
                         <Flex layerStyle="absoluteCentered" zIndex={1}>
                             <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={FrameGlow} type="video/webm" />
+                                <source src={getFrameGlow()} type="video/webm" />
                             </video>
                         </Flex>
                     </Flex>

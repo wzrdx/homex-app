@@ -46,11 +46,11 @@ function App() {
     const { address } = useGetAccountInfo();
     const { isLoggedIn } = useGetLoginInfo();
 
-    useEffect(() => {
-        if (!isLoggedIn && !address) {
-            console.log('[App.tsx] notLoggedIn & no address');
-        }
-    }, [address, isLoggedIn]);
+    // useEffect(() => {
+    //     if (!isLoggedIn && !address) {
+    //         console.log('[App.tsx] notLoggedIn & no address');
+    //     }
+    // }, [address, isLoggedIn]);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
