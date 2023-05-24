@@ -5,8 +5,11 @@ import { getShortAddress } from '../services/helpers';
 import { useNavigate } from 'react-router-dom';
 import { IoWalletOutline } from 'react-icons/io5';
 import { MdClose } from 'react-icons/md';
+import { AuthenticationContextType, useAuthenticationContext } from '../services/authentication';
 
 function Wallet({ callback }: { callback?: () => void }) {
+    const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
+
     const { address } = useGetAccountInfo();
     const navigate = useNavigate();
 
@@ -24,6 +27,8 @@ function Wallet({ callback }: { callback?: () => void }) {
                     if (callback) {
                         callback();
                     }
+
+                    setAuthentication(false);
 
                     logout(`/unlock`, (callbackUrl) => {
                         navigate(callbackUrl as string);

@@ -32,30 +32,25 @@ const Unlock = () => {
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
 
     let { address } = useGetAccountInfo();
-    const { isLoggedIn } = useGetLoginInfo();
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('[Unlock.tsx] isLoggedIn', isLoggedIn, 'address', address);
+        console.log('[Unlock] address', address);
 
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
-    }, [isLoggedIn, address]);
+    }, [address]);
 
     const checkAuthentication = async () => {
         try {
             if (!address) {
-                console.log('[Unlock.tsx] No address, logging out');
-
-                setTimeout(() => {
-                    logout(`/unlock`);
-                }, 3000);
+                console.log('[Unlock] checkAuthentication > No address, logging out');
+                logout(`/unlock`);
             } else {
-                console.log('[Unlock.tsx] User logged in with address', address);
+                console.log('[Unlock] User logged in with address', address);
 
                 const { data } = await getTokenCount(address);
-
                 onAuthenticationResult(data > 0);
             }
         } catch (err) {
@@ -74,7 +69,7 @@ const Unlock = () => {
         }
     };
 
-    const isUserLoggedIn = (): boolean => isLoggedIn && !!address;
+    const isUserLoggedIn = (): boolean => !!address;
 
     const getText = (text: string) => (
         <Box display="flex" flexDir="column" alignItems="center">
