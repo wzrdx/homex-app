@@ -19,4 +19,4 @@ export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
 export const YIELD_PER_HOUR = 0.3;
 
-export const START_OF_CONTEST = new Date('2023-06-01T12:30:15.000Z');
+export const START_OF_CONTEST = new Date('2023-05-01T12:30:15.000Z');
