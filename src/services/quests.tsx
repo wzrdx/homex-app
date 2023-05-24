@@ -20,6 +20,15 @@ import Q6L1 from '../assets/quests/videos/6-1.webm';
 import Q7L1 from '../assets/quests/videos/7-1.webm';
 import Q8L1 from '../assets/quests/videos/8-1.webm';
 
+import { OngoingQuest } from '../blockchain/types';
+import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
+import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
+import { map } from 'lodash';
+import { API_URL } from '../blockchain/config';
+import { smartContract } from '../blockchain/smartContract';
+import { BigNumber } from 'bignumber.js';
+
 const BASE_DURATION = 1;
 const BASE_COST = 1;
 export const QUEST_DURATION_INTERVAL = 'minute';
@@ -323,6 +332,8 @@ export const meetsRequirements = (resources: { [x: string]: number }, questId: n
 export interface QuestsContextType {
     quest: Quest;
     setQuest: React.Dispatch<Quest>;
+    ongoingQuests: OngoingQuest[];
+    getOngoingQuests: () => Promise<void>;
 }
 
 const QuestsContext = createContext<QuestsContextType | null>(null);
@@ -331,5 +342,43 @@ export const useQuestsContext = () => useContext(QuestsContext);
 
 export const QuestsProvider = ({ children }) => {
     const [quest, setQuest] = useState<Quest>(getQuest());
-    return <QuestsContext.Provider value={{ quest, setQuest }}>{children}</QuestsContext.Provider>;
+    const [ongoingQuests, setOngoingQuests] = useState<OngoingQuest[]>([]);
+
+    const getOngoingQuests = async () => {
+        const resultsParser = new ResultsParser();
+        const proxy = new ProxyNetworkProvider(API_URL);
+
+        try {
+            const address = await getAddress();
+
+            const query = smartContract.createQuery({
+                func: new ContractFunction('getOngoingQuests'),
+                args: [new AddressValue(new Address(address))],
+            });
+
+            const queryResponse = await proxy.queryContract(query);
+            const endpointDefinition = smartContract.getEndpoint('getOngoingQuests');
+
+            const { firstValue: amount } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
+            const quests: Array<{
+                id: BigNumber;
+                end_timestamp: BigNumber;
+            }> = amount?.valueOf();
+
+            setOngoingQuests(
+                map(quests, (quest) => ({
+                    id: quest.id.toNumber(),
+                    timestamp: new Date(quest.end_timestamp.toNumber() * 1000),
+                }))
+            );
+        } catch (err) {
+            console.error('Unable to call getOngoingQuests', err);
+        }
+    };
+
+    return (
+        <QuestsContext.Provider value={{ quest, setQuest, ongoingQuests, getOngoingQuests }}>
+            {children}
+        </QuestsContext.Provider>
+    );
 };

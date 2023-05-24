@@ -17,7 +17,7 @@ function Reward({ image, name, value, icon }) {
                     backgroundColor="black"
                 />
 
-                <Flex zIndex={2} layerStyle="absoluteCentered" animation="rotationReverse 5s infinite linear">
+                <Flex zIndex={2} layerStyle="absoluteCentered" animation="rotationReverse 3s infinite linear">
                     <Image src={InnerRing} alt="InnerRing" />
                 </Flex>
 

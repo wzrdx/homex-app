@@ -6,7 +6,7 @@ function Gameplay() {
     return (
         <Box pb={4}>
             <Flex flexDir="column" justifyContent="center" alignItems="center">
-                <Text maxWidth="663px" textAlign="justify" mb={5}>
+                <Text maxWidth="663px" textAlign="justify" mb={4}>
                     In order to participate in the Beta Testing you need{' '}
                     <Text as="span" color="brightBlue">
                         xEGLD
@@ -60,7 +60,7 @@ function Gameplay() {
                 </Flex>
             </Flex>
 
-            <Flex mt={7} alignItems="center">
+            <Flex mt={8} alignItems="center">
                 <Flex flex={1} flexDir="column">
                     <Flex alignItems="center">
                         <Image width="64px" src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
@@ -140,7 +140,7 @@ function Gameplay() {
                 </Flex>
             </Flex>
 
-            <Flex justifyContent="center" alignItems="stretch" mx={-3} mt={10}>
+            <Flex justifyContent="center" alignItems="stretch" mx={-3} mt={8}>
                 {/* Step 1 */}
                 <Box flex={1} position="relative">
                     <Flex position="absolute" top={0} right={0} left={0} justifyContent="center" alignItems="center">

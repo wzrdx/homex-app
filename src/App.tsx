@@ -7,13 +7,8 @@ import { theme } from './theme';
 import { ProtectedRoute } from './shared/ProtectedRoute';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
-import { ResourcesContextType, ResourcesProvider, useResourcesContext } from './services/resources';
-import {
-    useGetAccountInfo,
-    useGetFailedTransactions,
-    useGetLoginInfo,
-    useGetSuccessfulTransactions,
-} from '@multiversx/sdk-dapp/hooks';
+import { ResourcesContextType, useResourcesContext } from './services/resources';
+import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
 import { map, head, includes, filter, find, cloneDeep, remove, forEach } from 'lodash';
 import { useEffect } from 'react';
 import {
@@ -25,10 +20,9 @@ import {
 } from './services/transactions';
 import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
-import { getQuest } from './services/quests';
+import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
-import { useGetOngoingQuests } from './blockchain/hooks/useGetOngoingQuests';
 
 function App() {
     const toast = useToast();
@@ -39,13 +33,12 @@ function App() {
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
+    const { getOngoingQuests } = useQuestsContext() as QuestsContextType;
+
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
-    const { getOngoingQuests } = useGetOngoingQuests();
 
-    useEffect(() => {
-        // onTicketModalOpen();
-    }, []);
+    useEffect(() => {}, []);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));

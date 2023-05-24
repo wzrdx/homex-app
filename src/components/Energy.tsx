@@ -42,13 +42,12 @@ function Energy() {
         const address = await getAddress();
         const user = new Address(address);
 
-        // TODO: Less gas limit
         try {
             const tx = smartContract.methods
                 .faucet()
                 .withSender(user)
                 .withChainID('D')
-                .withGasLimit(9000000)
+                .withGasLimit(5000000)
                 .buildTransaction();
 
             await refreshAccount();

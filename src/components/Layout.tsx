@@ -7,7 +7,6 @@ import { ResourcesContextType, useResourcesContext } from '../services/resources
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
 import { getLayoutBackground } from '../services/assets';
-import FOG from 'vanta/dist/vanta.fog.min';
 import { CustomToast } from '../shared/CustomToast';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
@@ -23,32 +22,7 @@ function Layout() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
 
-    const [vantaEffect, setVantaEffect] = useState<any>(null);
-    const myRef = useRef(null);
     const toast = useToast();
-
-    // Smoke
-    useEffect(() => {
-        if (!vantaEffect) {
-            setVantaEffect(
-                FOG({
-                    el: myRef.current,
-                    mouseControls: false,
-                    touchControls: false,
-                    gyroControls: false,
-                    highlightColor: 0x9ca9e3,
-                    midtoneColor: 0xf59318,
-                    lowlightColor: 0xffffff,
-                    baseColor: 0x11000000,
-                    speed: 1.8,
-                    zoom: 1.2,
-                })
-            );
-        }
-        return () => {
-            if (vantaEffect) vantaEffect.destroy();
-        };
-    }, [vantaEffect]);
 
     // Init
     useEffect(() => {
@@ -93,16 +67,10 @@ function Layout() {
     };
 
     return (
-        <QuestsProvider>
+        <>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex
-                ref={myRef}
-                style={getBackgroundStyle(getLayoutBackground())}
-                position="relative"
-                height="100vh"
-                flexDir="column"
-            >
+            <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" height="100vh" flexDir="column">
                 <Box height={{ md: '18%', lg: '14%' }}>
                     <Header />
                 </Box>
@@ -116,7 +84,7 @@ function Layout() {
                     <Outlet context={{ checkEgldBalance }} />
                 </Box>
             </Flex>
-        </QuestsProvider>
+        </>
     );
 }
 

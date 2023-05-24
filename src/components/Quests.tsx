@@ -41,11 +41,10 @@ import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { getAccountBalance, refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
-import { useGetOngoingQuests } from '../blockchain/hooks/useGetOngoingQuests';
 import { isAfter, isBefore } from 'date-fns';
 import {
     TransactionType,
@@ -70,13 +69,11 @@ function Quests() {
 
     const { isQuestTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
-    const { quest: currentQuest, setQuest } = useQuestsContext() as QuestsContextType;
+    const { quest: currentQuest, setQuest, ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
     const { resources, isTicketModalOpen, onTicketModalClose } = useResourcesContext() as ResourcesContextType;
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
-
-    const { ongoingQuests, getOngoingQuests } = useGetOngoingQuests();
 
     const isQuestDefault = () => findIndex(ongoingQuests, (q) => q.id === currentQuest.id) < 0;
     const isQuestOngoing = () =>
@@ -88,6 +85,10 @@ function Quests() {
     useEffect(() => {
         getOngoingQuests();
     }, []);
+
+    useEffect(() => {
+        console.log('[Quests] Received new ongoingQuests');
+    }, [ongoingQuests]);
 
     const startQuest = async () => {
         setStartButtonLoading(true);
