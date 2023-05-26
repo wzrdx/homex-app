@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { Address } from '@multiversx/sdk-core/out';
@@ -79,30 +79,49 @@ function Energy() {
 
     return (
         <Flex height="100%" justifyContent="center" alignItems="center">
-            <Flex width={{ md: '898px', lg: '710px' }} flexDir="column" justifyContent="center" alignItems="center">
-                <Image
-                    width={{ md: '330px', lg: '460px' }}
-                    minHeight={{ md: '200px', lg: '320px' }}
-                    src={getFaucetImage()}
-                    alt="Energy"
-                    borderRadius="1px"
-                    border="2px solid #dadada3d"
-                />
+            <Flex flexDir="column" justifyContent="center" alignItems="center">
+                <Flex alignItems="flex-start" mb={8}>
+                    <Flex mr={3} flex={1} width="600px" justifyContent="flex-end">
+                        <Image
+                            width={{ md: '330px', lg: '435px' }}
+                            src={getFaucetImage()}
+                            alt="Energy"
+                            borderRadius="1px"
+                            border="2px solid #fdefce36"
+                        />
+                    </Flex>
 
-                <Text my={4} layerStyle="questDescription" minHeight={{ md: '110px', lg: '154px' }}>
-                    <Typewriter
-                        onInit={(typewriter) => {
-                            typewriter
-                                .typeString(
-                                    'Hidden deep within the desert, there exists a mysterious tribe called the The First Travelers. They are revered as secretive and powerful beings, skilled in ancient magic. These enigmatic individuals practiced a special ceremony, full of intrigue and wonder, where they sought a highly sought-after potion called "Energy." This magical elixir, which granted everlasting life, was given only to a select few who dared to explore a complex labyrinth during the ritual. Those who received it gained eternal vigor, enveloped in an aura of timeless wisdom, and possessed unwavering strength that defied the passing of years.'
-                                )
-                                .start();
-                        }}
-                        options={{
-                            delay: 0.2,
-                        }}
-                    />
-                </Text>
+                    <Flex ml={3} flex={1} width="600px">
+                        <Text layerStyle="questDescription" width="472px">
+                            {/* The planet's frequency was not limitless, and soon the Founders realized they needed to find
+                            more sources of Energy to sustain their growing needs. That was how the guild of Energy
+                            seekers came to be: brave and curious souls who ventured into the unknown corners of the
+                            planet, seeking out its mysteries and secrets, and unlocking new wells of Energy. They
+                            learned a special Ritual that allowed them to draw a small amount of Energy from the planet
+                            itself. The stronger the First Travelers were, the more Energy they could extract. And now,
+                            you are part of it. You are a First Traveler, one of the chosen few who can access the
+                            Energy of the planet and use it for your own ends. But you are not alone. There are others
+                            like you, and they may not share your vision or your values. You will have to compete with
+                            them for the scarce and precious Energy that sustains your civilization. Whenever you need
+                            to perform the Ritual, you can return to the Dome, the sacred place where it all began.
+                            Remember that Energy is not only a tool for your quests, but also a precious commodity for
+                            trade and a vital ingredient for your travels. */}
+
+                            <Typewriter
+                                onInit={(typewriter) => {
+                                    typewriter
+                                        .typeString(
+                                            "The planet's frequency was not limitless, and soon the Founders realized they needed to find more sources of Energy to sustain their growing needs. That was how the guild of Energy seekers came to be: brave and curious souls who ventured into the unknown corners of the planet, seeking out its mysteries and secrets, and unlocking new wells of Energy. They learned a special Ritual that allowed them to draw a small amount of Energy from the planet itself. The stronger the First Travelers were, the more Energy they could extract. And now, you are part of it. You are a First Traveler, one of the chosen few who can access the Energy of the planet and use it for your own ends. But you are not alone. There are others like you, and they may not share your vision or your values. You will have to compete with them for the scarce and precious Energy that sustains your civilization. Whenever you need to perform the Ritual, you can return to the Dome, the sacred place where it all began. Remember that Energy is not only a tool for your quests, but also a precious commodity for trade and a vital ingredient for your travels."
+                                        )
+                                        .start();
+                                }}
+                                options={{
+                                    delay: 0.2,
+                                }}
+                            />
+                        </Text>
+                    </Flex>
+                </Flex>
 
                 <Reward image={image} name={name} value={FAUCET_REWARD.value} icon={icon} />
 
