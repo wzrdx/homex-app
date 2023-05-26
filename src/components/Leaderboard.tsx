@@ -8,6 +8,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
 import { TimeIcon } from '@chakra-ui/icons';
+import { getFullTicket } from '../services/assets';
 
 const COLUMNS = [
     {
@@ -116,19 +117,40 @@ function Leaderboard() {
                 ) : (
                     <Flex flexDir="column">
                         {/* Header */}
-                        <Flex mb={2}>
-                            {_.map(COLUMNS, (column: any, index: number) => (
-                                <Text
-                                    key={index}
-                                    minWidth={column.width}
-                                    textAlign={column.align}
-                                    fontWeight={600}
-                                    fontSize="17px"
-                                >
-                                    {column.name}
+                        {!ticketEarners.length ? (
+                            <Flex flexDir="column" justifyContent="center" alignItems="center">
+                                <Image height="256px" src={getFullTicket()} />
+                                <Text mt={5} textAlign="center" maxWidth="418px">
+                                    No traveler has yet to retrieve the{' '}
+                                    <Text as="span" color="brightBlue">
+                                        Sacred Scarab
+                                    </Text>
+                                    . Become the first one by completing the{' '}
+                                    <Text as="span" color="brightBlue">
+                                        final mission
+                                    </Text>{' '}
+                                    and earning a{' '}
+                                    <Text as="span" color="brightBlue">
+                                        Ticket
+                                    </Text>
+                                    .
                                 </Text>
-                            ))}
-                        </Flex>
+                            </Flex>
+                        ) : (
+                            <Flex mb={2}>
+                                {_.map(COLUMNS, (column: any, index: number) => (
+                                    <Text
+                                        key={index}
+                                        minWidth={column.width}
+                                        textAlign={column.align}
+                                        fontWeight={600}
+                                        fontSize="17px"
+                                    >
+                                        {column.name}
+                                    </Text>
+                                ))}
+                            </Flex>
+                        )}
 
                         {_.map(ticketEarners, (earner: TicketEarner, index: number) => (
                             <Flex mt={2} alignItems="center" key={index}>

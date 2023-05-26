@@ -21,7 +21,7 @@ import { useLayout } from './Layout';
 export const FAUCET_REWARD = {
     resource: 'energy',
     name: 'Focus',
-    value: 10,
+    value: 120,
 };
 
 function Energy() {
@@ -92,21 +92,7 @@ function Energy() {
                     </Flex>
 
                     <Flex ml={3} width={{ md: '604px', lg: '600px' }}>
-                        <Text layerStyle="questDescription" width={{ md: '604px', lg: '472px' }}>
-                            {/* The planet's frequency was not limitless, and soon the Founders realized they needed to find
-                            more sources of Energy to sustain their growing needs. That was how the guild of Energy
-                            seekers came to be: brave and curious souls who ventured into the unknown corners of the
-                            planet, seeking out its mysteries and secrets, and unlocking new wells of Energy. They
-                            learned a special Ritual that allowed them to draw a small amount of Energy from the planet
-                            itself. The stronger the First Travelers were, the more Energy they could extract. And now,
-                            you are part of it. You are a First Traveler, one of the chosen few who can access the
-                            Energy of the planet and use it for your own ends. But you are not alone. There are others
-                            like you, and they may not share your vision or your values. You will have to compete with
-                            them for the scarce and precious Energy that sustains your civilization. Whenever you need
-                            to perform the Ritual, you can return to the Dome, the sacred place where it all began.
-                            Remember that Energy is not only a tool for your quests, but also a precious commodity for
-                            trade and a vital ingredient for your travels. */}
-
+                        <Box width={{ md: '604px', lg: '472px' }}>
                             <Typewriter
                                 onInit={(typewriter) => {
                                     typewriter
@@ -119,7 +105,7 @@ function Energy() {
                                     delay: 0.2,
                                 }}
                             />
-                        </Text>
+                        </Box>
                     </Flex>
                 </Flex>
 
