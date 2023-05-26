@@ -120,8 +120,8 @@ function Leaderboard() {
                         {!ticketEarners.length ? (
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
                                 <Image height="256px" src={getFullTicket()} />
-                                <Text mt={5} textAlign="center" maxWidth="418px">
-                                    No traveler has yet to retrieve the{' '}
+                                <Text mt={5} textAlign="center" maxWidth="464px">
+                                    No traveler has yet managed to retrieve the{' '}
                                     <Text as="span" color="brightBlue">
                                         Sacred Scarab
                                     </Text>
