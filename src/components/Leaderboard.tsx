@@ -121,11 +121,11 @@ function Leaderboard() {
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
                                 <Image height="256px" src={getFullTicket()} />
                                 <Text mt={5} textAlign="center" maxWidth="464px">
-                                    No traveler has yet managed to retrieve the{' '}
+                                    No traveler has managed to retrieve the{' '}
                                     <Text as="span" color="brightBlue">
                                         Sacred Scarab
-                                    </Text>
-                                    . Become the first one by completing the{' '}
+                                    </Text>{' '}
+                                    yet. Become the first one by completing the{' '}
                                     <Text as="span" color="brightBlue">
                                         final mission
                                     </Text>{' '}
