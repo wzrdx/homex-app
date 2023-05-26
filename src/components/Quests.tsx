@@ -86,10 +86,6 @@ function Quests() {
         getOngoingQuests();
     }, []);
 
-    useEffect(() => {
-        console.log('[Quests] Received new ongoingQuests');
-    }, [ongoingQuests]);
-
     const startQuest = async () => {
         setStartButtonLoading(true);
 

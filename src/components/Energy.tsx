@@ -80,10 +80,10 @@ function Energy() {
     return (
         <Flex height="100%" justifyContent="center" alignItems="center">
             <Flex flexDir="column" justifyContent="center" alignItems="center">
-                <Flex alignItems="flex-start" mb={8}>
-                    <Flex mr={3} flex={1} width="600px" justifyContent="flex-end">
+                <Flex alignItems="flex-start" mb={{ md: 6, lg: 8 }}>
+                    <Flex mr={3} width={{ md: 'auto', lg: '600px' }} justifyContent="flex-end">
                         <Image
-                            width={{ md: '330px', lg: '435px' }}
+                            width={{ md: '326px', lg: '435px' }}
                             src={getFaucetImage()}
                             alt="Energy"
                             borderRadius="1px"
@@ -91,8 +91,8 @@ function Energy() {
                         />
                     </Flex>
 
-                    <Flex ml={3} flex={1} width="600px">
-                        <Text layerStyle="questDescription" width="472px">
+                    <Flex ml={3} width={{ md: '604px', lg: '600px' }}>
+                        <Text layerStyle="questDescription" width={{ md: '604px', lg: '472px' }}>
                             {/* The planet's frequency was not limitless, and soon the Founders realized they needed to find
                             more sources of Energy to sustain their growing needs. That was how the guild of Energy
                             seekers came to be: brave and curious souls who ventured into the unknown corners of the
