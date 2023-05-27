@@ -53,7 +53,7 @@ import {
     useTransactionsContext,
 } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame, getFrameGlow, getFullTicket, getSpinningTicket } from '../services/assets';
+import { getFrame, getFrameGlow, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 
@@ -85,10 +85,6 @@ function Quests() {
     useEffect(() => {
         getOngoingQuests();
     }, []);
-
-    useEffect(() => {
-        console.log('[Quests] Received new ongoingQuests');
-    }, [ongoingQuests]);
 
     const startQuest = async () => {
         setStartButtonLoading(true);

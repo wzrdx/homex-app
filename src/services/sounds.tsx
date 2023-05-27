@@ -5,7 +5,7 @@ import { createContext, useContext, useReducer, useState } from 'react';
 const OST = new Howl({
     src: ['/ost.mp3'],
     loop: true,
-    volume: 0.15,
+    volume: 0.25,
 });
 
 export interface SoundsContextType {

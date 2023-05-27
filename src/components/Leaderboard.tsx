@@ -8,6 +8,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
 import { TimeIcon } from '@chakra-ui/icons';
+import { getFullTicket } from '../services/assets';
 
 const COLUMNS = [
     {
@@ -99,13 +100,13 @@ function Leaderboard() {
     return (
         <Flex justifyContent="center">
             <Flex flexDir="column" alignItems="center">
-                <Flex mb={7} flexDir="column">
+                <Flex mb={7} flexDir="column" alignItems="center">
                     <Text mb={1.5} fontSize="lg" fontWeight={600}>
                         Tickets Leaderboard
                     </Text>
 
                     <Box
-                        width="100%"
+                        width="110%"
                         height="1px"
                         background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
                     ></Box>
@@ -116,19 +117,40 @@ function Leaderboard() {
                 ) : (
                     <Flex flexDir="column">
                         {/* Header */}
-                        <Flex mb={2}>
-                            {_.map(COLUMNS, (column: any, index: number) => (
-                                <Text
-                                    key={index}
-                                    minWidth={column.width}
-                                    textAlign={column.align}
-                                    fontWeight={600}
-                                    fontSize="17px"
-                                >
-                                    {column.name}
+                        {!ticketEarners.length ? (
+                            <Flex flexDir="column" justifyContent="center" alignItems="center">
+                                <Image height="256px" src={getFullTicket()} />
+                                <Text mt={5} textAlign="center" maxWidth="464px">
+                                    No traveler has managed to retrieve the{' '}
+                                    <Text as="span" color="brightBlue">
+                                        Sacred Scarab
+                                    </Text>{' '}
+                                    yet. Become the first one by completing the{' '}
+                                    <Text as="span" color="brightBlue">
+                                        final mission
+                                    </Text>{' '}
+                                    and earning a{' '}
+                                    <Text as="span" color="brightBlue">
+                                        Ticket
+                                    </Text>
+                                    .
                                 </Text>
-                            ))}
-                        </Flex>
+                            </Flex>
+                        ) : (
+                            <Flex mb={2}>
+                                {_.map(COLUMNS, (column: any, index: number) => (
+                                    <Text
+                                        key={index}
+                                        minWidth={column.width}
+                                        textAlign={column.align}
+                                        fontWeight={600}
+                                        fontSize="17px"
+                                    >
+                                        {column.name}
+                                    </Text>
+                                ))}
+                            </Flex>
+                        )}
 
                         {_.map(ticketEarners, (earner: TicketEarner, index: number) => (
                             <Flex mt={2} alignItems="center" key={index}>

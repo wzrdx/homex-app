@@ -30,7 +30,7 @@ import { smartContract } from '../blockchain/smartContract';
 import { BigNumber } from 'bignumber.js';
 
 const BASE_DURATION = 1;
-const BASE_COST = 1;
+const BASE_COST = 10;
 export const QUEST_DURATION_INTERVAL = 'minute';
 
 const QUEST_IMAGES = [Quest_1, Quest_2, Quest_3, Quest_4, Quest_5, Quest_6, Quest_7, Quest_8, Quest_9];
@@ -229,7 +229,7 @@ export const QUESTS: any[] = [
             herbs: 4 * BASE_COST,
             gems: 2 * BASE_COST,
         },
-        duration: 3 * BASE_DURATION,
+        duration: 2 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
@@ -260,7 +260,7 @@ export const QUESTS: any[] = [
             herbs: 8 * BASE_COST,
             gems: 4 * BASE_COST,
         },
-        duration: 6 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
@@ -285,7 +285,7 @@ export const QUESTS: any[] = [
         description: (
             <Text layerStyle="questDescription">
                 You discovered the Sacred Scarab, a powerful artifact hidden in a desert temple. It is guarded by a
-                powerful sandstorm so use your resources to face it and retrieve the artifact back to the Monolith.
+                powerful sandstorm so use your resources to face it and recover the artifact back to the Monolith.
             </Text>
         ),
         requirements: {
@@ -294,7 +294,7 @@ export const QUESTS: any[] = [
             gems: 4 * BASE_COST,
             essence: (2 * BASE_COST) / 10,
         },
-        duration: 8 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',

@@ -28,7 +28,7 @@ function App() {
     const toast = useToast();
 
     const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
-    const { playSound } = useSoundsContext() as SoundsContextType;
+    const { playSound, setIsMusicOn } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
@@ -38,7 +38,9 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        setIsMusicOn(process.env.NODE_ENV !== 'development');
+    }, []);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
