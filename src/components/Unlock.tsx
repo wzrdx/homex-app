@@ -5,11 +5,11 @@ import {
     WalletConnectLoginButton,
 } from '@multiversx/sdk-dapp/UI';
 import { Box, Text, Spinner, Flex, Stack, Image } from '@chakra-ui/react';
-import { useGetAccountInfo, useGetIsLoggedIn, useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthenticationContextType, getTokenCount, useAuthenticationContext } from '../services/authentication';
-import { getAddress, logout } from '@multiversx/sdk-dapp/utils';
+import { AuthenticationContextType, useAuthenticationContext } from '../services/authentication';
+import { logout } from '@multiversx/sdk-dapp/utils';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
@@ -42,8 +42,6 @@ const Unlock = () => {
     useEffect(() => {
         console.log('[Unlock] address', address);
 
-        console.log(new Date().toISOString());
-
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
@@ -54,12 +52,8 @@ const Unlock = () => {
     const checkAuthentication = async () => {
         try {
             if (!address) {
-                console.log('[Unlock] checkAuthentication > No address, logging out');
                 logout(`/unlock`);
             } else {
-                console.log('[Unlock] User logged in with address', address);
-
-                // const { data } = await getTokenCount(address);
                 onAuthenticationResult(isContestReady());
             }
         } catch (err) {

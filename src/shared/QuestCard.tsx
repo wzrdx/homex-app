@@ -25,15 +25,12 @@ export const QuestCard: FunctionComponent<
         let timer: string | number | NodeJS.Timer | undefined;
 
         if (timestamp) {
-            // console.log(quest.id, timestamp);
             setWidths(getOverlayWidths());
 
             timer = setInterval(() => {
-                // console.log(quest.id, 'Updating width');
                 setWidths(getOverlayWidths());
             }, REFRESH_TIME);
         } else {
-            // console.log('QuestCard', quest.id, 'resetting widths');
             setWidths(['0%', '100%']);
         }
 

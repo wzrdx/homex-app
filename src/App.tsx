@@ -93,7 +93,7 @@ function App() {
             const txs = cloneDeep(pendingTxs);
             victims = remove(txs, (tx) => includes(victimSessionIds, tx.sessionId));
 
-            console.log('[App.tsx] removeTxs', victims);
+            // console.log('[App.tsx] removeTxs', victims);
 
             setPendingTxs(txs);
         }
@@ -102,7 +102,7 @@ function App() {
     };
 
     const applyTxResolution = (tx: Transaction) => {
-        console.log('[App.tsx] applyTxResolution', tx);
+        // console.log('[App.tsx] applyTxResolution', tx);
 
         switch (tx.resolution) {
             case TxResolution.UpdateEnergy:

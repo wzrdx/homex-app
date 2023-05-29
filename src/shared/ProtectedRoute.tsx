@@ -10,8 +10,6 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     let { address } = useGetAccountInfo();
 
     useEffect(() => {
-        console.log('[ProtectedRoute] address', address);
-
         if (isAuthenticated && !address) {
             setAuthentication(false);
             logout('/unlock');
