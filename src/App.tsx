@@ -161,7 +161,7 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 15000,
+            duration: 10000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
         });
     };

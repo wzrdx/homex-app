@@ -127,7 +127,7 @@ function Gameplay() {
                     </Flex>
 
                     <Text mt={4} fontWeight={500} fontSize="17px">
-                        In-game tokens
+                        In-game fungible tokens
                     </Text>
 
                     <Text mt={1} textAlign="center" maxWidth="330px">

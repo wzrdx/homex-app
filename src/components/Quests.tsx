@@ -245,6 +245,8 @@ function Quests() {
                             alt="Frame"
                             zIndex={4}
                             width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
+                            userSelect="none"
+                            pointerEvents="none"
                         />
 
                         {map(currentQuest.layers, (layer) => (
@@ -259,10 +261,12 @@ function Quests() {
                                 transform="scale(1.2)"
                                 mt="16px"
                                 clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
+                                userSelect="none"
+                                pointerEvents="none"
                             />
                         </Flex>
 
-                        <Flex layerStyle="absoluteCentered" zIndex={1}>
+                        <Flex layerStyle="absoluteCentered" zIndex={1} userSelect="none" pointerEvents="none">
                             <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
                                 <source src={getFrameGlow()} type="video/webm" />
                             </video>
