@@ -52,7 +52,7 @@ body {
 // Dapp Sign Tx Modal
 .Sign-Tx-Modal {
     .dapp-modal-dialog-content-body {
-        background-color: #191919 !important;
+        background-color: #222222 !important;
     }
 
     .dapp-modal-dialog-content {
@@ -65,7 +65,7 @@ body {
 .Tx-Toast {
     font-family: 'IBM Plex Mono', monospace !important;
     padding: 0.75rem 0.5rem !important;
-    background-color: #191919 !important;
+    background-color: #222222 !important;
     overflow: hidden;
 
     .dapp-core-component__transactionToast-styles__heading {
@@ -115,7 +115,7 @@ body {
     }
 
     .dapp-core-component__transactionsToastList-styles__toastWrapper {
-        background-color: #191919 !important;
+        background-color: #222222 !important;
     }
 }
 
@@ -124,7 +124,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem 0.5rem !important;
-    background-color: #191919 !important;
+    background-color: #222222 !important;
 
     h5 {
         font-size: 1.15rem;
@@ -145,12 +145,12 @@ body {
 
 // Mvx Modals
 .dapp-core-component__dappModalStyles__dappModalContent {
-    background-color: #191919 !important;
+    background-color: #222222 !important;
 }
 
 .dapp-core-component__main__btn-light {
     color: #868686 !important;
-    background-color: #191919 !important;
+    background-color: #222222 !important;
 }
 
 // Scrollbar

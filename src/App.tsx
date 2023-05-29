@@ -168,7 +168,7 @@ function App() {
 
     return (
         <ChakraBaseProvider theme={theme}>
-            <TransactionsToastList successfulToastLifetime={20000} transactionToastClassName="Tx-Toast" />
+            <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
             <NotificationModal />
             <SignTransactionsModals className="Sign-Tx-Modal" />
 

@@ -12,7 +12,7 @@ export const CustomToast: FunctionComponent<
     return (
         <Flex
             flexDir="column"
-            backgroundColor="#191919"
+            backgroundColor="#222222"
             borderInlineStartWidth="4px"
             borderInlineStartColor={color}
             padding="12px 32px 12px 12px"
