@@ -194,10 +194,10 @@ function Header() {
                             alignItems="center"
                             padding="7px 16px"
                             borderRadius="9999px"
-                            backgroundColor="#7c2d1252"
+                            backgroundColor="#3c180d"
                             cursor="pointer"
-                            transition="all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#7c2d1284' }}
+                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                            _hover={{ backgroundColor: '#4d1e0e' }}
                             onClick={() => {
                                 playSound('mystery');
                                 onGameplayOpen();

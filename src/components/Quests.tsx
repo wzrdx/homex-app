@@ -58,7 +58,7 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 
 const LARGE_FRAME_SIZE = 352;
-const MEDIUM_FRAME_SIZE = 296;
+const MEDIUM_FRAME_SIZE = 260;
 
 function Quests() {
     const { checkEgldBalance } = useLayout();
@@ -269,7 +269,7 @@ function Quests() {
                         </Flex>
                     </Flex>
 
-                    <Flex my={{ md: 5, lg: 8 }}>
+                    <Flex mt={{ md: 5, lg: 8 }} mb={{ md: 4, lg: 7 }}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
                             <Flex key={resource} width={{ md: '86px', lg: '102px' }} justifyContent="center">
                                 <Requirement
