@@ -1,13 +1,13 @@
-import { Box, Flex, Spinner, Text, Image, ResponsiveValue } from '@chakra-ui/react';
+import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { TicketEarner, useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
 import _ from 'lodash';
-import { getShortAddress, getUsername, zeroPad } from '../services/helpers';
+import { getUsername, zeroPad } from '../services/helpers';
 import { Role, RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
-import { TimeIcon } from '@chakra-ui/icons';
+import { TimeIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getFullTicket } from '../services/assets';
 
 const COLUMNS = [
@@ -86,7 +86,7 @@ function Leaderboard() {
     const getRoleTag = (ticketsEarned: number, index: number) => {
         let role = Role.FirstTravelers;
 
-        if (hasContestEnded() && index <= 2) {
+        if (index <= 2 && ticketsEarned >= 3) {
             role = Role.Elders;
         } else if (ticketsEarned > 1) {
             role = Role.OGTravelers;
@@ -95,13 +95,11 @@ function Leaderboard() {
         return <RoleTag role={role} />;
     };
 
-    const hasContestEnded = (): boolean => false;
-
     return (
         <Flex justifyContent="center">
             <Flex flexDir="column" alignItems="center">
-                <Flex mb={7} flexDir="column" alignItems="center">
-                    <Text mb={1.5} fontSize="lg" fontWeight={600}>
+                <Flex mb={5} flexDir="column" alignItems="center">
+                    <Text mb={1} fontSize="lg" fontWeight={600}>
                         Tickets Leaderboard
                     </Text>
 
@@ -110,6 +108,13 @@ function Leaderboard() {
                         height="1px"
                         background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
                     ></Box>
+                </Flex>
+
+                <Flex mb={6} justifyContent="center" alignItems="center">
+                    <InfoOutlineIcon boxSize={4} color="whitesmoke" />
+                    <Text ml={2}>
+                        Advance your ranking by collecting as many Tickets as you can in order to earn rewards
+                    </Text>
                 </Flex>
 
                 {!ticketEarners ? (

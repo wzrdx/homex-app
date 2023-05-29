@@ -5,7 +5,7 @@ export const VideoLayer = ({ source, mode }) => {
     const [fade, setFade] = useState<boolean>(false);
 
     return (
-        <Flex layerStyle="absoluteCentered" mixBlendMode={mode} zIndex={3}>
+        <Flex layerStyle="absoluteCentered" mixBlendMode={mode} zIndex={3} userSelect="none" pointerEvents="none">
             <video
                 className="Fade-In"
                 style={{ maxWidth: '120%', opacity: !fade ? 0 : 1 }}
