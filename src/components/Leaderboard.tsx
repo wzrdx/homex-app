@@ -57,11 +57,13 @@ function Leaderboard() {
     const parseEarners = async () => {
         const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
 
+        console.log(sorted);
+
         const parsedEarners = await Promise.all(
             _(sorted)
                 .map(async (earner) => ({
                     ...earner,
-                    address: await getUsername(earner.address),
+                    address: earner.address, // TODO: await getUsername(earner.address),
                     time: getDuration(earner.timestamp),
                 }))
                 .value()

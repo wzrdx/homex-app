@@ -31,13 +31,13 @@ export const useGetTicketEarners = () => {
             const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
             const value = firstValue?.valueOf();
 
+            console.log(value);
+
             const parsedArray: TicketEarner[] = map(value, (item) => ({
                 address: item?.address?.bech32(),
                 ticketsEarned: item?.tickets_earned?.toNumber(),
                 timestamp: new Date(item?.last_timestamp?.toNumber() * 1000),
             }));
-
-            // console.log(parsedArray);
 
             setEarners(parsedArray);
         } catch (err) {
