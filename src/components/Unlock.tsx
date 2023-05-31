@@ -41,6 +41,8 @@ const Unlock = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setError(undefined);
+
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
