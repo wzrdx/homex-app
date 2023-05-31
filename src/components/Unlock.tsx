@@ -14,17 +14,18 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
+import { END_OF_CONTEST, START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
 import { isAfter } from 'date-fns';
 import { Timer } from '../shared/Timer';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
+import { isWhitelisted } from '../blockchain/api/isWhitelisted';
 
 enum AuthenticationError {
-    NotHolding = 'NotHolding',
-    RequestError = 'RequestError',
+    NotWhitelisted = 'NotWhitelisted',
     ContestNotStarted = 'ContestNotStarted',
+    ContestEnded = 'ContestEnded',
 }
 
 const Unlock = () => {
@@ -40,39 +41,38 @@ const Unlock = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('[Unlock] address', address);
-
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
     }, [address]);
 
-    const isContestReady = (): boolean => isAfter(new Date(), START_OF_CONTEST);
+    const hasGameStarted = (): boolean => isAfter(new Date(), START_OF_CONTEST);
+    const hasGameEnded = (): boolean => isAfter(new Date(), END_OF_CONTEST);
+    const isUserLoggedIn = (): boolean => !!address;
 
     const checkAuthentication = async () => {
-        try {
-            if (!address) {
-                logout(`/unlock`);
-            } else {
-                onAuthenticationResult(isContestReady());
+        if (!address) {
+            logout(`/unlock`);
+        } else {
+            if (!hasGameStarted()) {
+                setError(AuthenticationError.ContestNotStarted);
+                return;
             }
-        } catch (err) {
-            console.error('Unable to fetch NFTs of user');
-            setError(AuthenticationError.RequestError);
-        }
-    };
 
-    const onAuthenticationResult = (isSuccessful: boolean) => {
-        if (isSuccessful) {
+            if (hasGameEnded()) {
+                setError(AuthenticationError.ContestEnded);
+                return;
+            }
+
+            if (!(await isWhitelisted(address))) {
+                setError(AuthenticationError.NotWhitelisted);
+                return;
+            }
+
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
-        } else {
-            setError(AuthenticationError.ContestNotStarted);
-            // setError(AuthenticationError.NotHolding);
         }
     };
-
-    const isUserLoggedIn = (): boolean => !!address;
 
     const getText = (text: string, displayTimer = false) => (
         <Flex flexDir="column" alignItems="center">
@@ -84,7 +84,7 @@ const Unlock = () => {
                 <Box mt={3}>
                     <Timer
                         timestamp={START_OF_CONTEST}
-                        callback={() => onAuthenticationResult(true)}
+                        callback={() => checkAuthentication()}
                         isActive
                         isDescending
                         displayDays
@@ -203,14 +203,12 @@ const Unlock = () => {
                         </>
                     ) : (
                         <Box display="flex" flexDir="column" alignItems="center">
-                            {error === AuthenticationError.NotHolding &&
-                                getText('Playing the game requires an NFT from the Home X collection')}
-
-                            {error === AuthenticationError.RequestError &&
-                                getText('Error occurred while fetching NFTs, please reload this page')}
-
                             {error === AuthenticationError.ContestNotStarted &&
                                 getText('Waiting for the game to start', true)}
+
+                            {error === AuthenticationError.ContestEnded && getText('The beta testing has ended')}
+
+                            {error === AuthenticationError.NotWhitelisted && getText("Address isn't whitelisted")}
 
                             {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>
