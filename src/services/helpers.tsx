@@ -43,3 +43,9 @@ export const getUsername = async (address: string): Promise<string> => {
 
     return result;
 };
+
+export const pairwise = (arr, func) => {
+    for (var i = 0; i < arr.length - 1; i++) {
+        func(arr[i], arr[i + 1]);
+    }
+};

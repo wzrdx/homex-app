@@ -6,7 +6,7 @@ import { API_URL } from '../config';
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL);
 
-export const getTicketEarnersCount = async () => {
+export const getTicketEarnersCount = async (): Promise<number> => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction('getTicketEarnersCount'),
@@ -18,9 +18,10 @@ export const getTicketEarnersCount = async () => {
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
 
         const value = firstValue?.valueOf();
-        console.log('getTicketEarnersCount', value.toNumber());
-        return value.toNumber();
+
+        return value.toNumber() as number;
     } catch (err) {
         console.error('Unable to call getTicketEarnersAddresses', err);
+        return 0;
     }
 };

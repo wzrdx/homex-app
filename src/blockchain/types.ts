@@ -13,3 +13,17 @@ export interface OngoingQuest {
     id: number;
     timestamp: Date;
 }
+
+export enum Role {
+    OGTravelers,
+    FirstTravelers,
+    Elders,
+}
+
+export interface TicketEarner {
+    address: string;
+    ticketsEarned: number;
+    timestamp: Date;
+    time?: string;
+    role?: Role;
+}

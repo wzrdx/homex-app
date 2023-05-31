@@ -1,11 +1,6 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import Logo from '../assets/logo_small_white.png';
-
-export enum Role {
-    OGTravelers,
-    FirstTravelers,
-    Elders,
-}
+import { Role } from '../blockchain/types';
 
 export const RoleTag = ({ role }) => {
     const getContent = () => {

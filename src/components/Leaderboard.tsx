@@ -1,15 +1,16 @@
+import _ from 'lodash';
 import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { TicketEarner, useGetTicketEarners } from '../blockchain/hooks/useGetTicketEarners';
-import _ from 'lodash';
-import { getUsername, zeroPad } from '../services/helpers';
-import { Role, RoleTag } from '../shared/RoleTag';
+import { getUsername, pairwise, zeroPad } from '../services/helpers';
+import { RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
 import { TimeIcon, InfoOutlineIcon, WarningIcon } from '@chakra-ui/icons';
 import { getFullTicket } from '../services/assets';
 import { getTicketEarnersCount } from '../blockchain/api/getTicketEarnersCount';
+import { Role, TicketEarner } from '../blockchain/types';
+import { getTicketEarners } from '../blockchain/api/getTicketEarners';
 
 const COLUMNS = [
     {
@@ -40,23 +41,37 @@ const COLUMNS = [
 ];
 
 function Leaderboard() {
-    const { earners, getTicketEarners } = useGetTicketEarners();
-
     const [ticketEarners, setTicketEarners] = useState<TicketEarner[]>();
     const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
-        getTicketEarnersCount();
-        getTicketEarners(0, 100);
+        init();
     }, []);
 
-    useEffect(() => {
-        if (earners) {
-            parseEarners();
-        }
-    }, [earners]);
+    const init = async () => {
+        const count: number = await getTicketEarnersCount();
+        const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
-    const parseEarners = async () => {
+        const apiCalls: Array<Promise<TicketEarner[]>> = [];
+
+        pairwise(
+            _(chunks)
+                .filter(_.identity)
+                .map((chunk, index) => {
+                    return index * 100 + chunk;
+                })
+                .unshift(0)
+                .value(),
+            (current, next) => {
+                apiCalls.push(getTicketEarners(current, next));
+            }
+        );
+
+        const result = await Promise.all(apiCalls);
+        parseEarners(_.flatten(result));
+    };
+
+    const parseEarners = async (earners: TicketEarner[]) => {
         try {
             const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
 
@@ -88,8 +103,6 @@ function Leaderboard() {
                             : earner.role,
                 };
             });
-
-            console.log(earnearsWithFilteredOgs);
 
             setTicketEarners(earnearsWithFilteredOgs);
         } catch (error) {
