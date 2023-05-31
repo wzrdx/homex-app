@@ -64,10 +64,9 @@ const Unlock = () => {
                 return;
             }
 
-            // TODO:
             if (!(await isWhitelisted(address))) {
-                // setError(AuthenticationError.NotWhitelisted);
-                // return;
+                setError(AuthenticationError.NotWhitelisted);
+                return;
             }
 
             setAuthentication(true);
