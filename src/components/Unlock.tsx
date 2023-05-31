@@ -52,6 +52,7 @@ const Unlock = () => {
 
     const checkAuthentication = async () => {
         if (!address) {
+            setError(undefined);
             logout(`/unlock`);
         } else {
             if (!hasGameStarted()) {
