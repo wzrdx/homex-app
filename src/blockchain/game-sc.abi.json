@@ -226,18 +226,6 @@
             "outputs": []
         },
         {
-            "name": "addEarners",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "earners",
-                    "type": "List<Address>"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "getTicketsId",
             "mutability": "readonly",
             "inputs": [],
