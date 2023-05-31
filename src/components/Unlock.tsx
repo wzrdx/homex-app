@@ -41,6 +41,8 @@ const Unlock = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setError(undefined);
+
         if (isUserLoggedIn()) {
             checkAuthentication();
         }
@@ -52,7 +54,6 @@ const Unlock = () => {
 
     const checkAuthentication = async () => {
         if (!address) {
-            setError(undefined);
             logout(`/unlock`);
         } else {
             if (!hasGameStarted()) {
