@@ -9,6 +9,7 @@ import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
 import { TimeIcon, InfoOutlineIcon, WarningIcon } from '@chakra-ui/icons';
 import { getFullTicket } from '../services/assets';
+import { getTicketEarnersCount } from '../blockchain/api/getTicketEarnersCount';
 
 const COLUMNS = [
     {
@@ -41,12 +42,12 @@ const COLUMNS = [
 function Leaderboard() {
     const { earners, getTicketEarners } = useGetTicketEarners();
 
-    // Parsed ticket earners
     const [ticketEarners, setTicketEarners] = useState<TicketEarner[]>();
     const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
-        getTicketEarners();
+        getTicketEarnersCount();
+        getTicketEarners(0, 100);
     }, []);
 
     useEffect(() => {
@@ -59,17 +60,38 @@ function Leaderboard() {
         try {
             const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
 
-            const parsedEarners = await Promise.all(
+            // Earners parsed with initial roles
+            const parsedEarners: TicketEarner[] = await Promise.all(
                 _(sorted)
-                    .map(async (earner) => ({
+                    .map(async (earner, index) => ({
                         ...earner,
                         address: await getUsername(earner.address),
                         time: getDuration(earner.timestamp),
+                        role: getRole(earner.ticketsEarned, index),
                     }))
                     .value()
             );
 
-            setTicketEarners(parsedEarners);
+            const first25OgsAddresses = _(parsedEarners)
+                .orderBy(['timestamp'], ['asc'])
+                .filter((earner) => earner.role === Role.OGTravelers)
+                .map((earner) => earner.address)
+                .take(25)
+                .value();
+
+            const earnearsWithFilteredOgs = _.map(parsedEarners, (earner) => {
+                return {
+                    ...earner,
+                    role:
+                        earner.role === Role.OGTravelers && !_.includes(first25OgsAddresses, earner.address)
+                            ? Role.FirstTravelers
+                            : earner.role,
+                };
+            });
+
+            console.log(earnearsWithFilteredOgs);
+
+            setTicketEarners(earnearsWithFilteredOgs);
         } catch (error) {
             console.error(error);
             setError(true);
@@ -90,7 +112,7 @@ function Leaderboard() {
         return days + [duration.hours, duration.minutes, duration.seconds].map(zeroPad).join(':');
     };
 
-    const getRoleTag = (ticketsEarned: number, index: number) => {
+    const getRole = (ticketsEarned: number, index: number): Role => {
         let role = Role.FirstTravelers;
 
         if (index <= 2 && ticketsEarned >= 3) {
@@ -99,7 +121,7 @@ function Leaderboard() {
             role = Role.OGTravelers;
         }
 
-        return <RoleTag role={role} />;
+        return role;
     };
 
     return (
@@ -132,7 +154,7 @@ function Leaderboard() {
                         <Text ml={2}>Unable to fetch leaderboard</Text>
                     </Flex>
                 ) : (
-                    <Flex flexDir="column" overflowY="scroll">
+                    <Flex flexDir="column" overflowY="auto" overflowX="hidden">
                         {/* Header */}
                         {!ticketEarners.length ? (
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
@@ -182,7 +204,9 @@ function Leaderboard() {
                                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                                 </Flex>
 
-                                <Flex minWidth={COLUMNS[3].width}>{getRoleTag(earner.ticketsEarned, index)}</Flex>
+                                <Flex minWidth={COLUMNS[3].width}>
+                                    <RoleTag role={earner.role} />
+                                </Flex>
 
                                 <Flex minWidth={COLUMNS[4].width} alignItems="center">
                                     <TimeIcon boxSize={4} color="whitesmoke" />
