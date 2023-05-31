@@ -56,6 +56,11 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
+            if (!(await isWhitelisted(address))) {
+                setError(AuthenticationError.NotWhitelisted);
+                return;
+            }
+
             if (!hasGameStarted()) {
                 setError(AuthenticationError.ContestNotStarted);
                 return;
@@ -63,11 +68,6 @@ const Unlock = () => {
 
             if (hasGameEnded()) {
                 setError(AuthenticationError.ContestEnded);
-                return;
-            }
-
-            if (!(await isWhitelisted(address))) {
-                setError(AuthenticationError.NotWhitelisted);
                 return;
             }
 
