@@ -29,11 +29,17 @@ export const useGetTicketEarners = () => {
             const endpointDefinition = smartContract.getEndpoint('getTicketEarners');
 
             const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-            const value = firstValue?.valueOf();
+            const array = firstValue?.valueOf();
 
-            console.log(value);
+            console.log(
+                map(array, (item) => ({
+                    address: item?.address?.bech32(),
+                    ticketsEarned: item?.tickets_earned?.toNumber(),
+                    timestamp: item?.last_timestamp?.toNumber(),
+                }))
+            );
 
-            const parsedArray: TicketEarner[] = map(value, (item) => ({
+            const parsedArray: TicketEarner[] = map(array, (item) => ({
                 address: item?.address?.bech32(),
                 ticketsEarned: item?.tickets_earned?.toNumber(),
                 timestamp: new Date(item?.last_timestamp?.toNumber() * 1000),

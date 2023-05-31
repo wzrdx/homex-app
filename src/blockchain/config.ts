@@ -15,5 +15,6 @@ export const HERBS_TOKEN_ID = 'HERBS-6ccf7c';
 export const GEMS_TOKEN_ID = 'GEMS-4966e1';
 export const ESSENCE_TOKEN_ID = 'ESSENCE-47a615';
 
-export const START_OF_CONTEST = new Date('2023-06-01T06:00:00.000Z');
+// TODO:
+export const START_OF_CONTEST = new Date('2023-05-31T06:00:00.000Z');
 export const END_OF_CONTEST = new Date('2023-06-02T06:00:00.000Z');

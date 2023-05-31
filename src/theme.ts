@@ -72,6 +72,11 @@ const layerStyles = {
         bottom: 0,
         left: 0,
     },
+    ellipsis: {
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+    },
 };
 
 const breakpoints = {

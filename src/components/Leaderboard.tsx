@@ -7,23 +7,23 @@ import { Role, RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
-import { TimeIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { TimeIcon, InfoOutlineIcon, WarningIcon } from '@chakra-ui/icons';
 import { getFullTicket } from '../services/assets';
 
 const COLUMNS = [
     {
         name: 'Rank',
-        width: '86px',
+        width: '72px',
         align: 'left',
     },
     {
         name: 'Player',
-        width: '162px',
+        width: '246px',
         align: 'left',
     },
     {
         name: 'Tickets',
-        width: '116px',
+        width: '96px',
         align: 'left',
     },
     {
@@ -33,7 +33,7 @@ const COLUMNS = [
     },
     {
         name: 'Time',
-        width: '100px',
+        width: '126px',
         align: 'left',
     },
 ];
@@ -43,6 +43,7 @@ function Leaderboard() {
 
     // Parsed ticket earners
     const [ticketEarners, setTicketEarners] = useState<TicketEarner[]>();
+    const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         getTicketEarners();
@@ -55,19 +56,25 @@ function Leaderboard() {
     }, [earners]);
 
     const parseEarners = async () => {
-        const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
+        try {
+            const sorted = _.orderBy(earners, ['ticketsEarned', 'timestamp'], ['desc', 'asc']);
 
-        const parsedEarners = await Promise.all(
-            _(sorted)
-                .map(async (earner) => ({
-                    ...earner,
-                    address: await getUsername(earner.address),
-                    time: getDuration(earner.timestamp),
-                }))
-                .value()
-        );
+            const parsedEarners = await Promise.all(
+                _(sorted)
+                    .map(async (earner) => ({
+                        ...earner,
+                        address: await getUsername(earner.address),
+                        time: getDuration(earner.timestamp),
+                    }))
+                    .value()
+            );
 
-        setTicketEarners(parsedEarners);
+            setTicketEarners(parsedEarners);
+        } catch (error) {
+            console.error(error);
+            setError(true);
+            setTicketEarners([]);
+        }
     };
 
     const getDuration = (timestamp: Date): string => {
@@ -96,7 +103,7 @@ function Leaderboard() {
     };
 
     return (
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" height="100%">
             <Flex flexDir="column" alignItems="center">
                 <Flex mb={5} flexDir="column" alignItems="center">
                     <Text mb={1} fontSize="lg" fontWeight={600}>
@@ -119,8 +126,13 @@ function Leaderboard() {
 
                 {!ticketEarners ? (
                     <Spinner mt={3} size="sm" />
+                ) : !!error ? (
+                    <Flex alignItems="center">
+                        <WarningIcon boxSize={4} color="redClrs" />
+                        <Text ml={2}>Unable to fetch leaderboard</Text>
+                    </Flex>
                 ) : (
-                    <Flex flexDir="column">
+                    <Flex flexDir="column" overflowY="scroll">
                         {/* Header */}
                         {!ticketEarners.length ? (
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
@@ -161,7 +173,9 @@ function Leaderboard() {
                             <Flex mt={2} alignItems="center" key={index}>
                                 <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
 
-                                <Text minWidth={COLUMNS[1].width}>{earner.address}</Text>
+                                <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
+                                    {earner.address}
+                                </Text>
 
                                 <Flex minWidth={COLUMNS[2].width}>
                                     <Text minWidth="24px">{earner.ticketsEarned}</Text>
