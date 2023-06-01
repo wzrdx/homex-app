@@ -45,7 +45,7 @@ function Layout() {
                     marginTop: '2rem',
                     marginRight: '2rem',
                 },
-                duration: 10000,
+                duration: 5000,
                 render: () => (
                     <CustomToast type="error" title="Insufficient balance" color="redClrs">
                         <Text mt={2}>You need xEGLD for gas fees</Text>

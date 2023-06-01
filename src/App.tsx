@@ -161,14 +161,14 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 10000,
+            duration: 5000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
         });
     };
 
     return (
         <ChakraBaseProvider theme={theme}>
-            <TransactionsToastList successfulToastLifetime={10000} transactionToastClassName="Tx-Toast" />
+            <TransactionsToastList successfulToastLifetime={5000} transactionToastClassName="Tx-Toast" />
             <NotificationModal />
             <SignTransactionsModals className="Sign-Tx-Modal" />
 
