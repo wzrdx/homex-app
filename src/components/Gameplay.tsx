@@ -164,7 +164,7 @@ function Gameplay() {
                         mx={3}
                         flexDir="column"
                         height="100%"
-                        backgroundColor="lightDark"
+                        backgroundColor="#272727"
                         overflow="hidden"
                         borderRadius="3px"
                     >
@@ -214,7 +214,7 @@ function Gameplay() {
                         mx={3}
                         flexDir="column"
                         height="100%"
-                        backgroundColor="lightDark"
+                        backgroundColor="#272727"
                         overflow="hidden"
                         borderRadius="3px"
                     >
@@ -277,7 +277,7 @@ function Gameplay() {
                         mx={3}
                         flexDir="column"
                         height="100%"
-                        backgroundColor="lightDark"
+                        backgroundColor="#272727"
                         overflow="hidden"
                         borderRadius="3px"
                     >
