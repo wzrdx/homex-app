@@ -130,7 +130,7 @@ function Leaderboard() {
 
         if (index <= 2 && ticketsEarned >= 3) {
             role = Role.Elders;
-        } else if (ticketsEarned > 1) {
+        } else if (ticketsEarned > 2) {
             role = Role.OGTravelers;
         }
 
