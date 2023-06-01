@@ -26,4 +26,5 @@ export interface TicketEarner {
     timestamp: Date;
     time?: string;
     role?: Role;
+    username?: string;
 }

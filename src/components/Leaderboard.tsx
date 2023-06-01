@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getUsername, pairwise, zeroPad } from '../services/helpers';
+import { OGs, getUsername, pairwise, zeroPad } from '../services/helpers';
 import { RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
@@ -80,31 +80,14 @@ function Leaderboard() {
                 _(sorted)
                     .map(async (earner, index) => ({
                         ...earner,
-                        address: await getUsername(earner.address),
+                        username: await getUsername(earner.address),
                         time: getDuration(earner.timestamp),
-                        role: getRole(earner.ticketsEarned, index),
+                        role: getRole(earner.ticketsEarned, earner.address, index),
                     }))
                     .value()
             );
 
-            const first25OgsAddresses = _(parsedEarners)
-                .orderBy(['timestamp'], ['asc'])
-                .filter((earner) => earner.role === Role.OGTravelers)
-                .map((earner) => earner.address)
-                .take(25)
-                .value();
-
-            const earnearsWithFilteredOgs = _.map(parsedEarners, (earner) => {
-                return {
-                    ...earner,
-                    role:
-                        earner.role === Role.OGTravelers && !_.includes(first25OgsAddresses, earner.address)
-                            ? Role.FirstTravelers
-                            : earner.role,
-                };
-            });
-
-            setTicketEarners(earnearsWithFilteredOgs);
+            setTicketEarners(parsedEarners);
         } catch (error) {
             console.error(error);
             setError(true);
@@ -125,12 +108,12 @@ function Leaderboard() {
         return days + [duration.hours, duration.minutes, duration.seconds].map(zeroPad).join(':');
     };
 
-    const getRole = (ticketsEarned: number, index: number): Role => {
+    const getRole = (ticketsEarned: number, address: string, index: number): Role => {
         let role = Role.FirstTravelers;
 
         if (index <= 2 && ticketsEarned >= 3) {
             role = Role.Elders;
-        } else if (ticketsEarned > 2) {
+        } else if (ticketsEarned > 2 && _.includes(OGs, address)) {
             role = Role.OGTravelers;
         }
 
@@ -209,7 +192,7 @@ function Leaderboard() {
                                 <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
 
                                 <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
-                                    {earner.address}
+                                    {earner.username}
                                 </Text>
 
                                 <Flex minWidth={COLUMNS[2].width}>
