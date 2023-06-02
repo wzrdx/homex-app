@@ -20,7 +20,6 @@ import { isAfter } from 'date-fns';
 import { Timer } from '../shared/Timer';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
-import { isWhitelisted } from '../blockchain/api/isWhitelisted';
 
 enum AuthenticationError {
     NotWhitelisted = 'NotWhitelisted',
@@ -56,21 +55,6 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
-            if (!(await isWhitelisted(address))) {
-                setError(AuthenticationError.NotWhitelisted);
-                return;
-            }
-
-            if (!hasGameStarted()) {
-                setError(AuthenticationError.ContestNotStarted);
-                return;
-            }
-
-            if (hasGameEnded()) {
-                setError(AuthenticationError.ContestEnded);
-                return;
-            }
-
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
         }

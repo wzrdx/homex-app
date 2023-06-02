@@ -293,7 +293,7 @@ function Quests() {
                                     isStartButtonLoading ||
                                     isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
-                                disabled={!meetsRequirements(resources, currentQuest.id)}
+                                disabled={true || !meetsRequirements(resources, currentQuest.id)}
                                 onClick={startQuest}
                             >
                                 <Text>Start</Text>
@@ -310,6 +310,7 @@ function Quests() {
                         {/* Complete - A quest is completed and its rewards must be claimed */}
                         {isQuestComplete() && (
                             <ActionButton
+                                disabled
                                 isLoading={
                                     isFinishButtonLoading ||
                                     isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)

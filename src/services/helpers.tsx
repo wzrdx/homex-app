@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GATEWAY_URL } from '../blockchain/config';
+import { API_URL, GATEWAY_URL, contractAddress } from '../blockchain/config';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -42,6 +42,14 @@ export const getUsername = async (address: string): Promise<string> => {
     }
 
     return result;
+};
+
+export const getTxCount = async (): Promise<string> => {
+    const response = await axios.get(`accounts/${contractAddress}/transactions/count`, {
+        baseURL: API_URL,
+    });
+
+    return response?.data;
 };
 
 export const pairwise = (arr, func) => {

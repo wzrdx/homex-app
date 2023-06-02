@@ -15,9 +15,9 @@ export interface OngoingQuest {
 }
 
 export enum Role {
-    OGTravelers,
-    FirstTravelers,
-    Elders,
+    OGTravelers = 'OG',
+    FirstTravelers = 'FirstTravelers',
+    Elders = 'Elders',
 }
 
 export interface TicketEarner {

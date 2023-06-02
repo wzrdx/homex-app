@@ -23,6 +23,7 @@ import ResourcesToast from './shared/ResourcesToast';
 import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
+import { getTxCount } from './services/helpers';
 
 function App() {
     const toast = useToast();
@@ -40,7 +41,13 @@ function App() {
 
     useEffect(() => {
         setIsMusicOn(process.env.NODE_ENV !== 'development');
+        init();
     }, []);
+
+    const init = async () => {
+        const result = await getTxCount();
+        console.log('Tx count', result);
+    };
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
