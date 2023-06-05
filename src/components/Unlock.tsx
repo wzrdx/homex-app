@@ -55,6 +55,11 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
+            if (hasGameEnded()) {
+                setError(AuthenticationError.ContestEnded);
+                return;
+            }
+
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
         }
@@ -192,7 +197,7 @@ const Unlock = () => {
                             {error === AuthenticationError.ContestNotStarted &&
                                 getText('Waiting for the game to start', true)}
 
-                            {error === AuthenticationError.ContestEnded && getText('The beta testing has ended')}
+                            {error === AuthenticationError.ContestEnded && getText('The contest has ended')}
 
                             {error === AuthenticationError.NotWhitelisted && getText("Address isn't whitelisted")}
 
