@@ -26,7 +26,6 @@ import Gameplay from './Gameplay';
 import Logo from '../assets/logo_small.png';
 
 const ROUTE_WIDTH = 144;
-const HIGHLIGHTED_ROUTES = [2];
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -43,7 +42,7 @@ function Header() {
 
     // Init
     useEffect(() => {
-        setRoutes(serviceRoutes.slice(-3).map((route) => route.path));
+        setRoutes(serviceRoutes.slice(-4).map((route) => route.path));
     }, []);
 
     useEffect(() => {
@@ -100,7 +99,7 @@ function Header() {
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
-                                    visibility={HIGHLIGHTED_ROUTES.includes(index) ? 'visible' : 'hidden'}
+                                    visibility="hidden"
                                     borderWidth="2px"
                                     borderColor="wheat"
                                     transform="rotate(45deg)"

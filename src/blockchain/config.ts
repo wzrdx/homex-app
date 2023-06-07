@@ -1,4 +1,4 @@
-export const contractAddress = 'erd1qqqqqqqqqqqqqpgqj45qe9v5y8sk9gzhej9tydd8s6puucc4ukrq44n0aj';
+export const contractAddress = 'erd1qqqqqqqqqqqqqpgq9459wl67kadq47jq8xqwp56muskyaajvukrq9xjh8z';
 
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
@@ -16,4 +16,3 @@ export const GEMS_TOKEN_ID = 'GEMS-40a073';
 export const ESSENCE_TOKEN_ID = 'ESSENCE-deb37b';
 
 export const START_OF_CONTEST = new Date('2023-06-01T06:00:00.000Z');
-export const END_OF_CONTEST = new Date('2023-06-02T06:00:00.000Z');

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { OGs, getUsername, pairwise, zeroPad } from '../services/helpers';
+import { getUsername, pairwise, zeroPad } from '../services/helpers';
 import { RoleTag } from '../shared/RoleTag';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
@@ -87,18 +87,6 @@ function Leaderboard() {
                     .value()
             );
 
-            // console.log(
-            //     _(parsedEarners)
-            //         .orderBy('role', 'desc')
-            //         .map((earner) => ({
-            //             address: earner.address,
-            //             role: earner.role,
-            //         }))
-            //         .value()
-            // );
-
-            // console.log(OGs);
-
             setTicketEarners(parsedEarners);
         } catch (error) {
             console.error(error);
@@ -125,7 +113,7 @@ function Leaderboard() {
 
         if (index <= 2 && ticketsEarned >= 3) {
             role = Role.Elders;
-        } else if (ticketsEarned > 2 && _.includes(OGs, address)) {
+        } else if (ticketsEarned > 2) {
             role = Role.OGTravelers;
         }
 

@@ -14,7 +14,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { END_OF_CONTEST, START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
+import { START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
 import { isAfter } from 'date-fns';
 import { Timer } from '../shared/Timer';
@@ -22,9 +22,8 @@ import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
 
 enum AuthenticationError {
-    NotWhitelisted = 'NotWhitelisted',
+    NotHolder = 'NotHolder',
     ContestNotStarted = 'ContestNotStarted',
-    ContestEnded = 'ContestEnded',
 }
 
 const Unlock = () => {
@@ -48,15 +47,14 @@ const Unlock = () => {
     }, [address]);
 
     const hasGameStarted = (): boolean => isAfter(new Date(), START_OF_CONTEST);
-    const hasGameEnded = (): boolean => isAfter(new Date(), END_OF_CONTEST);
     const isUserLoggedIn = (): boolean => !!address;
 
     const checkAuthentication = async () => {
         if (!address) {
             logout(`/unlock`);
         } else {
-            if (hasGameEnded()) {
-                setError(AuthenticationError.ContestEnded);
+            if (!hasGameStarted()) {
+                setError(AuthenticationError.ContestNotStarted);
                 return;
             }
 
@@ -197,9 +195,8 @@ const Unlock = () => {
                             {error === AuthenticationError.ContestNotStarted &&
                                 getText('Waiting for the game to start', true)}
 
-                            {error === AuthenticationError.ContestEnded && getText('The contest has ended')}
-
-                            {error === AuthenticationError.NotWhitelisted && getText("Address isn't whitelisted")}
+                            {error === AuthenticationError.NotHolder &&
+                                getText('Playing the game requires an NFT from the Home X collections')}
 
                             {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>

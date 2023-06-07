@@ -23,13 +23,12 @@ import ResourcesToast from './shared/ResourcesToast';
 import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Energy';
-import { getTxCount } from './services/helpers';
 
 function App() {
     const toast = useToast();
 
     const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
-    const { playSound, setIsMusicOn } = useSoundsContext() as SoundsContextType;
+    const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
@@ -39,15 +38,7 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    useEffect(() => {
-        setIsMusicOn(process.env.NODE_ENV !== 'development');
-        init();
-    }, []);
-
-    const init = async () => {
-        const result = await getTxCount();
-        console.log('Tx count', result);
-    };
+    useEffect(() => {}, []);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));

@@ -113,7 +113,6 @@ function Energy() {
 
                 <Flex mt={6} flexDir="column" justifyContent="center" alignItems="center">
                     <ActionButton
-                        disabled
                         isLoading={isEnergyButtonLoading || isFaucetTxPending()}
                         colorScheme="blue"
                         onClick={faucet}
