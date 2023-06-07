@@ -9,10 +9,12 @@ export const TOKEN_DENOMINATION = 1000000;
 export const API_URL = 'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457';
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 
-export const TICKETS_TOKEN_ID = 'HOMETICKET-de72b4';
-export const ENERGY_TOKEN_ID = 'ENERGY-834e7b';
-export const HERBS_TOKEN_ID = 'HERBS-1513b3';
-export const GEMS_TOKEN_ID = 'GEMS-40a073';
-export const ESSENCE_TOKEN_ID = 'ESSENCE-deb37b';
+export const TICKETS_TOKEN_ID = 'TICKETS-be6092';
+export const ENERGY_TOKEN_ID = 'ENERGY-a1ac9c';
+export const HERBS_TOKEN_ID = 'HERBS-a2ffd9';
+export const GEMS_TOKEN_ID = 'GEMS-274ae8';
+export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
+
+export const YIELD_PER_HOUR = 0.3;
 
 export const START_OF_CONTEST = new Date('2023-06-01T06:00:00.000Z');

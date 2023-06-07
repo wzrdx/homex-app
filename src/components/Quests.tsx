@@ -56,6 +56,7 @@ import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
+import Separator from '../shared/Separator';
 
 const LARGE_FRAME_SIZE = 352;
 const MEDIUM_FRAME_SIZE = 260;
@@ -380,12 +381,9 @@ function Quests() {
                         </Box>
                     </Flex>
 
-                    <Box
-                        my={3.5}
-                        width="100%"
-                        height="2px"
-                        background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
-                    ></Box>
+                    <Box my={3.5}>
+                        <Separator width="100%" height="1px" />
+                    </Box>
 
                     <Box>{currentQuest.description}</Box>
 

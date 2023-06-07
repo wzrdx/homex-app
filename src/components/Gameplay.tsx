@@ -5,62 +5,7 @@ import { ArrowForwardIcon } from '@chakra-ui/icons';
 function Gameplay() {
     return (
         <Box pb={4}>
-            <Flex flexDir="column" justifyContent="center" alignItems="center">
-                <Text maxWidth="663px" textAlign="justify" mb={4}>
-                    In order to participate in the Beta Testing you need{' '}
-                    <Text as="span" color="brightBlue">
-                        xEGLD
-                    </Text>{' '}
-                    for gas fees.{' '}
-                    <Text as="span" color="brightBlue">
-                        xEGLD
-                    </Text>{' '}
-                    is the token used on the MultiversX devnet and can be obtained through the official faucet.
-                </Text>
-
-                <Text fontSize="17px">
-                    Steps to obtain{' '}
-                    <Text as="span" color="brightBlue">
-                        xEGLD
-                    </Text>
-                </Text>
-
-                <Box
-                    mt={0.5}
-                    mb={3}
-                    width="214px"
-                    height="1px"
-                    background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
-                ></Box>
-
-                <Flex flexDir="column">
-                    <Flex alignItems="center">
-                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                        <Text ml={1} whiteSpace="nowrap">
-                            Connect your wallet to{' '}
-                            <Link color="brightBlue" href="https://devnet-wallet.multiversx.com" target="_blank">
-                                https://devnet-wallet.multiversx.com
-                            </Link>
-                        </Text>
-                    </Flex>
-
-                    <Flex alignItems="center">
-                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                        <Text ml={1} whiteSpace="nowrap">
-                            On the menu to the left click on Faucet
-                        </Text>
-                    </Flex>
-
-                    <Flex alignItems="center">
-                        <ArrowForwardIcon boxSize={4} color="whitesmoke" />
-                        <Text ml={1} whiteSpace="nowrap">
-                            A window will open where you can press Request Tokens
-                        </Text>
-                    </Flex>
-                </Flex>
-            </Flex>
-
-            <Flex mt={8} alignItems="center">
+            <Flex alignItems="center">
                 <Flex flex={1} flexDir="column">
                     <Flex alignItems="center">
                         <Image width="64px" src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
@@ -140,7 +85,7 @@ function Gameplay() {
                 </Flex>
             </Flex>
 
-            <Flex justifyContent="center" alignItems="stretch" mx={-3} mt={8}>
+            <Flex justifyContent="center" alignItems="stretch" mx={-3} mt={12}>
                 {/* Step 1 */}
                 <Box flex={1} position="relative">
                     <Flex position="absolute" top={0} right={0} left={0} justifyContent="center" alignItems="center">

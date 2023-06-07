@@ -127,12 +127,6 @@ function Leaderboard() {
                     <Text mb={1} fontSize="lg" fontWeight={600}>
                         Tickets Leaderboard
                     </Text>
-
-                    <Box
-                        width="110%"
-                        height="1px"
-                        background="linear-gradient(90deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
-                    ></Box>
                 </Flex>
 
                 <Flex mb={6} justifyContent="center" alignItems="center">

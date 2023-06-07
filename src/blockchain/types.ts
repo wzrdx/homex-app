@@ -14,6 +14,13 @@ export interface OngoingQuest {
     timestamp: Date;
 }
 
+export interface Participant {
+    address: string;
+    ticketsCount: number;
+    username?: string;
+}
+
+// TODO: Remove
 export enum Role {
     OGTravelers = 'OG',
     FirstTravelers = 'FirstTravelers',

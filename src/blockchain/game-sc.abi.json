@@ -18,16 +18,7 @@
     },
     "name": "GameScContract",
     "constructor": {
-        "inputs": [
-            {
-                "name": "beta_start_timestamp",
-                "type": "u64"
-            },
-            {
-                "name": "beta_end_timestamp",
-                "type": "u64"
-            }
-        ],
+        "inputs": [],
         "outputs": []
     },
     "endpoints": [
@@ -39,6 +30,18 @@
                 {
                     "name": "quests",
                     "type": "List<Quest>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setTokenId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
                 }
             ],
             "outputs": []
@@ -141,6 +144,56 @@
             "outputs": []
         },
         {
+            "name": "faucet",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "drawRaffleWinner",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "winners_count",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setRaffleTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "stake",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unstake",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimStakingRewards",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "startQuest",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -164,13 +217,46 @@
             "outputs": []
         },
         {
-            "name": "faucet",
+            "name": "joinRaffle",
             "mutability": "mutable",
+            "payableInTokens": ["*"],
             "inputs": [],
             "outputs": []
         },
         {
-            "name": "getTicketEarners",
+            "name": "swapEnergy",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getSubmittedTickets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getParticipantsCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getParticipants",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -184,22 +270,12 @@
             ],
             "outputs": [
                 {
-                    "type": "List<TicketEarner>"
+                    "type": "List<Participant>"
                 }
             ]
         },
         {
-            "name": "getTicketEarnersCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "isWhitelisted",
+            "name": "getStakingInfo",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -209,21 +285,50 @@
             ],
             "outputs": [
                 {
-                    "type": "bool"
+                    "type": "StakingInfo"
                 }
             ]
         },
         {
-            "name": "addWhitelist",
-            "onlyOwner": true,
-            "mutability": "mutable",
+            "name": "getStakedNonces",
+            "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "addresses",
-                    "type": "List<Address>"
+                    "name": "user",
+                    "type": "Address"
                 }
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getLastStakingTimestamp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
         },
         {
             "name": "getTicketsId",
@@ -303,7 +408,7 @@
             ]
         },
         {
-            "name": "getTicketsEarned",
+            "name": "getParticipantId",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -313,18 +418,64 @@
             ],
             "outputs": [
                 {
-                    "type": "u32"
+                    "type": "u16"
                 }
             ]
         },
         {
-            "name": "getTicketEarnersAddresses",
+            "name": "getParticipantAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "u16"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleIndex",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u16"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleVector",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u16>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getRaffleParticipants",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "variadic<Address>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getRaffleTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
                 }
             ]
         }
@@ -342,6 +493,19 @@
                 {
                     "name": "end_timestamp",
                     "type": "u64"
+                }
+            ]
+        },
+        "Participant": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "tickets_count",
+                    "type": "u32"
                 }
             ]
         },
@@ -370,20 +534,20 @@
                 }
             ]
         },
-        "TicketEarner": {
+        "StakingInfo": {
             "type": "struct",
             "fields": [
                 {
-                    "name": "tickets_earned",
-                    "type": "u32"
+                    "name": "rewards",
+                    "type": "BigUint"
                 },
                 {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
-                    "name": "last_timestamp",
+                    "name": "timestamp",
                     "type": "u64"
+                },
+                {
+                    "name": "nonces",
+                    "type": "List<u64>"
                 }
             ]
         }
