@@ -1,16 +1,14 @@
-import Energy from '../components/Energy';
+import Staking from '../components/Staking';
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
-import Leaderboard from '../components/Leaderboard';
 import Rewards from '../components/Rewards';
 
 export const routeNames = {
     unlock: 'unlock',
     main: '/',
     gameplay: 'gameplay',
-    energy: 'energy',
+    staking: 'staking',
     quests: 'quests',
-    leaderboard: 'leaderboard',
     rewards: 'rewards',
 };
 
@@ -22,18 +20,13 @@ export const routes = [
         authenticatedRoute: true,
     },
     {
-        path: routeNames.energy,
-        component: Energy,
+        path: routeNames.staking,
+        component: Staking,
         authenticatedRoute: true,
     },
     {
         path: routeNames.quests,
         component: Quests,
-        authenticatedRoute: true,
-    },
-    {
-        path: routeNames.leaderboard,
-        component: Leaderboard,
         authenticatedRoute: true,
     },
     {

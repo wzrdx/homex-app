@@ -22,7 +22,7 @@ import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
 import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
-import { FAUCET_REWARD } from './components/Energy';
+import { FAUCET_REWARD } from './components/Staking';
 
 function App() {
     const toast = useToast();

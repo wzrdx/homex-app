@@ -42,7 +42,7 @@ function Header() {
 
     // Init
     useEffect(() => {
-        setRoutes(serviceRoutes.slice(-4).map((route) => route.path));
+        setRoutes(serviceRoutes.slice(-3).map((route) => route.path));
     }, []);
 
     useEffect(() => {

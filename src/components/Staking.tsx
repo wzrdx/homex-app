@@ -24,7 +24,7 @@ export const FAUCET_REWARD = {
     value: 120,
 };
 
-function Energy() {
+function Staking() {
     const { checkEgldBalance } = useLayout();
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
 
@@ -130,4 +130,4 @@ function Energy() {
     );
 }
 
-export default Energy;
+export default Staking;

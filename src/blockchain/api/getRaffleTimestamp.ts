@@ -1,27 +1,27 @@
-import { ResultsParser, ContractFunction, Address, AddressValue } from '@multiversx/sdk-core/out';
+import { ResultsParser, ContractFunction, U32Value } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL);
+const FUNCTION_NAME = 'getRaffleTimestamp';
 
-export const isWhitelisted = async (address: string) => {
+export const getRaffleTimestamp = async (start: number, end: number) => {
     try {
         const query = smartContract.createQuery({
-            func: new ContractFunction('isWhitelisted'),
-            args: [new AddressValue(new Address(address))],
+            func: new ContractFunction(FUNCTION_NAME),
         });
 
         const queryResponse = await proxy.queryContract(query);
-        const endpointDefinition = smartContract.getEndpoint('isWhitelisted');
+        const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
 
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
 
-        const value = firstValue?.valueOf();
-        console.log('isWhitelisted', value);
-        return value;
+        const value: number = firstValue?.valueOf()?.toNumber();
+        return new Date(value * 1000);
     } catch (err) {
-        console.error('Unable to call isWhitelisted', err);
+        console.error(`Unable to call ${FUNCTION_NAME}`, err);
+        return [];
     }
 };
