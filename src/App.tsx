@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ChakraBaseProvider, useToast } from '@chakra-ui/react';
+import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
 import { AuthenticationProvider } from './services/authentication';
 import { TransactionsToastList, NotificationModal, SignTransactionsModals } from '@multiversx/sdk-dapp/UI';
@@ -23,6 +23,7 @@ import ResourcesToast from './shared/ResourcesToast';
 import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
 import { FAUCET_REWARD } from './components/Staking';
+import { CustomToast } from './shared/CustomToast';
 
 function App() {
     const toast = useToast();
@@ -74,6 +75,10 @@ function App() {
                         displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
                         break;
 
+                    case TransactionType.JoinRaffle:
+                        displayToast('Ticket/s sent!', 'Successfully joined the raffle', 'green.500');
+                        break;
+
                     default:
                         console.error('Unknown TransactionType');
                 }
@@ -91,8 +96,6 @@ function App() {
             const txs = cloneDeep(pendingTxs);
             victims = remove(txs, (tx) => includes(victimSessionIds, tx.sessionId));
 
-            // console.log('[App.tsx] removeTxs', victims);
-
             setPendingTxs(txs);
         }
 
@@ -100,11 +103,13 @@ function App() {
     };
 
     const applyTxResolution = (tx: Transaction) => {
-        // console.log('[App.tsx] applyTxResolution', tx);
-
         switch (tx.resolution) {
             case TxResolution.UpdateEnergy:
                 getEnergy();
+                break;
+
+            case TxResolution.UpdateTickets:
+                getTickets();
                 break;
 
             case TxResolution.UpdateResources:
@@ -161,6 +166,24 @@ function App() {
             },
             duration: 5000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
+        });
+    };
+
+    const displayToast = (title: string, text: string, color = 'redClrs') => {
+        playSound('navigate');
+
+        toast({
+            position: 'top-right',
+            containerStyle: {
+                marginTop: '2rem',
+                marginRight: '2rem',
+            },
+            duration: 5000,
+            render: () => (
+                <CustomToast type="success" title={title} color={color}>
+                    <Text mt={2}>{text}</Text>
+                </CustomToast>
+            ),
         });
     };
 

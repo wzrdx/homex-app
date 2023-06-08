@@ -48,14 +48,7 @@ function Layout() {
                 duration: 5000,
                 render: () => (
                     <CustomToast type="error" title="Insufficient balance" color="redClrs">
-                        <Text mt={2}>You need xEGLD for gas fees</Text>
-                        <Text mt={1}>
-                            Please check{' '}
-                            <Text as="span" color="#f97316">
-                                Gameplay
-                            </Text>{' '}
-                            (top left corner)
-                        </Text>
+                        <Text mt={2}>You need EGLD for gas fees</Text>
                     </CustomToast>
                 ),
             });

@@ -26,7 +26,7 @@ export interface TransactionsContextType {
     pendingTxs: Array<Transaction>;
     setPendingTxs: React.Dispatch<React.SetStateAction<Transaction[]>>;
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
-    isFaucetTxPending: () => boolean;
+    isTxPending: (type: TransactionType) => boolean;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | null>(null);
@@ -40,12 +40,12 @@ export const TransactionsProvider = ({ children }) => {
         return findIndex(pendingTxs, (tx) => tx.type === type && tx.questId === questId) > -1;
     };
 
-    const isFaucetTxPending = (): boolean => {
-        return findIndex(pendingTxs, (tx) => tx.type === TransactionType.Faucet) > -1;
+    const isTxPending = (type: TransactionType): boolean => {
+        return findIndex(pendingTxs, (tx) => tx.type === type) > -1;
     };
 
     return (
-        <TransactionsContext.Provider value={{ pendingTxs, setPendingTxs, isQuestTxPending, isFaucetTxPending }}>
+        <TransactionsContext.Provider value={{ pendingTxs, setPendingTxs, isQuestTxPending, isTxPending }}>
             {children}
         </TransactionsContext.Provider>
     );

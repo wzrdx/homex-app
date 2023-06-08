@@ -28,7 +28,7 @@ function Staking() {
     const { checkEgldBalance } = useLayout();
     const [isEnergyButtonLoading, setEnergyButtonLoading] = useState(false);
 
-    const { setPendingTxs, isFaucetTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
     const { name, icon, image } = getResourceElements('energy');
 
     const faucet = async () => {
@@ -113,7 +113,7 @@ function Staking() {
 
                 <Flex mt={6} flexDir="column" justifyContent="center" alignItems="center">
                     <ActionButton
-                        isLoading={isEnergyButtonLoading || isFaucetTxPending()}
+                        isLoading={isEnergyButtonLoading || isTxPending(TransactionType.Faucet)}
                         colorScheme="blue"
                         onClick={faucet}
                     >

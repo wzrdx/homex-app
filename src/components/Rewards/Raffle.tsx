@@ -23,7 +23,7 @@ function Raffle() {
     const { resources } = useResourcesContext() as ResourcesContextType;
     const [isButtonLoading, setButtonLoading] = useState(false);
 
-    const { setPendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { isTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
 
     useEffect(() => {
@@ -132,10 +132,9 @@ function Raffle() {
                     </Box>
                 </Box>
 
-                {/* TODO: isRaffleTxPending */}
                 <Box mt={1.5}>
                     <ActionButton
-                        isLoading={isButtonLoading}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
                         colorScheme="default"
                         onClick={joinRaffle}
                         buttonWidth="small"
