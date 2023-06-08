@@ -11,10 +11,10 @@ import { CustomToast } from '../shared/CustomToast';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
 
-type ContextType = { checkEgldBalance: () => Promise<boolean> };
+type LayoutContext = { checkEgldBalance: () => Promise<boolean> };
 
 export function useLayout() {
-    return useOutletContext<ContextType>();
+    return useOutletContext<LayoutContext>();
 }
 
 function Layout() {
@@ -79,7 +79,7 @@ function Layout() {
                     height={{ md: '82%', lg: '86%' }}
                     layerStyle="layout"
                     margin="0 auto"
-                    py={{ md: 8, lg: 12, xl: 16, '2xl': 20 }}
+                    py={{ md: 8, lg: 10, xl: 16, '2xl': 20 }}
                 >
                     <Outlet context={{ checkEgldBalance }} />
                 </Box>

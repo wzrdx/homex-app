@@ -16,10 +16,20 @@ body {
 }
 
 // Used for NavLinks
-.active {
-    p {
-        color: whitesmoke;
-        text-shadow: 0 0 10px white;
+.Header-Menu {
+    .active {
+        p {
+            color: whitesmoke;
+            text-shadow: 0 0 10px white;
+        }
+    }
+}
+
+.Rewards-Menu {
+    .active {
+        p {
+            color: whitesmoke;
+        }
     }
 }
 

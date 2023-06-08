@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, filter, find, cloneDeep, remove, forEach } from 'lodash';
+import { map, head, includes, first, find, cloneDeep, remove, forEach } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -187,7 +187,22 @@ function App() {
                         <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
                         {routes.map((route, index) => (
-                            <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
+                            <Route path={route.path} key={'route-key-' + index} element={<route.component />}>
+                                {route.children && (
+                                    <Route
+                                        path={'/' + route.path}
+                                        element={<Navigate to={first(route.children)?.path as string} replace />}
+                                    />
+                                )}
+
+                                {route.children?.map((child, index) => (
+                                    <Route
+                                        path={child.path}
+                                        key={'child-route-key-' + index}
+                                        element={<child.component />}
+                                    />
+                                ))}
+                            </Route>
                         ))}
 
                         <Route path="*" element={<Navigate to={routeNames.quests} replace />} />

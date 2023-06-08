@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import { indexOf } from 'lodash';
+import { findIndex, indexOf } from 'lodash';
 import { BsExclamation } from 'react-icons/bs';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
@@ -46,7 +46,9 @@ function Header() {
     }, []);
 
     useEffect(() => {
-        setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
+        const index = findIndex(routes, (route) => location.pathname.includes(route));
+        setOffset(index * ROUTE_WIDTH);
+        // setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
     }, [location]);
 
     const toggleSounds = () => {
@@ -95,7 +97,7 @@ function Header() {
             <Flex flex={1} position="relative" background="#00000036">
                 {/* Routes */}
                 <Flex pt={{ md: 4, lg: 5 }} width="100%" justifyContent="center" alignItems="flex-end">
-                    <Flex position="relative">
+                    <Flex className="Header-Menu" position="relative">
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
