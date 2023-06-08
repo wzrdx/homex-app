@@ -4,6 +4,7 @@ import Quests from '../components/Quests';
 import Rewards from '../components/Rewards';
 import Leaderboard from '../components/Rewards/Leaderboard';
 import Raffle from '../components/Rewards/Raffle';
+import Prizes from '../components/Rewards/Prizes';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -14,6 +15,7 @@ export const routeNames = {
     rewards: 'rewards',
     leaderboard: 'leaderboard',
     raffle: 'raffle',
+    prizes: 'prizes',
 };
 
 // Main routes after login
@@ -39,12 +41,16 @@ export const routes = [
         authenticatedRoute: true,
         children: [
             {
+                path: routeNames.raffle,
+                component: Raffle,
+            },
+            {
                 path: routeNames.leaderboard,
                 component: Leaderboard,
             },
             {
-                path: routeNames.raffle,
-                component: Raffle,
+                path: routeNames.prizes,
+                component: Prizes,
             },
         ],
     },

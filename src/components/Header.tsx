@@ -233,7 +233,7 @@ function Header() {
                         <Wallet />
 
                         <Box ml={6} mr="-2px">
-                            <Image width="68px" opacity={0.925} src={Logo} />
+                            <Image width="68px" opacity={0.9} src={Logo} />
                         </Box>
                     </Flex>
                 </Flex>

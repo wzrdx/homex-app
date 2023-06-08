@@ -27,8 +27,12 @@ body {
 
 .Rewards-Menu {
     .active {
-        p {
-            color: whitesmoke;
+        .Border-Box {
+            border-bottom: 2px solid whitesmoke;
+
+            p {
+                color: whitesmoke;
+            }
         }
     }
 }

@@ -28,9 +28,18 @@ function Rewards() {
                 {_.map(getRoute(routeNames.rewards)?.children, (route, index) => (
                     <Box key={index}>
                         <NavLink to={route.path}>
-                            <Text mx={4} fontSize="lg" fontWeight={500} color="header.gray">
-                                {toTitleCase(route.path)}
-                            </Text>
+                            <Box className="Border-Box" pb={0.5} mx={5} borderBottom="2px solid transparent">
+                                <Text
+                                    fontSize="lg"
+                                    fontWeight={500}
+                                    color="header.gray"
+                                    transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                                    cursor="pointer"
+                                    _hover={{ color: '#e3e3e3' }}
+                                >
+                                    {toTitleCase(route.path)}
+                                </Text>
+                            </Box>
                         </NavLink>
                     </Box>
                 ))}
