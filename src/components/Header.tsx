@@ -15,17 +15,18 @@ import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import { findIndex, indexOf } from 'lodash';
+import { findIndex } from 'lodash';
 import { BsExclamation } from 'react-icons/bs';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
+import { IoIosSwap } from 'react-icons/io';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import Logo from '../assets/logo_small.png';
 
-const ROUTE_WIDTH = 124;
+const ROUTE_WIDTH = 120;
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -48,7 +49,6 @@ function Header() {
     useEffect(() => {
         const index = findIndex(routes, (route) => location.pathname.includes(route));
         setOffset(index * ROUTE_WIDTH);
-        // setOffset(indexOf(routes, location.pathname.slice(1)) * ROUTE_WIDTH);
     }, [location]);
 
     const toggleSounds = () => {
@@ -207,6 +207,28 @@ function Header() {
                             <TbBook fontSize="20px" color="rgb(249 115 22)" />
                             <Text ml={2} color="white">
                                 Gameplay
+                            </Text>
+                        </Flex>
+
+                        <Flex
+                            ml={4}
+                            alignItems="center"
+                            padding="7px 16px"
+                            borderRadius="9999px"
+                            backgroundColor="#0e2a35"
+                            cursor="pointer"
+                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                            _hover={{ backgroundColor: '#0c3247' }}
+                            onClick={() => {
+                                playSound('mystery');
+                                onGameplayOpen();
+                            }}
+                        >
+                            <Box transform="rotate(90deg)" mr={-0.5}>
+                                <IoIosSwap fontSize="22px" color="#1eabe2" />
+                            </Box>
+                            <Text ml={2} color="white">
+                                Swap
                             </Text>
                         </Flex>
                     </Flex>
