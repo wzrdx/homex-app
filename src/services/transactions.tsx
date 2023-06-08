@@ -5,11 +5,13 @@ export enum TransactionType {
     StartQuest,
     CompleteQuest,
     Faucet,
+    JoinRaffle,
 }
 
 export enum TxResolution {
     UpdateResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
+    UpdateTickets = 'UpdateTickets',
 }
 
 export interface Transaction {

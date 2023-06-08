@@ -116,7 +116,7 @@ function Leaderboard() {
                 <Flex mx={2} justifyContent="center" alignItems="center">
                     <Text ml={1.5} mr={1}>
                         Total entries:{' '}
-                        <Text as="span" mx={0.5}>
+                        <Text as="span" fontWeight={500} mx={0.5}>
                             {totalTickets}
                         </Text>
                     </Text>
@@ -130,7 +130,7 @@ function Leaderboard() {
                 <Flex mx={2} justifyContent="center" alignItems="center">
                     <Text ml={1.5} mr={1}>
                         Your submission:{' '}
-                        <Text as="span" mx={0.5}>
+                        <Text as="span" fontWeight={500} mx={0.5}>
                             {myTickets}
                         </Text>
                     </Text>
@@ -164,8 +164,7 @@ function Leaderboard() {
                     <Text ml={2}>Unable to fetch leaderboard</Text>
                 </Flex>
             ) : (
-                <Flex px={4} flexDir="column" overflowY="auto" overflowX="hidden">
-                    {/* Header */}
+                <Flex px={6} flexDir="column" overflowY="auto" overflowX="hidden">
                     {!participants?.length ? (
                         <Flex flexDir="column" justifyContent="center" alignItems="center">
                             <Image my={2} height="256px" src={getFullTicket()} />

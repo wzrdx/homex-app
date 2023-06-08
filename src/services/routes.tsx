@@ -55,5 +55,3 @@ export const routes = [
         ],
     },
 ];
-
-export const getRoute = (path: string) => routes.find((route) => route.path === path);
