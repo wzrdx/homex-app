@@ -6,9 +6,14 @@ import { getParticipantsCount } from '../blockchain/api/getParticipantsCount';
 import { Participant } from '../blockchain/types';
 import { getUsername, pairwise } from '../services/helpers';
 import { RESOURCE_ELEMENTS } from '../services/resources';
-import { WarningIcon } from '@chakra-ui/icons';
+import { WarningIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getFullTicket } from '../services/assets';
 import Separator from '../shared/Separator';
+import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
+import { getRafflePot } from '../blockchain/api/getRafflePot';
+import { getSubmittedTicketsTotal } from '../blockchain/api/getSubmittedTicketsTotal';
+import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
+import { Timer } from '../shared/Timer';
 
 const COLUMNS = [
     {
@@ -23,25 +28,30 @@ const COLUMNS = [
     },
     {
         name: 'Tickets',
-        width: '96px',
+        width: '60px',
         align: 'left',
     },
 ];
 
 function Rewards() {
     const [participants, setParticipants] = useState<Participant[]>();
+    const [myTickets, setMyTickets] = useState<number>();
+    const [totalTickets, setTotalTickets] = useState<number>();
+    const [pot, setPot] = useState<number>();
+    const [timestamp, setTimestamp] = useState<Date>();
     const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         init();
     }, []);
 
-    useEffect(() => {
-        console.log(participants);
-    }, [participants]);
-
     const init = async () => {
         try {
+            setMyTickets(await getSubmittedTickets());
+            setTotalTickets(await getSubmittedTicketsTotal());
+            setPot(await getRafflePot());
+            setTimestamp(await getRaffleTimestamp());
+
             const count: number = await getParticipantsCount();
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
@@ -71,17 +81,17 @@ function Rewards() {
 
     const parse = async (earners: Participant[]) => {
         const sorted = _.orderBy(earners, ['ticketsCount'], ['desc']);
-
-        setParticipants(
-            await Promise.all(
-                _(sorted)
-                    .map(async (earner, index) => ({
-                        ...earner,
-                        username: await getUsername(earner.address),
-                    }))
-                    .value()
-            )
+        const parsed = await Promise.all(
+            _(sorted)
+                .map(async (earner, index) => ({
+                    ...earner,
+                    username: await getUsername(earner.address),
+                }))
+                .value()
         );
+
+        // TODO:
+        setParticipants([...parsed, ...parsed, ...parsed, ...parsed, ...parsed, ...parsed, ...parsed]);
     };
 
     return (
@@ -89,10 +99,67 @@ function Rewards() {
             <Flex flexDir="column" alignItems="center">
                 <Flex mb={5} flexDir="column" alignItems="center">
                     <Text mb={1.5} fontSize="lg" fontWeight={600}>
-                        Raffle Participants
+                        Leaderboard
                     </Text>
 
-                    <Separator width="110%" height="1px" />
+                    <Separator type="horizontal" width="130%" height="1px" />
+                </Flex>
+
+                <Flex mt={1} mb={6} justifyContent="center" alignItems="center">
+                    <Flex mx={2} justifyContent="center" alignItems="center">
+                        <Text ml={1.5} mr={1}>
+                            Prize pot:{' '}
+                            <Text as="span" color="ticketGold" fontWeight={500} ml={0.5}>
+                                {pot} $EGLD
+                            </Text>
+                        </Text>
+                    </Flex>
+
+                    <Box mx={2} opacity="0.9">
+                        <Separator type="vertical" width="1px" height="34px" />
+                    </Box>
+
+                    <Flex mx={2} justifyContent="center" alignItems="center">
+                        <Text ml={1.5} mr={1}>
+                            Total entries:{' '}
+                            <Text as="span" mx={0.5}>
+                                {totalTickets}
+                            </Text>
+                        </Text>
+                        <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                    </Flex>
+
+                    <Box mx={2} opacity="0.9">
+                        <Separator type="vertical" width="1px" height="34px" />
+                    </Box>
+
+                    <Flex mx={2} justifyContent="center" alignItems="center">
+                        <Text ml={1.5} mr={1}>
+                            Your submission:{' '}
+                            <Text as="span" mx={0.5}>
+                                {myTickets}
+                            </Text>
+                        </Text>
+                        <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                    </Flex>
+
+                    {!!timestamp && (
+                        <>
+                            <Box mx={2} opacity="0.9">
+                                <Separator type="vertical" width="1px" height="34px" />
+                            </Box>
+
+                            <Flex mx={2} justifyContent="center" alignItems="center">
+                                <Text ml={1.5} mr={2}>
+                                    Ends in:
+                                </Text>
+
+                                <Flex minWidth="158px">
+                                    <Timer timestamp={timestamp} isActive isDescending displayDays />
+                                </Flex>
+                            </Flex>
+                        </>
+                    )}
                 </Flex>
 
                 {!participants ? (
@@ -103,7 +170,7 @@ function Rewards() {
                         <Text ml={2}>Unable to fetch leaderboard</Text>
                     </Flex>
                 ) : (
-                    <Flex flexDir="column" overflowY="auto" overflowX="hidden">
+                    <Flex px={4} flexDir="column" overflowY="auto" overflowX="hidden">
                         {/* Header */}
                         {!participants.length ? (
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
@@ -121,7 +188,7 @@ function Rewards() {
                                 </Text>
                             </Flex>
                         ) : (
-                            <Flex mb={2}>
+                            <Flex mb={1}>
                                 {_.map(COLUMNS, (column: any, index: number) => (
                                     <Text
                                         key={index}

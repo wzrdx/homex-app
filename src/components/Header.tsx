@@ -25,7 +25,7 @@ import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import Logo from '../assets/logo_small.png';
 
-const ROUTE_WIDTH = 144;
+const ROUTE_WIDTH = 124;
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();

@@ -26,6 +26,7 @@ const colors = {
     lightOrange: '#ee8b1c',
     redClrs: '#FF4136',
     brightWheat: '#ffe1bb',
+    ticketGold: '#eeb942',
 };
 
 const fonts = {

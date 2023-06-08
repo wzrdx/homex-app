@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
+import Separator from '../shared/Separator';
 
 function Gameplay() {
     return (
@@ -38,13 +39,17 @@ function Gameplay() {
                     </Flex>
                 </Flex>
 
-                <Box
+                {/* <Box
                     mx={16}
                     width="1px"
-                    height="182px"
-                    opacity={0.7}
+                    height=""
+                    
                     background="linear-gradient(0deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
-                ></Box>
+                ></Box> */}
+
+                <Box mx={16} opacity={0.7}>
+                    <Separator type="vertical" width="1px" height="182px" />
+                </Box>
 
                 <Flex flex={1} flexDir="column" alignItems="center">
                     <Flex>

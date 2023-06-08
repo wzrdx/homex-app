@@ -382,7 +382,7 @@ function Quests() {
                     </Flex>
 
                     <Box my={3.5}>
-                        <Separator width="100%" height="1px" />
+                        <Separator type="horizontal" width="100%" height="1px" />
                     </Box>
 
                     <Box>{currentQuest.description}</Box>
