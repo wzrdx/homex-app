@@ -93,8 +93,7 @@ function Leaderboard() {
                 .value()
         );
 
-        // TODO:
-        setParticipants([...parsed, ...parsed, ...parsed, ...parsed, ...parsed, ...parsed, ...parsed]);
+        setParticipants(parsed);
     };
 
     return (

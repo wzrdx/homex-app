@@ -23,7 +23,6 @@ import {
     TICKETS_TOKEN_ID,
 } from '../blockchain/config';
 import axios from 'axios';
-import { getAddress, logout } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useDisclosure } from '@chakra-ui/react';
 

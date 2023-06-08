@@ -10,6 +10,7 @@ export const TOKEN_DENOMINATION = 1000000;
 export const API_URL = 'https://devnet-api.multiversx.com';
 // export const API_URL = 'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457';
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
+export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
 
 export const TICKETS_TOKEN_ID = 'TICKETS-be6092';
 export const ENERGY_TOKEN_ID = 'ENERGY-a1ac9c';

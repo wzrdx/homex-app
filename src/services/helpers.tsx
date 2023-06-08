@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL, GATEWAY_URL, contractAddress } from '../blockchain/config';
+import { API_URL, EXPLORER_URL, GATEWAY_URL, contractAddress } from '../blockchain/config';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -55,3 +55,5 @@ export function toTitleCase(str: string) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 }
+
+export const getTxExplorerURL = (hash: string) => `${EXPLORER_URL}/transactions/${hash}`;

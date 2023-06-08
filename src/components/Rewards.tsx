@@ -30,7 +30,7 @@ function Rewards() {
 
     return (
         <Flex height="100%" flexDir="column" alignItems="center">
-            <Flex ref={ref} className="Rewards-Menu" alignItems="center" pb={7}>
+            <Flex ref={ref} className="Rewards-Menu" alignItems="center" pb={8}>
                 {_.map(route?.children, (route, index) => (
                     <Box key={index}>
                         <NavLink to={route.path}>
