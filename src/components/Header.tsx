@@ -166,27 +166,23 @@ function Header() {
                     margin="0 auto"
                 >
                     <Flex alignItems="center" pointerEvents="all">
-                        <Box mr={8} ml="-1px">
-                            <Image width="64px" opacity={0.95} src={Logo} />
-                        </Box>
-
                         {isMusicOn ? (
                             <Box cursor="pointer" color="whitesmoke" px={2.5} ml={-2.5}>
-                                <TbMusic fontSize="20px" onClick={toggleMusic} />
+                                <TbMusic fontSize="21px" onClick={toggleMusic} />
                             </Box>
                         ) : (
                             <Box cursor="pointer" color="header.lightgray" px={2.5} ml={-2.5}>
-                                <TbMusicOff fontSize="20px" onClick={toggleMusic} />
+                                <TbMusicOff fontSize="21px" onClick={toggleMusic} />
                             </Box>
                         )}
 
                         {areSoundsOn ? (
                             <Box cursor="pointer" color="whitesmoke" px={2.5}>
-                                <IoVolumeHighOutline fontSize="21px" onClick={toggleSounds} />
+                                <IoVolumeHighOutline fontSize="22px" onClick={toggleSounds} />
                             </Box>
                         ) : (
                             <Box cursor="pointer" color="header.lightgray" px={2.5}>
-                                <IoVolumeMuteOutline fontSize="21px" onClick={toggleSounds} />
+                                <IoVolumeMuteOutline fontSize="22px" onClick={toggleSounds} />
                             </Box>
                         )}
 
@@ -233,9 +229,13 @@ function Header() {
                         </Flex>
                     </Flex>
 
-                    <Box pointerEvents="all">
+                    <Flex alignItems="center" pointerEvents="all">
                         <Wallet />
-                    </Box>
+
+                        <Box ml={6} mr="-2px">
+                            <Image width="68px" opacity={0.925} src={Logo} />
+                        </Box>
+                    </Flex>
                 </Flex>
 
                 <Box position="absolute" left={0} bottom={0} right={0}>
