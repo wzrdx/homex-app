@@ -151,7 +151,7 @@
             "outputs": []
         },
         {
-            "name": "drawRaffleWinner",
+            "name": "drawRaffleWinners",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
@@ -508,6 +508,17 @@
             "outputs": [
                 {
                     "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getTxHashes",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<array32<u8>>",
+                    "multi_result": true
                 }
             ]
         }
