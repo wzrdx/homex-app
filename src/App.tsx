@@ -22,8 +22,8 @@ import { useSoundsContext, SoundsContextType } from './services/sounds';
 import ResourcesToast from './shared/ResourcesToast';
 import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
 import { Quest } from './types';
-import { FAUCET_REWARD } from './components/Staking';
 import { CustomToast } from './shared/CustomToast';
+import { useStoreContext, StoreContextType } from './services/store';
 
 function App() {
     const toast = useToast();
@@ -35,6 +35,7 @@ function App() {
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     const { getOngoingQuests } = useQuestsContext() as QuestsContextType;
+    const { getStakingInfo } = useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
@@ -59,7 +60,7 @@ function App() {
                         const quest: Quest = getQuest(tx.questId);
                         const isMission = quest.type === 'final';
 
-                        displayResourcesToast(`${isMission ? 'Mission' : 'Quest'} complete!`, quest.rewards, isMission);
+                        displayResourcesToast(`${isMission ? 'Mission' : 'Quest'} complete!`, quest.rewards, 'ticket');
 
                         if (isMission) {
                             onTicketModalOpen();
@@ -71,8 +72,16 @@ function App() {
                         playSound('start_quest');
                         break;
 
-                    case TransactionType.Faucet:
-                        displayResourcesToast('Energy gained!', [FAUCET_REWARD]);
+                    case TransactionType.Stake:
+                        playSound('stake');
+                        break;
+
+                    case TransactionType.Unstake || TransactionType.Claim:
+                        displayResourcesToast(
+                            'Energy gained!',
+                            [{ resource: 'energy', value: tx.data.energyGain }],
+                            'unstake'
+                        );
                         break;
 
                     case TransactionType.JoinRaffle:
@@ -120,6 +129,15 @@ function App() {
                 forEach(calls, (call) => call());
                 break;
 
+            case TxResolution.UpdateStakingInfo:
+                getStakingInfo();
+                break;
+
+            case TxResolution.ClaimStakingRewards:
+                getEnergy();
+                getStakingInfo();
+                break;
+
             default:
                 console.error('Unknown TxResolution');
         }
@@ -154,9 +172,9 @@ function App() {
             resource: string;
             value: number;
         }[],
-        isMission: boolean = false
+        sound = 'complete_quest'
     ) => {
-        playSound(isMission ? 'ticket' : 'complete_quest');
+        playSound(sound);
 
         toast({
             position: 'top-right',

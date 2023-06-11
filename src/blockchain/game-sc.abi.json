@@ -35,12 +35,16 @@
             "outputs": []
         },
         {
-            "name": "setTokenId",
+            "name": "setCollectionIds",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "token_id",
+                    "name": "travelers_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "elders_id",
                     "type": "TokenIdentifier"
                 }
             ],
@@ -312,22 +316,6 @@
             ]
         },
         {
-            "name": "getStakedNonces",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "variadic<u64>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
             "name": "getLastStakingTimestamp",
             "mutability": "readonly",
             "inputs": [
@@ -343,7 +331,17 @@
             ]
         },
         {
-            "name": "getTokenId",
+            "name": "getTravelersCollectionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getEldersCollectionId",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -589,7 +587,11 @@
                     "type": "u64"
                 },
                 {
-                    "name": "nonces",
+                    "name": "traveler_nonces",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "elder_nonces",
                     "type": "List<u64>"
                 }
             ]

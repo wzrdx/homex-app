@@ -10,6 +10,7 @@ import { SoundsProvider } from './services/sounds';
 import { ResourcesProvider } from './services/resources';
 import { ColorModeScript } from '@chakra-ui/react';
 import { QuestsProvider } from './services/quests';
+import { StoreProvider } from './services/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -27,8 +28,10 @@ root.render(
                 <SoundsProvider>
                     <ResourcesProvider>
                         <QuestsProvider>
-                            <ColorModeScript initialColorMode="dark" />
-                            <App />
+                            <StoreProvider>
+                                <ColorModeScript initialColorMode="dark" />
+                                <App />
+                            </StoreProvider>
                         </QuestsProvider>
                     </ResourcesProvider>
                 </SoundsProvider>

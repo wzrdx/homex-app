@@ -24,7 +24,7 @@ import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
-import Logo from '../assets/logo_small.png';
+import { getSmallLogo } from '../services/assets';
 
 const ROUTE_WIDTH = 120;
 
@@ -233,7 +233,7 @@ function Header() {
                         <Wallet />
 
                         <Box ml={6} mr="-2px">
-                            <Image width="68px" opacity={0.9} src={Logo} />
+                            <Image width="68px" opacity={0.9} src={getSmallLogo()} />
                         </Box>
                     </Flex>
                 </Flex>

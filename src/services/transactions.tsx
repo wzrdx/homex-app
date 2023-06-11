@@ -4,14 +4,18 @@ import { createContext, useContext, useEffect, useState } from 'react';
 export enum TransactionType {
     StartQuest,
     CompleteQuest,
-    Faucet,
     JoinRaffle,
+    Stake,
+    Unstake,
+    Claim,
 }
 
 export enum TxResolution {
     UpdateResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
     UpdateTickets = 'UpdateTickets',
+    UpdateStakingInfo = 'UpdateStakingInfo',
+    ClaimStakingRewards = 'Unstaking',
 }
 
 export interface Transaction {

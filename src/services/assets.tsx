@@ -6,6 +6,8 @@ import Frame_3 from '../assets/frame_3.png';
 import Ritual from '../assets/images/ritual.jpg';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
+import Logo from '../assets/logo_small.png';
+import EldersLogo from '../assets/logo_elders.png';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -16,3 +18,6 @@ export const getFullTicket = () => Ticket;
 export const getTicketSFT = () => TicketSFT;
 export const getFrameGlow = () => FrameGlow;
 export const getSpinningTicket = () => SpinningTicket;
+
+export const getSmallLogo = () => Logo;
+export const getEldersLogo = () => EldersLogo;
