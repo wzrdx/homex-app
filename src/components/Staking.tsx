@@ -11,13 +11,11 @@ import {
     TransactionType,
     TxResolution,
 } from '../services/transactions';
-import { CalendarIcon, InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
 import { getResourceElements } from '../services/resources';
 import Reward from '../shared/Reward';
 import { getEldersLogo, getFaucetImage, getSmallLogo } from '../services/assets';
 import { useLayout } from './Layout';
 import _ from 'lodash';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getNonces } from '../services/authentication';
 import { round } from '../services/helpers';
@@ -44,7 +42,7 @@ enum YieldType {
 }
 
 function Staking() {
-    const { checkEgldBalance } = useLayout();
+    const { checkEgldBalance, displayToast } = useLayout();
 
     const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
     const [isStakingButtonLoading, setStakingButtonLoading] = useState(false);
@@ -96,6 +94,7 @@ function Staking() {
             const { data: travelerTokens } = await getNonces(address, TRAVELERS_COLLECTION_ID);
             const { data: elderTokens } = await getNonces(address, ELDERS_COLLECTION_ID);
 
+            // TODO: Remove takes
             const transfers: TokenTransfer[] = [
                 ..._(travelerTokens)
                     .map((token) => TokenTransfer.nonFungible(TRAVELERS_COLLECTION_ID, token.nonce))
@@ -106,6 +105,16 @@ function Staking() {
                     .take(2)
                     .value(),
             ];
+
+            if (_.isEmpty(transfers)) {
+                displayToast(
+                    'error',
+                    'Nothing to stake',
+                    'No NFT from the Home X collections is currently in your wallet',
+                    'redClrs'
+                );
+                return;
+            }
 
             const tx = smartContract.methods
                 .stake()
@@ -330,12 +339,11 @@ function Staking() {
                         <Flex mt={6} flexDir="column" justifyContent="center" alignItems="center">
                             <Flex justifyContent="center" alignItems="center">
                                 <ActionButton
-                                    disabled={!stakingInfo}
+                                    disabled={!stakingInfo || isTxPending(TransactionType.Claim)}
                                     isLoading={
                                         isStakingButtonLoading ||
                                         isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake) ||
-                                        isTxPending(TransactionType.Claim)
+                                        isTxPending(TransactionType.Stake)
                                     }
                                     colorScheme="blue"
                                     buttonWidth="small"

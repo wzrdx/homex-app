@@ -11,7 +11,10 @@ import { CustomToast } from '../shared/CustomToast';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
 
-type LayoutContext = { checkEgldBalance: () => Promise<boolean> };
+type LayoutContext = {
+    checkEgldBalance: () => Promise<boolean>;
+    displayToast: (type: string, title: string, description: string, color: string) => void;
+};
 
 export function useLayout() {
     return useOutletContext<LayoutContext>();
@@ -39,24 +42,27 @@ function Layout() {
         if (!balance || balance === '0') {
             playSound('swap');
 
-            toast({
-                position: 'top-right',
-                containerStyle: {
-                    marginTop: '2rem',
-                    marginRight: '2rem',
-                },
-                duration: 5000,
-                render: () => (
-                    <CustomToast type="error" title="Insufficient balance" color="redClrs">
-                        <Text mt={2}>You need EGLD for gas fees</Text>
-                    </CustomToast>
-                ),
-            });
-
+            displayToast('error', 'Insufficient balance', 'You need EGLD for gas fees', 'redClrs');
             return false;
         } else {
             return true;
         }
+    };
+
+    const displayToast = (type: string, title: string, description: string, color: string) => {
+        toast({
+            position: 'top-right',
+            containerStyle: {
+                marginTop: '2rem',
+                marginRight: '2rem',
+            },
+            duration: 6000,
+            render: () => (
+                <CustomToast type={type} title={title} color={color}>
+                    <Text mt={2}>{description}</Text>
+                </CustomToast>
+            ),
+        });
     };
 
     return (
@@ -74,7 +80,7 @@ function Layout() {
                     margin="0 auto"
                     py={{ md: 8, lg: 10, xl: 16, '2xl': 20 }}
                 >
-                    <Outlet context={{ checkEgldBalance }} />
+                    <Outlet context={{ checkEgldBalance, displayToast }} />
                 </Box>
             </Flex>
         </>

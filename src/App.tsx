@@ -76,7 +76,15 @@ function App() {
                         playSound('stake');
                         break;
 
-                    case TransactionType.Unstake || TransactionType.Claim:
+                    case TransactionType.Unstake:
+                        displayResourcesToast(
+                            'Energy gained!',
+                            [{ resource: 'energy', value: tx.data.energyGain }],
+                            'unstake'
+                        );
+                        break;
+
+                    case TransactionType.Claim:
                         displayResourcesToast(
                             'Energy gained!',
                             [{ resource: 'energy', value: tx.data.energyGain }],
