@@ -39,14 +39,6 @@ function Gameplay() {
                     </Flex>
                 </Flex>
 
-                {/* <Box
-                    mx={16}
-                    width="1px"
-                    height=""
-                    
-                    background="linear-gradient(0deg, rgb(62 62 62 / 20%) 0%, rgb(150 150 150) 50%, rgb(62 62 62 / 20%) 100%)"
-                ></Box> */}
-
                 <Box mx={16} opacity={0.7}>
                     <Separator type="vertical" width="1px" height="182px" />
                 </Box>

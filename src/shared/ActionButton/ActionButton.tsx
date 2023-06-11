@@ -1,6 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 import style from './ActionButton.module.scss';
+import { isEmpty } from 'lodash';
 
 export const ActionButton: FunctionComponent<
     PropsWithChildren<{
@@ -8,9 +9,9 @@ export const ActionButton: FunctionComponent<
         disabled?: boolean;
         onClick?: () => void;
         colorScheme?: string;
-        buttonWidth?: string;
+        customStyle?: any;
     }>
-> = ({ children, isLoading, disabled, onClick, colorScheme = 'default', buttonWidth = 'default' }) => {
+> = ({ children, isLoading, disabled, onClick, colorScheme = 'default', customStyle }) => {
     const getColorScheme = () => {
         if (disabled) {
             return style.disabled;
@@ -35,7 +36,7 @@ export const ActionButton: FunctionComponent<
             alignItems="center"
             justifyContent="center"
             cursor={isLoading || disabled ? 'not-allowed' : 'pointer'}
-            style={buttonWidth === 'small' ? { width: '160px' } : {}}
+            style={!isEmpty(customStyle) ? customStyle : {}}
         >
             {isLoading && (
                 <Flex

@@ -346,7 +346,7 @@ function Staking() {
                                         isTxPending(TransactionType.Stake)
                                     }
                                     colorScheme="blue"
-                                    buttonWidth="small"
+                                    customStyle={{ width: '160px' }}
                                     onClick={toggleStaking}
                                 >
                                     <Text>{`${stakingInfo.isStaked ? 'Unstake' : 'Stake'}`}</Text>
@@ -358,7 +358,7 @@ function Staking() {
                                             disabled={!stakingInfo || isTxPending(TransactionType.Unstake)}
                                             isLoading={isClaimingButtonLoading || isTxPending(TransactionType.Claim)}
                                             colorScheme="red"
-                                            buttonWidth="small"
+                                            customStyle={{ width: '160px' }}
                                             onClick={claim}
                                         >
                                             <Text>Claim Rewards</Text>

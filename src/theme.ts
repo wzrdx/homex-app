@@ -1,4 +1,11 @@
 import { ThemeConfig, extendTheme } from '@chakra-ui/react';
+import chakraTheme from '@chakra-ui/theme';
+
+const { Input } = chakraTheme.components;
+
+const components = {
+    Input,
+};
 
 const config: ThemeConfig = {
     initialColorMode: 'dark',
@@ -96,4 +103,5 @@ export const theme = extendTheme({
     styles,
     layerStyles,
     breakpoints,
+    components,
 });

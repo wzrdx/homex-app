@@ -8,6 +8,7 @@ import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
 import Logo from '../assets/logo_small.png';
 import EldersLogo from '../assets/logo_elders.png';
+import MvxLogo from '../assets/multiversx_logo.jpg';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -21,3 +22,4 @@ export const getSpinningTicket = () => SpinningTicket;
 
 export const getSmallLogo = () => Logo;
 export const getEldersLogo = () => EldersLogo;
+export const getMvxLogo = () => MvxLogo;

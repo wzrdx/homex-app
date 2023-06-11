@@ -25,11 +25,13 @@ import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '..
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import { getSmallLogo } from '../services/assets';
+import Swap from './Swap';
 
 const ROUTE_WIDTH = 120;
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
+    const { isOpen: isSwapOpen, onOpen: onSwapOpen, onClose: onSwapClose } = useDisclosure();
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
@@ -216,8 +218,8 @@ function Header() {
                             transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
                             _hover={{ backgroundColor: '#0c3247' }}
                             onClick={() => {
-                                playSound('mystery');
-                                onGameplayOpen();
+                                playSound('select_quest');
+                                onSwapOpen();
                             }}
                         >
                             <Box transform="rotate(90deg)" mr={-0.5}>
@@ -376,6 +378,23 @@ function Header() {
 
                         <Box position="absolute" bottom="16px" right="24px">
                             <Button onClick={onGameplayClose} colorScheme="red">
+                                Close
+                            </Button>
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+
+            {/* Swap */}
+            <Modal size="full" onClose={onSwapClose} isOpen={isSwapOpen}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
+                        <Swap />
+
+                        <Box position="absolute" bottom="16px" right="24px">
+                            <Button onClick={onSwapClose} colorScheme="blue">
                                 Close
                             </Button>
                         </Box>

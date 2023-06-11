@@ -8,6 +8,7 @@ export enum TransactionType {
     Stake,
     Unstake,
     Claim,
+    Swap,
 }
 
 export enum TxResolution {
