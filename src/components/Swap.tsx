@@ -144,7 +144,18 @@ function Swap() {
                                 }}
                             />
 
-                            <Flex px={3} position="absolute" top={1} right={1} bottom={1}>
+                            <Flex
+                                px={2.5}
+                                position="absolute"
+                                top={1}
+                                right={1}
+                                bottom={1}
+                                backgroundColor="#2c2d2f"
+                                borderTopLeftRadius="38px"
+                                borderTopRightRadius="4px"
+                                borderBottomLeftRadius="38px"
+                                borderBottomRightRadius="4px"
+                            >
                                 <Flex alignItems="center">
                                     <Image width="26px" height="26px" mr={1.5} src={icon} alt="Energy" />
                                     <Text>ENERGY</Text>
@@ -189,7 +200,18 @@ function Swap() {
                                 }}
                             />
 
-                            <Flex px={3} position="absolute" top={1} right={1} bottom={1}>
+                            <Flex
+                                px={2.5}
+                                position="absolute"
+                                top={1}
+                                right={1}
+                                bottom={1}
+                                backgroundColor="#2c2d2f"
+                                borderTopLeftRadius="38px"
+                                borderTopRightRadius="4px"
+                                borderBottomLeftRadius="38px"
+                                borderBottomRightRadius="4px"
+                            >
                                 <Flex alignItems="center">
                                     <Image
                                         borderRadius="50%"
@@ -223,7 +245,7 @@ function Swap() {
                             isLoading={isButtonLoading || isTxPending(TransactionType.Swap)}
                             disabled={!energyValue}
                             colorScheme="blue"
-                            customStyle={{ width: '100%' }}
+                            customStyle={{ width: '100%', borderRadius: '6px', padding: '10px' }}
                             onClick={swap}
                         >
                             <Text>Swap</Text>
