@@ -80,7 +80,7 @@ function Raffle() {
             <Flex flexDir="column" alignItems="center">
                 <Image
                     my={2}
-                    height="372px"
+                    height={{ md: '292px', lg: '372px' }}
                     src={getTicketSFT()}
                     alt="Ticket"
                     borderRadius="1px"
@@ -88,7 +88,7 @@ function Raffle() {
                     userSelect="none"
                 />
 
-                <Text mt={5} fontSize="17px" textAlign="center" maxWidth="464px" userSelect="none">
+                <Text mt={{ md: 3, lg: 5 }} fontSize="17px" textAlign="center" maxWidth="464px" userSelect="none">
                     Use{' '}
                     <Text as="span" color="ticketGold">
                         Golden Tickets
@@ -96,7 +96,7 @@ function Raffle() {
                     to participate in the raffle
                 </Text>
 
-                <Box my={4} display="flex" alignItems="center">
+                <Box my={{ md: 3, lg: 4 }} display="flex" alignItems="center">
                     <Box
                         px="1"
                         cursor="pointer"
