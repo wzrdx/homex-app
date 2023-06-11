@@ -1,8 +1,7 @@
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { Box, Flex, Text, useToast } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
-import { QuestsProvider } from '../services/quests';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
@@ -10,10 +9,13 @@ import { getLayoutBackground } from '../services/assets';
 import { CustomToast } from '../shared/CustomToast';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
+import { routes, routeNames } from '../services/routes';
 
 type LayoutContext = {
     checkEgldBalance: () => Promise<boolean>;
     displayToast: (type: string, title: string, description: string, color: string) => void;
+    routes;
+    routeNames;
 };
 
 export function useLayout() {
@@ -80,7 +82,7 @@ function Layout() {
                     margin="0 auto"
                     py={{ md: 8, lg: 10, xl: 16, '2xl': 20 }}
                 >
-                    <Outlet context={{ checkEgldBalance, displayToast }} />
+                    <Outlet context={{ checkEgldBalance, displayToast, routes, routeNames }} />
                 </Box>
             </Flex>
         </>

@@ -58,7 +58,7 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 
-const LARGE_FRAME_SIZE = 332;
+const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
 
 function Quests() {
@@ -239,7 +239,7 @@ function Quests() {
 
             {/* Quest requirements */}
             <Flex flex={7} justifyContent="center">
-                <Flex pb={{ md: 0, lg: 4 }} flexDir="column" justifyContent="center" alignItems="center">
+                <Flex flexDir="column" justifyContent="center" alignItems="center">
                     <Flex justifyContent="center" alignItems="center" position="relative">
                         <Image
                             src={getFrame()}

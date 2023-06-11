@@ -311,9 +311,10 @@ function Staking() {
 
                 {/* Resposive */}
                 <Flex flexDir={{ md: 'row', lg: 'column' }} justifyContent="center" alignItems="center">
-                    <Flex my={5} width="auto" justifyContent="flex-end">
+                    <Flex my={4} width="auto" justifyContent="flex-end">
                         <Image
                             width="328px"
+                            height="328px"
                             mr={{ md: 5, lg: 0 }}
                             src={getFaucetImage()}
                             alt="Energy"
@@ -330,7 +331,7 @@ function Staking() {
                             <Reward image={image} name={name} value={stakingInfo.rewards} icon={icon} />
 
                             {stakingInfo.isStaked && (
-                                <Flex alignItems="center" mt={5}>
+                                <Flex alignItems="center" mt={4}>
                                     <Image width="22px" mr={2} src={icon} alt="Energy" />
 
                                     <Text fontSize="15px" color="energyBright">
@@ -342,7 +343,7 @@ function Staking() {
                                 </Flex>
                             )}
 
-                            <Flex mt={5} flexDir="column" justifyContent="center" alignItems="center">
+                            <Flex mt={4} flexDir="column" justifyContent="center" alignItems="center">
                                 <Flex justifyContent="center" alignItems="center">
                                     <ActionButton
                                         disabled={!stakingInfo || isTxPending(TransactionType.Claim)}
