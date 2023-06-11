@@ -58,8 +58,8 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 
-const LARGE_FRAME_SIZE = 352;
-const MEDIUM_FRAME_SIZE = 260;
+const LARGE_FRAME_SIZE = 332;
+const MEDIUM_FRAME_SIZE = 240;
 
 function Quests() {
     const { checkEgldBalance } = useLayout();

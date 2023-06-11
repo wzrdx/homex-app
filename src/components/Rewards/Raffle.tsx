@@ -137,7 +137,7 @@ function Raffle() {
                         isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
                         colorScheme="default"
                         onClick={joinRaffle}
-                        customStyle={{ width: '160px' }}
+                        customStyle={{ width: '156px' }}
                     >
                         <Text userSelect="none">Join Raffle</Text>
                     </ActionButton>

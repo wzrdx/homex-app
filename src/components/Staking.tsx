@@ -162,9 +162,7 @@ function Staking() {
             return;
         }
 
-        console.log(updatedStakingInfo);
         const energyGain = updatedStakingInfo.rewards;
-        console.log(energyGain);
 
         try {
             const tx = smartContract.methods
@@ -311,73 +309,83 @@ function Staking() {
                     </Flex>
                 )}
 
-                <Flex my={6} width="auto" justifyContent="flex-end">
-                    <Image
-                        width={{ md: '260px', lg: '336px' }}
-                        src={getFaucetImage()}
-                        alt="Energy"
-                        borderRadius="1px"
-                        border="2px solid #fdefce29"
-                    />
-                </Flex>
-
-                {/* Controls */}
-                {!stakingInfo ? (
-                    <Spinner />
-                ) : (
-                    <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Reward image={image} name={name} value={stakingInfo.rewards} icon={icon} />
-
-                        {stakingInfo.isStaked && (
-                            <Flex alignItems="center" mt={6}>
-                                <Image width="22px" mr={2} src={icon} alt="Energy" />
-
-                                <Text fontSize="15px" color="energyBright">
-                                    {getEnergyPerHour()}
-                                </Text>
-                                <Text fontSize="15px">{`/hr (${getEnergyPerHour(
-                                    YieldType.Travelers
-                                )} from Travelers, ${getEnergyPerHour(YieldType.Elders)} from Elders)`}</Text>
-                            </Flex>
-                        )}
-
-                        <Flex mt={6} flexDir="column" justifyContent="center" alignItems="center">
-                            <Flex justifyContent="center" alignItems="center">
-                                <ActionButton
-                                    disabled={!stakingInfo || isTxPending(TransactionType.Claim)}
-                                    isLoading={
-                                        isStakingButtonLoading ||
-                                        isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake)
-                                    }
-                                    colorScheme="blue"
-                                    customStyle={{ width: '160px' }}
-                                    onClick={toggleStaking}
-                                >
-                                    <Text>{`${stakingInfo.isStaked ? 'Unstake' : 'Stake'}`}</Text>
-                                </ActionButton>
-
-                                {stakingInfo.isStaked && (
-                                    <Box ml={4}>
-                                        <ActionButton
-                                            disabled={!stakingInfo || isTxPending(TransactionType.Unstake)}
-                                            isLoading={isClaimingButtonLoading || isTxPending(TransactionType.Claim)}
-                                            colorScheme="red"
-                                            customStyle={{ width: '160px' }}
-                                            onClick={claim}
-                                        >
-                                            <Text>Claim Rewards</Text>
-                                        </ActionButton>
-                                    </Box>
-                                )}
-                            </Flex>
-
-                            <Box mt={3}>
-                                <Timer displayDays isActive={stakingInfo.isStaked} timestamp={stakingInfo.timestamp} />
-                            </Box>
-                        </Flex>
+                {/* Resposive */}
+                <Flex flexDir={{ md: 'row', lg: 'column' }} justifyContent="center" alignItems="center">
+                    <Flex my={5} width="auto" justifyContent="flex-end">
+                        <Image
+                            width="328px"
+                            mr={{ md: 5, lg: 0 }}
+                            src={getFaucetImage()}
+                            alt="Energy"
+                            borderRadius="1px"
+                            border="2px solid #fdefce29"
+                        />
                     </Flex>
-                )}
+
+                    {/* Controls */}
+                    {!stakingInfo ? (
+                        <Spinner />
+                    ) : (
+                        <Flex ml={{ md: 5, lg: 0 }} flexDir="column" justifyContent="center" alignItems="center">
+                            <Reward image={image} name={name} value={stakingInfo.rewards} icon={icon} />
+
+                            {stakingInfo.isStaked && (
+                                <Flex alignItems="center" mt={5}>
+                                    <Image width="22px" mr={2} src={icon} alt="Energy" />
+
+                                    <Text fontSize="15px" color="energyBright">
+                                        {getEnergyPerHour()}
+                                    </Text>
+                                    <Text fontSize="15px">{`/hr (${getEnergyPerHour(
+                                        YieldType.Travelers
+                                    )} from Travelers, ${getEnergyPerHour(YieldType.Elders)} from Elders)`}</Text>
+                                </Flex>
+                            )}
+
+                            <Flex mt={5} flexDir="column" justifyContent="center" alignItems="center">
+                                <Flex justifyContent="center" alignItems="center">
+                                    <ActionButton
+                                        disabled={!stakingInfo || isTxPending(TransactionType.Claim)}
+                                        isLoading={
+                                            isStakingButtonLoading ||
+                                            isTxPending(TransactionType.Unstake) ||
+                                            isTxPending(TransactionType.Stake)
+                                        }
+                                        colorScheme="blue"
+                                        customStyle={{ width: '156px' }}
+                                        onClick={toggleStaking}
+                                    >
+                                        <Text>{`${stakingInfo.isStaked ? 'Unstake' : 'Stake'}`}</Text>
+                                    </ActionButton>
+
+                                    {stakingInfo.isStaked && (
+                                        <Box ml={4}>
+                                            <ActionButton
+                                                disabled={!stakingInfo || isTxPending(TransactionType.Unstake)}
+                                                isLoading={
+                                                    isClaimingButtonLoading || isTxPending(TransactionType.Claim)
+                                                }
+                                                colorScheme="red"
+                                                customStyle={{ width: '156px' }}
+                                                onClick={claim}
+                                            >
+                                                <Text>Claim Rewards</Text>
+                                            </ActionButton>
+                                        </Box>
+                                    )}
+                                </Flex>
+
+                                <Box mt={3}>
+                                    <Timer
+                                        displayDays
+                                        isActive={stakingInfo.isStaked}
+                                        timestamp={stakingInfo.timestamp}
+                                    />
+                                </Box>
+                            </Flex>
+                        </Flex>
+                    )}
+                </Flex>
             </Flex>
         </Flex>
     );

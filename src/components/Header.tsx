@@ -125,7 +125,7 @@ function Header() {
                                     <Text
                                         textTransform="capitalize"
                                         color="header.gray"
-                                        fontSize={{ md: '18px', lg: '20px ' }}
+                                        fontSize={{ md: '18px', lg: '20px' }}
                                         lineHeight={{ md: '18px', lg: '20px ' }}
                                         transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                         pt={3}
