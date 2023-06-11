@@ -96,6 +96,16 @@ function App() {
                         displayToast('Ticket/s sent!', 'Successfully joined the raffle', 'green.500');
                         break;
 
+                    case TransactionType.Swap:
+                        displayToast(
+                            'Swapped ENERGY for EGLD!',
+                            `You received ${tx.data.egldValue} in your wallet`,
+                            'blue.500'
+                        );
+                        playSound('swap');
+
+                        break;
+
                     default:
                         console.error('Unknown TransactionType');
                 }
@@ -204,7 +214,7 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 5000,
+            duration: 6000,
             render: () => (
                 <CustomToast type="success" title={title} color={color}>
                     <Text mt={2}>{text}</Text>

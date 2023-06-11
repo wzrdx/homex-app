@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Image, Input, InputGroup, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, FormControl, IconButton, Image, Input, InputGroup, Link, Text } from '@chakra-ui/react';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
@@ -44,7 +44,7 @@ function Swap() {
 
         if (!isNaN(value)) {
             setEnergyValue(value);
-            setEgldValue(round(value * ENERGY_SWAP_RATE, 3).toString());
+            setEgldValue(round(value * ENERGY_SWAP_RATE, 18).toString());
         }
     };
 
@@ -58,7 +58,7 @@ function Swap() {
         value = Number.parseFloat(value);
 
         if (!isNaN(value)) {
-            setEnergyValue(round(value / ENERGY_SWAP_RATE, 3).toString());
+            setEnergyValue(round(value / ENERGY_SWAP_RATE, 6).toString());
             setEgldValue(value);
         }
     };
@@ -72,6 +72,8 @@ function Swap() {
 
         const user = new Address(address);
         const amount = Number.parseFloat(energyValue);
+
+        console.log('Swap', amount);
 
         try {
             const tx = smartContract.methods
@@ -100,6 +102,9 @@ function Swap() {
                     sessionId,
                     type: TransactionType.Swap,
                     resolution: TxResolution.UpdateEnergy,
+                    data: {
+                        egldValue,
+                    },
                 },
             ]);
 
@@ -108,6 +113,8 @@ function Swap() {
             console.error('Error occured while staking', err);
         }
     };
+
+    const isFormInvalid = !energyValue || energyValue > resources.energy;
 
     return (
         <Flex flexDir="column" justifyContent="center" alignItems="center">
@@ -131,37 +138,40 @@ function Swap() {
                     </Flex>
 
                     <Box position="relative">
-                        <InputGroup>
-                            <Input
-                                size="lg"
-                                variant="filled"
-                                bg="black.100"
-                                placeholder="0.0"
-                                type="number"
-                                value={energyValue}
-                                onChange={(e) => {
-                                    onEnergyInputChange(e.target.value);
-                                }}
-                            />
+                        <FormControl isInvalid={isFormInvalid}>
+                            <InputGroup>
+                                <Input
+                                    size="lg"
+                                    variant="filled"
+                                    bg="black.100"
+                                    placeholder="0.0"
+                                    type="number"
+                                    value={energyValue}
+                                    autoFocus
+                                    onChange={(e) => {
+                                        onEnergyInputChange(e.target.value);
+                                    }}
+                                />
 
-                            <Flex
-                                px={2.5}
-                                position="absolute"
-                                top={1}
-                                right={1}
-                                bottom={1}
-                                backgroundColor="#2c2d2f"
-                                borderTopLeftRadius="38px"
-                                borderTopRightRadius="4px"
-                                borderBottomLeftRadius="38px"
-                                borderBottomRightRadius="4px"
-                            >
-                                <Flex alignItems="center">
-                                    <Image width="26px" height="26px" mr={1.5} src={icon} alt="Energy" />
-                                    <Text>ENERGY</Text>
+                                <Flex
+                                    px={2.5}
+                                    position="absolute"
+                                    top={1}
+                                    right={1}
+                                    bottom={1}
+                                    backgroundColor="#2c2d2f"
+                                    borderTopLeftRadius="38px"
+                                    borderTopRightRadius="4px"
+                                    borderBottomLeftRadius="38px"
+                                    borderBottomRightRadius="4px"
+                                >
+                                    <Flex alignItems="center">
+                                        <Image width="26px" height="26px" mr={1.5} src={icon} alt="Energy" />
+                                        <Text>ENERGY</Text>
+                                    </Flex>
                                 </Flex>
-                            </Flex>
-                        </InputGroup>
+                            </InputGroup>
+                        </FormControl>
                     </Box>
 
                     <Flex my={4} width="100%" justifyContent="center" alignItems="center">
@@ -243,7 +253,11 @@ function Swap() {
                     <Box mt={4}>
                         <ActionButton
                             isLoading={isButtonLoading || isTxPending(TransactionType.Swap)}
-                            disabled={!energyValue}
+                            disabled={
+                                !energyValue ||
+                                Number.parseFloat(energyValue) > resources.energy ||
+                                Number.parseFloat(energyValue) < 0.001
+                            }
                             colorScheme="blue"
                             customStyle={{ width: '100%', borderRadius: '6px', padding: '10px' }}
                             onClick={swap}

@@ -23,9 +23,9 @@ function Gameplay() {
                         <Flex alignItems="center">
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
-                                Earned by performing{' '}
+                                Earned through{' '}
                                 <Text as="span" color="brightBlue">
-                                    Rituals
+                                    staking
                                 </Text>
                             </Text>
                         </Flex>
@@ -34,6 +34,16 @@ function Gameplay() {
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
                                 Used in-game to complete quests
+                            </Text>
+                        </Flex>
+
+                        <Flex alignItems="center">
+                            <ArrowForwardIcon boxSize={4} color="whitesmoke" />
+                            <Text ml={1} whiteSpace="nowrap">
+                                Can be swapped in-game for{' '}
+                                <Text as="span" color="brightBlue">
+                                    $EGLD
+                                </Text>
                             </Text>
                         </Flex>
                     </Flex>
@@ -103,6 +113,7 @@ function Gameplay() {
                     <Flex
                         mt="16px"
                         width="308px"
+                        pb={0.5}
                         mx={3}
                         flexDir="column"
                         height="100%"
@@ -122,11 +133,10 @@ function Gameplay() {
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
                                 <Text>
-                                    Perform{' '}
                                     <Text as="span" color="brightBlue">
-                                        Rituals
+                                        Stake
                                     </Text>{' '}
-                                    in order to gain energy
+                                    your NFTs in order to gain the $ENERGY token
                                 </Text>
                             </Flex>
                         </Flex>
@@ -153,6 +163,7 @@ function Gameplay() {
                     <Flex
                         mt="16px"
                         width="308px"
+                        pb={0.5}
                         mx={3}
                         flexDir="column"
                         height="100%"
@@ -189,7 +200,7 @@ function Gameplay() {
                                     <Text as="span" color="lightOrange">
                                         mission
                                     </Text>{' '}
-                                    using the collected tokens and unlock NFT Tickets
+                                    using the collected tokens and unlock Golden Tickets
                                 </Text>
                             </Flex>
                         </Flex>
@@ -216,6 +227,7 @@ function Gameplay() {
                     <Flex
                         mt="16px"
                         width="308px"
+                        pb={0.5}
                         mx={3}
                         flexDir="column"
                         height="100%"
@@ -235,11 +247,11 @@ function Gameplay() {
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
                                 <Text>
-                                    Advance your{' '}
+                                    Use{' '}
                                     <Text as="span" color="orangered">
-                                        ranking
+                                        Golden Tickets
                                     </Text>{' '}
-                                    in the leaderboard in order to win prizes
+                                    to earn prizes
                                 </Text>
                             </Flex>
                         </Flex>
