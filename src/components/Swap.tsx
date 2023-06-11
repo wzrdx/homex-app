@@ -1,8 +1,8 @@
-import { Box, Flex, FormControl, IconButton, Image, Input, InputGroup, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, FormControl, IconButton, Image, Input, InputGroup, Text } from '@chakra-ui/react';
 import { ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
-import { EGLD_DENOMINATION, ENERGY_SWAP_RATE, ENERGY_TOKEN_ID } from '../blockchain/config';
+import { CHAIN_ID, EGLD_DENOMINATION, ENERGY_SWAP_RATE, ENERGY_TOKEN_ID } from '../blockchain/config';
 import { round } from '../services/helpers';
 import { ArrowDownIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getMvxLogo } from '../services/assets';
@@ -80,7 +80,7 @@ function Swap() {
                 .swapEnergy()
                 .withSingleESDTTransfer(TokenTransfer.fungibleFromAmount(ENERGY_TOKEN_ID, amount, 6))
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(6000000)
                 .buildTransaction();
 

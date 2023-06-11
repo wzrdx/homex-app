@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getTicketSFT } from '../../services/assets';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
@@ -14,7 +14,7 @@ import {
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { TICKETS_TOKEN_ID } from '../../blockchain/config';
+import { CHAIN_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
@@ -44,7 +44,7 @@ function Raffle() {
                 .joinRaffle()
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(6000000)
                 .buildTransaction();
 

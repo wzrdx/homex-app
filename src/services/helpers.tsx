@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL, EXPLORER_URL, GATEWAY_URL, contractAddress } from '../blockchain/config';
+import { EXPLORER_URL, GATEWAY_URL } from '../blockchain/config';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,

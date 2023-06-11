@@ -13,13 +13,14 @@ import {
 } from '../services/transactions';
 import { getResourceElements } from '../services/resources';
 import Reward from '../shared/Reward';
-import { getEldersLogo, getFaucetImage, getSmallLogo } from '../services/assets';
+import { getEldersLogo, getRitualImage, getSmallLogo } from '../services/assets';
 import { useLayout } from './Layout';
 import _ from 'lodash';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getNonces } from '../services/authentication';
 import { round } from '../services/helpers';
 import {
+    CHAIN_ID,
     ELDERS_COLLECTION_ID,
     ELDER_YIELD_PER_HOUR,
     REWARDS_QUERYING_INTERVAL,
@@ -119,7 +120,7 @@ function Staking() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withExplicitReceiver(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(2000000 + 1000000 * _.size(transfers))
                 .buildTransaction();
 
@@ -168,7 +169,7 @@ function Staking() {
             const tx = smartContract.methods
                 .unstake()
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(
                     1000000 +
                         1000000 * (updatedStakingInfo.travelerNonces.length + updatedStakingInfo.elderNonces.length)
@@ -226,7 +227,7 @@ function Staking() {
             const tx = smartContract.methods
                 .claimStakingRewards()
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(6000000)
                 .buildTransaction();
 
@@ -316,7 +317,7 @@ function Staking() {
                             width="328px"
                             height="328px"
                             mr={{ md: 5, lg: 0 }}
-                            src={getFaucetImage()}
+                            src={getRitualImage()}
                             alt="Energy"
                             borderRadius="1px"
                             border="2px solid #fdefce29"

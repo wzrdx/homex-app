@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
-import { routes, routeNames } from '../services/routes';
 import { toTitleCase } from '../services/helpers';
+import { useLayout } from './Layout';
 
 type RewardsContext = { height: number };
 
@@ -12,6 +12,8 @@ export function useRewards() {
 }
 
 function Rewards() {
+    const { routes, routeNames } = useLayout();
+
     const [height, setHeight] = useState<number>(0);
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);

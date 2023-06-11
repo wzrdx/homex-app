@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import { Box, Flex, Spinner, Text, Image, Link } from '@chakra-ui/react';
+import { Flex, Spinner, Text, Link } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getShortAddress, getTxExplorerURL, getUsername, sleep } from '../../services/helpers';
+import { getShortAddress, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { API_URL, EGLD_DENOMINATION } from '../../blockchain/config';
 import axios from 'axios';
-import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';

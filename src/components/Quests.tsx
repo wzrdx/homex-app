@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import {
     Box,
     Button,
-    DarkMode,
     Flex,
     Image,
     Modal,
@@ -11,11 +10,10 @@ import {
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    ResponsiveValue,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import _, { find, findIndex, includes, map } from 'lodash';
+import _, { find, findIndex, map } from 'lodash';
 import {
     QUESTS,
     QUEST_DURATION_INTERVAL,
@@ -57,6 +55,7 @@ import { getFrame, getFrameGlow, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
+import { CHAIN_ID } from '../blockchain/config';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
@@ -111,7 +110,7 @@ function Quests() {
                     )
                 )
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(4000000 + requiredResources.length * 1000000)
                 .buildTransaction();
 
@@ -160,7 +159,7 @@ function Quests() {
             const tx = smartContract.methods
                 .completeQuest([currentQuest.id])
                 .withSender(user)
-                .withChainID('D')
+                .withChainID(CHAIN_ID)
                 .withGasLimit(7000000)
                 .buildTransaction();
 
@@ -239,7 +238,7 @@ function Quests() {
 
             {/* Quest requirements */}
             <Flex flex={7} justifyContent="center">
-                <Flex flexDir="column" justifyContent="center" alignItems="center">
+                <Flex pt={1} flexDir="column" justifyContent="center" alignItems="center">
                     <Flex justifyContent="center" alignItems="center" position="relative">
                         <Image
                             src={getFrame()}

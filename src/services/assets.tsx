@@ -14,7 +14,7 @@ export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
 
 export const getFrame = () => Frame_3;
-export const getFaucetImage = () => Ritual;
+export const getRitualImage = () => Ritual;
 export const getFullTicket = () => Ticket;
 export const getTicketSFT = () => TicketSFT;
 export const getFrameGlow = () => FrameGlow;

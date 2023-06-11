@@ -1,4 +1,4 @@
-import { Flex, Image, Text, Box } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 import InnerRing from '../assets/resources/images/ring_inner.png';
 import OuterRing from '../assets/resources/images/ring_outer.png';
 

@@ -2,7 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
-import { getLayoutBackground, getFrame, getFaucetImage } from '../services/assets';
+import { getLayoutBackground, getFrame, getRitualImage, getTicketSFT } from '../services/assets';
 import { getQuestImage } from '../services/quests';
 import { isAfter } from 'date-fns';
 import { START_OF_CONTEST } from '../blockchain/config';
@@ -14,7 +14,8 @@ function LoadingScreen({ setIsLoaded }) {
         getFrame(),
         getLayoutBackground(),
         getQuestImage(1),
-        getFaucetImage(),
+        getRitualImage(),
+        getTicketSFT(),
     ]);
 
     const getTranslateDistance = () => window.innerWidth / 2 + 250;
