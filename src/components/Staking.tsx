@@ -29,6 +29,7 @@ import {
 import { StoreContextType, useStoreContext } from '../services/store';
 import { Timer } from '../shared/Timer';
 import Separator from '../shared/Separator';
+import { StakingInfo } from '../blockchain/hooks/useGetStakingInfo';
 
 export const ENERGY_REWARD = {
     resource: 'energy',
@@ -94,15 +95,12 @@ function Staking() {
             const { data: travelerTokens } = await getNonces(address, TRAVELERS_COLLECTION_ID);
             const { data: elderTokens } = await getNonces(address, ELDERS_COLLECTION_ID);
 
-            // TODO: Remove takes
             const transfers: TokenTransfer[] = [
                 ..._(travelerTokens)
                     .map((token) => TokenTransfer.nonFungible(TRAVELERS_COLLECTION_ID, token.nonce))
-                    // .take(3)
                     .value(),
                 ..._(elderTokens)
                     .map((token) => TokenTransfer.nonFungible(ELDERS_COLLECTION_ID, token.nonce))
-                    // .take(2)
                     .value(),
             ];
 
@@ -122,7 +120,7 @@ function Staking() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID('D')
-                .withGasLimit(2000000 + 2000000 * _.size(transfers))
+                .withGasLimit(2000000 + 1000000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
@@ -156,20 +154,27 @@ function Staking() {
             return;
         }
 
-        await getStakingInfo();
+        const updatedStakingInfo: StakingInfo | undefined = await getStakingInfo();
         const user = new Address(address);
 
-        if (!stakingInfo) {
+        if (!updatedStakingInfo) {
             console.error('Unable to unstake');
             return;
         }
+
+        console.log(updatedStakingInfo);
+        const energyGain = updatedStakingInfo.rewards;
+        console.log(energyGain);
 
         try {
             const tx = smartContract.methods
                 .unstake()
                 .withSender(user)
                 .withChainID('D')
-                .withGasLimit(3000000 + 1500000 * (stakingInfo.travelerNonces.length + stakingInfo.elderNonces.length))
+                .withGasLimit(
+                    1000000 +
+                        1000000 * (updatedStakingInfo.travelerNonces.length + updatedStakingInfo.elderNonces.length)
+                )
                 .buildTransaction();
 
             await refreshAccount();
@@ -191,7 +196,7 @@ function Staking() {
                     type: TransactionType.Unstake,
                     resolution: TxResolution.ClaimStakingRewards,
                     data: {
-                        energyGain: stakingInfo.rewards,
+                        energyGain,
                     },
                 },
             ]);
