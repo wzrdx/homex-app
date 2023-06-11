@@ -98,11 +98,11 @@ function Staking() {
             const transfers: TokenTransfer[] = [
                 ..._(travelerTokens)
                     .map((token) => TokenTransfer.nonFungible(TRAVELERS_COLLECTION_ID, token.nonce))
-                    .take(3)
+                    // .take(3)
                     .value(),
                 ..._(elderTokens)
                     .map((token) => TokenTransfer.nonFungible(ELDERS_COLLECTION_ID, token.nonce))
-                    .take(2)
+                    // .take(2)
                     .value(),
             ];
 

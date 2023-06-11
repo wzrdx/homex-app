@@ -318,7 +318,7 @@ function Quests() {
                                 colorScheme="green"
                                 onClick={completeQuest}
                             >
-                                <Text>Complete</Text>
+                                <Text>Claim Rewards</Text>
                             </ActionButton>
                         )}
                     </Box>

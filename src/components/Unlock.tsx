@@ -8,18 +8,25 @@ import { Box, Text, Spinner, Flex, Stack, Image } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthenticationContextType, useAuthenticationContext } from '../services/authentication';
+import { AuthenticationContextType, getNFTsCount, useAuthenticationContext } from '../services/authentication';
 import { logout } from '@multiversx/sdk-dapp/utils';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { START_OF_CONTEST, walletConnectV2ProjectId } from '../blockchain/config';
+import {
+    ELDERS_COLLECTION_ID,
+    START_OF_CONTEST,
+    TRAVELERS_COLLECTION_ID,
+    walletConnectV2ProjectId,
+} from '../blockchain/config';
 import Wallet from '../shared/Wallet';
 import { isAfter } from 'date-fns';
 import { Timer } from '../shared/Timer';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
+import { useStoreContext, StoreContextType } from '../services/store';
+import { StakingInfo } from '../blockchain/hooks/useGetStakingInfo';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
@@ -34,6 +41,7 @@ const Unlock = () => {
 
     const [error, setError] = useState<AuthenticationError>();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
+    const { getStakingInfo } = useStoreContext() as StoreContextType;
 
     let { address } = useGetAccountInfo();
     const navigate = useNavigate();
@@ -56,6 +64,22 @@ const Unlock = () => {
             if (!hasGameStarted()) {
                 setError(AuthenticationError.ContestNotStarted);
                 return;
+            }
+
+            const stakingInfo: StakingInfo | undefined = await getStakingInfo();
+
+            if (stakingInfo?.isStaked) {
+                console.warn('User is staked');
+            } else {
+                const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
+                const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+
+                console.warn('Holder', travelerTokens + elderTokens);
+
+                if (travelerTokens + elderTokens === 0) {
+                    setError(AuthenticationError.NotHolder);
+                    return;
+                }
             }
 
             setAuthentication(true);

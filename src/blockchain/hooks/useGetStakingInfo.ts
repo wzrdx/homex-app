@@ -22,7 +22,7 @@ export interface StakingInfo {
 export const useGetStakingInfo = () => {
     const [stakingInfo, setStakingInfo] = useState<StakingInfo>();
 
-    const call = async () => {
+    const call = async (): Promise<StakingInfo | undefined> => {
         try {
             const address = await getAddress();
 
@@ -52,6 +52,8 @@ export const useGetStakingInfo = () => {
 
             setStakingInfo(info);
             console.log(FUNCTION_NAME);
+
+            return info;
         } catch (err) {
             console.error(`Unable to call ${FUNCTION_NAME}`, err);
         }

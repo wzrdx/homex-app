@@ -3,7 +3,7 @@ import { StakingInfo, useGetStakingInfo } from '../blockchain/hooks/useGetStakin
 
 export interface StoreContextType {
     stakingInfo: StakingInfo | undefined;
-    getStakingInfo: () => Promise<void>;
+    getStakingInfo: () => Promise<StakingInfo | undefined>;
 }
 
 const StoreContext = createContext<StoreContextType | null>(null);
