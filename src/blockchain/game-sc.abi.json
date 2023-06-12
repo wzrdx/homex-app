@@ -191,6 +191,13 @@
             "outputs": []
         },
         {
+            "name": "clearTicketsHistory",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -301,6 +308,36 @@
             ]
         },
         {
+            "name": "getTicketStats",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TicketStats"
+                }
+            ]
+        },
+        {
+            "name": "getStakedAddressesCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getStakedNFTsCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
             "name": "getStakingInfo",
             "mutability": "readonly",
             "inputs": [
@@ -327,6 +364,17 @@
             "outputs": [
                 {
                     "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getStakedAddresses",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
                 }
             ]
         },
@@ -593,6 +641,23 @@
                 {
                     "name": "elder_nonces",
                     "type": "List<u64>"
+                }
+            ]
+        },
+        "TicketStats": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "earners_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "tickets_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "most_earned",
+                    "type": "u32"
                 }
             ]
         }
