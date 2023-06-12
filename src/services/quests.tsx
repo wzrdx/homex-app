@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import Quest_1 from '../assets/quests/1.jpg';
-import Quest_2 from '../assets/quests/2.jpg';
-import Quest_3 from '../assets/quests/3.jpg';
-import Quest_4 from '../assets/quests/4.jpg';
-import Quest_5 from '../assets/quests/5.jpg';
-import Quest_6 from '../assets/quests/6.jpg';
-import Quest_7 from '../assets/quests/7.jpg';
-import Quest_8 from '../assets/quests/8.jpg';
-import Quest_9 from '../assets/quests/9.jpg';
+import Quest_1 from '../assets/quests/Q1.jpg';
+import Quest_2 from '../assets/quests/Q2.jpg';
+import Quest_3 from '../assets/quests/Q3.jpg';
+import Quest_4 from '../assets/quests/Q4.jpg';
+import Quest_5 from '../assets/quests/Q5.jpg';
+import Quest_6 from '../assets/quests/Q6.jpg';
+import Quest_7 from '../assets/quests/Q7.jpg';
+import Quest_8 from '../assets/quests/Q8.jpg';
+import Quest_9 from '../assets/quests/Q9.jpg';
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
-import Q1L1 from '../assets/quests/videos/1-1.webm';
-import Q2L1 from '../assets/quests/videos/2-1.webm';
-import Q3L1 from '../assets/quests/videos/3-1.webm';
-import Q4L1 from '../assets/quests/videos/4-1.webm';
-import Q5L1 from '../assets/quests/videos/5-1.webm';
-import Q6L1 from '../assets/quests/videos/6-1.webm';
-import Q7L1 from '../assets/quests/videos/7-1.webm';
-import Q8L1 from '../assets/quests/videos/8-1.webm';
+import Q1 from '../assets/quests/videos/1.webm';
+import LightRays from '../assets/quests/videos/3-1.webm';
+import Q3 from '../assets/quests/videos/3.webm';
+import Q4 from '../assets/quests/videos/4.webm';
+import Q5 from '../assets/quests/videos/5.webm';
+import Q6 from '../assets/quests/videos/6.webm';
+import Mine from '../assets/quests/videos/7-1.webm';
+import DesertSmoke from '../assets/quests/videos/8-1.webm';
+import Q9 from '../assets/quests/videos/9.webm';
 
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
@@ -40,11 +41,11 @@ export const QUESTS: any[] = [
     {
         id: 1,
         type: 'basic',
-        name: 'Explore',
+        name: 'City Scouting',
         description: (
             <Text layerStyle="questDescription">
-                Uncover the city's secrets through a daring expedition, conquering obstacles and discovering hidden
-                treasures. Preserve your energy to unearth ancient artifacts and unravel mysteries.
+                Embark on a journey to uncover the secrets of the city and earn a reward. This adventure requires some
+                energy to keep you focused on your path.
             </Text>
         ),
         requirements: {
@@ -60,7 +61,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q1L1,
+                source: Q1,
                 mode: 'normal',
             },
         ],
@@ -68,12 +69,11 @@ export const QUESTS: any[] = [
     {
         id: 2,
         type: 'basic',
-        name: 'Stellarforge',
+        name: 'Craft Compass',
         description: (
             <Text layerStyle="questDescription">
-                Illuminate the path ahead by constructing a celestial lantern, harnessing the power of the stars.
-                Dedicate your energy and time to this intricate task, for its radiant glow will reveal hidden treasures
-                and guide you through the darkness.
+                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a
+                compass. This task will require significant energy and time, but the reward awaits those who succeed.
             </Text>
         ),
         requirements: {
@@ -89,20 +89,20 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q2L1,
-                mode: 'screen',
+                source: LightRays,
+                mode: 'normal',
             },
         ],
     },
     {
         id: 3,
         type: 'basic',
-        name: 'Beneath the Depths',
+        name: 'Menhir Summit',
         description: (
             <Text layerStyle="questDescription">
-                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and
-                unravel cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient
-                mysteries concealed in the depths, rewarding those who dare to explore.
+                You seek to gain a better understanding of the city's layout and its surroundings, and decide to climb
+                to its highest point. The journey is treacherous and challenging, but the view from the top is
+                breathtaking and awe-inspiring.
             </Text>
         ),
         requirements: {
@@ -118,7 +118,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q3L1,
+                source: Q3,
                 mode: 'normal',
             },
         ],
@@ -126,12 +126,12 @@ export const QUESTS: any[] = [
     {
         id: 4,
         type: 'basic',
-        name: 'Taleweaver',
+        name: 'Tales Unveiled',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a quest to captivate the hearts and minds of the people of Menhir with your exciting stories.
-                Gather a crowd, enthralling them with tales of your daring exploits and mesmerizing adventures. In
-                return for your storytelling prowess, be rewarded with gleaming gems as a token of their appreciation.
+                As a seasoned traveler, you long to share your tales of adventure with the people of Menhir. They are
+                eager to hear your stories, and in exchange, offer you a reward of precious gems. But to captivate your
+                audience, you must spend time gathering enough listeners to hear your tales.
             </Text>
         ),
         requirements: {
@@ -147,7 +147,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q4L1,
+                source: Q4,
                 mode: 'normal',
             },
         ],
@@ -157,11 +157,12 @@ export const QUESTS: any[] = [
     {
         id: 5,
         type: 'exchange',
-        name: 'Whispering Bargain',
+        name: 'Encounter Merchant',
         description: (
             <Text layerStyle="questDescription">
-                In the city's depths, you chance upon an enigmatic creature, the Whispering Sentinel. It promises hidden
-                knowledge if you part with a precious possession. The choice is yours: risk loss for potential gain.
+                While exploring the city, you come across an old vendor and strike a deal. For a small price, you
+                acquire a revigorating potion that restores your energy and a diagram leading to a secret location. The
+                transaction takes a bit of your time, but it may prove to be worth it.
             </Text>
         ),
         requirements: {
@@ -177,7 +178,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q5L1,
+                source: Q5,
                 mode: 'hard-light',
             },
         ],
@@ -185,12 +186,12 @@ export const QUESTS: any[] = [
     {
         id: 6,
         type: 'exchange',
-        name: 'Marketplace Encounter',
+        name: 'Shadowy Figure',
         description: (
             <Text layerStyle="questDescription">
-                Within the hidden marketplace, you stumble upon a mystical stall. Bartering your possessions, you
-                acquire a potent elixir, invigorating your spirit. The transaction bestows newfound vitality, fueling
-                your path ahead.
+                As you explore the city, you come across a mysterious figure who offers you a strange substance and a
+                diagram in exchange for some gems. Upon consuming the substance, you feel a surge of energy. Although it
+                may take some time, the transaction could potentially be valuable.
             </Text>
         ),
         requirements: {
@@ -206,7 +207,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q6L1,
+                source: Q6,
                 mode: 'normal',
             },
         ],
@@ -216,12 +217,13 @@ export const QUESTS: any[] = [
     {
         id: 7,
         type: 'essence',
-        name: 'The Lost Mine',
+        name: 'Underground Blueprint',
         description: (
             <Text layerStyle="questDescription">
-                You embark on a perilous quest to recover a forgotten artifact hidden in the treacherous ruins of an
-                abandoned mine. Overcoming daunting obstacles and displaying unwavering resolve, you'll secure the
-                long-lost relic and attain a valuable essence as your reward.
+                While exploring the city's outskirts, you stumble upon an ancient mine filled with toxic substances. You
+                manage to navigate through the harsh underground environment and discover a hidden diagram, but not
+                without using a significant amount of resources. In the process, you obtain a rare essence. The journey
+                to complete this task is not an easy one and requires considerable effort.
             </Text>
         ),
         requirements: {
@@ -239,7 +241,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q7L1,
+                source: Mine,
                 mode: 'normal',
             },
         ],
@@ -247,12 +249,11 @@ export const QUESTS: any[] = [
     {
         id: 8,
         type: 'essence',
-        name: 'Enchanted Sanctuary',
+        name: 'Mystic Labyrinth',
         description: (
             <Text layerStyle="questDescription">
-                Exploring the uncharted realms of the outside world, you chance upon a forgotten sanctuary veiled in
-                mystery. Overcoming perilous trials and deciphering cryptic clues, you unearth an ancient artifact of
-                profound significance.
+                As you journey through the outside world, you come across an ancient labyrinth filled with mysteries and
+                challenges. You successfully navigate through it and uncover a hidden Diagram.
             </Text>
         ),
         requirements: {
@@ -270,7 +271,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q8L1,
+                source: DesertSmoke,
                 mode: 'normal',
             },
         ],
@@ -281,11 +282,12 @@ export const QUESTS: any[] = [
         id: 9,
         type: 'final',
         isFinal: true,
-        name: 'The Sacred Scarab',
+        name: 'Adraka Narcotic',
         description: (
             <Text layerStyle="questDescription">
-                You discovered the Sacred Scarab, a powerful artifact hidden in a desert temple. It is guarded by a
-                powerful sandstorm so use your resources to face it and recover the artifact back to the Monolith.
+                Retrieve the Adraka Narcotic hidden in a linen tent palace in the city's marketplace to protect yourself
+                from desert mirages. Get the narcotic back to the Dome to receive your Ticket as a reward for your true
+                intentions.
             </Text>
         ),
         requirements: {
@@ -304,7 +306,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q3L1,
+                source: Q9,
                 mode: 'normal',
             },
         ],

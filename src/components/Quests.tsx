@@ -414,7 +414,7 @@ function Quests() {
                                 color="header.gold"
                                 mt={10}
                             >
-                                Location
+                                Story
                             </Text>
 
                             <Flex mt={3.5}>

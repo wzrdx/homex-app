@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { Flex, Spinner, Text, Link } from '@chakra-ui/react';
+import { Flex, Spinner, Text, Link, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { API_URL, EGLD_DENOMINATION } from '../../blockchain/config';
+import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import axios from 'axios';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
@@ -10,6 +10,8 @@ import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
 import { Timer } from '../../shared/Timer';
 import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
+import { getEldersLogo } from '../../services/assets';
+import { RESOURCE_ELEMENTS } from '../../services/resources';
 
 function Prizes() {
     const { height } = useRewards();
@@ -76,11 +78,33 @@ function Prizes() {
                     if (operation.type === 'egld') {
                         prize = (
                             <Text>
-                                <Text as="span" color="brightBlue">
+                                <Text as="span" color="brightBlue" fontWeight={500}>
                                     {Number.parseInt(operation.value) / EGLD_DENOMINATION}
                                 </Text>{' '}
                                 $EGLD
                             </Text>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.ticker === ELDERS_COLLECTION_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Image src={getEldersLogo()} height="22px" mr={2} alt="Elder" />
+                                <Text fontWeight={500} color="redClrs">
+                                    {operation.name}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.ticker === TICKETS_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="brightWheat" minWidth="20px">
+                                    {operation.value}
+                                </Text>
+                                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                            </Flex>
                         );
                     }
 
@@ -171,7 +195,8 @@ function Prizes() {
                                             width="100%"
                                             justifyContent="space-between"
                                             alignItems="center"
-                                            _notLast={{ mb: 1 }}
+                                            height="28px"
+                                            _notLast={{ mb: 2 }}
                                         >
                                             <Text mr="2">{winner.username}</Text>
                                             {winner.prize}
