@@ -27,10 +27,12 @@ import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
 import { useStoreContext, StoreContextType } from '../services/store';
 import { StakingInfo } from '../blockchain/hooks/useGetStakingInfo';
+import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
     ContestNotStarted = 'ContestNotStarted',
+    Paused = 'Paused',
 }
 
 const Unlock = () => {
@@ -42,6 +44,7 @@ const Unlock = () => {
     const [error, setError] = useState<AuthenticationError>();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
     const { getStakingInfo } = useStoreContext() as StoreContextType;
+    const { getGameState } = useTransactionsContext() as TransactionsContextType;
 
     let { address } = useGetAccountInfo();
     const navigate = useNavigate();
@@ -63,6 +66,13 @@ const Unlock = () => {
         } else {
             if (!hasGameStarted()) {
                 setError(AuthenticationError.ContestNotStarted);
+                return;
+            }
+
+            const isGamePaused = await getGameState();
+
+            if (isGamePaused) {
+                setError(AuthenticationError.Paused);
                 return;
             }
 
@@ -221,6 +231,8 @@ const Unlock = () => {
 
                             {error === AuthenticationError.NotHolder &&
                                 getText('Playing the game requires an NFT from the Home X collections')}
+
+                            {error === AuthenticationError.Paused && getText('The game is temporarily paused')}
 
                             {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>

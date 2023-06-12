@@ -2,6 +2,7 @@ import { FunctionComponent, PropsWithChildren } from 'react';
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 import style from './ActionButton.module.scss';
 import { isEmpty } from 'lodash';
+import { useTransactionsContext, TransactionsContextType } from '../../services/transactions';
 
 export const ActionButton: FunctionComponent<
     PropsWithChildren<{
@@ -12,8 +13,10 @@ export const ActionButton: FunctionComponent<
         customStyle?: any;
     }>
 > = ({ children, isLoading, disabled, onClick, colorScheme = 'default', customStyle }) => {
+    const { isGamePaused } = useTransactionsContext() as TransactionsContextType;
+
     const getColorScheme = () => {
-        if (disabled) {
+        if (isDisabled()) {
             return style.disabled;
         } else if (colorScheme) {
             return style[colorScheme];
@@ -22,6 +25,8 @@ export const ActionButton: FunctionComponent<
         }
     };
 
+    const isDisabled = () => isGamePaused || disabled;
+
     return (
         <Flex
             className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
@@ -29,13 +34,13 @@ export const ActionButton: FunctionComponent<
             width={[160, 160, 160, 200]}
             padding={['0.4rem', '0.4rem', '0.4rem', '0.5rem']}
             onClick={() => {
-                if (!disabled && !isLoading && onClick) {
+                if (!isDisabled() && !isLoading && onClick) {
                     onClick();
                 }
             }}
             alignItems="center"
             justifyContent="center"
-            cursor={isLoading || disabled ? 'not-allowed' : 'pointer'}
+            cursor={isLoading || isDisabled() ? 'not-allowed' : 'pointer'}
             style={!isEmpty(customStyle) ? customStyle : {}}
         >
             {isLoading && (
@@ -51,7 +56,9 @@ export const ActionButton: FunctionComponent<
                     <Spinner size="sm" />
                 </Flex>
             )}
-            <Box visibility={isLoading ? 'hidden' : 'visible'}>{children}</Box>
+            <Box userSelect="none" visibility={isLoading ? 'hidden' : 'visible'}>
+                {isGamePaused ? 'Game paused' : children}
+            </Box>
         </Flex>
     );
 };

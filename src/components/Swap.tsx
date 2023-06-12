@@ -4,7 +4,7 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { CHAIN_ID, EGLD_DENOMINATION, ENERGY_SWAP_RATE, ENERGY_TOKEN_ID } from '../blockchain/config';
 import { round } from '../services/helpers';
-import { ArrowDownIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { ArrowDownIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getMvxLogo } from '../services/assets';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import {
@@ -265,6 +265,11 @@ function Swap() {
                             <Text>Swap</Text>
                         </ActionButton>
                     </Box>
+
+                    <Flex mt={4} alignItems="center" justifyContent="center">
+                        <InfoIcon fontSize="15px" mr={1.5} color="whiteAlpha.700" />
+                        <Text fontSize="14px">Min. ENERGY swap amount is 0.001</Text>
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>

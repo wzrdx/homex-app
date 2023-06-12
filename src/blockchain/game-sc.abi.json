@@ -198,6 +198,30 @@
             "outputs": []
         },
         {
+            "name": "setGamePaused",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "value",
+                    "type": "bool"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setSwappingPaused",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "value",
+                    "type": "bool"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -565,6 +589,26 @@
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "isGamePaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "isSwappingPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
                 }
             ]
         }

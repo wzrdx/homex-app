@@ -1,6 +1,8 @@
-import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
+import { CheckCircleIcon, InfoOutlineIcon, TimeIcon, WarningIcon } from '@chakra-ui/icons';
 import { FunctionComponent, PropsWithChildren } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
+
+const ICON_SIZE = '19px';
 
 export const CustomToast: FunctionComponent<
     PropsWithChildren<{
@@ -9,23 +11,36 @@ export const CustomToast: FunctionComponent<
         title: string;
     }>
 > = ({ children, type, color, title }) => {
+    const getIcon = () => {
+        switch (type) {
+            case 'success':
+                return <CheckCircleIcon fontSize={ICON_SIZE} color="green.500" />;
+
+            case 'error':
+                return <WarningIcon fontSize={ICON_SIZE} color="redClrs" />;
+
+            case 'time':
+                return <TimeIcon fontSize={ICON_SIZE} color="whiteAlpha.800" />;
+
+            default:
+                return <InfoOutlineIcon fontSize={ICON_SIZE} color="green.500" />;
+        }
+    };
+
     return (
         <Flex
             flexDir="column"
             backgroundColor="#222222"
             borderInlineStartWidth="4px"
             borderInlineStartColor={color}
-            padding="12px 32px 12px 12px"
+            px={4}
+            py={3}
             borderRadius={3}
         >
             <Flex alignItems="center">
-                {type === 'success' ? (
-                    <CheckCircleIcon boxSize={5} color="green.500" />
-                ) : (
-                    <WarningIcon boxSize={5} color="redClrs" />
-                )}
+                {getIcon()}
 
-                <Text ml={2} fontSize="lg" fontWeight={600}>
+                <Text ml={2} fontSize="17px" fontWeight={600}>
                     {title}
                 </Text>
             </Flex>

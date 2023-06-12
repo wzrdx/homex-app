@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
 import { AuthenticationProvider } from './services/authentication';
@@ -25,10 +25,14 @@ import { Quest } from './types';
 import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
 
+const REFRESH_TIME = 900000; // 15 minutes
+
 function App() {
     const toast = useToast();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { pendingTxs, setPendingTxs, getGameState } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
@@ -40,7 +44,21 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        getGameState();
+
+        const timer = setInterval(async () => {
+            const isGamePaused = await getGameState();
+
+            if (isGamePaused) {
+                navigate('/unlock');
+            }
+        }, REFRESH_TIME);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
 
     useEffect(() => {
         removeTxs(map(failedTransactionsArray, (tx) => head(tx)));

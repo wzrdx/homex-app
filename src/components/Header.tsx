@@ -26,15 +26,17 @@ import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import { getSmallLogo } from '../services/assets';
 import Swap from './Swap';
+import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
 
 const ROUTE_WIDTH = 120;
 
-function Header() {
+function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
     const { isOpen: isSwapOpen, onOpen: onSwapOpen, onClose: onSwapClose } = useDisclosure();
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
+    const { isSwappingPaused } = useTransactionsContext() as TransactionsContextType;
 
     const location = useLocation();
 
@@ -218,8 +220,18 @@ function Header() {
                             transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
                             _hover={{ backgroundColor: '#0c3247' }}
                             onClick={() => {
-                                playSound('select_quest');
-                                onSwapOpen();
+                                if (isSwappingPaused) {
+                                    displayToast(
+                                        'time',
+                                        'Swapping disabled',
+                                        'Swapping is temporarily disabled',
+                                        'resources.energy'
+                                    );
+                                    return;
+                                } else {
+                                    playSound('select_quest');
+                                    onSwapOpen();
+                                }
                             }}
                         >
                             <Box transform="rotate(90deg)" mr={-0.5}>
