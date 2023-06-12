@@ -45,7 +45,7 @@ function Raffle() {
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6000000)
+                .withGasLimit(8000000)
                 .buildTransaction();
 
             await refreshAccount();
