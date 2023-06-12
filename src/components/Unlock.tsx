@@ -77,23 +77,21 @@ const Unlock = () => {
             }
 
             // TODO: Remove
-            if (process.env.NODE_ENV !== 'development') {
-                const stakingInfo: StakingInfo | undefined = await getStakingInfo();
+            // const stakingInfo: StakingInfo | undefined = await getStakingInfo();
 
-                if (stakingInfo?.isStaked) {
-                    console.warn('User is staked');
-                } else {
-                    const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-                    const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+            // if (stakingInfo?.isStaked) {
+            //     console.warn('User is staked');
+            // } else {
+            //     const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
+            //     const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
 
-                    console.warn('Holder', travelerTokens + elderTokens);
+            //     console.warn('Holder', travelerTokens + elderTokens);
 
-                    if (travelerTokens + elderTokens === 0) {
-                        setError(AuthenticationError.NotHolder);
-                        return;
-                    }
-                }
-            }
+            //     if (travelerTokens + elderTokens === 0) {
+            //         setError(AuthenticationError.NotHolder);
+            //         return;
+            //     }
+            // }
 
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);

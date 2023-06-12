@@ -18,7 +18,7 @@ function Prizes() {
     const [tx, setTx] = useState<{
         winners: Array<{
             username: string;
-            prize: string;
+            prize: JSX.Element;
         }>;
         timestamp: Date;
         hash: string;
@@ -42,8 +42,7 @@ function Prizes() {
             setTimestamp(await getRaffleTimestamp());
 
             const hashes = await getTxHashes();
-
-            setHashes(hashes);
+            setHashes(_.reverse(hashes));
 
             if (hashes.length) {
                 await getTx(_.head(hashes) as string);
@@ -67,11 +66,29 @@ function Prizes() {
         });
 
         if (result.data) {
+            const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
+
             const winners = await Promise.all(
-                _.map(result.data.operations, async (operation) => ({
-                    username: await getUsername(operation.receiver),
-                    prize: operation.value,
-                }))
+                _.map(operations, async (operation) => {
+                    const username = await getUsername(operation.receiver);
+                    let prize: JSX.Element = <Flex />;
+
+                    if (operation.type === 'egld') {
+                        prize = (
+                            <Text>
+                                <Text as="span" color="brightBlue">
+                                    {Number.parseInt(operation.value) / EGLD_DENOMINATION}
+                                </Text>{' '}
+                                $EGLD
+                            </Text>
+                        );
+                    }
+
+                    return {
+                        username,
+                        prize,
+                    };
+                })
             );
 
             const timestamp = new Date(result.data.timestamp * 1000);
@@ -81,6 +98,14 @@ function Prizes() {
                 timestamp,
                 hash,
             });
+
+            console.log(
+                {
+                    winners,
+                    timestamp,
+                },
+                result.data
+            );
         }
     };
 
@@ -149,13 +174,7 @@ function Prizes() {
                                             _notLast={{ mb: 1 }}
                                         >
                                             <Text mr="2">{winner.username}</Text>
-
-                                            <Text>
-                                                <Text as="span" color="brightBlue">
-                                                    {Number.parseInt(winner.prize) / EGLD_DENOMINATION}
-                                                </Text>{' '}
-                                                $EGLD
-                                            </Text>
+                                            {winner.prize}
                                         </Flex>
                                     ))}
                                 </Flex>
