@@ -16,7 +16,6 @@ import {
 import _, { find, findIndex, map } from 'lodash';
 import {
     QUESTS,
-    QUEST_DURATION_INTERVAL,
     QuestsContextType,
     getQuest,
     getQuestImage,
@@ -222,14 +221,17 @@ function Quests() {
             {/* Quest list */}
             <Flex flex={5} justifyContent="center" overflowY="scroll">
                 <Flex flexDir="column" width="100%" pl="2px">
-                    <Text layerStyle="header1">Basic</Text>
-                    {getQuestCards('basic')}
+                    <Text layerStyle="header1">Herbalism</Text>
+                    {getQuestCards('herbalism')}
 
-                    <Text layerStyle="header1">Exchange</Text>
-                    {getQuestCards('exchange')}
+                    <Text layerStyle="header1">Jewelcrafting</Text>
+                    {getQuestCards('jewelcrafting')}
 
-                    <Text layerStyle="header1">Essence</Text>
-                    {getQuestCards('essence')}
+                    <Text layerStyle="header1">Enchanting</Text>
+                    {getQuestCards('enchanting')}
+
+                    <Text layerStyle="header1">Divination</Text>
+                    {getQuestCards('divination')}
 
                     <Text layerStyle="header1">Mission</Text>
                     {getQuestCards('final')}
@@ -326,11 +328,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={2}>
-                                    {`${currentQuest.duration} ${QUEST_DURATION_INTERVAL}${
-                                        currentQuest.duration > 1 ? 's' : ''
-                                    }`}
-                                </Text>
+                                <Text ml={2}>{currentQuest.duration}</Text>
                             </Flex>
                         )}
 

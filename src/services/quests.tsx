@@ -30,17 +30,20 @@ import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { BigNumber } from 'bignumber.js';
 
+let ID = 0;
+
 const BASE_DURATION = 1;
 const BASE_COST = 10;
-export const QUEST_DURATION_INTERVAL = 'minute';
 
 const QUEST_IMAGES = [Quest_1, Quest_2, Quest_3, Quest_4, Quest_5, Quest_6, Quest_7, Quest_8, Quest_9];
 
+const getId = () => ++ID;
+
 export const QUESTS: any[] = [
-    // Basic
+    // Herbalism
     {
-        id: 1,
-        type: 'basic',
+        id: getId(),
+        type: 'herbalism',
         name: 'City Scouting',
         description: (
             <Text layerStyle="questDescription">
@@ -67,36 +70,8 @@ export const QUESTS: any[] = [
         ],
     },
     {
-        id: 2,
-        type: 'basic',
-        name: 'Craft Compass',
-        description: (
-            <Text layerStyle="questDescription">
-                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a
-                compass. This task will require significant energy and time, but the reward awaits those who succeed.
-            </Text>
-        ),
-        requirements: {
-            energy: BASE_COST,
-        },
-        duration: BASE_DURATION,
-        rewards: [
-            {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: BASE_COST,
-            },
-        ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'normal',
-            },
-        ],
-    },
-    {
-        id: 3,
-        type: 'basic',
+        id: getId(),
+        type: 'herbalism',
         name: 'Menhir Summit',
         description: (
             <Text layerStyle="questDescription">
@@ -124,8 +99,67 @@ export const QUESTS: any[] = [
         ],
     },
     {
-        id: 4,
-        type: 'basic',
+        id: getId(),
+        type: 'herbalism',
+        name: 'Shadowy Figure',
+        description: (
+            <Text layerStyle="questDescription">
+                As you explore the city, you come across a mysterious figure who offers you a strange substance and a
+                diagram in exchange for some valuables. Upon consuming the substance, you feel a surge of energy.
+                Although it may take some time, the transaction could potentially be valuable.
+            </Text>
+        ),
+        requirements: {
+            energy: 3 * BASE_COST,
+        },
+        duration: 3 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 6 * BASE_COST,
+            },
+        ],
+        layers: [
+            {
+                source: Q6,
+                mode: 'normal',
+            },
+        ],
+    },
+
+    // Jewelcrafting
+    {
+        id: getId(),
+        type: 'jewelcrafting',
+        name: 'Craft Compass',
+        description: (
+            <Text layerStyle="questDescription">
+                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a
+                compass. This task will require significant energy and time, but the reward awaits those who succeed.
+            </Text>
+        ),
+        requirements: {
+            energy: BASE_COST,
+        },
+        duration: BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: BASE_COST,
+            },
+        ],
+        layers: [
+            {
+                source: LightRays,
+                mode: 'normal',
+            },
+        ],
+    },
+    {
+        id: getId(),
+        type: 'jewelcrafting',
         name: 'Tales Unveiled',
         description: (
             <Text layerStyle="questDescription">
@@ -152,11 +186,9 @@ export const QUESTS: any[] = [
             },
         ],
     },
-
-    // Exchange
     {
-        id: 5,
-        type: 'exchange',
+        id: getId(),
+        type: 'jewelcrafting',
         name: 'Encounter Merchant',
         description: (
             <Text layerStyle="questDescription">
@@ -166,14 +198,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            herbs: 2 * BASE_COST,
+            energy: 3 * BASE_COST,
         },
-        duration: BASE_DURATION,
+        duration: 3 * BASE_DURATION,
         rewards: [
             {
-                resource: 'energy',
-                name: 'Focus',
-                value: BASE_COST / 2,
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 3 * BASE_COST,
             },
         ],
         layers: [
@@ -183,40 +215,41 @@ export const QUESTS: any[] = [
             },
         ],
     },
+
+    // Enchanting
     {
-        id: 6,
-        type: 'exchange',
-        name: 'Shadowy Figure',
-        description: (
-            <Text layerStyle="questDescription">
-                As you explore the city, you come across a mysterious figure who offers you a strange substance and a
-                diagram in exchange for some gems. Upon consuming the substance, you feel a surge of energy. Although it
-                may take some time, the transaction could potentially be valuable.
-            </Text>
-        ),
+        id: getId(),
+        type: 'enchanting',
+        name: 'Disenchant',
+        description: <Text layerStyle="questDescription">Disenchant</Text>,
         requirements: {
-            gems: BASE_COST,
+            energy: 4 * BASE_COST,
         },
-        duration: BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
-                resource: 'energy',
-                name: 'Focus',
-                value: BASE_COST / 2,
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 4 * BASE_COST,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 2 * BASE_COST,
             },
         ],
         layers: [
             {
-                source: Q6,
+                source: DesertSmoke,
                 mode: 'normal',
             },
         ],
     },
 
-    // Essence
+    // Divination
     {
-        id: 7,
-        type: 'essence',
+        id: getId(),
+        type: 'divination',
         name: 'Underground Blueprint',
         description: (
             <Text layerStyle="questDescription">
@@ -247,8 +280,8 @@ export const QUESTS: any[] = [
         ],
     },
     {
-        id: 8,
-        type: 'essence',
+        id: getId(),
+        type: 'divination',
         name: 'Mystic Labyrinth',
         description: (
             <Text layerStyle="questDescription">
@@ -279,7 +312,7 @@ export const QUESTS: any[] = [
 
     // Final
     {
-        id: 9,
+        id: getId(),
         type: 'final',
         isFinal: true,
         name: 'Adraka Narcotic',

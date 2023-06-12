@@ -171,11 +171,11 @@ function Header({ displayToast }) {
                 >
                     <Flex alignItems="center" pointerEvents="all">
                         {isMusicOn ? (
-                            <Box cursor="pointer" color="whitesmoke" px={2.5} ml={-2.5}>
+                            <Box cursor="pointer" color="whitesmoke" px={2.5} ml={-2.5} mb="1px">
                                 <TbMusic fontSize="21px" onClick={toggleMusic} />
                             </Box>
                         ) : (
-                            <Box cursor="pointer" color="header.lightgray" px={2.5} ml={-2.5}>
+                            <Box cursor="pointer" color="header.lightgray" px={2.5} ml={-2.5} mb="1px">
                                 <TbMusicOff fontSize="21px" onClick={toggleMusic} />
                             </Box>
                         )}
