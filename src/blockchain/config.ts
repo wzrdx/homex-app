@@ -9,7 +9,8 @@ export const TOKEN_DENOMINATION = 1000000;
 // TODO: Mainnet values
 export const CHAIN_ID = 'D';
 export const API_URL = 'https://devnet-api.multiversx.com';
-// export const API_URL = 'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457';
+// export const DEVNET_API_URL = 'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457';
+// export const API_URL = 'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b'
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
 
