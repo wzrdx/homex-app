@@ -5,12 +5,7 @@ import { getTicketSFT } from '../../services/assets';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
-import {
-    TransactionType,
-    TransactionsContextType,
-    TxResolution,
-    useTransactionsContext,
-} from '../../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
@@ -134,6 +129,7 @@ function Raffle() {
 
                 <Box mt={1.5}>
                     <ActionButton
+                        disabled={!resources.tickets}
                         isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
                         colorScheme="default"
                         onClick={joinRaffle}

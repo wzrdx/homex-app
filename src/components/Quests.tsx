@@ -462,7 +462,7 @@ function Quests() {
                             </video>
                         </Box>
 
-                        <Flex position="absolute" bottom={0} right={0} left={0} justifyContent="center" px="172px" pb={4}>
+                        <Flex position="absolute" bottom={0} right={0} left={0} justifyContent="center" px="172px" pb={4.5}>
                             <Text textAlign="center">
                                 You fought bravely against the desert mirages and emerged victorious, retrieving the Adraka
                                 Narcotic and bringing it back to the city center. Placing the Narcotic within the Monolith
