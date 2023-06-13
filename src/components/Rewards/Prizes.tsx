@@ -89,7 +89,7 @@ function Prizes() {
                     if (operation.type === 'nft' && operation.ticker === ELDERS_COLLECTION_ID) {
                         prize = (
                             <Flex alignItems="center">
-                                <Image src={getEldersLogo()} height="22px" mr={2} alt="Elder" />
+                                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
                                 <Text fontWeight={500} color="redClrs">
                                     {operation.name}
                                 </Text>

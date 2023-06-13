@@ -7,12 +7,7 @@ import { round } from '../services/helpers';
 import { ArrowDownIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getMvxLogo } from '../services/assets';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
-import {
-    TransactionType,
-    TransactionsContextType,
-    TxResolution,
-    useTransactionsContext,
-} from '../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
@@ -29,9 +24,6 @@ function Swap() {
 
     const { address } = useGetAccountInfo();
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
-
-    // Init
-    useEffect(() => {}, []);
 
     const onEnergyInputChange = (value) => {
         if (value === '') {
@@ -175,12 +167,7 @@ function Swap() {
                     </Box>
 
                     <Flex my={4} width="100%" justifyContent="center" alignItems="center">
-                        <IconButton
-                            borderRadius="50%"
-                            aria-label="swap"
-                            size="sm"
-                            icon={<ArrowDownIcon fontSize="18px" />}
-                        />
+                        <IconButton borderRadius="50%" aria-label="swap" size="sm" icon={<ArrowDownIcon fontSize="18px" />} />
                     </Flex>
 
                     <Flex mb={1.5} alignItems="center" justifyContent="space-between">

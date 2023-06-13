@@ -9,7 +9,7 @@ import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
 import { Participant } from '../../blockchain/types';
-import { getFullTicket } from '../../services/assets';
+import { getEldersLogo, getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
@@ -96,25 +96,47 @@ function Leaderboard() {
         setParticipants(parsed);
     };
 
+    const getPot = () => (
+        <Flex ml={1.5} alignItems="center">
+            <Flex alignItems="center">
+                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
+                <Text fontWeight={500} color="redClrs">
+                    2 Elders
+                </Text>
+            </Flex>
+
+            <Text mx={1}>+</Text>
+
+            <Text color="brightBlue" fontWeight={500}>
+                25 $EGLD
+            </Text>
+
+            <Text mx={1}>+</Text>
+
+            <Flex alignItems="center">
+                <Text mr={1.5} fontWeight={500} color="brightWheat">
+                    20
+                </Text>
+                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+            </Flex>
+        </Flex>
+    );
+
     return (
         <Flex height={`calc(100% - ${height}px)`} flexDir="column" alignItems="center">
             <Flex mb={6} justifyContent="center" alignItems="center">
                 <Flex mx={2} justifyContent="center" alignItems="center">
-                    <Text ml={1.5} mr={1}>
-                        Prize pot:{' '}
-                        <Text as="span" color="ticketGold" fontWeight={500} ml={0.5}>
-                            {pot} $EGLD
-                        </Text>
-                    </Text>
+                    <Text>Pot:</Text>
+                    {getPot()}
                 </Flex>
 
-                <Box mx={2} opacity="0.9">
+                <Box mx={1.5} opacity="0.9">
                     <Separator type="vertical" width="1px" height="34px" />
                 </Box>
 
                 <Flex mx={2} justifyContent="center" alignItems="center">
-                    <Text ml={1.5} mr={1}>
-                        Total entries:{' '}
+                    <Text mr={1}>
+                        Total:{' '}
                         <Text as="span" fontWeight={500} mx={0.5}>
                             {totalTickets}
                         </Text>
@@ -122,12 +144,12 @@ function Leaderboard() {
                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                 </Flex>
 
-                <Box mx={2} opacity="0.9">
+                <Box mx={1.5} opacity="0.9">
                     <Separator type="vertical" width="1px" height="34px" />
                 </Box>
 
                 <Flex mx={2} justifyContent="center" alignItems="center">
-                    <Text ml={1.5} mr={1}>
+                    <Text mr={1}>
                         Your submission:{' '}
                         <Text as="span" fontWeight={500} mx={0.5}>
                             {myTickets}
@@ -138,14 +160,12 @@ function Leaderboard() {
 
                 {!!timestamp && (
                     <>
-                        <Box mx={2} opacity="0.9">
+                        <Box mx={1.5} opacity="0.9">
                             <Separator type="vertical" width="1px" height="34px" />
                         </Box>
 
                         <Flex mx={2} justifyContent="center" alignItems="center">
-                            <Text ml={1.5} mr={2}>
-                                Ends in:
-                            </Text>
+                            <Text mr={2}>Ends in:</Text>
 
                             <Flex minWidth="158px">
                                 <Timer timestamp={timestamp as Date} isActive isDescending displayDays />
