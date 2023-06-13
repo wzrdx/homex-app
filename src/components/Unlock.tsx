@@ -76,22 +76,21 @@ const Unlock = () => {
                 return;
             }
 
-            // TODO: Remove
-            // const stakingInfo: StakingInfo | undefined = await getStakingInfo();
+            const stakingInfo: StakingInfo | undefined = await getStakingInfo();
 
-            // if (stakingInfo?.isStaked) {
-            //     console.warn('User is staked');
-            // } else {
-            //     const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-            //     const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+            if (stakingInfo?.isStaked) {
+                console.warn('User is staked');
+            } else {
+                const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
+                const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
 
-            //     console.warn('Holder', travelerTokens + elderTokens);
+                console.warn('Holder', travelerTokens + elderTokens);
 
-            //     if (travelerTokens + elderTokens === 0) {
-            //         setError(AuthenticationError.NotHolder);
-            //         return;
-            //     }
-            // }
+                if (travelerTokens + elderTokens === 0) {
+                    setError(AuthenticationError.NotHolder);
+                    return;
+                }
+            }
 
             setAuthentication(true);
             setTimeout(() => navigate('/'), 0);
@@ -227,8 +226,7 @@ const Unlock = () => {
                         </>
                     ) : (
                         <Box display="flex" flexDir="column" alignItems="center">
-                            {error === AuthenticationError.ContestNotStarted &&
-                                getText('Waiting for the game to start', true)}
+                            {error === AuthenticationError.ContestNotStarted && getText('Waiting for the game to start', true)}
 
                             {error === AuthenticationError.NotHolder &&
                                 getText('Playing the game requires an NFT from the Home X collections')}

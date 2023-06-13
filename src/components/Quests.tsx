@@ -14,25 +14,13 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import _, { find, findIndex, map } from 'lodash';
-import {
-    QUESTS,
-    QuestsContextType,
-    getQuest,
-    getQuestImage,
-    meetsRequirements,
-    useQuestsContext,
-} from '../services/quests';
+import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
 import Vision from '../assets/videos/vision.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
-import {
-    RESOURCE_ELEMENTS,
-    ResourcesContextType,
-    getResourceElements,
-    useResourcesContext,
-} from '../services/resources';
+import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import Requirement from '../shared/Requirement';
 import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
@@ -43,12 +31,7 @@ import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { isAfter, isBefore } from 'date-fns';
-import {
-    TransactionType,
-    TransactionsContextType,
-    TxResolution,
-    useTransactionsContext,
-} from '../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getSpinningTicket } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
@@ -111,7 +94,7 @@ function Quests() {
                 )
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(5000000 + requiredResources.length * 1000000)
+                .withGasLimit(6000000 + requiredResources.length * 1000000)
                 .buildTransaction();
 
             await refreshAccount();
@@ -160,7 +143,7 @@ function Quests() {
                 .completeQuest([currentQuest.id])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(7000000)
+                .withGasLimit(9000000)
                 .buildTransaction();
 
             await refreshAccount();
@@ -297,8 +280,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <ActionButton
                                 isLoading={
-                                    isStartButtonLoading ||
-                                    isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
+                                    isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
                                 disabled={!meetsRequirements(resources, currentQuest.id)}
                                 onClick={startQuest}
@@ -318,8 +300,7 @@ function Quests() {
                         {isQuestComplete() && (
                             <ActionButton
                                 isLoading={
-                                    isFinishButtonLoading ||
-                                    isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
+                                    isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
                                 colorScheme="green"
                                 onClick={completeQuest}
@@ -340,9 +321,7 @@ function Quests() {
                         {isQuestOngoing() && (
                             <Timer
                                 isActive={true}
-                                timestamp={
-                                    find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date
-                                }
+                                timestamp={find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date}
                                 callback={() => {
                                     getOngoingQuests();
                                 }}
@@ -364,13 +343,7 @@ function Quests() {
             <Flex flex={5} justifyContent="center">
                 <Flex flexDir="column">
                     <Flex justifyContent="space-between" alignItems="flex-end">
-                        <Text
-                            fontSize="20px"
-                            lineHeight="22px"
-                            fontWeight={600}
-                            letterSpacing="0.5px"
-                            color="header.gold"
-                        >
+                        <Text fontSize="20px" lineHeight="22px" fontWeight={600} letterSpacing="0.5px" color="header.gold">
                             {currentQuest.name}
                         </Text>
 
@@ -389,14 +362,7 @@ function Quests() {
 
                     <Box>{currentQuest.description}</Box>
 
-                    <Text
-                        fontSize="20px"
-                        lineHeight="22px"
-                        fontWeight={600}
-                        letterSpacing="0.5px"
-                        color="header.gold"
-                        mt={10}
-                    >
+                    <Text fontSize="20px" lineHeight="22px" fontWeight={600} letterSpacing="0.5px" color="header.gold" mt={10}>
                         Quest rewards
                     </Text>
 
@@ -458,12 +424,7 @@ function Quests() {
                     <ModalBody minHeight="500px">
                         <Flex flexDir="column" justifyContent="center" alignItems="center" py={2}>
                             <Box width="300px" mt={-16} mb={-12}>
-                                <video
-                                    autoPlay={true}
-                                    muted={true}
-                                    loop={false}
-                                    onClick={(e) => (e.target as any).play()}
-                                >
+                                <video autoPlay={true} muted={true} loop={false} onClick={(e) => (e.target as any).play()}>
                                     <source src={getSpinningTicket()} type="video/webm" />
                                 </video>
                             </Box>
@@ -500,6 +461,15 @@ function Quests() {
                                 <source src={Vision} type="video/webm" />
                             </video>
                         </Box>
+
+                        <Flex position="absolute" bottom={0} right={0} left={0} justifyContent="center" px="172px" pb={4}>
+                            <Text textAlign="center">
+                                You fought bravely against the desert mirages and emerged victorious, retrieving the Adraka
+                                Narcotic and bringing it back to the city center. Placing the Narcotic within the Monolith
+                                walls, you felt the power of the artifact radiating through the city, bringing new life and
+                                prosperity to the once barren land.
+                            </Text>
+                        </Flex>
 
                         <Box position="absolute" bottom="16px" right="24px">
                             <Button onClick={onVisionClose} colorScheme="orange">

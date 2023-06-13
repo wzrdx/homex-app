@@ -148,6 +148,22 @@
             "outputs": []
         },
         {
+            "name": "airdropEnergy",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "alloc_per_addr",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "clearOngoingQuests",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -464,17 +480,6 @@
             "outputs": [
                 {
                     "type": "variadic<OngoingQuest>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "getActivePlayers",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
                     "multi_result": true
                 }
             ]

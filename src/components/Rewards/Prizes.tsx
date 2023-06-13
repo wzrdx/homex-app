@@ -122,14 +122,6 @@ function Prizes() {
                 timestamp,
                 hash,
             });
-
-            console.log(
-                {
-                    winners,
-                    timestamp,
-                },
-                result.data
-            );
         }
     };
 
