@@ -30,10 +30,9 @@ const REFRESH_TIME = 900000; // 15 minutes
 function App() {
     const toast = useToast();
     const navigate = useNavigate();
-    const location = useLocation();
 
     const { pendingTxs, setPendingTxs, getGameState } = useTransactionsContext() as TransactionsContextType;
-    const { playSound } = useSoundsContext() as SoundsContextType;
+    const { playSound, setIsMusicOn } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
@@ -46,6 +45,7 @@ function App() {
 
     useEffect(() => {
         getGameState();
+        setIsMusicOn(true);
 
         const timer = setInterval(async () => {
             const isGamePaused = await getGameState();
@@ -95,19 +95,11 @@ function App() {
                         break;
 
                     case TransactionType.Unstake:
-                        displayResourcesToast(
-                            'Energy gained!',
-                            [{ resource: 'energy', value: tx.data.energyGain }],
-                            'unstake'
-                        );
+                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: tx.data.energyGain }], 'unstake');
                         break;
 
                     case TransactionType.Claim:
-                        displayResourcesToast(
-                            'Energy gained!',
-                            [{ resource: 'energy', value: tx.data.energyGain }],
-                            'unstake'
-                        );
+                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: tx.data.energyGain }], 'unstake');
                         break;
 
                     case TransactionType.JoinRaffle:
@@ -273,11 +265,7 @@ function App() {
                                 )}
 
                                 {route.children?.map((child, index) => (
-                                    <Route
-                                        path={child.path}
-                                        key={'child-route-key-' + index}
-                                        element={<child.component />}
-                                    />
+                                    <Route path={child.path} key={'child-route-key-' + index} element={<child.component />} />
                                 ))}
                             </Route>
                         ))}

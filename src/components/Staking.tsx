@@ -116,7 +116,7 @@ function Staking() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 1000000 * _.size(transfers))
+                .withGasLimit(8000000 + 1100000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
