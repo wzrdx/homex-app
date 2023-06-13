@@ -8,7 +8,7 @@ import Quest_6 from '../assets/quests/Q6.jpg';
 import Quest_7 from '../assets/quests/Q7.jpg';
 import Quest_8 from '../assets/quests/Q8.jpg';
 import Quest_9 from '../assets/quests/Q9.jpg';
-import Quest_10 from '../assets/quests/Q9.jpg';
+import Quest_10 from '../assets/quests/Q10.jpg';
 
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
@@ -226,8 +226,14 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'enchanting',
-        name: 'Disenchant',
-        description: <Text layerStyle="questDescription">Disenchant</Text>,
+        name: 'Beneath the Depths',
+        description: (
+            <Text layerStyle="questDescription">
+                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and
+                unravel cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient
+                mysteries concealed in the depths, rewarding those who dare to explore.
+            </Text>
+        ),
         requirements: {
             energy: 4 * BASE_COST,
         },
@@ -246,7 +252,7 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: DesertSmoke,
+                source: LightRays,
                 mode: 'normal',
             },
         ],
@@ -276,7 +282,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 1,
+                value: BASE_COST,
             },
         ],
         layers: [
@@ -307,7 +313,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 2,
+                value: 2 * BASE_COST,
             },
         ],
         layers: [
@@ -333,12 +339,12 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 4 * BASE_COST,
-            herbs: 8 * BASE_COST,
-            gems: 4 * BASE_COST,
-            essence: (2 * BASE_COST) / 10,
+            energy: 10 * BASE_COST,
+            herbs: 20 * BASE_COST,
+            gems: 10 * BASE_COST,
+            essence: 6 * BASE_COST,
         },
-        duration: 4 * BASE_DURATION,
+        duration: 8 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',

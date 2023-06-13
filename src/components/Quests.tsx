@@ -369,13 +369,13 @@ function Quests() {
                             {currentQuest.name}
                         </Text>
 
-                        <Box>
+                        <Flex>
                             {currentQuest.rewards.map((reward: { resource: string }, index: number) => (
-                                <Box key={index}>
+                                <Box ml={3} key={index}>
                                     <Image height="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
                                 </Box>
                             ))}
-                        </Box>
+                        </Flex>
                     </Flex>
 
                     <Box my={3.5}>
@@ -395,10 +395,14 @@ function Quests() {
                         Quest rewards
                     </Text>
 
-                    <Flex flexDir="column" mt={3.5}>
+                    <Flex justifyContent="space-between" mt={3.5}>
                         {map(currentQuest.rewards, (reward, index) => {
                             const { name, color, icon, image } = getResourceElements(reward.resource);
-                            return <Reward key={index} image={image} name={name} value={reward.value} icon={icon} />;
+                            return (
+                                <Box>
+                                    <Reward key={index} image={image} name={name} value={reward.value} icon={icon} />
+                                </Box>
+                            );
                         })}
                     </Flex>
 

@@ -4,7 +4,7 @@ import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { differenceInSeconds } from 'date-fns';
-import { first } from 'lodash';
+import { first, map, size } from 'lodash';
 import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 
@@ -51,17 +51,33 @@ export const QuestCard: FunctionComponent<
 
     const isQuestOngoing = (): boolean => !!timestamp && differenceInSeconds(timestamp, new Date()) > 0;
 
+    const getRewardsBlock = (): JSX.Element => {
+        if (isQuestOngoing()) {
+            return <TimeIcon boxSize="28px" color="almostWhite" />;
+        }
+
+        if (size(quest.rewards) == 1) {
+            return (
+                <Image
+                    width="28px"
+                    src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon}
+                />
+            );
+        } else {
+            return (
+                <Flex flexDir="column" justifyContent="space-between" height="100%" pr="4px">
+                    {map(quest.rewards, (reward, index) => (
+                        <Image key={index} width="24px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                    ))}
+                </Flex>
+            );
+        }
+    };
+
     return (
         <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
-            <Box mr={8}>
-                {isQuestOngoing() ? (
-                    <TimeIcon boxSize="28px" color="almostWhite" />
-                ) : (
-                    <Image
-                        width="28px"
-                        src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon}
-                    />
-                )}
+            <Box mr={8} height="100%">
+                {getRewardsBlock()}
             </Box>
 
             <Flex

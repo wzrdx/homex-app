@@ -23,10 +23,10 @@ export const HERBS_TOKEN_ID = 'HERBS-a2ffd9';
 export const GEMS_TOKEN_ID = 'GEMS-274ae8';
 export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
-export const TRAVELER_YIELD_PER_HOUR: number = 0.3;
-export const ELDER_YIELD_PER_HOUR: number = 0.3;
+export const TRAVELER_YIELD_PER_HOUR: number = 3;
+export const ELDER_YIELD_PER_HOUR: number = 3;
 export const REWARDS_QUERYING_INTERVAL = 60000;
-export const ENERGY_SWAP_RATE = 0.001;
+export const ENERGY_SWAP_RATE = 0.000024;
 
 // TODO: Mainnet values
 export const START_OF_CONTEST = new Date('2023-06-01T06:00:00.000Z');
