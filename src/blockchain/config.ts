@@ -24,4 +24,4 @@ export const ELDER_YIELD_PER_HOUR: number = 3;
 export const REWARDS_QUERYING_INTERVAL = 30000;
 export const ENERGY_SWAP_RATE = 0.000024;
 
-export const START_OF_CONTEST = new Date('2023-06-13T16:00:00.000Z');
+export const START_OF_CONTEST = new Date('2023-06-13T00:00:00.000Z');
