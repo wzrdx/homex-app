@@ -462,20 +462,11 @@ function Quests() {
                             </video>
                         </Box>
 
-                        <Flex position="absolute" bottom={0} right={0} left={0} justifyContent="center" px="172px" pb={4.5}>
-                            <Text textAlign="center">
-                                You fought bravely against the desert mirages and emerged victorious, retrieving the Adraka
-                                Narcotic and bringing it back to the city center. Placing the Narcotic within the Monolith
-                                walls, you felt the power of the artifact radiating through the city, bringing new life and
-                                prosperity to the once barren land.
-                            </Text>
-                        </Flex>
-
-                        <Box position="absolute" bottom="16px" right="24px">
+                        {/* <Box position="absolute" bottom="16px" right="24px">
                             <Button onClick={onVisionClose} colorScheme="orange">
                                 Close
                             </Button>
-                        </Box>
+                        </Box> */}
                     </ModalBody>
                 </ModalContent>
             </Modal>
