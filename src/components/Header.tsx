@@ -284,11 +284,7 @@ function Header({ displayToast }) {
                     margin="0 auto"
                 >
                     <Flex alignItems="center">
-                        <Resource
-                            imageSrc={RESOURCE_ELEMENTS['tickets'].icon}
-                            value={resources.tickets}
-                            height="46px"
-                        />
+                        <Resource imageSrc={RESOURCE_ELEMENTS['tickets'].icon} value={resources.tickets} height="46px" />
 
                         {process.env.NODE_ENV === 'development' && (
                             <Flex alignItems="center" zIndex={4}>
@@ -369,11 +365,6 @@ function Header({ displayToast }) {
                                 >
                                     <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
                                 </Box>
-
-                                {/* Size */}
-                                <Text layerStyle="responsive" ml={2}>
-                                    {size.width}px / {size.height}px
-                                </Text>
                             </Flex>
                         )}
                     </Flex>
