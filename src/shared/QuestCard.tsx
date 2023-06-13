@@ -76,9 +76,9 @@ export const QuestCard: FunctionComponent<
 
     return (
         <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
-            <Box mr={8} height="100%">
+            <Flex mr={8} height="100%" alignItems="center">
                 {getRewardsBlock()}
-            </Box>
+            </Flex>
 
             <Flex
                 onClick={() => callback(quest.id)}

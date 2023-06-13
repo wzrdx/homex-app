@@ -2,7 +2,7 @@ export const contractAddress = 'erd1qqqqqqqqqqqqqpgq9459wl67kadq47jq8xqwp56musky
 
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
-export const apiTimeout = 15000;
+export const apiTimeout = 30000;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 

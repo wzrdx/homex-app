@@ -304,7 +304,7 @@ function Quests() {
 
                         {/* Ongoing - A quest is ongoing but is not completed */}
                         {isQuestOngoing() && (
-                            <ActionButton>
+                            <ActionButton disabled>
                                 <Text>Ongoing</Text>
                             </ActionButton>
                         )}
@@ -328,7 +328,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={2}>{currentQuest.duration}</Text>
+                                <Text ml={2}>{currentQuest.duration} minute/s</Text>
                             </Flex>
                         )}
 
@@ -399,8 +399,8 @@ function Quests() {
                         {map(currentQuest.rewards, (reward, index) => {
                             const { name, color, icon, image } = getResourceElements(reward.resource);
                             return (
-                                <Box>
-                                    <Reward key={index} image={image} name={name} value={reward.value} icon={icon} />
+                                <Box key={index}>
+                                    <Reward image={image} name={name} value={reward.value} icon={icon} />
                                 </Box>
                             );
                         })}

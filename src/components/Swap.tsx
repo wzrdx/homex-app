@@ -256,7 +256,7 @@ function Swap() {
                             disabled={
                                 !energyValue ||
                                 Number.parseFloat(energyValue) > resources.energy ||
-                                Number.parseFloat(energyValue) < 0.001
+                                Number.parseFloat(energyValue) < 0.1
                             }
                             colorScheme="blue"
                             customStyle={{ width: '100%', borderRadius: '6px', padding: '10px' }}
@@ -268,7 +268,7 @@ function Swap() {
 
                     <Flex mt={4} alignItems="center" justifyContent="center">
                         <InfoIcon fontSize="15px" mr={1.5} color="whiteAlpha.700" />
-                        <Text fontSize="14px">Min. ENERGY swap amount is 0.001</Text>
+                        <Text fontSize="14px">Min. ENERGY swap amount is 0.1</Text>
                     </Flex>
                 </Flex>
             </Flex>
