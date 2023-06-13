@@ -5,12 +5,7 @@ import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
-import {
-    useTransactionsContext,
-    TransactionsContextType,
-    TransactionType,
-    TxResolution,
-} from '../services/transactions';
+import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
 import { getResourceElements } from '../services/resources';
 import Reward from '../shared/Reward';
 import { getEldersLogo, getRitualImage, getSmallLogo } from '../services/assets';
@@ -171,8 +166,7 @@ function Staking() {
                 .withSender(user)
                 .withChainID(CHAIN_ID)
                 .withGasLimit(
-                    1000000 +
-                        1000000 * (updatedStakingInfo.travelerNonces.length + updatedStakingInfo.elderNonces.length)
+                    3000000 + 1000000 * (updatedStakingInfo.travelerNonces.length + updatedStakingInfo.elderNonces.length)
                 )
                 .buildTransaction();
 
@@ -329,20 +323,13 @@ function Staking() {
                         <Spinner />
                     ) : (
                         <Flex ml={{ md: 5, lg: 0 }} flexDir="column" justifyContent="center" alignItems="center">
-                            <Reward image={image} name={name} value={stakingInfo.rewards} icon={icon} />
-
-                            {stakingInfo.isStaked && (
-                                <Flex alignItems="center" mt={4}>
-                                    <Image width="22px" mr={2} src={icon} alt="Energy" />
-
-                                    <Text fontSize="15px" color="energyBright">
-                                        {getEnergyPerHour()}
-                                    </Text>
-                                    <Text fontSize="15px">{`/hr (${getEnergyPerHour(
-                                        YieldType.Travelers
-                                    )} from Travelers, ${getEnergyPerHour(YieldType.Elders)} from Elders)`}</Text>
-                                </Flex>
-                            )}
+                            <Reward
+                                image={image}
+                                name={name}
+                                value={stakingInfo.rewards}
+                                icon={icon}
+                                perHour={stakingInfo.isStaked ? getEnergyPerHour() : 0}
+                            />
 
                             <Flex mt={4} flexDir="column" justifyContent="center" alignItems="center">
                                 <Flex justifyContent="center" alignItems="center">
@@ -364,9 +351,7 @@ function Staking() {
                                         <Box ml={4}>
                                             <ActionButton
                                                 disabled={!stakingInfo || isTxPending(TransactionType.Unstake)}
-                                                isLoading={
-                                                    isClaimingButtonLoading || isTxPending(TransactionType.Claim)
-                                                }
+                                                isLoading={isClaimingButtonLoading || isTxPending(TransactionType.Claim)}
                                                 colorScheme="red"
                                                 customStyle={{ width: '156px' }}
                                                 onClick={claim}
@@ -378,11 +363,7 @@ function Staking() {
                                 </Flex>
 
                                 <Box mt={3}>
-                                    <Timer
-                                        displayDays
-                                        isActive={stakingInfo.isStaked}
-                                        timestamp={stakingInfo.timestamp}
-                                    />
+                                    <Timer displayDays isActive={stakingInfo.isStaked} timestamp={stakingInfo.timestamp} />
                                 </Box>
                             </Flex>
                         </Flex>

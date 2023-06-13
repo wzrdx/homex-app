@@ -55,6 +55,7 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
+import { hDisplay, mDisplay } from '../services/helpers';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
@@ -216,6 +217,10 @@ function Quests() {
         </Flex>
     );
 
+    const getQuestDuration = (duration: number) => {
+        return `${hDisplay(Math.floor(duration / 60))}:${mDisplay(duration % 60)}:00`;
+    };
+
     return (
         <Flex height="100%">
             {/* Quest list */}
@@ -328,7 +333,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={2}>{currentQuest.duration} minute/s</Text>
+                                <Text ml={2}>{getQuestDuration(currentQuest.duration)}</Text>
                             </Flex>
                         )}
 

@@ -34,7 +34,7 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = 1;
+const BASE_DURATION = 30; // minutes
 const BASE_COST = 10;
 
 const getId = () => ++ID;

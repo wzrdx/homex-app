@@ -8,7 +8,7 @@ import { first, map, size } from 'lodash';
 import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 
-const REFRESH_TIME = 1000;
+const REFRESH_TIME = 10000;
 
 export const QuestCard: FunctionComponent<
     PropsWithChildren<{

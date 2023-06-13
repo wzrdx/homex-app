@@ -25,7 +25,7 @@ export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
 export const TRAVELER_YIELD_PER_HOUR: number = 3;
 export const ELDER_YIELD_PER_HOUR: number = 3;
-export const REWARDS_QUERYING_INTERVAL = 60000;
+export const REWARDS_QUERYING_INTERVAL = 30000;
 export const ENERGY_SWAP_RATE = 0.000024;
 
 // TODO: Mainnet values
