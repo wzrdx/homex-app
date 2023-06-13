@@ -8,6 +8,8 @@ import Quest_6 from '../assets/quests/Q6.jpg';
 import Quest_7 from '../assets/quests/Q7.jpg';
 import Quest_8 from '../assets/quests/Q8.jpg';
 import Quest_9 from '../assets/quests/Q9.jpg';
+import Quest_10 from '../assets/quests/Q9.jpg';
+
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
@@ -34,8 +36,6 @@ let ID = 0;
 
 const BASE_DURATION = 1;
 const BASE_COST = 10;
-
-const QUEST_IMAGES = [Quest_1, Quest_2, Quest_3, Quest_4, Quest_5, Quest_6, Quest_7, Quest_8, Quest_9];
 
 const getId = () => ++ID;
 
@@ -68,6 +68,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_1,
     },
     {
         id: getId(),
@@ -97,6 +98,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_2,
     },
     {
         id: getId(),
@@ -126,6 +128,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_3,
     },
 
     // Jewelcrafting
@@ -156,6 +159,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_4,
     },
     {
         id: getId(),
@@ -185,6 +189,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_5,
     },
     {
         id: getId(),
@@ -214,6 +219,7 @@ export const QUESTS: any[] = [
                 mode: 'hard-light',
             },
         ],
+        image: Quest_6,
     },
 
     // Enchanting
@@ -244,6 +250,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_7,
     },
 
     // Divination
@@ -278,6 +285,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_8,
     },
     {
         id: getId(),
@@ -308,6 +316,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_9,
     },
 
     // Final
@@ -343,6 +352,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
+        image: Quest_10,
     },
 ];
 
@@ -350,7 +360,7 @@ export const getQuest = (id = 1): Quest => {
     return QUESTS.find((m) => m.id === id);
 };
 
-export const getQuestImage = (id: number) => QUEST_IMAGES[id - 1];
+export const getQuestImage = (id: number) => QUESTS.find((quest) => quest.id === id).image;
 
 export const meetsRequirements = (resources: { [x: string]: number }, questId: number | undefined) => {
     const quest = getQuest(questId);
