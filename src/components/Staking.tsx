@@ -42,7 +42,9 @@ function Staking() {
     const { checkEgldBalance, displayToast } = useLayout();
 
     const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+
     const [isStakingButtonLoading, setStakingButtonLoading] = useState(false);
+    const [isUnstakingButtonLoading, setUnstakingButtonLoading] = useState(false);
     const [isClaimingButtonLoading, setClaimingButtonLoading] = useState(false);
 
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
@@ -63,27 +65,17 @@ function Staking() {
         };
     }, []);
 
-    const toggleStaking = async () => {
-        if (!stakingInfo || isStakingButtonLoading) {
+    const stake = async () => {
+        if (!stakingInfo) {
             return;
         }
 
-        setStakingButtonLoading(true);
-
-        if (stakingInfo.isStaked) {
-            await unstake();
-        } else {
-            await stake();
-        }
-
-        setStakingButtonLoading(false);
-    };
-
-    const stake = async () => {
         if (!(await checkEgldBalance())) {
             setStakingButtonLoading(false);
             return;
         }
+
+        setStakingButtonLoading(true);
 
         const user = new Address(address);
 
@@ -107,6 +99,8 @@ function Staking() {
                     'No NFT from the Home X collections is currently in your wallet',
                     'redClrs'
                 );
+                setStakingButtonLoading(false);
+
                 return;
             }
 
@@ -139,26 +133,35 @@ function Staking() {
                     resolution: TxResolution.UpdateStakingInfo,
                 },
             ]);
+
+            setStakingButtonLoading(false);
         } catch (err) {
             console.error('Error occured while staking', err);
         }
     };
 
     const unstake = async () => {
-        if (!(await checkEgldBalance())) {
-            setStakingButtonLoading(false);
+        if (!stakingInfo) {
             return;
         }
+
+        if (!(await checkEgldBalance())) {
+            setUnstakingButtonLoading(false);
+            return;
+        }
+
+        setUnstakingButtonLoading(true);
 
         const updatedStakingInfo: StakingInfo | undefined = await getStakingInfo();
         const user = new Address(address);
 
         if (!updatedStakingInfo) {
             console.error('Unable to unstake');
+            setUnstakingButtonLoading(false);
             return;
         }
 
-        const energyGain = updatedStakingInfo.rewards;
+        const energyGain = _.cloneDeep(updatedStakingInfo.rewards);
 
         try {
             const tx = smartContract.methods
@@ -193,6 +196,8 @@ function Staking() {
                     },
                 },
             ]);
+
+            setUnstakingButtonLoading(false);
         } catch (err) {
             console.error('Error occured ', err);
         }
@@ -209,13 +214,17 @@ function Staking() {
         }
 
         setClaimingButtonLoading(true);
-        await getStakingInfo();
+
+        const updatedStakingInfo: StakingInfo | undefined = await getStakingInfo();
         const user = new Address(address);
 
-        if (!stakingInfo) {
+        if (!updatedStakingInfo) {
             console.error('Unable to claim');
+            setClaimingButtonLoading(false);
             return;
         }
+
+        const energyGain = _.cloneDeep(updatedStakingInfo.rewards);
 
         try {
             const tx = smartContract.methods
@@ -244,7 +253,7 @@ function Staking() {
                     type: TransactionType.Claim,
                     resolution: TxResolution.ClaimStakingRewards,
                     data: {
-                        energyGain: stakingInfo.rewards,
+                        energyGain,
                     },
                 },
             ]);
@@ -332,33 +341,53 @@ function Staking() {
                             />
 
                             <Flex mt={4} flexDir="column" justifyContent="center" alignItems="center">
-                                <Flex justifyContent="center" alignItems="center">
+                                <Flex flexDir={{ md: 'column', lg: 'row' }} justifyContent="center" alignItems="center">
                                     <ActionButton
-                                        disabled={!stakingInfo || isTxPending(TransactionType.Claim)}
-                                        isLoading={
-                                            isStakingButtonLoading ||
-                                            isTxPending(TransactionType.Unstake) ||
-                                            isTxPending(TransactionType.Stake)
+                                        disabled={
+                                            !stakingInfo ||
+                                            isTxPending(TransactionType.Claim) ||
+                                            isTxPending(TransactionType.Unstake)
                                         }
+                                        isLoading={isStakingButtonLoading || isTxPending(TransactionType.Stake)}
                                         colorScheme="blue"
                                         customStyle={{ width: '156px' }}
-                                        onClick={toggleStaking}
+                                        onClick={stake}
                                     >
-                                        <Text>{`${stakingInfo.isStaked ? 'Unstake' : 'Stake'}`}</Text>
+                                        <Text>Stake</Text>
                                     </ActionButton>
 
                                     {stakingInfo.isStaked && (
-                                        <Box ml={4}>
+                                        <Box mx={4} my={{ md: 2.5, lg: 0 }}>
                                             <ActionButton
-                                                disabled={!stakingInfo || isTxPending(TransactionType.Unstake)}
-                                                isLoading={isClaimingButtonLoading || isTxPending(TransactionType.Claim)}
-                                                colorScheme="red"
+                                                disabled={
+                                                    !stakingInfo ||
+                                                    isTxPending(TransactionType.Claim) ||
+                                                    isTxPending(TransactionType.Stake)
+                                                }
+                                                isLoading={isUnstakingButtonLoading || isTxPending(TransactionType.Unstake)}
+                                                colorScheme="default"
                                                 customStyle={{ width: '156px' }}
-                                                onClick={claim}
+                                                onClick={unstake}
                                             >
-                                                <Text>Claim Rewards</Text>
+                                                <Text>Unstake</Text>
                                             </ActionButton>
                                         </Box>
+                                    )}
+
+                                    {stakingInfo.isStaked && (
+                                        <ActionButton
+                                            disabled={
+                                                !stakingInfo ||
+                                                isTxPending(TransactionType.Stake) ||
+                                                isTxPending(TransactionType.Unstake)
+                                            }
+                                            isLoading={isClaimingButtonLoading || isTxPending(TransactionType.Claim)}
+                                            colorScheme="red"
+                                            customStyle={{ width: '156px' }}
+                                            onClick={claim}
+                                        >
+                                            <Text>Claim Rewards</Text>
+                                        </ActionButton>
                                     )}
                                 </Flex>
 
