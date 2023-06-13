@@ -35,6 +35,7 @@ const colors = {
     brightWheat: '#ffe1bb',
     ticketGold: '#efbe50',
     energyBright: '#50a3f2',
+    availableResource: '#95f984',
 };
 
 const fonts = {

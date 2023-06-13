@@ -461,12 +461,6 @@ function Quests() {
                                 <source src={Vision} type="video/webm" />
                             </video>
                         </Box>
-
-                        {/* <Box position="absolute" bottom="16px" right="24px">
-                            <Button onClick={onVisionClose} colorScheme="orange">
-                                Close
-                            </Button>
-                        </Box> */}
                     </ModalBody>
                 </ModalContent>
             </Modal>
