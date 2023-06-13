@@ -1,3 +1,4 @@
+// TODO: Mainnet values
 export const contractAddress = 'erd1qqqqqqqqqqqqqpgq9459wl67kadq47jq8xqwp56muskyaajvukrq9xjh8z';
 
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';

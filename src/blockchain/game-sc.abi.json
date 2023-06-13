@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.68.0-nightly",
-            "commitHash": "3020239de947ec52677e9b4e853a6a9fc073d1f9",
-            "commitDate": "2023-01-09",
+            "version": "1.69.0-nightly",
+            "commitHash": "31f858d9a511f24fedb8ed997b28304fec809630",
+            "commitDate": "2023-02-28",
             "channel": "Nightly",
-            "short": "rustc 1.68.0-nightly (3020239de 2023-01-09)"
+            "short": "rustc 1.69.0-nightly (31f858d9a 2023-02-28)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -148,7 +148,7 @@
             "outputs": []
         },
         {
-            "name": "faucet",
+            "name": "clearOngoingQuests",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
@@ -179,15 +179,10 @@
             "outputs": []
         },
         {
-            "name": "setRafflePot",
+            "name": "clearRaffle",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "value",
-                    "type": "u32"
-                }
-            ],
+            "inputs": [],
             "outputs": []
         },
         {
@@ -377,32 +372,6 @@
             ]
         },
         {
-            "name": "getLastStakingTimestamp",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getStakedAddresses",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
             "name": "getTravelersCollectionId",
             "mutability": "readonly",
             "inputs": [],
@@ -500,32 +469,13 @@
             ]
         },
         {
-            "name": "getParticipantId",
+            "name": "getActivePlayers",
             "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
+            "inputs": [],
             "outputs": [
                 {
-                    "type": "u16"
-                }
-            ]
-        },
-        {
-            "name": "getParticipantAddress",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "id",
-                    "type": "u16"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "Address"
+                    "type": "variadic<Address>",
+                    "multi_result": true
                 }
             ]
         },
@@ -536,17 +486,6 @@
             "outputs": [
                 {
                     "type": "u16"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleVector",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<u16>",
-                    "multi_result": true
                 }
             ]
         },
@@ -568,16 +507,6 @@
             "outputs": [
                 {
                     "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getRafflePot",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },

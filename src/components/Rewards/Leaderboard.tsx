@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
 import { getParticipants } from '../../blockchain/api/getParticipants';
 import { getParticipantsCount } from '../../blockchain/api/getParticipantsCount';
-import { getRafflePot } from '../../blockchain/api/getRafflePot';
 import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
@@ -40,7 +39,6 @@ function Leaderboard() {
     const [participants, setParticipants] = useState<Participant[]>();
     const [myTickets, setMyTickets] = useState<number>();
     const [totalTickets, setTotalTickets] = useState<number>();
-    const [pot, setPot] = useState<number>();
     const [timestamp, setTimestamp] = useState<Date>();
     const [error, setError] = useState<boolean>(false);
 
@@ -52,7 +50,6 @@ function Leaderboard() {
         try {
             setMyTickets(await getSubmittedTickets());
             setTotalTickets(await getSubmittedTicketsTotal());
-            setPot(await getRafflePot());
             setTimestamp(await getRaffleTimestamp());
 
             const count: number = await getParticipantsCount();

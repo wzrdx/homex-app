@@ -65,8 +65,6 @@ function Swap() {
         const user = new Address(address);
         const amount = Number.parseFloat(energyValue);
 
-        console.log('Swap', amount);
-
         try {
             const tx = smartContract.methods
                 .swapEnergy()
@@ -102,7 +100,7 @@ function Swap() {
 
             setButtonLoading(false);
         } catch (err) {
-            console.error('Error occured while staking', err);
+            console.error('Error occured ', err);
         }
     };
 
@@ -110,7 +108,7 @@ function Swap() {
 
     return (
         <Flex flexDir="column" justifyContent="center" alignItems="center">
-            <Flex width="400px" flexDir="column" backgroundColor="#2c2d2f" overflow="hidden" borderRadius="3px">
+            <Flex width="408px" flexDir="column" backgroundColor="#2c2d2f" overflow="hidden" borderRadius="3px">
                 <Box width="100%" height="5px" backgroundColor="resources.energy"></Box>
 
                 <Flex flexDir="column" my={6} px={7}>

@@ -19,19 +19,3 @@ export interface Participant {
     ticketsCount: number;
     username?: string;
 }
-
-// TODO: Remove
-export enum Role {
-    OGTravelers = 'OG',
-    FirstTravelers = 'FirstTravelers',
-    Elders = 'Elders',
-}
-
-export interface TicketEarner {
-    address: string;
-    ticketsEarned: number;
-    timestamp: Date;
-    time?: string;
-    role?: Role;
-    username?: string;
-}
