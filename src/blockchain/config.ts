@@ -13,7 +13,7 @@ export const EXPLORER_URL = 'https://explorer.multiversx.com';
 export const TRAVELERS_COLLECTION_ID = 'TRAVELER-51bdef';
 export const ELDERS_COLLECTION_ID = 'HOMEXELDER-d43957';
 
-export const TICKETS_TOKEN_ID = 'HOMETICKET-821eec';
+export const TICKETS_TOKEN_ID = 'HOMETICKET-257a32';
 export const ENERGY_TOKEN_ID = 'ENERGY-36fb1d';
 export const HERBS_TOKEN_ID = 'HERBS-1c45fb';
 export const GEMS_TOKEN_ID = 'GEMS-5fbf7d';

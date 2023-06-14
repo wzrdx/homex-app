@@ -25,7 +25,7 @@ import { Quest } from './types';
 import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
 
-const REFRESH_TIME = 900000; // 15 minutes
+const REFRESH_TIME = 1800000; // 30 minutes
 
 function App() {
     const toast = useToast();
