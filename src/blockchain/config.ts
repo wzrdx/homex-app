@@ -1,27 +1,27 @@
-export const contractAddress = 'erd1qqqqqqqqqqqqqpgqpt68cy4cde6ff2wzcfsfncjv6gxjxda8dn7q9ekje9';
+export const contractAddress = 'erd1qqqqqqqqqqqqqpgq9459wl67kadq47jq8xqwp56muskyaajvukrq9xjh8z';
+
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
-export const apiTimeout = 30000;
+export const apiTimeout = 15000;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 
-export const CHAIN_ID = '1';
-export const API_URL = 'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b';
+export const API_URL = 'https://devnet-api.multiversx.com'; // https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
-export const EXPLORER_URL = 'https://explorer.multiversx.com';
+export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
 
-export const TRAVELERS_COLLECTION_ID = 'TRAVELER-51bdef';
-export const ELDERS_COLLECTION_ID = 'HOMEXELDER-d43957';
+export const TRAVELERS_COLLECTION_ID = 'PTESTERS-8fd15c';
+export const ELDERS_COLLECTION_ID = 'PINKF-f70e86';
 
-export const TICKETS_TOKEN_ID = 'HOMETICKET-257a32';
-export const ENERGY_TOKEN_ID = 'ENERGY-36fb1d';
-export const HERBS_TOKEN_ID = 'HERBS-1c45fb';
-export const GEMS_TOKEN_ID = 'GEMS-5fbf7d';
-export const ESSENCE_TOKEN_ID = 'ESSENCE-67531c';
+export const TICKETS_TOKEN_ID = 'TICKETS-be6092';
+export const ENERGY_TOKEN_ID = 'ENERGY-a1ac9c';
+export const HERBS_TOKEN_ID = 'HERBS-a2ffd9';
+export const GEMS_TOKEN_ID = 'GEMS-274ae8';
+export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
-export const TRAVELER_YIELD_PER_HOUR: number = 3;
-export const ELDER_YIELD_PER_HOUR: number = 3;
-export const REWARDS_QUERYING_INTERVAL = 30000;
-export const ENERGY_SWAP_RATE = 0.000024;
+export const TRAVELER_YIELD_PER_HOUR: number = 0.3;
+export const ELDER_YIELD_PER_HOUR: number = 0.3;
+export const REWARDS_QUERYING_INTERVAL = 60000;
+export const ENERGY_SWAP_RATE = 0.001;
 
-export const START_OF_CONTEST = new Date('2023-06-13T16:00:00.000Z');
+export const START_OF_CONTEST = new Date('2023-06-01T00:00:00.000Z');
