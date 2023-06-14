@@ -157,10 +157,6 @@ function App() {
                 break;
 
             case TxResolution.UpdateStakingInfo:
-                getStakingInfo();
-                break;
-
-            case TxResolution.ClaimStakingRewards:
                 getEnergy();
                 getStakingInfo();
                 break;
