@@ -18,7 +18,6 @@ export enum TxResolution {
     UpdateEnergy = 'UpdateEnergy',
     UpdateTickets = 'UpdateTickets',
     UpdateStakingInfo = 'UpdateStakingInfo',
-    ClaimStakingRewards = 'Unstaking',
 }
 
 export interface Transaction {
