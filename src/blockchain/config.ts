@@ -6,6 +6,7 @@ export const apiTimeout = 15000;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 
+export const CHAIN_ID = 'D';
 export const API_URL = 'https://devnet-api.multiversx.com'; // https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
