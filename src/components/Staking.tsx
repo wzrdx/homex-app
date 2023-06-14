@@ -190,7 +190,7 @@ function Staking() {
                 {
                     sessionId,
                     type: TransactionType.Unstake,
-                    resolution: TxResolution.ClaimStakingRewards,
+                    resolution: TxResolution.UpdateStakingInfo,
                     data: {
                         energyGain,
                     },
@@ -251,7 +251,7 @@ function Staking() {
                 {
                     sessionId,
                     type: TransactionType.Claim,
-                    resolution: TxResolution.ClaimStakingRewards,
+                    resolution: TxResolution.UpdateStakingInfo,
                     data: {
                         energyGain,
                     },
