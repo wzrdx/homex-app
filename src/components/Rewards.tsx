@@ -2,8 +2,8 @@ import _ from 'lodash';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
-import { toTitleCase } from '../services/helpers';
 import { useLayout } from './Layout';
+import Tab from '../shared/Tab';
 
 type RewardsContext = { height: number };
 
@@ -36,19 +36,7 @@ function Rewards() {
                 {_.map(route?.children, (route, index) => (
                     <Box key={index}>
                         <NavLink to={route.path}>
-                            <Box className="Border-Box" pb={0.5} mx={5} borderBottom="2px solid transparent">
-                                <Text
-                                    fontSize="lg"
-                                    fontWeight={500}
-                                    color="header.gray"
-                                    transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                    cursor="pointer"
-                                    userSelect="none"
-                                    _hover={{ color: '#e3e3e3' }}
-                                >
-                                    {toTitleCase(route.path)}
-                                </Text>
-                            </Box>
+                            <Tab text={route.path} />
                         </NavLink>
                     </Box>
                 ))}

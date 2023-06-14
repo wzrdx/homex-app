@@ -5,6 +5,8 @@ import Rewards from '../components/Rewards';
 import Leaderboard from '../components/Rewards/Leaderboard';
 import Raffle from '../components/Rewards/Raffle';
 import Prizes from '../components/Rewards/Prizes';
+import Stake from '../components/Staking/Stake';
+import Unstake from '../components/Staking/Unstake';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -16,6 +18,8 @@ export const routeNames = {
     leaderboard: 'leaderboard',
     raffle: 'raffle',
     prizes: 'prizes',
+    stake: 'stake',
+    unstake: 'unstake',
 };
 
 // Main routes after login
@@ -29,6 +33,16 @@ export const routes = [
         path: routeNames.staking,
         component: Staking,
         authenticatedRoute: true,
+        children: [
+            {
+                path: routeNames.stake,
+                component: Stake,
+            },
+            {
+                path: routeNames.unstake,
+                component: Unstake,
+            },
+        ],
     },
     {
         path: routeNames.quests,
