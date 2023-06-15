@@ -147,12 +147,10 @@ function Stake() {
                             </ActionButton>
                         </Box>
 
-                        {_.isEmpty(selectedTokens) && (
-                            <Flex ml={4} alignItems="center">
-                                <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                                <Text color="almostWhite">Select some NFTs in order to stake</Text>
-                            </Flex>
-                        )}
+                        <Flex ml={4} alignItems="center">
+                            <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                            <Text color="almostWhite">Select some NFTs in order to stake</Text>
+                        </Flex>
                     </Flex>
 
                     <Flex
