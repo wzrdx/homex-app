@@ -177,6 +177,10 @@ body {
 }
 
 // Scrollbar
+.Scrollbar-Gutter {
+    scrollbar-gutter: stable;
+}
+
 /* Firefox */
 * {
     scrollbar-width: none;

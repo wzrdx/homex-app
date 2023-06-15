@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Button, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getTicketSFT } from '../../services/assets';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
@@ -17,9 +17,10 @@ import { useStaking } from '../Staking';
 import { getNFTsCount, getWalletNonces } from '../../services/authentication';
 import { pairwise } from '../../services/helpers';
 import { NFT } from '../../blockchain/types';
+import TokenCard from '../../shared/TokenCard';
 
 function Stake() {
-    const { checkEgldBalance, displayToast } = useStaking();
+    const { height, checkEgldBalance, displayToast } = useStaking();
 
     const { address } = useGetAccountInfo();
 
@@ -29,6 +30,7 @@ function Stake() {
     const [isStakingButtonLoading, setStakingButtonLoading] = useState(false);
 
     const [travelers, setTravelers] = useState<NFT[]>();
+    const [elders, setElders] = useState<NFT[]>();
 
     useEffect(() => {
         init();
@@ -61,14 +63,36 @@ function Stake() {
                 .flatten()
                 .value();
 
-            console.log(travelers);
+            const elderchunks = new Array(Math.floor(elderscount / 25)).fill(25).concat(elderscount % 25);
+            const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
+
+            pairwise(
+                _(elderchunks)
+                    .filter(_.identity)
+                    .map((chunk, index) => {
+                        return index * 25 + chunk;
+                    })
+                    .unshift(0)
+                    .value(),
+                (from: number, _: number) => {
+                    eldersApiCalls.push(getWalletNonces(address, ELDERS_COLLECTION_ID, from));
+                }
+            );
+
+            const elders = _(await Promise.all(eldersApiCalls))
+                .flatten()
+                .map((result) => result.data)
+                .flatten()
+                .value();
 
             setTravelers(travelers);
+            setElders(elders);
+
+            console.log(travelers);
+            console.log(elders);
         } catch (error) {
             console.error(error);
         }
-
-        // const { data: elderTokens } = await getWalletNonces(address, ELDERS_COLLECTION_ID);
     };
 
     const stake = async () => {
@@ -147,8 +171,31 @@ function Stake() {
     };
 
     return (
-        <Flex justifyContent="center" height="100%">
-            <Flex flexDir="column" alignItems="center">
+        <Flex justifyContent="center" height={`calc(100% - ${height}px)`}>
+            <Flex
+                className="Scrollbar-Gutter"
+                flexDir="column"
+                alignItems="center"
+                overflowY="auto"
+                pr={4}
+                mr="calc(-1rem - 6px)"
+            >
+                {elders && travelers ? (
+                    <Box
+                        display="grid"
+                        gridAutoColumns="1fr"
+                        gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+                        rowGap={4}
+                        columnGap={4}
+                    >
+                        {_.map([...elders, ...travelers], (token, index) => (
+                            <TokenCard key={index} name={token.name} url={token.url} nonce={token.nonce} />
+                        ))}
+                    </Box>
+                ) : (
+                    <Spinner />
+                )}
+
                 {/* <Button colorScheme="red" onClick={stake}>
                     Stake
                 </Button> */}

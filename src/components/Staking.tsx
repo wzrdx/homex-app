@@ -92,7 +92,7 @@ function Staking() {
                 ))}
             </Flex>
 
-            <Flex layerStyle="layout">
+            <Flex layerStyle="layout" height="100%">
                 <Flex flex={1}>
                     <Stats
                         stakedNFTsCount={stakedNFTsCount}
