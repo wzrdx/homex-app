@@ -14,6 +14,7 @@ export function useRewards() {
 function Rewards() {
     const { routes, routeNames } = useLayout();
 
+    // The height of the menu
     const [height, setHeight] = useState<number>(0);
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);

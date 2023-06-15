@@ -63,6 +63,17 @@ const layerStyles = {
         fontWeight: 600,
         letterSpacing: '0.75px',
     },
+    header2: {
+        textTransform: 'uppercase',
+        fontWeight: 600,
+        letterSpacing: '0.75px',
+    },
+    value: {
+        textTransform: 'uppercase',
+        fontSize: '17px',
+        fontWeight: 600,
+        letterSpacing: '0.5px',
+    },
     questDescription: {
         textAlign: 'justify',
         lineHeight: '22px',

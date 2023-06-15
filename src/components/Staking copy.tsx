@@ -12,7 +12,7 @@ import { getEldersLogo, getRitualImage, getSmallLogo } from '../services/assets'
 import { useLayout } from './Layout';
 import _ from 'lodash';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { getNonces } from '../services/authentication';
+import { getWalletNonces } from '../services/authentication';
 import { round } from '../services/helpers';
 import {
     CHAIN_ID,
@@ -80,8 +80,8 @@ function Testing() {
         const user = new Address(address);
 
         try {
-            const { data: travelerTokens } = await getNonces(address, TRAVELERS_COLLECTION_ID);
-            const { data: elderTokens } = await getNonces(address, ELDERS_COLLECTION_ID);
+            const { data: travelerTokens } = await getWalletNonces(address, TRAVELERS_COLLECTION_ID);
+            const { data: elderTokens } = await getWalletNonces(address, ELDERS_COLLECTION_ID);
 
             const transfers: TokenTransfer[] = [
                 ..._(travelerTokens)
@@ -264,26 +264,6 @@ function Testing() {
         }
     };
 
-    const getEnergyPerHour = (yieldType: YieldType = YieldType.Total): number => {
-        if (!stakingInfo) {
-            return 0;
-        }
-
-        const travelersYield = round(TRAVELER_YIELD_PER_HOUR * stakingInfo?.travelerNonces?.length, 1);
-        const eldersYield = round(ELDER_YIELD_PER_HOUR * stakingInfo?.elderNonces?.length, 1);
-
-        switch (yieldType) {
-            case YieldType.Travelers:
-                return travelersYield;
-
-            case YieldType.Elders:
-                return eldersYield;
-
-            default:
-                return round(travelersYield + eldersYield, 1);
-        }
-    };
-
     return (
         <Flex height="100%" justifyContent="center" alignItems="center">
             <Flex flexDir="column" justifyContent="center" alignItems="center">
@@ -332,13 +312,7 @@ function Testing() {
                         <Spinner />
                     ) : (
                         <Flex ml={{ md: 5, lg: 0 }} flexDir="column" justifyContent="center" alignItems="center">
-                            <Reward
-                                image={image}
-                                name={name}
-                                value={stakingInfo.rewards}
-                                icon={icon}
-                                perHour={stakingInfo.isStaked ? getEnergyPerHour() : 0}
-                            />
+                            <Reward image={image} name={name} value={stakingInfo.rewards} icon={icon} />
 
                             <Flex mt={4} flexDir="column" justifyContent="center" alignItems="center">
                                 <Flex flexDir={{ md: 'column', lg: 'row' }} justifyContent="center" alignItems="center">

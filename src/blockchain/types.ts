@@ -19,3 +19,9 @@ export interface Participant {
     ticketsCount: number;
     username?: string;
 }
+
+export interface NFT {
+    name: string;
+    nonce: number;
+    url: string;
+}

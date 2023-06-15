@@ -15,7 +15,7 @@ export const routeNames = {
     staking: 'staking',
     quests: 'quests',
     rewards: 'rewards',
-    leaderboard: 'leaderboard',
+    leaderboard: 'entries',
     raffle: 'raffle',
     prizes: 'prizes',
     stake: 'stake',
@@ -43,6 +43,7 @@ export const routes = [
                 component: Unstake,
             },
         ],
+        defaultChildRoute: routeNames.stake,
     },
     {
         path: routeNames.quests,
@@ -67,5 +68,6 @@ export const routes = [
                 component: Prizes,
             },
         ],
+        defaultChildRoute: routeNames.leaderboard,
     },
 ];

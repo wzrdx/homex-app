@@ -111,7 +111,7 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                console.log('getEnergy');
+                // console.log('getEnergy');
                 setResources((state) => ({
                     ...state,
                     energy: Number.parseInt(result.data.balance) / 1000000,
@@ -135,7 +135,7 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                console.log('getHerbs');
+                // console.log('getHerbs');
                 setResources((state) => ({
                     ...state,
                     herbs: Number.parseInt(result.data.balance) / 1000000,
@@ -159,7 +159,7 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                console.log('getGems');
+                // console.log('getGems');
                 setResources((state) => ({
                     ...state,
                     gems: Number.parseInt(result.data.balance) / 1000000,
@@ -183,7 +183,7 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                console.log('getEssence');
+                // console.log('getEssence');
                 setResources((state) => ({
                     ...state,
                     essence: Number.parseInt(result.data.balance) / 1000000,
@@ -207,7 +207,7 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                console.log('getTickets');
+                // console.log('getTickets');
                 setResources((state) => ({
                     ...state,
                     tickets: Number.parseInt(result.data.balance),

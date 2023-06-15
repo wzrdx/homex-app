@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getTicketSFT } from '../../services/assets';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
@@ -9,20 +9,149 @@ import { TransactionType, TransactionsContextType, TxResolution, useTransactions
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useStoreContext, StoreContextType } from '../../services/store';
+import { useStaking } from '../Staking';
+import { getNFTsCount, getWalletNonces } from '../../services/authentication';
+import { pairwise } from '../../services/helpers';
+import { NFT } from '../../blockchain/types';
 
 function Stake() {
-    const [amount, setAmount] = useState(0);
+    const { checkEgldBalance, displayToast } = useStaking();
+
     const { address } = useGetAccountInfo();
 
-    useEffect(() => {}, []);
+    const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+    const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
+
+    const [isStakingButtonLoading, setStakingButtonLoading] = useState(false);
+
+    const [travelers, setTravelers] = useState<NFT[]>();
+
+    useEffect(() => {
+        init();
+    }, []);
+
+    const init = async () => {
+        try {
+            const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
+            const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+
+            const travelerchunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
+            const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
+
+            pairwise(
+                _(travelerchunks)
+                    .filter(_.identity)
+                    .map((chunk, index) => {
+                        return index * 25 + chunk;
+                    })
+                    .unshift(0)
+                    .value(),
+                (from: number, _: number) => {
+                    travelersApiCalls.push(getWalletNonces(address, TRAVELERS_COLLECTION_ID, from));
+                }
+            );
+
+            const travelers = _(await Promise.all(travelersApiCalls))
+                .flatten()
+                .map((result) => result.data)
+                .flatten()
+                .value();
+
+            console.log(travelers);
+
+            setTravelers(travelers);
+        } catch (error) {
+            console.error(error);
+        }
+
+        // const { data: elderTokens } = await getWalletNonces(address, ELDERS_COLLECTION_ID);
+    };
+
+    const stake = async () => {
+        if (!stakingInfo) {
+            return;
+        }
+
+        if (!(await checkEgldBalance())) {
+            setStakingButtonLoading(false);
+            return;
+        }
+
+        setStakingButtonLoading(true);
+
+        const user = new Address(address);
+
+        try {
+            const { data: travelerTokens } = await getWalletNonces(address, TRAVELERS_COLLECTION_ID);
+            const { data: elderTokens } = await getWalletNonces(address, ELDERS_COLLECTION_ID);
+
+            const transfers: TokenTransfer[] = [
+                ..._(travelerTokens)
+                    .map((token) => TokenTransfer.nonFungible(TRAVELERS_COLLECTION_ID, token.nonce))
+                    .value(),
+                ..._(elderTokens)
+                    .map((token) => TokenTransfer.nonFungible(ELDERS_COLLECTION_ID, token.nonce))
+                    .value(),
+            ];
+
+            if (_.isEmpty(transfers)) {
+                displayToast(
+                    'error',
+                    'Nothing to stake',
+                    'No NFT from the Home X collections is currently in your wallet',
+                    'redClrs'
+                );
+                setStakingButtonLoading(false);
+
+                return;
+            }
+
+            const tx = smartContract.methods
+                .stake()
+                .withMultiESDTNFTTransfer(transfers)
+                .withSender(user)
+                .withExplicitReceiver(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(8000000 + 1100000 * _.size(transfers))
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.Stake,
+                    resolution: TxResolution.UpdateStakingInfo,
+                },
+            ]);
+
+            setStakingButtonLoading(false);
+        } catch (err) {
+            console.error('Error occured while staking', err);
+        }
+    };
 
     return (
         <Flex justifyContent="center" height="100%">
             <Flex flexDir="column" alignItems="center">
-                <Text>Stake</Text>
+                {/* <Button colorScheme="red" onClick={stake}>
+                    Stake
+                </Button> */}
             </Flex>
         </Flex>
     );

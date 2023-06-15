@@ -11,6 +11,9 @@ export const API_URL = 'https://devnet-api.multiversx.com'; // https://elrond-ap
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
 
+// TODO: 3333 + 60
+// TODO: Parametrize this file using a development mode flag
+export const COLLECTION_SIZE = 200;
 export const TRAVELERS_COLLECTION_ID = 'PTESTERS-8fd15c';
 export const ELDERS_COLLECTION_ID = 'PINKF-f70e86';
 
@@ -20,9 +23,9 @@ export const HERBS_TOKEN_ID = 'HERBS-a2ffd9';
 export const GEMS_TOKEN_ID = 'GEMS-274ae8';
 export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
-export const TRAVELER_YIELD_PER_HOUR: number = 0.3;
-export const ELDER_YIELD_PER_HOUR: number = 0.3;
+export const TRAVELER_YIELD_PER_HOUR: number = 3;
+export const ELDER_YIELD_PER_HOUR: number = 3;
 export const REWARDS_QUERYING_INTERVAL = 60000;
-export const ENERGY_SWAP_RATE = 0.001;
+export const ENERGY_SWAP_RATE = 0.000024;
 
 export const START_OF_CONTEST = new Date('2023-06-01T00:00:00.000Z');

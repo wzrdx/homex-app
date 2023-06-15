@@ -2,7 +2,7 @@ import { Flex, Image, Text } from '@chakra-ui/react';
 import InnerRing from '../assets/resources/images/ring_inner.png';
 import OuterRing from '../assets/resources/images/ring_outer.png';
 
-function Reward({ image, name, value, icon, perHour = 0 }) {
+function Reward({ image, name, value, icon }) {
     return (
         <Flex alignItems="center">
             <Flex justifyContent="center" alignItems="center" position="relative">
@@ -42,16 +42,6 @@ function Reward({ image, name, value, icon, perHour = 0 }) {
                     </Text>
 
                     <Image width="28px" mr={2} src={icon} alt="Icon" />
-
-                    {perHour > 0 && (
-                        <Text>
-                            (
-                            <Text as="span" mx="2px" color="energyBright">
-                                {perHour}
-                            </Text>
-                            /hr)
-                        </Text>
-                    )}
                 </Flex>
             </Flex>
         </Flex>

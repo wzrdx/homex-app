@@ -255,7 +255,7 @@ function App() {
                                 {route.children && (
                                     <Route
                                         path={'/' + route.path}
-                                        element={<Navigate to={first(route.children)?.path as string} replace />}
+                                        element={<Navigate to={route.defaultChildRoute as string} replace />}
                                     />
                                 )}
 
