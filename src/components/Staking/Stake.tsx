@@ -15,8 +15,8 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import { getNFTsCount, getWalletNonces } from '../../services/authentication';
-import { pairwise } from '../../services/helpers';
-import { NFT } from '../../blockchain/types';
+import { getRandomInt, pairwise } from '../../services/helpers';
+import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 
 function Stake() {
@@ -24,17 +24,29 @@ function Stake() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+    const { stakingInfo } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
-    const [isStakingButtonLoading, setStakingButtonLoading] = useState(false);
+    const [isButtonLoading, setButtonLoading] = useState(false);
 
     const [travelers, setTravelers] = useState<NFT[]>();
     const [elders, setElders] = useState<NFT[]>();
 
+    const [selectedTokens, setSelectedTokens] = useState<
+        Array<{
+            nonce: number;
+            type: NFTType;
+        }>
+    >([]);
+
     useEffect(() => {
         init();
     }, []);
+
+    useEffect(() => {
+        console.log('[Stake] Received updated staking info');
+        setSelectedTokens([]);
+    }, [stakingInfo]);
 
     const init = async () => {
         try {
@@ -57,10 +69,16 @@ function Stake() {
                 }
             );
 
+            // TODO: Remove URL overwriting
             const travelers = _(await Promise.all(travelersApiCalls))
                 .flatten()
                 .map((result) => result.data)
                 .flatten()
+                .map((nft) => ({
+                    ...nft,
+                    type: NFTType.Traveler,
+                    url: `https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
+                }))
                 .value();
 
             const elderchunks = new Array(Math.floor(elderscount / 25)).fill(25).concat(elderscount % 25);
@@ -79,10 +97,16 @@ function Stake() {
                 }
             );
 
+            // TODO: Remove URL overwriting
             const elders = _(await Promise.all(eldersApiCalls))
                 .flatten()
                 .map((result) => result.data)
                 .flatten()
+                .map((nft) => ({
+                    ...nft,
+                    type: NFTType.Elder,
+                    url: `https://media.elrond.com/nfts/asset/QmWv6En64krZQnvEhL7sEDovcZsgkdLpEfC6UzaVdVHrrJ/${nft.nonce}.png`,
+                }))
                 .value();
 
             setTravelers(travelers);
@@ -101,26 +125,23 @@ function Stake() {
         }
 
         if (!(await checkEgldBalance())) {
-            setStakingButtonLoading(false);
+            setButtonLoading(false);
             return;
         }
 
-        setStakingButtonLoading(true);
+        setButtonLoading(true);
 
         const user = new Address(address);
 
         try {
-            const { data: travelerTokens } = await getWalletNonces(address, TRAVELERS_COLLECTION_ID);
-            const { data: elderTokens } = await getWalletNonces(address, ELDERS_COLLECTION_ID);
-
-            const transfers: TokenTransfer[] = [
-                ..._(travelerTokens)
-                    .map((token) => TokenTransfer.nonFungible(TRAVELERS_COLLECTION_ID, token.nonce))
-                    .value(),
-                ..._(elderTokens)
-                    .map((token) => TokenTransfer.nonFungible(ELDERS_COLLECTION_ID, token.nonce))
-                    .value(),
-            ];
+            const transfers: TokenTransfer[] = _(selectedTokens)
+                .map((token) =>
+                    TokenTransfer.nonFungible(
+                        token.type === NFTType.Traveler ? TRAVELERS_COLLECTION_ID : ELDERS_COLLECTION_ID,
+                        token.nonce
+                    )
+                )
+                .value();
 
             if (_.isEmpty(transfers)) {
                 displayToast(
@@ -129,7 +150,7 @@ function Stake() {
                     'No NFT from the Home X collections is currently in your wallet',
                     'redClrs'
                 );
-                setStakingButtonLoading(false);
+                setButtonLoading(false);
 
                 return;
             }
@@ -164,42 +185,101 @@ function Stake() {
                 },
             ]);
 
-            setStakingButtonLoading(false);
+            setButtonLoading(false);
         } catch (err) {
             console.error('Error occured while staking', err);
         }
     };
 
     return (
-        <Flex justifyContent="center" height={`calc(100% - ${height}px)`}>
-            <Flex
-                className="Scrollbar-Gutter"
-                flexDir="column"
-                alignItems="center"
-                overflowY="auto"
-                pr={4}
-                mr="calc(-1rem - 6px)"
-            >
-                {elders && travelers ? (
-                    <Box
-                        display="grid"
-                        gridAutoColumns="1fr"
-                        gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
-                        rowGap={4}
-                        columnGap={4}
-                    >
-                        {_.map([...elders, ...travelers], (token, index) => (
-                            <TokenCard key={index} name={token.name} url={token.url} nonce={token.nonce} />
-                        ))}
-                    </Box>
-                ) : (
-                    <Spinner />
-                )}
+        <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
+            {elders && travelers ? (
+                <>
+                    <Flex pb={6}>
+                        <ActionButton
+                            disabled={
+                                _.isEmpty(selectedTokens) ||
+                                !stakingInfo ||
+                                isTxPending(TransactionType.Claim) ||
+                                isTxPending(TransactionType.Unstake)
+                            }
+                            isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
+                            colorScheme="red"
+                            customStyle={{ width: '134px' }}
+                            onClick={stake}
+                        >
+                            <Text>Stake</Text>
+                        </ActionButton>
 
-                {/* <Button colorScheme="red" onClick={stake}>
-                    Stake
-                </Button> */}
-            </Flex>
+                        <Text>{_.map(selectedTokens, (i) => i.nonce).toString()}</Text>
+                    </Flex>
+
+                    <Flex
+                        className="Scrollbar-Gutter"
+                        flexDir="column"
+                        alignItems="center"
+                        overflowY="auto"
+                        pr={4}
+                        mr="calc(-1rem - 6px)"
+                    >
+                        <Box
+                            display="grid"
+                            gridAutoColumns="1fr"
+                            gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+                            rowGap={4}
+                            columnGap={4}
+                        >
+                            {_.map([...elders, ...travelers], (token, index) => (
+                                <Box
+                                    key={index}
+                                    cursor="pointer"
+                                    onClick={() =>
+                                        setSelectedTokens((tokens) => {
+                                            if (
+                                                _.findIndex(tokens, (t) => t.nonce === token.nonce && t.type === token.type) ===
+                                                -1
+                                            ) {
+                                                if (_.size(tokens) === 25) {
+                                                    return tokens;
+                                                }
+
+                                                return [
+                                                    ...tokens,
+                                                    {
+                                                        nonce: token.nonce,
+                                                        type: token.type as NFTType,
+                                                    },
+                                                ];
+                                            } else {
+                                                return _.filter(
+                                                    tokens,
+                                                    (t) => !(t.nonce === token.nonce && t.type === token.type)
+                                                );
+                                            }
+                                        })
+                                    }
+                                >
+                                    <TokenCard
+                                        isSelected={
+                                            _.findIndex(
+                                                selectedTokens,
+                                                (t) => t.nonce === token.nonce && t.type === token.type
+                                            ) > -1
+                                        }
+                                        name={token.name}
+                                        url={token.url}
+                                        type={token?.type}
+                                    />
+                                </Box>
+                            ))}
+                        </Box>
+                    </Flex>
+                </>
+            ) : (
+                <Flex alignItems="center" justifyContent="center" height="100%">
+                    <Spinner size="md" />
+                </Flex>
+            )}
         </Flex>
     );
 }

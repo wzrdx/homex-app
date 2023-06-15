@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL);
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
 const FUNCTION_NAME = 'getStakingInfo';
 
 export interface StakingInfo {
@@ -49,6 +49,7 @@ export const useGetStakingInfo = () => {
                 travelerNonces: map(value.traveler_nonces, (nonce) => nonce.toNumber()),
                 elderNonces: map(value.elder_nonces, (nonce) => nonce.toNumber()),
             };
+            console.log(FUNCTION_NAME);
 
             setStakingInfo(info);
 

@@ -7,7 +7,7 @@ import { map } from 'lodash';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL);
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
 const FUNCTION_NAME = 'getUserTokenNonces';
 
 export const useGetUserTokenNonces = () => {

@@ -55,7 +55,7 @@ const styles = {
 
 const layerStyles = {
     layout: {
-        width: '1420px',
+        width: '1400px',
     },
     header1: {
         textTransform: 'uppercase',

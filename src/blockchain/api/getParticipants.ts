@@ -6,7 +6,7 @@ import { Participant } from '../types';
 import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL);
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
 const FUNCTION_NAME = 'getParticipants';
 
 export const getParticipants = async (start: number, end: number) => {

@@ -47,8 +47,8 @@ export const QUESTS: any[] = [
         name: 'City Scouting',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a journey to uncover the secrets of the city and earn a reward. This adventure requires some
-                energy to keep you focused on your path.
+                Embark on a journey to uncover the secrets of the city and earn a reward. This adventure requires some energy to
+                keep you focused on your path.
             </Text>
         ),
         requirements: {
@@ -76,9 +76,9 @@ export const QUESTS: any[] = [
         name: 'Menhir Summit',
         description: (
             <Text layerStyle="questDescription">
-                You seek to gain a better understanding of the city's layout and its surroundings, and decide to climb
-                to its highest point. The journey is treacherous and challenging, but the view from the top is
-                breathtaking and awe-inspiring.
+                You seek to gain a better understanding of the city's layout and its surroundings, and decide to climb to its
+                highest point. The journey is treacherous and challenging, but the view from the top is breathtaking and
+                awe-inspiring.
             </Text>
         ),
         requirements: {
@@ -106,9 +106,9 @@ export const QUESTS: any[] = [
         name: 'Shadowy Figure',
         description: (
             <Text layerStyle="questDescription">
-                As you explore the city, you come across a mysterious figure who offers you a strange substance and a
-                diagram in exchange for some valuables. Upon consuming the substance, you feel a surge of energy.
-                Although it may take some time, the transaction could potentially be valuable.
+                As you explore the city, you come across a mysterious figure who offers you a strange substance and a diagram in
+                exchange for some valuables. Upon consuming the substance, you feel a surge of energy. Although it may take some
+                time, the transaction could potentially be valuable.
             </Text>
         ),
         requirements: {
@@ -138,8 +138,8 @@ export const QUESTS: any[] = [
         name: 'Craft Compass',
         description: (
             <Text layerStyle="questDescription">
-                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a
-                compass. This task will require significant energy and time, but the reward awaits those who succeed.
+                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a compass.
+                This task will require significant energy and time, but the reward awaits those who succeed.
             </Text>
         ),
         requirements: {
@@ -167,9 +167,9 @@ export const QUESTS: any[] = [
         name: 'Tales Unveiled',
         description: (
             <Text layerStyle="questDescription">
-                As a seasoned traveler, you long to share your tales of adventure with the people of Menhir. They are
-                eager to hear your stories, and in exchange, offer you a reward of precious gems. But to captivate your
-                audience, you must spend time gathering enough listeners to hear your tales.
+                As a seasoned traveler, you long to share your tales of adventure with the people of Menhir. They are eager to
+                hear your stories, and in exchange, offer you a reward of precious gems. But to captivate your audience, you
+                must spend time gathering enough listeners to hear your tales.
             </Text>
         ),
         requirements: {
@@ -197,9 +197,9 @@ export const QUESTS: any[] = [
         name: 'Encounter Merchant',
         description: (
             <Text layerStyle="questDescription">
-                While exploring the city, you come across an old vendor and strike a deal. For a small price, you
-                acquire a revigorating potion that restores your energy and a diagram leading to a secret location. The
-                transaction takes a bit of your time, but it may prove to be worth it.
+                While exploring the city, you come across an old vendor and strike a deal. For a small price, you acquire a
+                revigorating potion that restores your energy and a diagram leading to a secret location. The transaction takes
+                a bit of your time, but it may prove to be worth it.
             </Text>
         ),
         requirements: {
@@ -229,9 +229,9 @@ export const QUESTS: any[] = [
         name: 'Beneath the Depths',
         description: (
             <Text layerStyle="questDescription">
-                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and
-                unravel cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient
-                mysteries concealed in the depths, rewarding those who dare to explore.
+                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and unravel
+                cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient mysteries concealed
+                in the depths, rewarding those who dare to explore.
             </Text>
         ),
         requirements: {
@@ -266,10 +266,10 @@ export const QUESTS: any[] = [
         name: 'Underground Blueprint',
         description: (
             <Text layerStyle="questDescription">
-                While exploring the city's outskirts, you stumble upon an ancient mine filled with toxic substances. You
-                manage to navigate through the harsh underground environment and discover a hidden diagram, but not
-                without using a significant amount of resources. In the process, you obtain a rare essence. The journey
-                to complete this task is not an easy one and requires considerable effort.
+                While exploring the city's outskirts, you stumble upon an ancient mine filled with toxic substances. You manage
+                to navigate through the harsh underground environment and discover a hidden diagram, but not without using a
+                significant amount of resources. In the process, you obtain a rare essence. The journey to complete this task is
+                not an easy one and requires considerable effort.
             </Text>
         ),
         requirements: {
@@ -333,9 +333,8 @@ export const QUESTS: any[] = [
         name: 'Adraka Narcotic',
         description: (
             <Text layerStyle="questDescription">
-                Retrieve the Adraka Narcotic hidden in a linen tent palace in the city's marketplace to protect yourself
-                from desert mirages. Get the narcotic back to the Dome to receive your Ticket as a reward for your true
-                intentions.
+                Retrieve the Adraka Narcotic hidden in a linen tent palace in the city's marketplace to protect yourself from
+                desert mirages. Get the narcotic back to the Dome to receive your Ticket as a reward for your true intentions.
             </Text>
         ),
         requirements: {
@@ -397,7 +396,7 @@ export const QuestsProvider = ({ children }) => {
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
-        const proxy = new ProxyNetworkProvider(API_URL);
+        const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
 
         try {
             const address = await getAddress();
@@ -428,8 +427,6 @@ export const QuestsProvider = ({ children }) => {
     };
 
     return (
-        <QuestsContext.Provider value={{ quest, setQuest, ongoingQuests, getOngoingQuests }}>
-            {children}
-        </QuestsContext.Provider>
+        <QuestsContext.Provider value={{ quest, setQuest, ongoingQuests, getOngoingQuests }}>{children}</QuestsContext.Provider>
     );
 };

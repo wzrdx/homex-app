@@ -4,7 +4,7 @@ import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL);
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
 const FUNCTION_NAME = 'isGamePaused';
 
 export const isGamePausedQuery = async () => {

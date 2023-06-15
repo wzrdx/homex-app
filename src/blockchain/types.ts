@@ -24,4 +24,10 @@ export interface NFT {
     name: string;
     nonce: number;
     url: string;
+    type?: NFTType;
+}
+
+export enum NFTType {
+    Traveler = 'Traveler',
+    Elder = 'Elder',
 }
