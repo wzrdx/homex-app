@@ -1,29 +1,13 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image, Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { getTicketSFT } from '../../services/assets';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../../services/resources';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import {
-    CHAIN_ID,
-    COLLECTION_SIZE,
-    ELDER_YIELD_PER_HOUR,
-    TICKETS_TOKEN_ID,
-    TRAVELER_YIELD_PER_HOUR,
-} from '../../blockchain/config';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { COLLECTION_SIZE, ELDER_YIELD_PER_HOUR, TRAVELER_YIELD_PER_HOUR } from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { round } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 
 function Stats({ stakedNFTsCount, stakedAddressesCount, travelersCount, eldersCount, stakingInfo }) {
-    const [amount, setAmount] = useState(0);
-    const { address } = useGetAccountInfo();
-
     useEffect(() => {}, []);
 
     const getEnergyPerHour = (): number => {

@@ -14,6 +14,7 @@ import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import { NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 function Stake() {
     const { height, checkEgldBalance, displayToast } = useStaking();
@@ -36,6 +37,10 @@ function Stake() {
     useEffect(() => {
         getWalletNFTs();
     }, []);
+
+    useEffect(() => {
+        setSelectedTokens([]);
+    }, [travelers, elders]);
 
     const stake = async () => {
         if (!stakingInfo) {
@@ -103,11 +108,27 @@ function Stake() {
         }
     };
 
+    const selectAll = async () => {
+        if (!elders || !travelers) {
+            return;
+        }
+
+        setSelectedTokens(
+            _([...elders, ...travelers])
+                .take(25)
+                .map((token) => ({
+                    nonce: token.nonce,
+                    type: token.type as NFTType,
+                }))
+                .value()
+        );
+    };
+
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             {elders && travelers ? (
                 <>
-                    <Flex pb={6}>
+                    <Flex pb={6} alignItems="center">
                         <ActionButton
                             disabled={
                                 !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
@@ -119,6 +140,19 @@ function Stake() {
                         >
                             <Text>Stake</Text>
                         </ActionButton>
+
+                        <Box ml={4}>
+                            <ActionButton colorScheme="red" onClick={selectAll}>
+                                <Text>Select all (25 max.)</Text>
+                            </ActionButton>
+                        </Box>
+
+                        {_.isEmpty(selectedTokens) && (
+                            <Flex ml={4} alignItems="center">
+                                <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                                <Text color="almostWhite">Select some NFTs in order to stake</Text>
+                            </Flex>
+                        )}
                     </Flex>
 
                     <Flex

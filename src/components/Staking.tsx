@@ -45,14 +45,17 @@ function Staking() {
             getStakingInfo();
         }, REWARDS_QUERYING_INTERVAL);
 
-        getUserTokenNonces();
-        getStakedNFTsCount();
-        getStakedAddressesCount();
-
         return () => {
             clearInterval(rewardsQueryingTimer);
         };
     }, []);
+
+    useEffect(() => {
+        console.log('[Staking] Received stakingInfo');
+        getUserTokenNonces();
+        getStakedNFTsCount();
+        getStakedAddressesCount();
+    }, [stakingInfo]);
 
     useEffect(() => {
         if (!(ref?.current as any).clientHeight) {

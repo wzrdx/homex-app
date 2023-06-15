@@ -32,7 +32,7 @@ export const ActionButton: FunctionComponent<
             className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
             position="relative"
             width={[160, 160, 160, 200]}
-            padding={['0.4rem', '0.4rem', '0.4rem', '0.5rem']}
+            padding={['0.4rem', '0.4rem', '0.4rem', '0.45rem']}
             onClick={() => {
                 if (!isDisabled() && !isLoading && onClick) {
                     onClick();
@@ -44,15 +44,7 @@ export const ActionButton: FunctionComponent<
             style={!isEmpty(customStyle) ? customStyle : {}}
         >
             {isLoading && (
-                <Flex
-                    position="absolute"
-                    alignItems="center"
-                    justifyContent="center"
-                    top="0"
-                    right="0"
-                    bottom="0"
-                    left="0"
-                >
+                <Flex position="absolute" alignItems="center" justifyContent="center" top="0" right="0" bottom="0" left="0">
                     <Spinner size="sm" />
                 </Flex>
             )}
