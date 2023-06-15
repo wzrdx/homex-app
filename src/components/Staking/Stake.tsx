@@ -142,7 +142,7 @@ function Stake() {
                         </ActionButton>
 
                         <Box ml={4}>
-                            <ActionButton colorScheme="red" onClick={selectAll}>
+                            <ActionButton colorScheme="red" customStyle={{ width: '178px ' }} onClick={selectAll}>
                                 <Text>Select all (25 max.)</Text>
                             </ActionButton>
                         </Box>

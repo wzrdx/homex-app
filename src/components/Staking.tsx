@@ -21,6 +21,7 @@ export function useStaking() {
     return useOutletContext<StakingContext>();
 }
 
+// TODO: Delete Staking copy
 function Staking() {
     const { routes, routeNames, checkEgldBalance, displayToast } = useLayout();
 
