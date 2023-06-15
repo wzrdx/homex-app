@@ -1,22 +1,18 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image, Button, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getTicketSFT } from '../../services/assets';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { getNFTsCount, getWalletNonces } from '../../services/authentication';
-import { getRandomInt, pairwise } from '../../services/helpers';
-import { NFT, NFTType } from '../../blockchain/types';
+import { NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 
 function Stake() {
@@ -28,9 +24,7 @@ function Stake() {
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
-
-    const [travelers, setTravelers] = useState<NFT[]>();
-    const [elders, setElders] = useState<NFT[]>();
+    const { travelers, elders, getWalletNFTs } = useResourcesContext() as ResourcesContextType;
 
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
@@ -40,84 +34,8 @@ function Stake() {
     >([]);
 
     useEffect(() => {
-        init();
+        getWalletNFTs();
     }, []);
-
-    useEffect(() => {
-        console.log('[Stake] Received updated staking info');
-        setSelectedTokens([]);
-    }, [stakingInfo]);
-
-    const init = async () => {
-        try {
-            const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-            const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
-
-            const travelerchunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
-            const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
-
-            pairwise(
-                _(travelerchunks)
-                    .filter(_.identity)
-                    .map((chunk, index) => {
-                        return index * 25 + chunk;
-                    })
-                    .unshift(0)
-                    .value(),
-                (from: number, _: number) => {
-                    travelersApiCalls.push(getWalletNonces(address, TRAVELERS_COLLECTION_ID, from));
-                }
-            );
-
-            // TODO: Remove URL overwriting
-            const travelers = _(await Promise.all(travelersApiCalls))
-                .flatten()
-                .map((result) => result.data)
-                .flatten()
-                .map((nft) => ({
-                    ...nft,
-                    type: NFTType.Traveler,
-                    url: `https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
-                }))
-                .value();
-
-            const elderchunks = new Array(Math.floor(elderscount / 25)).fill(25).concat(elderscount % 25);
-            const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
-
-            pairwise(
-                _(elderchunks)
-                    .filter(_.identity)
-                    .map((chunk, index) => {
-                        return index * 25 + chunk;
-                    })
-                    .unshift(0)
-                    .value(),
-                (from: number, _: number) => {
-                    eldersApiCalls.push(getWalletNonces(address, ELDERS_COLLECTION_ID, from));
-                }
-            );
-
-            // TODO: Remove URL overwriting
-            const elders = _(await Promise.all(eldersApiCalls))
-                .flatten()
-                .map((result) => result.data)
-                .flatten()
-                .map((nft) => ({
-                    ...nft,
-                    type: NFTType.Elder,
-                    url: `https://media.elrond.com/nfts/asset/QmWv6En64krZQnvEhL7sEDovcZsgkdLpEfC6UzaVdVHrrJ/${nft.nonce}.png`,
-                }))
-                .value();
-
-            setTravelers(travelers);
-            setElders(elders);
-
-            console.log(travelers);
-            console.log(elders);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const stake = async () => {
         if (!stakingInfo) {
@@ -126,6 +44,12 @@ function Stake() {
 
         if (!(await checkEgldBalance())) {
             setButtonLoading(false);
+            return;
+        }
+
+        if (_.isEmpty(selectedTokens)) {
+            displayToast('error', 'Nothing to stake', 'Please select some NFTs first', 'redClrs');
+
             return;
         }
 
@@ -142,18 +66,6 @@ function Stake() {
                     )
                 )
                 .value();
-
-            if (_.isEmpty(transfers)) {
-                displayToast(
-                    'error',
-                    'Nothing to stake',
-                    'No NFT from the Home X collections is currently in your wallet',
-                    'redClrs'
-                );
-                setButtonLoading(false);
-
-                return;
-            }
 
             const tx = smartContract.methods
                 .stake()
@@ -181,7 +93,7 @@ function Stake() {
                 {
                     sessionId,
                     type: TransactionType.Stake,
-                    resolution: TxResolution.UpdateStakingInfo,
+                    resolution: TxResolution.UpdateStakingAndNFTs,
                 },
             ]);
 
@@ -198,10 +110,7 @@ function Stake() {
                     <Flex pb={6}>
                         <ActionButton
                             disabled={
-                                _.isEmpty(selectedTokens) ||
-                                !stakingInfo ||
-                                isTxPending(TransactionType.Claim) ||
-                                isTxPending(TransactionType.Unstake)
+                                !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
                             }
                             isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
                             colorScheme="red"
@@ -210,8 +119,6 @@ function Stake() {
                         >
                             <Text>Stake</Text>
                         </ActionButton>
-
-                        <Text>{_.map(selectedTokens, (i) => i.nonce).toString()}</Text>
                     </Flex>
 
                     <Flex
@@ -233,7 +140,11 @@ function Stake() {
                                 <Box
                                     key={index}
                                     cursor="pointer"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (isButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            return;
+                                        }
+
                                         setSelectedTokens((tokens) => {
                                             if (
                                                 _.findIndex(tokens, (t) => t.nonce === token.nonce && t.type === token.type) ===
@@ -256,8 +167,8 @@ function Stake() {
                                                     (t) => !(t.nonce === token.nonce && t.type === token.type)
                                                 );
                                             }
-                                        })
-                                    }
+                                        });
+                                    }}
                                 >
                                     <TokenCard
                                         isSelected={

@@ -190,7 +190,7 @@ function Testing() {
                 {
                     sessionId,
                     type: TransactionType.Unstake,
-                    resolution: TxResolution.UpdateStakingInfo,
+                    resolution: TxResolution.UpdateStakingAndNFTs,
                     data: {
                         energyGain,
                     },

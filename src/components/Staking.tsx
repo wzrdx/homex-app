@@ -1,27 +1,8 @@
-import { Box, Flex, Image, Spinner, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { ActionButton } from '../shared/ActionButton/ActionButton';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { smartContract } from '../blockchain/smartContract';
-import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
-import { getResourceElements } from '../services/resources';
-import Reward from '../shared/Reward';
-import { getEldersLogo, getRitualImage, getSmallLogo } from '../services/assets';
 import { useLayout } from './Layout';
 import _ from 'lodash';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { getWalletNonces } from '../services/authentication';
-import { round, toTitleCase } from '../services/helpers';
-import {
-    CHAIN_ID,
-    ELDERS_COLLECTION_ID,
-    ELDER_YIELD_PER_HOUR,
-    REWARDS_QUERYING_INTERVAL,
-    TRAVELERS_COLLECTION_ID,
-    TRAVELER_YIELD_PER_HOUR,
-} from '../blockchain/config';
+import { REWARDS_QUERYING_INTERVAL } from '../blockchain/config';
 import { StoreContextType, useStoreContext } from '../services/store';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';

@@ -40,7 +40,7 @@ function App() {
     const { getOngoingQuests } = useQuestsContext() as QuestsContextType;
     const { getStakingInfo } = useStoreContext() as StoreContextType;
 
-    const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
+    const { getWalletNFTs, getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
     useEffect(() => {
@@ -154,6 +154,12 @@ function App() {
 
                 const calls = map(resources, (resource) => getResourceCall(resource));
                 forEach(calls, (call) => call());
+                break;
+
+            case TxResolution.UpdateStakingAndNFTs:
+                getWalletNFTs();
+                getEnergy();
+                getStakingInfo();
                 break;
 
             case TxResolution.UpdateStakingInfo:
