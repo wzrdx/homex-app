@@ -36,8 +36,9 @@ function TokenCard({ isSelected, name, url, type }) {
                         left={0}
                     ></Flex>
                 )}
-
-                <Image src={url} alt="NFT" borderRadius="2px" userSelect="none" />
+                {/* TODO: Remove */}
+                <Box width="100%" height="100%" backgroundColor="#ff003018"></Box>
+                {/* <Image src={url} alt="NFT" borderRadius="2px" userSelect="none" /> */}
             </Box>
 
             <Text fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>

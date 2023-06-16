@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import { API_URL } from '../blockchain/config';
+import { API_URL, contractAddress } from '../blockchain/config';
 import { NFT } from '../blockchain/types';
 
 export interface AuthenticationContextType {
@@ -24,6 +24,16 @@ export const getWalletNonces = (address: string, collection: string, from = 0): 
             type: 'NonFungibleESDT',
             fields: 'nonce,name,url',
             from,
+        },
+    });
+
+export const getStakedNFTs = (collection: string, identifiers: string): Promise<{ data: Array<NFT> }> =>
+    axios.get(`accounts/${contractAddress}/nfts`, {
+        baseURL: API_URL,
+        params: {
+            identifiers,
+            collections: collection,
+            fields: 'nonce,name,url',
         },
     });
 

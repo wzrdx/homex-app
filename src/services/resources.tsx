@@ -16,21 +16,16 @@ import TicketsImage from '../assets/resources/images/tickets.png';
 
 import {
     API_URL,
-    ELDERS_COLLECTION_ID,
     ENERGY_TOKEN_ID,
     ESSENCE_TOKEN_ID,
     GEMS_TOKEN_ID,
     HERBS_TOKEN_ID,
     TICKETS_TOKEN_ID,
-    TRAVELERS_COLLECTION_ID,
 } from '../blockchain/config';
 import axios from 'axios';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useDisclosure } from '@chakra-ui/react';
-import { NFT, NFTType } from '../blockchain/types';
 import _ from 'lodash';
-import { getNFTsCount, getWalletNonces } from './authentication';
-import { pairwise } from './helpers';
 
 export const INITIAL_RESOURCES_STATE = {
     energy: 0,
@@ -98,9 +93,6 @@ export interface ResourcesContextType {
     isTicketModalOpen: boolean;
     onTicketModalOpen: () => void;
     onTicketModalClose: () => void;
-    getWalletNFTs: () => Promise<void>;
-    travelers: NFT[] | undefined;
-    elders: NFT[] | undefined;
 }
 
 const ResourcesContext = createContext<ResourcesContextType | null>(null);
@@ -109,82 +101,10 @@ export const useResourcesContext = () => useContext(ResourcesContext);
 
 export const ResourcesProvider = ({ children }) => {
     const [resources, setResources] = useState(INITIAL_RESOURCES_STATE);
-    const [travelers, setTravelers] = useState<NFT[]>();
-    const [elders, setElders] = useState<NFT[]>();
 
     let { address } = useGetAccountInfo();
 
     const { isOpen: isTicketModalOpen, onOpen: onTicketModalOpen, onClose: onTicketModalClose } = useDisclosure();
-
-    const getWalletNFTs = async () => {
-        try {
-            const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-            const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
-
-            const travelerchunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
-            const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
-
-            pairwise(
-                _(travelerchunks)
-                    .filter(_.identity)
-                    .map((chunk, index) => {
-                        return index * 25 + chunk;
-                    })
-                    .unshift(0)
-                    .value(),
-                (from: number, _: number) => {
-                    travelersApiCalls.push(getWalletNonces(address, TRAVELERS_COLLECTION_ID, from));
-                }
-            );
-
-            // TODO: Remove URL overwriting
-            const travelers = _(await Promise.all(travelersApiCalls))
-                .flatten()
-                .map((result) => result.data)
-                .flatten()
-                .map((nft) => ({
-                    ...nft,
-                    type: NFTType.Traveler,
-                    url: `https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
-                }))
-                .orderBy('nonce', 'asc')
-                .value();
-
-            const elderchunks = new Array(Math.floor(elderscount / 25)).fill(25).concat(elderscount % 25);
-            const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
-
-            pairwise(
-                _(elderchunks)
-                    .filter(_.identity)
-                    .map((chunk, index) => {
-                        return index * 25 + chunk;
-                    })
-                    .unshift(0)
-                    .value(),
-                (from: number, _: number) => {
-                    eldersApiCalls.push(getWalletNonces(address, ELDERS_COLLECTION_ID, from));
-                }
-            );
-
-            // TODO: Remove URL overwriting
-            const elders = _(await Promise.all(eldersApiCalls))
-                .flatten()
-                .map((result) => result.data)
-                .flatten()
-                .map((nft) => ({
-                    ...nft,
-                    type: NFTType.Elder,
-                    url: `https://media.elrond.com/nfts/asset/QmWv6En64krZQnvEhL7sEDovcZsgkdLpEfC6UzaVdVHrrJ/${nft.nonce}.png`,
-                }))
-                .orderBy('nonce', 'asc')
-                .value();
-
-            setTravelers(travelers);
-            setElders(elders);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const getEnergy = async () => {
         try {
@@ -319,9 +239,6 @@ export const ResourcesProvider = ({ children }) => {
                 isTicketModalOpen,
                 onTicketModalOpen,
                 onTicketModalClose,
-                getWalletNFTs,
-                travelers,
-                elders,
             }}
         >
             {children}

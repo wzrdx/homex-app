@@ -9,7 +9,6 @@ import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
 import { useGetStakedAddressesCount } from '../blockchain/hooks/useGetStakedAddressesCount';
-import { useGetUserTokenNonces } from '../blockchain/hooks/useGetUserTokenNonces';
 
 type StakingContext = {
     height: number;
@@ -30,11 +29,10 @@ function Staking() {
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
-    const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+    const { stakingInfo, getStakingInfo, nonces, getUserTokenNonces } = useStoreContext() as StoreContextType;
 
     const { stakedNFTsCount, getStakedNFTsCount } = useGetStakedNFTsCount();
-    const { stakedAddressesCount, getStakedAddressesCount } = useGetStakedAddressesCount();
-    const { nonces, getUserTokenNonces } = useGetUserTokenNonces();
+    // const { stakedAddressesCount, getStakedAddressesCount } = useGetStakedAddressesCount();
 
     // Init
     useEffect(() => {
@@ -55,7 +53,6 @@ function Staking() {
         console.log('[Staking] Received stakingInfo');
         getUserTokenNonces();
         getStakedNFTsCount();
-        getStakedAddressesCount();
     }, [stakingInfo]);
 
     useEffect(() => {
@@ -81,7 +78,6 @@ function Staking() {
                 <Flex flex={1}>
                     <Stats
                         stakedNFTsCount={stakedNFTsCount}
-                        stakedAddressesCount={stakedAddressesCount}
                         travelersCount={_.size(nonces?.travelers)}
                         eldersCount={_.size(nonces?.elders)}
                         stakingInfo={stakingInfo}

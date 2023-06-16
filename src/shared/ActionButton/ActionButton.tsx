@@ -32,7 +32,7 @@ export const ActionButton: FunctionComponent<
             className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
             position="relative"
             width={[160, 160, 160, 200]}
-            padding={['0.4rem', '0.4rem', '0.4rem', '0.45rem']}
+            padding={['0.375rem', '0.375rem', '0.375rem', '0.45rem']}
             onClick={() => {
                 if (!isDisabled() && !isLoading && onClick) {
                     onClick();

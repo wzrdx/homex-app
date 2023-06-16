@@ -1,14 +1,49 @@
 import _ from 'lodash';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { COLLECTION_SIZE, ELDER_YIELD_PER_HOUR, TRAVELER_YIELD_PER_HOUR } from '../../blockchain/config';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { round } from '../../services/helpers';
+import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
+import { intervalToDuration } from 'date-fns';
 
-function Stats({ stakedNFTsCount, stakedAddressesCount, travelersCount, eldersCount, stakingInfo }) {
-    useEffect(() => {}, []);
+function Stats({ stakedNFTsCount, travelersCount, eldersCount, stakingInfo }) {
+    const [duration, setDuration] = useState<Duration>({
+        seconds: 0,
+        minutes: 0,
+        hours: 0,
+        days: 0,
+        months: 0,
+        years: 0,
+    });
+
+    useEffect(() => {
+        let timer: string | number | NodeJS.Timer | undefined;
+
+        if (stakingInfo && stakingInfo.isStaked) {
+            clearInterval(timer);
+
+            setDuration(
+                intervalToDuration({
+                    start: stakingInfo.timestamp,
+                    end: new Date(),
+                })
+            );
+
+            timer = setInterval(() => {
+                setDuration(
+                    intervalToDuration({
+                        start: stakingInfo.timestamp,
+                        end: new Date(),
+                    })
+                );
+            }, 1000);
+        }
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, [stakingInfo]);
 
     const getEnergyPerHour = (): number => {
         if (!stakingInfo) {
@@ -19,6 +54,18 @@ function Stats({ stakedNFTsCount, stakedAddressesCount, travelersCount, eldersCo
         const eldersYield = round(ELDER_YIELD_PER_HOUR * stakingInfo?.elderNonces?.length, 1);
         return round(travelersYield + eldersYield, 1);
     };
+
+    const getDays = (): string => {
+        const days: number = duration.days as number;
+        if (!days) {
+            return '';
+        }
+
+        return days > 1 ? `${days} days,` : `one day,`;
+    };
+
+    const getTimestamp = (): string =>
+        `${getDays()}${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`;
 
     return (
         <Flex justifyContent="center" height="100%">
@@ -34,6 +81,7 @@ function Stats({ stakedNFTsCount, stakedAddressesCount, travelersCount, eldersCo
                     <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
                 </StatsEntry>
                 <StatsEntry label="Energy per hour" color="energyBright" value={getEnergyPerHour()} />
+                {stakingInfo.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
 
                 {/* Global */}
                 <Text mt={5} mb={3} layerStyle="header1">
@@ -45,7 +93,7 @@ function Stats({ stakedNFTsCount, stakedAddressesCount, travelersCount, eldersCo
                     value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
                 />
 
-                <StatsEntry label="Total wallets staked" value={stakedAddressesCount} />
+                {/* <StatsEntry label="Total wallets staked" value={stakedAddressesCount} /> */}
             </Flex>
         </Flex>
     );

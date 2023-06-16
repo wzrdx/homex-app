@@ -57,3 +57,5 @@ export function toTitleCase(str: string) {
 }
 
 export const getTxExplorerURL = (hash: string) => `${EXPLORER_URL}/transactions/${hash}`;
+
+export const toHexNumber = (value: number, padding: number) => value.toString(16).padStart(padding, '0');

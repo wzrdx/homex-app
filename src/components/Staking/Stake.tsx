@@ -21,11 +21,10 @@ function Stake() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo } = useStoreContext() as StoreContextType;
+    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
-    const { travelers, elders, getWalletNFTs } = useResourcesContext() as ResourcesContextType;
 
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
@@ -142,7 +141,7 @@ function Stake() {
                         </ActionButton>
 
                         <Box ml={4}>
-                            <ActionButton colorScheme="red" customStyle={{ width: '178px ' }} onClick={selectAll}>
+                            <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
                                 <Text>Select all (25 max.)</Text>
                             </ActionButton>
                         </Box>
