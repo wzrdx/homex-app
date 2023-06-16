@@ -59,7 +59,6 @@ export const StoreProvider = ({ children }) => {
                 }
             );
 
-            // TODO: Remove URL overwriting
             const travelers = _(await Promise.all(travelersApiCalls))
                 .flatten()
                 .map((result) => result.data)
@@ -67,7 +66,6 @@ export const StoreProvider = ({ children }) => {
                 .map((nft) => ({
                     ...nft,
                     type: NFTType.Traveler,
-                    url: `https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
@@ -88,7 +86,6 @@ export const StoreProvider = ({ children }) => {
                 }
             );
 
-            // TODO: Remove URL overwriting
             const elders = _(await Promise.all(eldersApiCalls))
                 .flatten()
                 .map((result) => result.data)
@@ -96,7 +93,6 @@ export const StoreProvider = ({ children }) => {
                 .map((nft) => ({
                     ...nft,
                     type: NFTType.Elder,
-                    url: `https://media.elrond.com/nfts/asset/QmWv6En64krZQnvEhL7sEDovcZsgkdLpEfC6UzaVdVHrrJ/${nft.nonce}.png`,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();

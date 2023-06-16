@@ -14,7 +14,7 @@ import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import { NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 
 function Stake() {
     const { height, checkEgldBalance, displayToast } = useStaking();
@@ -127,28 +127,35 @@ function Stake() {
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             {elders && travelers ? (
                 <>
-                    <Flex pb={6} alignItems="center">
-                        <ActionButton
-                            disabled={
-                                !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
-                            }
-                            isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
-                            colorScheme="red"
-                            customStyle={{ width: '134px' }}
-                            onClick={stake}
-                        >
-                            <Text>Stake</Text>
-                        </ActionButton>
-
-                        <Box ml={4}>
-                            <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
-                                <Text>Select all (25 max.)</Text>
+                    <Flex pb={6} alignItems="center" justifyContent="space-between">
+                        <Flex alignItems="center">
+                            <ActionButton
+                                disabled={
+                                    !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
+                                }
+                                isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
+                                colorScheme="red"
+                                customStyle={{ width: '134px' }}
+                                onClick={stake}
+                            >
+                                <Text>Stake</Text>
                             </ActionButton>
-                        </Box>
+
+                            <Box ml={4}>
+                                <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
+                                    <Text>Select all (25 max.)</Text>
+                                </ActionButton>
+                            </Box>
+
+                            <Flex ml={4} alignItems="center">
+                                <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                                <Text color="almostWhite">Select some NFTs in order to stake</Text>
+                            </Flex>
+                        </Flex>
 
                         <Flex ml={4} alignItems="center">
-                            <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                            <Text color="almostWhite">Select some NFTs in order to stake</Text>
+                            <InfoIcon mr={1.5} color="brightWheat" />
+                            <Text color="brightWheat">Staking will automatically claim your rewards</Text>
                         </Flex>
                     </Flex>
 

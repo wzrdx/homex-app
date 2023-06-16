@@ -15,7 +15,9 @@ export const EXPLORER_URL = 'https://devnet-explorer.multiversx.com';
 // TODO: Parametrize this file using a development mode flag
 export const COLLECTION_SIZE = 200;
 export const TRAVELERS_COLLECTION_ID = 'PTESTERS-8fd15c';
+export const TRAVELERS_PADDING = 2; // TODO: 4
 export const ELDERS_COLLECTION_ID = 'PINKF-f70e86';
+export const ELDERS_PADDING = 2;
 
 export const TICKETS_TOKEN_ID = 'TICKETS-be6092';
 export const ENERGY_TOKEN_ID = 'ENERGY-a1ac9c';

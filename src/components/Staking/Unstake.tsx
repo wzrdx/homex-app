@@ -4,10 +4,17 @@ import { useEffect, useState } from 'react';
 import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { Address, TokenTransfer, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { API_URL, CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import {
+    API_URL,
+    CHAIN_ID,
+    ELDERS_COLLECTION_ID,
+    ELDERS_PADDING,
+    TRAVELERS_COLLECTION_ID,
+    TRAVELERS_PADDING,
+} from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
@@ -23,7 +30,7 @@ function Unstake() {
     const { height, checkEgldBalance, displayToast } = useStaking();
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, getStakingInfo, nonces, getUserTokenNonces } = useStoreContext() as StoreContextType;
+    const { stakingInfo, getStakingInfo, nonces } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
@@ -38,8 +45,6 @@ function Unstake() {
             type: NFTType;
         }>
     >([]);
-
-    useEffect(() => {}, []);
 
     useEffect(() => {
         console.log('[Unstake] nonces', nonces);
@@ -61,8 +66,10 @@ function Unstake() {
         const travelerChunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
         const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
-        // TODO: toHexNumber should force to 4 digits for travelers and 2 for elders
-        const travelerIds = _.map(nonces?.travelers, (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, 2)}`);
+        const travelerIds = _.map(
+            nonces?.travelers,
+            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, TRAVELERS_PADDING)}`
+        );
 
         pairwise(
             _(travelerChunks)
@@ -78,7 +85,6 @@ function Unstake() {
             }
         );
 
-        // TODO: Remove URL overwriting
         const travelers = _(await Promise.all(travelersApiCalls))
             .flatten()
             .map((result) => result.data)
@@ -93,8 +99,7 @@ function Unstake() {
         const elderChunks = new Array(Math.floor(eldersCount / 25)).fill(25).concat(eldersCount % 25);
         const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
-        // TODO: toHexNumber should force to 4 digits for travelers and 2 for elders
-        const elderIds = _.map(nonces?.elders, (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, 2)}`);
+        const elderIds = _.map(nonces?.elders, (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`);
 
         pairwise(
             _(elderChunks)
@@ -110,7 +115,6 @@ function Unstake() {
             }
         );
 
-        // TODO: Remove URL overwriting
         const elders = _(await Promise.all(eldersApiCalls))
             .flatten()
             .map((result) => result.data)
@@ -138,23 +142,31 @@ function Unstake() {
 
         setUnstakeButtonLoading(true);
 
-        const updatedStakingInfo: StakingInfo | undefined = await getStakingInfo();
         const user = new Address(address);
 
-        if (!updatedStakingInfo) {
-            console.error('Unable to unstake');
+        const travelerNonces = _(selectedTokens)
+            .filter((token) => token.type === NFTType.Traveler)
+            .map((token) => new U64Value(token.nonce))
+            .value();
+
+        const elderNonces = _(selectedTokens)
+            .filter((token) => token.type === NFTType.Elder)
+            .map((token) => new U64Value(token.nonce))
+            .value();
+
+        const count = travelerNonces.length + elderNonces.length;
+
+        if (!count) {
             setUnstakeButtonLoading(false);
             return;
         }
 
-        const energyGain = _.cloneDeep(updatedStakingInfo.rewards);
-
         try {
             const tx = smartContract.methods
-                .unstake()
+                .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 1000000 * selectedTokens.length)
+                .withGasLimit(7000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
@@ -175,9 +187,6 @@ function Unstake() {
                     sessionId,
                     type: TransactionType.Unstake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
-                    data: {
-                        energyGain,
-                    },
                 },
             ]);
 
@@ -199,16 +208,7 @@ function Unstake() {
 
         setClaimButtonLoading(true);
 
-        const updatedStakingInfo: StakingInfo | undefined = await getStakingInfo();
         const user = new Address(address);
-
-        if (!updatedStakingInfo) {
-            console.error('Unable to claim');
-            setClaimButtonLoading(false);
-            return;
-        }
-
-        const energyGain = _.cloneDeep(updatedStakingInfo.rewards);
 
         try {
             const tx = smartContract.methods
@@ -236,9 +236,6 @@ function Unstake() {
                     sessionId,
                     type: TransactionType.Claim,
                     resolution: TxResolution.UpdateStakingInfo,
-                    data: {
-                        energyGain,
-                    },
                 },
             ]);
 
@@ -272,7 +269,7 @@ function Unstake() {
                                     customStyle={{ width: '186px' }}
                                     onClick={() => console.log('select_all')}
                                 >
-                                    <Text>Select all (25 max.)</Text>
+                                    <Text>Select all</Text>
                                 </ActionButton>
                             </Box>
 

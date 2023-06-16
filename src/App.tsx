@@ -94,11 +94,13 @@ function App() {
                         break;
 
                     case TransactionType.Unstake:
-                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: tx.data.energyGain }], 'unstake');
+                        // TODO: Energy gain
+                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: 0 }], 'unstake');
                         break;
 
                     case TransactionType.Claim:
-                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: tx.data.energyGain }], 'unstake');
+                        // TODO: Energy gain
+                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: 0 }], 'unstake');
                         break;
 
                     case TransactionType.JoinRaffle:
@@ -157,6 +159,8 @@ function App() {
                 break;
 
             case TxResolution.UpdateStakingAndNFTs:
+                console.log('[App] UpdateStakingAndNFTs', tx);
+
                 getWalletNFTs();
                 getUserTokenNonces();
                 getEnergy();

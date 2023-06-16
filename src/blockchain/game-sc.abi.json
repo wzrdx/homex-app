@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.68.0-nightly",
-            "commitHash": "3020239de947ec52677e9b4e853a6a9fc073d1f9",
-            "commitDate": "2023-01-09",
+            "version": "1.69.0-nightly",
+            "commitHash": "31f858d9a511f24fedb8ed997b28304fec809630",
+            "commitDate": "2023-02-28",
             "channel": "Nightly",
-            "short": "rustc 1.68.0-nightly (3020239de 2023-01-09)"
+            "short": "rustc 1.69.0-nightly (31f858d9a 2023-02-28)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -251,7 +251,16 @@
         {
             "name": "unstake",
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "traveler_nonces",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "elder_nonces",
+                    "type": "List<u64>"
+                }
+            ],
             "outputs": []
         },
         {
