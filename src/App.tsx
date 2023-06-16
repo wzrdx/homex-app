@@ -32,7 +32,7 @@ function App() {
     const navigate = useNavigate();
 
     const { pendingTxs, setPendingTxs, getGameState } = useTransactionsContext() as TransactionsContextType;
-    const { playSound, setIsMusicOn } = useSoundsContext() as SoundsContextType;
+    const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
@@ -45,7 +45,6 @@ function App() {
 
     useEffect(() => {
         getGameState();
-        setIsMusicOn(true);
 
         const timer = setInterval(async () => {
             const isGamePaused = await getGameState();
