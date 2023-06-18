@@ -1,13 +1,14 @@
 import { Image, Flex, Text, Box } from '@chakra-ui/react';
 import { NFTType } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function TokenCard({ isSelected, name, url, type }) {
     const getColor = () => (type === NFTType.Traveler ? 'whitesmoke' : 'redClrs');
 
     return (
         <Flex className="NFT" flexDir="column">
-            <Box mb={1} position="relative">
+            <Box position="relative" minWidth="170px" minHeight="170px">
                 {isSelected && (
                     <Flex
                         justifyContent="center"
@@ -36,15 +37,8 @@ function TokenCard({ isSelected, name, url, type }) {
                         left={0}
                     ></Flex>
                 )}
-                <Image
-                    src={url}
-                    minWidth="160px"
-                    minHeight="160px"
-                    alt="NFT"
-                    borderRadius="2px"
-                    userSelect="none"
-                    loading="lazy"
-                />
+
+                <LazyLoadImage src={url} alt="NFT" loading="lazy" effect="opacity" />
             </Box>
 
             <Text fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>
