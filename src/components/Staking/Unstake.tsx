@@ -44,8 +44,6 @@ function Unstake() {
     >([]);
 
     useEffect(() => {
-        console.log('[Unstake] nonces', nonces);
-
         setSelectedTokens([]);
         getNFTs();
     }, [nonces]);
@@ -55,7 +53,8 @@ function Unstake() {
             return;
         }
 
-        console.log('[Unstake] getNFTs', nonces.elders.length + nonces.travelers.length);
+        setTravelers([]);
+        setElders([]);
 
         const travelersCount = _.size(nonces?.travelers);
         const eldersCount = _.size(nonces?.elders);

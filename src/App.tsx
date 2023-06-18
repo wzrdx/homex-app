@@ -26,7 +26,7 @@ import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
 import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
 import { getTx } from './services/helpers';
-import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
+import { EGLD_DENOMINATION, ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 
 const REFRESH_TIME = 1800000; // 30 minutes
 
@@ -71,8 +71,6 @@ function App() {
             const txs: Transaction[] = removeTxs(successfulTransactionsArray);
 
             forEach(txs, async (tx) => {
-                console.warn(tx);
-
                 if (tx.resolution) {
                     applyTxResolution(tx);
                 }
@@ -113,10 +111,7 @@ function App() {
                         break;
 
                     case TransactionType.Swap:
-                        // TODO:
-                        displayToast('Swapped ENERGY for EGLD', `You received ${tx.data.egldValue} in your wallet`, 'blue.500');
-                        playSound('swap');
-
+                        displayEGLDGain(tx?.hash);
                         break;
 
                     default:
@@ -228,7 +223,7 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 10000,
+            duration: 8000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
         });
     };
@@ -242,7 +237,7 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 10000,
+            duration: 8000,
             render: () => (
                 <CustomToast type="success" title={title} color={color}>
                     <Text mt={2}>{text}</Text>
@@ -263,6 +258,22 @@ function App() {
                     'Energy gained',
                     [{ resource: 'energy', value: operation?.value / TOKEN_DENOMINATION }],
                     'unstake'
+                );
+            }
+        }
+    };
+
+    const displayEGLDGain = async (txHash: string | undefined) => {
+        if (txHash) {
+            const result = await getTx(txHash);
+            if (result.data) {
+                const operation = find(result.data.operations, (op) => op.action === 'transfer' && op.type === 'egld');
+
+                playSound('swap');
+                displayToast(
+                    'Swapped ENERGY for EGLD',
+                    `You received ${operation.value / EGLD_DENOMINATION} in your wallet`,
+                    'blue.500'
                 );
             }
         }

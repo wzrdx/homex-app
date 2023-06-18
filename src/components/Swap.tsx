@@ -92,9 +92,6 @@ function Swap() {
                     sessionId,
                     type: TransactionType.Swap,
                     resolution: TxResolution.UpdateEnergy,
-                    data: {
-                        egldValue,
-                    },
                 },
             ]);
 
