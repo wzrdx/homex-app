@@ -26,6 +26,7 @@ export interface Transaction {
     type: TransactionType;
     questId?: number;
     resolution?: TxResolution;
+    hash?: string;
     data?: any;
 }
 

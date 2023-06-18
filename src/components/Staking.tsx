@@ -2,13 +2,11 @@ import { Box, Flex } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useLayout } from './Layout';
 import _ from 'lodash';
-import { REWARDS_QUERYING_INTERVAL } from '../blockchain/config';
 import { StoreContextType, useStoreContext } from '../services/store';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
-import { useGetStakedAddressesCount } from '../blockchain/hooks/useGetStakedAddressesCount';
 
 type StakingContext = {
     height: number;
@@ -20,7 +18,6 @@ export function useStaking() {
     return useOutletContext<StakingContext>();
 }
 
-// TODO: Delete Staking copy
 function Staking() {
     const { routes, routeNames, checkEgldBalance, displayToast } = useLayout();
 
@@ -29,28 +26,15 @@ function Staking() {
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
-    const { stakingInfo, getStakingInfo, nonces, getUserTokenNonces } = useStoreContext() as StoreContextType;
-
+    const { stakingInfo, nonces, getUserTokenNonces } = useStoreContext() as StoreContextType;
     const { stakedNFTsCount, getStakedNFTsCount } = useGetStakedNFTsCount();
-    // const { stakedAddressesCount, getStakedAddressesCount } = useGetStakedAddressesCount();
 
     // Init
     useEffect(() => {
         setRoute(routes.find((route) => route.path === routeNames.staking));
-
-        getStakingInfo();
-
-        let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
-            getStakingInfo();
-        }, REWARDS_QUERYING_INTERVAL);
-
-        return () => {
-            clearInterval(rewardsQueryingTimer);
-        };
     }, []);
 
     useEffect(() => {
-        console.log('[Staking] Received stakingInfo');
         getUserTokenNonces();
         getStakedNFTsCount();
     }, [stakingInfo]);
@@ -80,7 +64,6 @@ function Staking() {
                         stakedNFTsCount={stakedNFTsCount}
                         travelersCount={_.size(nonces?.travelers)}
                         eldersCount={_.size(nonces?.elders)}
-                        stakingInfo={stakingInfo}
                     />
                 </Flex>
 

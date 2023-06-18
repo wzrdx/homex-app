@@ -98,6 +98,7 @@ function Stake() {
                     sessionId,
                     type: TransactionType.Stake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
+                    data: _.size(transfers),
                 },
             ]);
 

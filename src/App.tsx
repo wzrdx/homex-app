@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, first, find, cloneDeep, remove, forEach } from 'lodash';
+import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -24,6 +24,9 @@ import { QuestsContextType, getQuest, useQuestsContext } from './services/quests
 import { Quest } from './types';
 import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
+import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
+import { getTx } from './services/helpers';
+import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 
 const REFRESH_TIME = 1800000; // 30 minutes
 
@@ -60,14 +63,16 @@ function App() {
     }, []);
 
     useEffect(() => {
-        removeTxs(map(failedTransactionsArray, (tx) => head(tx)));
+        removeTxs(failedTransactionsArray);
     }, [failedTransactionsArray]);
 
     useEffect(() => {
         if (hasSuccessfulTransactions) {
-            const txs = removeTxs(map(successfulTransactionsArray, (tx) => head(tx)));
+            const txs: Transaction[] = removeTxs(successfulTransactionsArray);
 
-            forEach(txs, (tx) => {
+            forEach(txs, async (tx) => {
+                console.warn(tx);
+
                 if (tx.resolution) {
                     applyTxResolution(tx);
                 }
@@ -77,7 +82,7 @@ function App() {
                         const quest: Quest = getQuest(tx.questId);
                         const isMission = quest.type === 'final';
 
-                        displayResourcesToast(`${isMission ? 'Mission' : 'Quest'} complete!`, quest.rewards, 'ticket');
+                        displayResourcesToast(`${isMission ? 'Mission' : 'Quest'} complete`, quest.rewards, 'ticket');
 
                         if (isMission) {
                             onTicketModalOpen();
@@ -90,29 +95,26 @@ function App() {
                         break;
 
                     case TransactionType.Stake:
-                        playSound('stake');
+                        displayToast('Staking succesful', `Successfully staked ${tx.data} NFTs`, 'green.500', 'stake');
+                        displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.Unstake:
-                        // TODO: Energy gain
-                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: 0 }], 'unstake');
+                        displayToast('Unstaking succesful', `Successfully unstaked ${tx.data} NFTs`, 'green.500');
+                        displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.Claim:
-                        // TODO: Energy gain
-                        displayResourcesToast('Energy gained!', [{ resource: 'energy', value: 0 }], 'unstake');
+                        displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.JoinRaffle:
-                        displayToast('Ticket/s sent!', 'Successfully joined the raffle', 'green.500');
+                        displayToast('Ticket/s sent', 'Successfully joined the raffle', 'green.500');
                         break;
 
                     case TransactionType.Swap:
-                        displayToast(
-                            'Swapped ENERGY for EGLD!',
-                            `You received ${tx.data.egldValue} in your wallet`,
-                            'blue.500'
-                        );
+                        // TODO:
+                        displayToast('Swapped ENERGY for EGLD', `You received ${tx.data.egldValue} in your wallet`, 'blue.500');
                         playSound('swap');
 
                         break;
@@ -124,9 +126,10 @@ function App() {
         }
     }, [successfulTransactionsArray]);
 
-    const removeTxs = (victimSessionIds: string[]): Transaction[] => {
+    const removeTxs = (transactions: [string, SignedTransactionsBodyType][]): Transaction[] => {
         let victims: Transaction[] = [];
 
+        const victimSessionIds: string[] = map(transactions, (tx) => tx[0]);
         const pendingSessionIds: string[] = map(pendingTxs, (tx) => tx.sessionId);
         const hasTxsToRemove = victimSessionIds.some((id) => includes(pendingSessionIds, id));
 
@@ -136,6 +139,18 @@ function App() {
 
             setPendingTxs(txs);
         }
+
+        victims = map(victims, (victimTx) => {
+            let hash: string | undefined;
+
+            const tx = find(transactions, (tx) => tx[0] === victimTx.sessionId);
+
+            if (tx && !isEmpty(tx[1].transactions)) {
+                hash = head(tx[1].transactions)?.hash;
+            }
+
+            return { ...victimTx, hash };
+        });
 
         return victims;
     };
@@ -159,10 +174,7 @@ function App() {
                 break;
 
             case TxResolution.UpdateStakingAndNFTs:
-                console.log('[App] UpdateStakingAndNFTs', tx);
-
                 getWalletNFTs();
-                getUserTokenNonces();
                 getEnergy();
                 getStakingInfo();
                 break;
@@ -216,13 +228,13 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 6000,
+            duration: 10000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
         });
     };
 
-    const displayToast = (title: string, text: string, color = 'redClrs') => {
-        playSound('navigate');
+    const displayToast = (title: string, text: string, color = 'redClrs', sound = 'navigate') => {
+        playSound(sound);
 
         toast({
             position: 'top-right',
@@ -230,13 +242,30 @@ function App() {
                 marginTop: '2rem',
                 marginRight: '2rem',
             },
-            duration: 6000,
+            duration: 10000,
             render: () => (
                 <CustomToast type="success" title={title} color={color}>
                     <Text mt={2}>{text}</Text>
                 </CustomToast>
             ),
         });
+    };
+
+    const displayEnergyGain = async (txHash: string | undefined) => {
+        if (txHash) {
+            const result = await getTx(txHash);
+            if (result.data) {
+                const operation = find(
+                    result.data.operations,
+                    (op) => op.action === 'transfer' && op.identifier === ENERGY_TOKEN_ID
+                );
+                displayResourcesToast(
+                    'Energy gained',
+                    [{ resource: 'energy', value: operation?.value / TOKEN_DENOMINATION }],
+                    'unstake'
+                );
+            }
+        }
     };
 
     return (

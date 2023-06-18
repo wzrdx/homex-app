@@ -1,14 +1,12 @@
 import _ from 'lodash';
 import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer, U64Value } from '@multiversx/sdk-core/out';
+import { Address, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import {
-    API_URL,
     CHAIN_ID,
     ELDERS_COLLECTION_ID,
     ELDERS_PADDING,
@@ -23,14 +21,13 @@ import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getStakedNFTs } from '../../services/authentication';
 import { pairwise, toHexNumber } from '../../services/helpers';
-import { StakingInfo } from '../../blockchain/hooks/useGetStakingInfo';
 import { smartContract } from '../../blockchain/smartContract';
 
 function Unstake() {
-    const { height, checkEgldBalance, displayToast } = useStaking();
+    const { height, checkEgldBalance } = useStaking();
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, getStakingInfo, nonces } = useStoreContext() as StoreContextType;
+    const { stakingInfo, nonces } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
@@ -187,6 +184,7 @@ function Unstake() {
                     sessionId,
                     type: TransactionType.Unstake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
+                    data: count,
                 },
             ]);
 

@@ -27,7 +27,7 @@ export const ESSENCE_TOKEN_ID = 'ESSENCE-7ae5f2';
 
 export const TRAVELER_YIELD_PER_HOUR: number = 3;
 export const ELDER_YIELD_PER_HOUR: number = 3;
-export const REWARDS_QUERYING_INTERVAL = 60000;
+export const REWARDS_QUERYING_INTERVAL = 120000;
 export const ENERGY_SWAP_RATE = 0.000024;
 
 export const START_OF_CONTEST = new Date('2023-06-01T00:00:00.000Z');

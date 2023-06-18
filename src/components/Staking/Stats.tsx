@@ -2,12 +2,18 @@ import _ from 'lodash';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
-import { COLLECTION_SIZE, ELDER_YIELD_PER_HOUR, TRAVELER_YIELD_PER_HOUR } from '../../blockchain/config';
+import {
+    COLLECTION_SIZE,
+    ELDER_YIELD_PER_HOUR,
+    REWARDS_QUERYING_INTERVAL,
+    TRAVELER_YIELD_PER_HOUR,
+} from '../../blockchain/config';
 import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
+import { useStoreContext, StoreContextType } from '../../services/store';
 
-function Stats({ stakedNFTsCount, travelersCount, eldersCount, stakingInfo }) {
+function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
     const [duration, setDuration] = useState<Duration>({
         seconds: 0,
         minutes: 0,
@@ -16,6 +22,20 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount, stakingInfo }) {
         months: 0,
         years: 0,
     });
+
+    const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+
+    useEffect(() => {
+        getStakingInfo();
+
+        let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
+            getStakingInfo();
+        }, REWARDS_QUERYING_INTERVAL);
+
+        return () => {
+            clearInterval(rewardsQueryingTimer);
+        };
+    }, []);
 
     useEffect(() => {
         let timer: string | number | NodeJS.Timer | undefined;
@@ -77,11 +97,11 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount, stakingInfo }) {
 
                 <StatsEntry label="Travelers staked" value={travelersCount} />
                 <StatsEntry label="Elders staked" value={eldersCount} />
-                <StatsEntry label="Staking rewards" color="energyBright" value={stakingInfo.rewards}>
+                <StatsEntry label="Staking rewards" color="energyBright" value={stakingInfo?.rewards.toString() as string}>
                     <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
                 </StatsEntry>
                 <StatsEntry label="Energy per hour" color="energyBright" value={getEnergyPerHour()} />
-                {stakingInfo.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
+                {stakingInfo?.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
 
                 {/* Global */}
                 <Text mt={5} mb={3} layerStyle="header1">
@@ -92,8 +112,6 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount, stakingInfo }) {
                     label="Total NFTs staked"
                     value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
                 />
-
-                {/* <StatsEntry label="Total wallets staked" value={stakedAddressesCount} /> */}
             </Flex>
         </Flex>
     );

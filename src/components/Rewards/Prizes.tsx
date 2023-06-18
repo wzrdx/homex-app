@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Flex, Spinner, Text, Link, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getShortAddress, getTxExplorerURL, getUsername } from '../../services/helpers';
+import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import axios from 'axios';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
@@ -35,7 +35,7 @@ function Prizes() {
 
     useEffect(() => {
         if (hashes.length) {
-            getTx(_.head(hashes) as string);
+            getTransaction(_.head(hashes) as string);
         }
     }, [hashes]);
 
@@ -47,7 +47,7 @@ function Prizes() {
             setHashes(_.reverse(hashes));
 
             if (hashes.length) {
-                await getTx(_.head(hashes) as string);
+                await getTransaction(_.head(hashes) as string);
             }
 
             setLoadingHashes(false);
@@ -56,16 +56,11 @@ function Prizes() {
         }
     };
 
-    const getTx = async (hash: string) => {
+    const getTransaction = async (hash: string) => {
         // Used to trigger the spinner
         setTx(undefined);
 
-        const result = await axios.get(`transactions/${hash}`, {
-            baseURL: API_URL,
-            params: {
-                fields: 'operations,timestamp',
-            },
-        });
+        const result = await getTx(hash);
 
         if (result.data) {
             const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
@@ -149,7 +144,7 @@ function Prizes() {
                                 cursor="pointer"
                                 transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                 _hover={{ color: '#e3e3e3' }}
-                                onClick={() => getTx(hash)}
+                                onClick={() => getTransaction(hash)}
                             >
                                 Trial #{index + 1}
                             </Text>

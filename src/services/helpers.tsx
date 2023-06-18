@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EXPLORER_URL, GATEWAY_URL } from '../blockchain/config';
+import { API_URL, EXPLORER_URL, GATEWAY_URL } from '../blockchain/config';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -59,3 +59,12 @@ export function toTitleCase(str: string) {
 export const getTxExplorerURL = (hash: string) => `${EXPLORER_URL}/transactions/${hash}`;
 
 export const toHexNumber = (value: number, padding: number) => value.toString(16).padStart(padding, '0');
+
+export const getTx = (hash: string) => {
+    return axios.get(`transactions/${hash}`, {
+        baseURL: API_URL,
+        params: {
+            fields: 'operations,timestamp',
+        },
+    });
+};
