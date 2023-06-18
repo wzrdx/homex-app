@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
@@ -12,7 +12,7 @@ import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFTType } from '../../blockchain/types';
+import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 
@@ -77,7 +77,7 @@ function Stake() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 1100000 * _.size(transfers))
+                .withGasLimit(8000000 + 1000000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
@@ -126,109 +126,120 @@ function Stake() {
 
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
-            {elders && travelers ? (
-                <>
-                    <Flex pb={6} alignItems="center" justifyContent="space-between">
-                        <Flex alignItems="center">
-                            <ActionButton
-                                disabled={
-                                    !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
-                                }
-                                isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
-                                colorScheme="red"
-                                customStyle={{ width: '134px' }}
-                                onClick={stake}
-                            >
-                                <Text>Stake</Text>
-                            </ActionButton>
-
-                            <Box ml={4}>
-                                <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
-                                    <Text>Select all (25 max.)</Text>
-                                </ActionButton>
-                            </Box>
-
-                            <Flex ml={4} alignItems="center">
-                                <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                                <Text color="almostWhite">Select some NFTs in order to stake</Text>
-                            </Flex>
-                        </Flex>
-
-                        <Flex ml={4} alignItems="center">
-                            <InfoIcon mr={1.5} color="brightWheat" />
-                            <Text color="brightWheat">Staking will automatically claim your rewards</Text>
-                        </Flex>
-                    </Flex>
-
-                    <Flex
-                        className="Scrollbar-Gutter"
-                        flexDir="column"
-                        alignItems="center"
-                        overflowY="auto"
-                        pr={4}
-                        mr="calc(-1rem - 6px)"
+            <Flex pb={6} alignItems="center" justifyContent="space-between">
+                <Flex alignItems="center">
+                    <ActionButton
+                        disabled={!stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
+                        colorScheme="red"
+                        customStyle={{ width: '134px' }}
+                        onClick={stake}
                     >
-                        <Box
-                            display="grid"
-                            gridAutoColumns="1fr"
-                            gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
-                            rowGap={4}
-                            columnGap={4}
-                        >
-                            {_.map([...elders, ...travelers], (token, index) => (
-                                <Box
-                                    key={index}
-                                    cursor="pointer"
-                                    onClick={() => {
-                                        if (isButtonLoading || isTxPending(TransactionType.Stake)) {
-                                            return;
-                                        }
+                        <Text>Stake</Text>
+                    </ActionButton>
 
-                                        setSelectedTokens((tokens) => {
-                                            if (
-                                                _.findIndex(tokens, (t) => t.nonce === token.nonce && t.type === token.type) ===
-                                                -1
-                                            ) {
-                                                if (_.size(tokens) === 25) {
-                                                    return tokens;
-                                                }
+                    <Box ml={4}>
+                        <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
+                            <Text>Select all (25 max.)</Text>
+                        </ActionButton>
+                    </Box>
 
-                                                return [
-                                                    ...tokens,
-                                                    {
-                                                        nonce: token.nonce,
-                                                        type: token.type as NFTType,
-                                                    },
-                                                ];
-                                            } else {
-                                                return _.filter(
-                                                    tokens,
-                                                    (t) => !(t.nonce === token.nonce && t.type === token.type)
-                                                );
-                                            }
-                                        });
-                                    }}
-                                >
-                                    <TokenCard
-                                        isSelected={
-                                            _.findIndex(
-                                                selectedTokens,
-                                                (t) => t.nonce === token.nonce && t.type === token.type
-                                            ) > -1
-                                        }
-                                        name={token.name}
-                                        url={token.url}
-                                        type={token?.type}
-                                    />
-                                </Box>
-                            ))}
-                        </Box>
+                    <Flex ml={4} alignItems="center">
+                        <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                        <Text color="almostWhite">Select some NFTs in order to stake</Text>
                     </Flex>
-                </>
-            ) : (
+                </Flex>
+
+                <Flex ml={4} alignItems="center">
+                    <InfoIcon mr={1.5} color="brightWheat" />
+                    <Text color="brightWheat">Staking will automatically claim your rewards</Text>
+                </Flex>
+            </Flex>
+
+            {!(elders && travelers) ? (
                 <Flex alignItems="center" justifyContent="center" height="100%">
                     <Spinner size="md" />
                 </Flex>
+            ) : (
+                <>
+                    {_.isEmpty(elders) && _.isEmpty(travelers) ? (
+                        <Flex py={4}>
+                            <Flex backgroundColor="#000000e3">
+                                <Alert status="info">
+                                    <AlertIcon />
+                                    There are no NFTs from the Home X collections in your wallet
+                                </Alert>
+                            </Flex>
+                        </Flex>
+                    ) : (
+                        <Flex
+                            className="Scrollbar-Gutter"
+                            flexDir="column"
+                            alignItems="center"
+                            overflowY="auto"
+                            pr={4}
+                            mr="calc(-1rem - 6px)"
+                        >
+                            <Box
+                                display="grid"
+                                gridAutoColumns="1fr"
+                                gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+                                rowGap={4}
+                                columnGap={4}
+                            >
+                                {_.map([...(elders as NFT[]), ...(travelers as NFT[])], (token, index) => (
+                                    <Box
+                                        key={index}
+                                        cursor="pointer"
+                                        onClick={() => {
+                                            if (isButtonLoading || isTxPending(TransactionType.Stake)) {
+                                                return;
+                                            }
+
+                                            setSelectedTokens((tokens) => {
+                                                if (
+                                                    _.findIndex(
+                                                        tokens,
+                                                        (t) => t.nonce === token.nonce && t.type === token.type
+                                                    ) === -1
+                                                ) {
+                                                    if (_.size(tokens) === 25) {
+                                                        return tokens;
+                                                    }
+
+                                                    return [
+                                                        ...tokens,
+                                                        {
+                                                            nonce: token.nonce,
+                                                            type: token.type as NFTType,
+                                                        },
+                                                    ];
+                                                } else {
+                                                    return _.filter(
+                                                        tokens,
+                                                        (t) => !(t.nonce === token.nonce && t.type === token.type)
+                                                    );
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <TokenCard
+                                            isSelected={
+                                                _.findIndex(
+                                                    selectedTokens,
+                                                    (t) => t.nonce === token.nonce && t.type === token.type
+                                                ) > -1
+                                            }
+                                            name={token.name}
+                                            url={token.url}
+                                            type={token?.type}
+                                        />
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Flex>
+                    )}
+                </>
             )}
         </Flex>
     );

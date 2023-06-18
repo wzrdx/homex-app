@@ -41,7 +41,7 @@ function App() {
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     const { getOngoingQuests } = useQuestsContext() as QuestsContextType;
-    const { getStakingInfo, getWalletNFTs, getUserTokenNonces } = useStoreContext() as StoreContextType;
+    const { getStakingInfo, getWalletNFTs } = useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;

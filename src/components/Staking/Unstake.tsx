@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, AlertIcon, Alert } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
@@ -49,12 +49,14 @@ function Unstake() {
     }, [nonces]);
 
     const getNFTs = async () => {
-        if (!nonces || (_.isEmpty(nonces.travelers) && _.isEmpty(nonces.elders))) {
+        console.log('getNFTs', nonces);
+
+        if (!nonces) {
             return;
         }
 
-        setTravelers([]);
-        setElders([]);
+        setTravelers(undefined);
+        setElders(undefined);
 
         const travelersCount = _.size(nonces?.travelers);
         const eldersCount = _.size(nonces?.elders);
@@ -162,7 +164,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(7000000 + 1000000 * count)
+                .withGasLimit(6000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
@@ -242,6 +244,21 @@ function Unstake() {
         }
     };
 
+    const selectAll = async () => {
+        if (!elders || !travelers) {
+            return;
+        }
+
+        setSelectedTokens(
+            _([...elders, ...travelers])
+                .map((token) => ({
+                    nonce: token.nonce,
+                    type: token.type as NFTType,
+                }))
+                .value()
+        );
+    };
+
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             {elders && travelers ? (
@@ -261,19 +278,17 @@ function Unstake() {
                             </ActionButton>
 
                             <Box ml={4}>
-                                <ActionButton
-                                    colorScheme="default"
-                                    customStyle={{ width: '186px' }}
-                                    onClick={() => console.log('select_all')}
-                                >
+                                <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
                                     <Text>Select all</Text>
                                 </ActionButton>
                             </Box>
 
-                            <Flex ml={4} alignItems="center">
-                                <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                                <Text color="almostWhite">Select some NFTs in order to unstake</Text>
-                            </Flex>
+                            {stakingInfo?.isStaked && (
+                                <Flex ml={4} alignItems="center">
+                                    <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                                    <Text color="almostWhite">Select some NFTs in order to unstake</Text>
+                                </Flex>
+                            )}
                         </Flex>
 
                         {stakingInfo?.isStaked && (
@@ -291,70 +306,83 @@ function Unstake() {
                         )}
                     </Flex>
 
-                    <Flex
-                        className="Scrollbar-Gutter"
-                        flexDir="column"
-                        alignItems="center"
-                        overflowY="auto"
-                        pr={4}
-                        mr="calc(-1rem - 6px)"
-                    >
-                        <Box
-                            display="grid"
-                            gridAutoColumns="1fr"
-                            gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
-                            rowGap={4}
-                            columnGap={4}
+                    {_.isEmpty(travelers) && _.isEmpty(elders) ? (
+                        <Flex py={4}>
+                            <Flex backgroundColor="#000000e3">
+                                <Alert status="info">
+                                    <AlertIcon />
+                                    You have no staked NFTs to display
+                                </Alert>
+                            </Flex>
+                        </Flex>
+                    ) : (
+                        <Flex
+                            className="Scrollbar-Gutter"
+                            flexDir="column"
+                            alignItems="center"
+                            overflowY="auto"
+                            pr={4}
+                            mr="calc(-1rem - 6px)"
                         >
-                            {_.map([...elders, ...travelers], (token, index) => (
-                                <Box
-                                    key={index}
-                                    cursor="pointer"
-                                    onClick={() => {
-                                        if (isUnstakeButtonLoading || isTxPending(TransactionType.Stake)) {
-                                            return;
-                                        }
-
-                                        setSelectedTokens((tokens) => {
-                                            if (
-                                                _.findIndex(tokens, (t) => t.nonce === token.nonce && t.type === token.type) ===
-                                                -1
-                                            ) {
-                                                if (_.size(tokens) === 25) {
-                                                    return tokens;
-                                                }
-
-                                                return [
-                                                    ...tokens,
-                                                    {
-                                                        nonce: token.nonce,
-                                                        type: token.type as NFTType,
-                                                    },
-                                                ];
-                                            } else {
-                                                return _.filter(
-                                                    tokens,
-                                                    (t) => !(t.nonce === token.nonce && t.type === token.type)
-                                                );
+                            <Box
+                                display="grid"
+                                gridAutoColumns="1fr"
+                                gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+                                rowGap={4}
+                                columnGap={4}
+                            >
+                                {_.map([...elders, ...travelers], (token, index) => (
+                                    <Box
+                                        key={index}
+                                        cursor="pointer"
+                                        onClick={() => {
+                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.Stake)) {
+                                                return;
                                             }
-                                        });
-                                    }}
-                                >
-                                    <TokenCard
-                                        isSelected={
-                                            _.findIndex(
-                                                selectedTokens,
-                                                (t) => t.nonce === token.nonce && t.type === token.type
-                                            ) > -1
-                                        }
-                                        name={token.name}
-                                        url={token.url}
-                                        type={token?.type}
-                                    />
-                                </Box>
-                            ))}
-                        </Box>
-                    </Flex>
+
+                                            setSelectedTokens((tokens) => {
+                                                if (
+                                                    _.findIndex(
+                                                        tokens,
+                                                        (t) => t.nonce === token.nonce && t.type === token.type
+                                                    ) === -1
+                                                ) {
+                                                    if (_.size(tokens) === 25) {
+                                                        return tokens;
+                                                    }
+
+                                                    return [
+                                                        ...tokens,
+                                                        {
+                                                            nonce: token.nonce,
+                                                            type: token.type as NFTType,
+                                                        },
+                                                    ];
+                                                } else {
+                                                    return _.filter(
+                                                        tokens,
+                                                        (t) => !(t.nonce === token.nonce && t.type === token.type)
+                                                    );
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <TokenCard
+                                            isSelected={
+                                                _.findIndex(
+                                                    selectedTokens,
+                                                    (t) => t.nonce === token.nonce && t.type === token.type
+                                                ) > -1
+                                            }
+                                            name={token.name}
+                                            url={token.url}
+                                            type={token?.type}
+                                        />
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Flex>
+                    )}
                 </>
             ) : (
                 <Flex alignItems="center" justifyContent="center" height="100%">

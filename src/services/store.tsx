@@ -40,8 +40,8 @@ export const StoreProvider = ({ children }) => {
 
     const getWalletNFTs = async () => {
         try {
-            setTravelers([]);
-            setElders([]);
+            setTravelers(undefined);
+            setElders(undefined);
 
             const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
             const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
@@ -99,6 +99,8 @@ export const StoreProvider = ({ children }) => {
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
+
+            console.log('Wallet NFTs', travelers.length + elders.length);
 
             setTravelers(travelers);
             setElders(elders);
