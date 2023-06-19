@@ -20,7 +20,7 @@ import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getStakedNFTs } from '../../services/authentication';
-import { pairwise, toHexNumber } from '../../services/helpers';
+import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 
 function Unstake() {
@@ -64,7 +64,7 @@ function Unstake() {
 
         const travelerIds = _.map(
             nonces?.travelers,
-            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, TRAVELERS_PADDING)}`
+            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
         );
 
         pairwise(
