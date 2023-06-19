@@ -265,9 +265,9 @@ function Unstake() {
                         <Flex alignItems="center">
                             <ActionButton
                                 disabled={
-                                    !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)
+                                    !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Stake)
                                 }
-                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Stake)}
+                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
                                 colorScheme="blue"
                                 customStyle={{ width: '134px' }}
                                 onClick={unstake}
@@ -276,7 +276,17 @@ function Unstake() {
                             </ActionButton>
 
                             <Box ml={4}>
-                                <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
+                                <ActionButton
+                                    colorScheme="default"
+                                    customStyle={{ width: '186px' }}
+                                    onClick={selectAll}
+                                    disabled={
+                                        !stakingInfo ||
+                                        isTxPending(TransactionType.Claim) ||
+                                        isTxPending(TransactionType.Unstake) ||
+                                        isTxPending(TransactionType.Stake)
+                                    }
+                                >
                                     <Text>Select all</Text>
                                 </ActionButton>
                             </Box>

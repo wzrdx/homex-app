@@ -138,7 +138,17 @@ function Stake() {
                     </ActionButton>
 
                     <Box ml={4}>
-                        <ActionButton colorScheme="default" customStyle={{ width: '186px' }} onClick={selectAll}>
+                        <ActionButton
+                            colorScheme="default"
+                            customStyle={{ width: '186px' }}
+                            onClick={selectAll}
+                            disabled={
+                                !stakingInfo ||
+                                isTxPending(TransactionType.Claim) ||
+                                isTxPending(TransactionType.Unstake) ||
+                                isTxPending(TransactionType.Stake)
+                            }
+                        >
                             <Text>Select all (25 max.)</Text>
                         </ActionButton>
                     </Box>
