@@ -1,14 +1,12 @@
 import _ from 'lodash';
-import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon } from '@chakra-ui/react';
+import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
+import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
-import { Timer } from '../../shared/Timer';
-import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -49,7 +47,7 @@ function Prizes() {
         }>
     >();
 
-    const [hashes, setHashes] = useState<
+    const [txs, setTxs] = useState<
         Array<{
             timestamp: Date;
             hash: string;
@@ -85,7 +83,7 @@ function Prizes() {
             }>
         );
 
-        setHashes(
+        setTxs(
             _(result)
                 .map((hashResult) => ({
                     hash: hashResult?.hash,
@@ -161,15 +159,15 @@ function Prizes() {
     };
 
     const isWinner = (address: string = userAddress) => {
-        // TODO:
-        return false;
-        // return _.findIndex(tx?.winners, (winner) => winner.address === address) > -1;
+        return _.findIndex(winners, (winner) => winner.address === address) > -1;
     };
 
     return (
-        <Flex height={_.isEmpty(hashes) ? 'auto' : `calc(100% - ${height}px)`} justifyContent="center">
+        <Flex height={_.isEmpty(txs) ? 'auto' : `calc(100% - ${height}px)`} justifyContent="center">
             {isLoadingHashes ? (
                 <Spinner />
+            ) : _.isEmpty(txs) ? (
+                <Text>No prizes to display</Text>
             ) : (
                 <Flex minW="600px">
                     {/* Left */}
@@ -185,19 +183,27 @@ function Prizes() {
                             </Flex>
                         ) : (
                             <>
-                                <Flex alignItems="center" justifyContent="space-between">
-                                    <Flex alignItems="center" mb={2}>
-                                        <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                        <Text>{format(_.head(hashes)?.timestamp as Date, 'PPPP')}</Text>
-                                    </Flex>
-
-                                    <Link href={getTxExplorerURL(_.head(hashes)?.hash as string)} isExternal>
-                                        <Flex alignItems="center">
-                                            <Text>{getShortAddress(_.head(hashes)?.hash as string)}</Text>
-                                            <ExternalLinkIcon ml={1.5} />
-                                        </Flex>
-                                    </Link>
+                                <Flex alignItems="center" mb={2}>
+                                    <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
+                                    <Text>{format(_.head(txs)?.timestamp as Date, 'PPPP')}</Text>
                                 </Flex>
+
+                                <Text mb={1} fontWeight={600} fontSize="17px">
+                                    Hashes
+                                </Text>
+
+                                <Box display="grid" gridAutoColumns="1fr" gridTemplateColumns="1fr 1fr 1fr" rowGap={1}>
+                                    {_.map(txs, (tx, index) => (
+                                        <Flex key={index} alignItems="center" justifyContent="space-between">
+                                            <Link href={getTxExplorerURL(tx?.hash as string)} isExternal>
+                                                <Flex alignItems="center">
+                                                    <Text>{getShortAddress(tx?.hash as string)}</Text>
+                                                    <ExternalLinkIcon ml={1.5} />
+                                                </Flex>
+                                            </Link>
+                                        </Flex>
+                                    ))}
+                                </Box>
 
                                 {isWinner() && (
                                     <Flex mt={4} backgroundColor="#000000e3">
