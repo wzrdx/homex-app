@@ -32,5 +32,5 @@ export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-011f1c', 'ESSENCE-67531c');
 
 export const TRAVELER_YIELD_PER_HOUR: number = 3;
 export const ELDER_YIELD_PER_HOUR: number = 3;
-export const REWARDS_QUERYING_INTERVAL = 120000;
+export const REWARDS_QUERYING_INTERVAL = 30000;
 export const ENERGY_SWAP_RATE = 0.000024;

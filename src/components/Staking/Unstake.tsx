@@ -49,8 +49,6 @@ function Unstake() {
     }, [nonces]);
 
     const getNFTs = async () => {
-        console.log('getNFTs', nonces);
-
         if (!nonces) {
             return;
         }

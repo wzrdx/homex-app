@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { Box, Flex, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
@@ -77,7 +76,7 @@ function Stake() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 1000000 * _.size(transfers))
+                .withGasLimit(6000000 + 1000000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();

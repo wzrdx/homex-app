@@ -49,7 +49,6 @@ export const useGetStakingInfo = () => {
                 travelerNonces: map(value.traveler_nonces, (nonce) => nonce.toNumber()),
                 elderNonces: map(value.elder_nonces, (nonce) => nonce.toNumber()),
             };
-            console.log(FUNCTION_NAME);
 
             setStakingInfo(info);
 

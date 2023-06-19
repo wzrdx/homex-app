@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty } from 'lodash';
+import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty, isNaN } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -235,11 +235,18 @@ function App() {
                     result.data.operations,
                     (op) => op.action === 'transfer' && op.identifier === ENERGY_TOKEN_ID
                 );
-                displayResourcesToast(
-                    'Energy gained',
-                    [{ resource: 'energy', value: operation?.value / TOKEN_DENOMINATION }],
-                    'unstake'
-                );
+
+                if (!operation) {
+                    return;
+                }
+
+                const gain: number = operation.value / TOKEN_DENOMINATION;
+
+                if (!gain || Number.isNaN(gain) || gain === 0) {
+                    return;
+                }
+
+                displayResourcesToast('Energy gained', [{ resource: 'energy', value: gain }], 'unstake');
             }
         }
     };
@@ -250,12 +257,18 @@ function App() {
             if (result.data) {
                 const operation = find(result.data.operations, (op) => op.action === 'transfer' && op.type === 'egld');
 
+                if (!operation) {
+                    return;
+                }
+
+                const gain: number = operation.value / EGLD_DENOMINATION;
+
+                if (!gain || Number.isNaN(gain) || gain === 0) {
+                    return;
+                }
+
                 playSound('swap');
-                displayToast(
-                    'Swapped ENERGY for EGLD',
-                    `You received ${operation.value / EGLD_DENOMINATION} in your wallet`,
-                    'blue.500'
-                );
+                displayToast('Swapped ENERGY for EGLD', `You received ${gain} in your wallet`, 'blue.500');
             }
         }
     };

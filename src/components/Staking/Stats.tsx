@@ -12,6 +12,7 @@ import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
 import { useStoreContext, StoreContextType } from '../../services/store';
+import { useGetStakingInfo } from '../../blockchain/hooks/useGetStakingInfo';
 
 function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
     const [duration, setDuration] = useState<Duration>({
@@ -23,13 +24,16 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         years: 0,
     });
 
-    const { stakingInfo, getStakingInfo } = useStoreContext() as StoreContextType;
+    // Local staking info is used in order to fetch staking rewards without triggering a global update on the context
+    const { stakingInfo } = useStoreContext() as StoreContextType;
+    const { stakingInfo: localStakingInfo, getStakingInfo: localGetStakingInfo } = useGetStakingInfo();
 
     useEffect(() => {
-        getStakingInfo();
+        localGetStakingInfo();
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
-            getStakingInfo();
+            console.log('localGetStakingInfo');
+            localGetStakingInfo();
         }, REWARDS_QUERYING_INTERVAL);
 
         return () => {
@@ -97,7 +101,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
                 <StatsEntry label="Travelers staked" value={travelersCount} />
                 <StatsEntry label="Elders staked" value={eldersCount} />
-                <StatsEntry label="Staking rewards" color="energyBright" value={stakingInfo?.rewards.toString() as string}>
+                <StatsEntry label="Staking rewards" color="energyBright" value={localStakingInfo?.rewards.toString() as string}>
                     <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
                 </StatsEntry>
                 <StatsEntry label="Energy per hour" color="energyBright" value={getEnergyPerHour()} />

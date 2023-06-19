@@ -100,8 +100,6 @@ export const StoreProvider = ({ children }) => {
                 .orderBy('nonce', 'asc')
                 .value();
 
-            console.log('Wallet NFTs', travelers.length + elders.length);
-
             setTravelers(travelers);
             setElders(elders);
         } catch (error) {
