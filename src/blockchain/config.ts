@@ -13,10 +13,9 @@ export const TOKEN_DENOMINATION = 1000000;
 
 export const CHAIN_ID = getEnvValue('D', '1');
 
-// TODO: 'https://api.multiversx.com'
 export const API_URL = getEnvValue(
     'https://devnet-api.multiversx.com',
-    'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457'
+    'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b'
 );
 
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
