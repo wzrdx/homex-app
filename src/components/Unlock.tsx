@@ -14,15 +14,8 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import {
-    ELDERS_COLLECTION_ID,
-    START_OF_CONTEST,
-    TRAVELERS_COLLECTION_ID,
-    walletConnectV2ProjectId,
-} from '../blockchain/config';
+import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
-import { isAfter } from 'date-fns';
-import { Timer } from '../shared/Timer';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
 import { useStoreContext, StoreContextType } from '../services/store';
@@ -44,7 +37,6 @@ const Unlock = () => {
     const [error, setError] = useState<AuthenticationError>();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
     const { getStakingInfo } = useStoreContext() as StoreContextType;
-    const { getGameState } = useTransactionsContext() as TransactionsContextType;
 
     let { address } = useGetAccountInfo();
     const navigate = useNavigate();
@@ -57,25 +49,12 @@ const Unlock = () => {
         }
     }, [address]);
 
-    const hasGameStarted = (): boolean => isAfter(new Date(), START_OF_CONTEST);
     const isUserLoggedIn = (): boolean => !!address;
 
     const checkAuthentication = async () => {
         if (!address) {
             logout(`/unlock`);
         } else {
-            if (!hasGameStarted()) {
-                setError(AuthenticationError.ContestNotStarted);
-                return;
-            }
-
-            const isGamePaused = await getGameState();
-
-            if (isGamePaused) {
-                setError(AuthenticationError.Paused);
-                return;
-            }
-
             const stakingInfo: StakingInfo | undefined = await getStakingInfo();
 
             if (stakingInfo?.isStaked) {
@@ -103,17 +82,17 @@ const Unlock = () => {
                 {text}
             </Text>
 
-            {displayTimer && (
+            {/* {displayTimer && (
                 <Box mt={3}>
                     <Timer
-                        timestamp={START_OF_CONTEST}
+                        timestamp={}
                         callback={() => checkAuthentication()}
                         isActive
                         isDescending
                         displayDays
                     />
                 </Box>
-            )}
+            )} */}
 
             <Box mt={5}>
                 <Wallet
@@ -226,12 +205,10 @@ const Unlock = () => {
                         </>
                     ) : (
                         <Box display="flex" flexDir="column" alignItems="center">
-                            {error === AuthenticationError.ContestNotStarted && getText('Waiting for the game to start', true)}
+                            {/* {error === AuthenticationError.ContestNotStarted && getText('Waiting for the game to start', true)} */}
 
                             {error === AuthenticationError.NotHolder &&
                                 getText('Playing the game requires an NFT from the Home X collections')}
-
-                            {error === AuthenticationError.Paused && getText('The game is temporarily paused')}
 
                             {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
                         </Box>

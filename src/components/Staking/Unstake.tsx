@@ -327,7 +327,7 @@ function Unstake() {
                             <Box
                                 display="grid"
                                 gridAutoColumns="1fr"
-                                gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+                                gridTemplateColumns="1fr 1fr 1fr 1fr 1fr"
                                 rowGap={4}
                                 columnGap={4}
                             >

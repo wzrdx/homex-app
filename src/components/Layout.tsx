@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useToast } from '@chakra-ui/react';
+import { Box, Flex, StyleProps, Text, ToastPosition, useToast } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
@@ -10,6 +10,7 @@ import { CustomToast } from '../shared/CustomToast';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
 import { routes, routeNames } from '../services/routes';
+import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
 
 type LayoutContext = {
     checkEgldBalance: () => Promise<boolean>;
@@ -26,6 +27,7 @@ function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
+    const { isGamePaused, getGameState } = useTransactionsContext() as TransactionsContextType;
 
     const toast = useToast();
 
@@ -36,7 +38,17 @@ function Layout() {
         getGems();
         getEssence();
         getTickets();
+
+        getGameState();
     }, []);
+
+    useEffect(() => {
+        if (isGamePaused) {
+            displayToast('time', 'The game is temporarily paused', '', 'whitesmoke', 1000000000, 'bottom-left', {
+                margin: '3rem',
+            });
+        }
+    }, [isGamePaused]);
 
     const checkEgldBalance = async (): Promise<boolean> => {
         const balance = await getAccountBalance();
@@ -51,17 +63,25 @@ function Layout() {
         }
     };
 
-    const displayToast = (type: string, title: string, description: string, color: string) => {
+    const displayToast = (
+        type: string,
+        title: string,
+        description: string,
+        color: string,
+        duration = 6000,
+        position: ToastPosition = 'top-right',
+        containerStyle: StyleProps = {
+            marginTop: '2rem',
+            marginRight: '2rem',
+        }
+    ) => {
         toast({
-            position: 'top-right',
-            containerStyle: {
-                marginTop: '2rem',
-                marginRight: '2rem',
-            },
-            duration: 6000,
+            position,
+            containerStyle,
+            duration,
             render: () => (
                 <CustomToast type={type} title={title} color={color}>
-                    <Text mt={2}>{description}</Text>
+                    {description && <Text mt={2}>{description}</Text>}
                 </CustomToast>
             ),
         });

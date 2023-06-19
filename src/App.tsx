@@ -28,13 +28,10 @@ import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
 import { getTx } from './services/helpers';
 import { EGLD_DENOMINATION, ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 
-const REFRESH_TIME = 1800000; // 30 minutes
-
 function App() {
     const toast = useToast();
-    const navigate = useNavigate();
 
-    const { pendingTxs, setPendingTxs, getGameState } = useTransactionsContext() as TransactionsContextType;
+    const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
@@ -45,22 +42,6 @@ function App() {
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
-
-    useEffect(() => {
-        getGameState();
-
-        const timer = setInterval(async () => {
-            const isGamePaused = await getGameState();
-
-            if (isGamePaused) {
-                navigate('/unlock');
-            }
-        }, REFRESH_TIME);
-
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
 
     useEffect(() => {
         removeTxs(failedTransactionsArray);

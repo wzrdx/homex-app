@@ -49,7 +49,7 @@ export const ActionButton: FunctionComponent<
                 </Flex>
             )}
             <Box userSelect="none" visibility={isLoading ? 'hidden' : 'visible'}>
-                {isGamePaused ? 'Game paused' : children}
+                {children}
             </Box>
         </Flex>
     );

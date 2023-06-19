@@ -3,7 +3,6 @@ import { Flex, Spinner, Text, Link, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
-import axios from 'axios';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
@@ -12,6 +11,31 @@ import { Timer } from '../../shared/Timer';
 import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
+
+const COLUMNS = [
+    {
+        name: 'No.',
+        style: {
+            minWidth: '58px',
+        },
+        align: 'left',
+    },
+    {
+        name: 'Player',
+        style: {
+            width: '100%',
+        },
+        align: 'left',
+    },
+    {
+        name: 'Prize',
+        style: {
+            width: '180px',
+            minWidth: '180px',
+        },
+        align: 'right',
+    },
+];
 
 function Prizes() {
     const { height } = useRewards();
@@ -72,11 +96,8 @@ function Prizes() {
 
                     if (operation.type === 'egld') {
                         prize = (
-                            <Text>
-                                <Text as="span" color="brightBlue" fontWeight={500}>
-                                    {Number.parseInt(operation.value) / EGLD_DENOMINATION}
-                                </Text>{' '}
-                                $EGLD
+                            <Text color="brightBlue" fontWeight={500}>
+                                {Number.parseInt(operation.value) / EGLD_DENOMINATION} $EGLD
                             </Text>
                         );
                     }
@@ -133,9 +154,9 @@ function Prizes() {
                     </Flex>
                 </Flex>
             ) : (
-                <Flex minW="448px">
+                <Flex minW="600px">
                     {/* Left */}
-                    <Flex flex={1} flexDir="column" overflowY="auto" pr={4}>
+                    <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
                         {_.map(hashes, (hash, index) => (
                             <Text
                                 key={index}
@@ -152,41 +173,54 @@ function Prizes() {
                     </Flex>
 
                     {/* Right */}
-                    <Flex flex={4} flexDir="column" px={10} overflowY="auto">
+                    <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         {!tx ? (
                             <Flex justifyContent="center">
                                 <Spinner />
                             </Flex>
                         ) : (
                             <>
-                                <Flex alignItems="center" mb={2}>
-                                    <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                    <Text>{format(tx.timestamp, 'PPPP')}</Text>
+                                <Flex alignItems="center" justifyContent="space-between">
+                                    <Flex alignItems="center" mb={2}>
+                                        <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
+                                        <Text>{format(tx.timestamp, 'PPPP')}</Text>
+                                    </Flex>
+
+                                    <Link href={getTxExplorerURL(tx.hash)} isExternal>
+                                        <Flex alignItems="center">
+                                            <Text>{getShortAddress(tx.hash)}</Text>
+                                            <ExternalLinkIcon ml={1.5} />
+                                        </Flex>
+                                    </Link>
                                 </Flex>
 
-                                <Link href={getTxExplorerURL(tx.hash)} isExternal>
-                                    <Flex alignItems="center">
-                                        <Text>{getShortAddress(tx.hash)}</Text>
-                                        <ExternalLinkIcon ml={1.5} />
-                                    </Flex>
-                                </Link>
-
-                                <Text mt={6} mb={2} fontSize="17px" fontWeight={500}>
-                                    Winners
-                                </Text>
+                                {/* Header */}
+                                <Flex mb={1} mt={6}>
+                                    {_.map(COLUMNS, (column: any, index: number) => (
+                                        <Text
+                                            key={index}
+                                            style={column.style}
+                                            textAlign={column.align}
+                                            fontWeight={600}
+                                            fontSize="17px"
+                                        >
+                                            {column.name}
+                                        </Text>
+                                    ))}
+                                </Flex>
 
                                 <Flex width="100%" flexDir="column">
                                     {_.map(tx.winners, (winner, index) => (
-                                        <Flex
-                                            key={index}
-                                            width="100%"
-                                            justifyContent="space-between"
-                                            alignItems="center"
-                                            height="28px"
-                                            _notLast={{ mb: 2 }}
-                                        >
-                                            <Text mr="2">{winner.username}</Text>
-                                            {winner.prize}
+                                        <Flex key={index} width="100%" alignItems="center" height="28px" mt={2}>
+                                            <Text style={COLUMNS[0].style}>{index + 1}</Text>
+
+                                            <Text pr={6} layerStyle="ellipsis" style={COLUMNS[1].style}>
+                                                {winner.username}
+                                            </Text>
+
+                                            <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
+                                                {winner.prize}
+                                            </Flex>
                                         </Flex>
                                     ))}
                                 </Flex>
