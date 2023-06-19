@@ -149,6 +149,7 @@ function Stake() {
                                 isTxPending(TransactionType.Unstake) ||
                                 isTxPending(TransactionType.Stake)
                             }
+                            isStakingButton
                         >
                             <Text>Select all (25 max.)</Text>
                         </ActionButton>

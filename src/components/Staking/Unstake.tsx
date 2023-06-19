@@ -287,6 +287,7 @@ function Unstake() {
                                         isTxPending(TransactionType.Unstake) ||
                                         isTxPending(TransactionType.Stake)
                                     }
+                                    isStakingButton
                                 >
                                     <Text>Select all</Text>
                                 </ActionButton>
@@ -309,6 +310,7 @@ function Unstake() {
                                 colorScheme="blue"
                                 customStyle={{ width: '154px' }}
                                 onClick={claim}
+                                isStakingButton
                             >
                                 <Text>Claim Energy</Text>
                             </ActionButton>
