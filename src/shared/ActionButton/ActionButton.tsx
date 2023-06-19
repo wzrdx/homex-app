@@ -11,8 +11,9 @@ export const ActionButton: FunctionComponent<
         onClick?: () => void;
         colorScheme?: string;
         customStyle?: any;
+        isStakingButton?: boolean;
     }>
-> = ({ children, isLoading, disabled, onClick, colorScheme = 'default', customStyle }) => {
+> = ({ children, isLoading, disabled, onClick, colorScheme = 'default', customStyle, isStakingButton }) => {
     const { isGamePaused } = useTransactionsContext() as TransactionsContextType;
 
     const getColorScheme = () => {
@@ -25,7 +26,7 @@ export const ActionButton: FunctionComponent<
         }
     };
 
-    const isDisabled = () => isGamePaused || disabled;
+    const isDisabled = () => !isStakingButton && (isGamePaused || disabled);
 
     return (
         <Flex

@@ -271,6 +271,7 @@ function Unstake() {
                                 colorScheme="blue"
                                 customStyle={{ width: '134px' }}
                                 onClick={unstake}
+                                isStakingButton
                             >
                                 <Text>Unstake</Text>
                             </ActionButton>

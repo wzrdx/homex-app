@@ -133,6 +133,7 @@ function Stake() {
                         colorScheme="red"
                         customStyle={{ width: '134px' }}
                         onClick={stake}
+                        isStakingButton
                     >
                         <Text>Stake</Text>
                     </ActionButton>
