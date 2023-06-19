@@ -1,4 +1,5 @@
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
+// TODO:
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
 
 export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq03qfld7ypk27r2k0wgux89573pw2htq8ukrqze9mpw',
@@ -11,10 +12,13 @@ export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 
 export const CHAIN_ID = getEnvValue('D', '1');
+
+// TODO: 'https://api.multiversx.com'
 export const API_URL = getEnvValue(
     'https://devnet-api.multiversx.com',
     'https://elrond-api-devnet.blastapi.io/10364add-1eae-4391-acd6-5f7ac77ad457'
 );
+
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = getEnvValue('https://devnet-explorer.multiversx.com', 'https://explorer.multiversx.com');
 
@@ -32,5 +36,5 @@ export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-011f1c', 'ESSENCE-67531c');
 
 export const TRAVELER_YIELD_PER_HOUR: number = 3;
 export const ELDER_YIELD_PER_HOUR: number = 3;
-export const REWARDS_QUERYING_INTERVAL = 30000;
+export const REWARDS_QUERYING_INTERVAL = 15000;
 export const ENERGY_SWAP_RATE = 0.000024;

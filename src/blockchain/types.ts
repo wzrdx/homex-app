@@ -25,6 +25,7 @@ export interface NFT {
     nonce: number;
     url: string;
     type?: NFTType;
+    rank?: number;
 }
 
 export enum NFTType {

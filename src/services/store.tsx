@@ -100,6 +100,8 @@ export const StoreProvider = ({ children }) => {
                 .orderBy('nonce', 'asc')
                 .value();
 
+            console.log(travelers);
+
             setTravelers(travelers);
             setElders(elders);
         } catch (error) {

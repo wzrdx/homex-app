@@ -22,7 +22,7 @@ export const getWalletNonces = (address: string, collection: string, from = 0): 
         params: {
             search: collection,
             type: 'NonFungibleESDT',
-            fields: 'nonce,name,url',
+            fields: 'nonce,name,url,rank',
             from,
         },
     });
@@ -33,7 +33,7 @@ export const getStakedNFTs = (collection: string, identifiers: string): Promise<
         params: {
             identifiers,
             collections: collection,
-            fields: 'nonce,name,url',
+            fields: 'nonce,name,url,rank',
         },
     });
 

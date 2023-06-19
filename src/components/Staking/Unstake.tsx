@@ -122,6 +122,8 @@ function Unstake() {
             .orderBy('nonce', 'asc')
             .value();
 
+        console.log(travelers);
+
         setTravelers(travelers);
         setElders(elders);
     };

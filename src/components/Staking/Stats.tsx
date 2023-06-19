@@ -26,13 +26,13 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
     // Local staking info is used in order to fetch staking rewards without triggering a global update on the context
     const { stakingInfo } = useStoreContext() as StoreContextType;
-    const { stakingInfo: localStakingInfo, getStakingInfo: localGetStakingInfo } = useGetStakingInfo();
+    const { stakingInfo: localStakingInfo, getStakingInfo: getLocalStakingInfo } = useGetStakingInfo();
 
     useEffect(() => {
-        localGetStakingInfo();
+        getLocalStakingInfo();
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
-            localGetStakingInfo();
+            getLocalStakingInfo();
         }, REWARDS_QUERYING_INTERVAL);
 
         return () => {
@@ -44,6 +44,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         let timer: string | number | NodeJS.Timer | undefined;
 
         if (stakingInfo && stakingInfo.isStaked) {
+            getLocalStakingInfo();
             clearInterval(timer);
 
             setDuration(
