@@ -134,8 +134,6 @@ function Prizes() {
 
             const timestamp = new Date(result.data.timestamp * 1000);
 
-            console.log(winners);
-
             setTx({
                 winners,
                 timestamp,
