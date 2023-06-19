@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Flex, Spinner, Text, Link, Image } from '@chakra-ui/react';
+import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
@@ -11,6 +11,7 @@ import { Timer } from '../../shared/Timer';
 import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
 const COLUMNS = [
     {
@@ -44,6 +45,7 @@ function Prizes() {
     const [tx, setTx] = useState<{
         winners: Array<{
             username: string;
+            address: string;
             prize: JSX.Element;
         }>;
         timestamp: Date;
@@ -52,6 +54,8 @@ function Prizes() {
 
     const [hashes, setHashes] = useState<string[]>([]);
     const [isLoadingHashes, setLoadingHashes] = useState<boolean>(true);
+
+    const { address: userAddress } = useGetAccountInfo();
 
     useEffect(() => {
         init();
@@ -69,10 +73,6 @@ function Prizes() {
 
             const hashes = await getTxHashes();
             setHashes(_.reverse(hashes));
-
-            if (hashes.length) {
-                await getTransaction(_.head(hashes) as string);
-            }
 
             setLoadingHashes(false);
         } catch (error) {
@@ -127,11 +127,14 @@ function Prizes() {
                     return {
                         username,
                         prize,
+                        address: operation.receiver,
                     };
                 })
             );
 
             const timestamp = new Date(result.data.timestamp * 1000);
+
+            console.log(winners);
 
             setTx({
                 winners,
@@ -139,6 +142,10 @@ function Prizes() {
                 hash,
             });
         }
+    };
+
+    const isWinner = (address: string = userAddress) => {
+        return _.findIndex(tx?.winners, (winner) => winner.address === address) > -1;
     };
 
     return (
@@ -194,6 +201,18 @@ function Prizes() {
                                     </Link>
                                 </Flex>
 
+                                {isWinner() && (
+                                    <Flex mt={4} backgroundColor="#000000e3">
+                                        <Alert status="success">
+                                            <AlertIcon />
+                                            <Flex ml={1} flexDir="column">
+                                                <Text>Congratulations!</Text>
+                                                <Text>You are one of the winners of this trial</Text>
+                                            </Flex>
+                                        </Alert>
+                                    </Flex>
+                                )}
+
                                 {/* Header */}
                                 <Flex mb={1} mt={6}>
                                     {_.map(COLUMNS, (column: any, index: number) => (
@@ -214,7 +233,12 @@ function Prizes() {
                                         <Flex key={index} width="100%" alignItems="center" height="28px" mt={2}>
                                             <Text style={COLUMNS[0].style}>{index + 1}</Text>
 
-                                            <Text pr={6} layerStyle="ellipsis" style={COLUMNS[1].style}>
+                                            <Text
+                                                pr={6}
+                                                layerStyle="ellipsis"
+                                                style={COLUMNS[1].style}
+                                                color={winner.address === userAddress ? 'redClrs' : '#F5F5F5'}
+                                            >
                                                 {winner.username}
                                             </Text>
 

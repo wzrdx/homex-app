@@ -32,7 +32,6 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         localGetStakingInfo();
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
-            console.log('localGetStakingInfo');
             localGetStakingInfo();
         }, REWARDS_QUERYING_INTERVAL);
 
