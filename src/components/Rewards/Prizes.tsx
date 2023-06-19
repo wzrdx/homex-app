@@ -149,7 +149,7 @@ function Prizes() {
                 <Flex flexDir="column" alignItems="Center">
                     <Text mb={3}>Prizes distribution will be displayed here after the raffle ends</Text>
 
-                    <Flex minWidth="158px">
+                    <Flex>
                         <Timer timestamp={timestamp as Date} isActive isDescending displayDays />
                     </Flex>
                 </Flex>
