@@ -40,19 +40,21 @@ const COLUMNS = [
 
 function Prizes() {
     const { height } = useRewards();
-    const [timestamp, setTimestamp] = useState<Date>();
 
-    const [tx, setTx] = useState<{
-        winners: Array<{
+    const [winners, setWinners] = useState<
+        Array<{
             username: string;
             address: string;
             prize: JSX.Element;
-        }>;
-        timestamp: Date;
-        hash: string;
-    }>();
+        }>
+    >();
 
-    const [hashes, setHashes] = useState<string[]>([]);
+    const [hashes, setHashes] = useState<
+        Array<{
+            timestamp: Date;
+            hash: string;
+        }>
+    >();
     const [isLoadingHashes, setLoadingHashes] = useState<boolean>(true);
 
     const { address: userAddress } = useGetAccountInfo();
@@ -61,29 +63,45 @@ function Prizes() {
         init();
     }, []);
 
-    useEffect(() => {
-        if (hashes.length) {
-            getTransaction(_.head(hashes) as string);
-        }
-    }, [hashes]);
-
     const init = async () => {
         try {
-            setTimestamp(await getRaffleTimestamp());
-
-            const hashes = await getTxHashes();
-            setHashes(_.reverse(hashes));
-
-            setLoadingHashes(false);
+            bundleHashes(await getTxHashes());
         } catch (error) {
             console.error(error);
         }
     };
 
-    const getTransaction = async (hash: string) => {
-        // Used to trigger the spinner
-        setTx(undefined);
+    const bundleHashes = async (hashes: string[]) => {
+        const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
 
+        setWinners(
+            _(result)
+                .map((hashResult) => hashResult?.winners)
+                .flatten()
+                .value() as Array<{
+                username: string;
+                address: string;
+                prize: JSX.Element;
+            }>
+        );
+
+        setHashes(
+            _(result)
+                .map((hashResult) => ({
+                    hash: hashResult?.hash,
+                    timestamp: hashResult?.timestamp,
+                }))
+                .flatten()
+                .value() as Array<{
+                timestamp: Date;
+                hash: string;
+            }>
+        );
+
+        setLoadingHashes(false);
+    };
+
+    const getTransaction = async (hash: string) => {
         const result = await getTx(hash);
 
         if (result.data) {
@@ -134,52 +152,34 @@ function Prizes() {
 
             const timestamp = new Date(result.data.timestamp * 1000);
 
-            setTx({
+            return {
                 winners,
                 timestamp,
                 hash,
-            });
+            };
         }
     };
 
     const isWinner = (address: string = userAddress) => {
-        return _.findIndex(tx?.winners, (winner) => winner.address === address) > -1;
+        // TODO:
+        return false;
+        // return _.findIndex(tx?.winners, (winner) => winner.address === address) > -1;
     };
 
     return (
         <Flex height={_.isEmpty(hashes) ? 'auto' : `calc(100% - ${height}px)`} justifyContent="center">
             {isLoadingHashes ? (
                 <Spinner />
-            ) : _.isEmpty(hashes) ? (
-                <Flex flexDir="column" alignItems="Center">
-                    <Text mb={3}>Prizes distribution will be displayed here after the raffle ends</Text>
-
-                    <Flex>
-                        <Timer timestamp={timestamp as Date} isActive isDescending displayDays />
-                    </Flex>
-                </Flex>
             ) : (
                 <Flex minW="600px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        {_.map(hashes, (hash, index) => (
-                            <Text
-                                key={index}
-                                color={tx?.hash === hash ? 'white' : 'header.gray'}
-                                _notLast={{ mb: 2 }}
-                                cursor="pointer"
-                                transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                _hover={{ color: '#e3e3e3' }}
-                                onClick={() => getTransaction(hash)}
-                            >
-                                Trial #{index + 1}
-                            </Text>
-                        ))}
+                        <Text>Trial #1</Text>
                     </Flex>
 
                     {/* Right */}
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
-                        {!tx ? (
+                        {!winners ? (
                             <Flex justifyContent="center">
                                 <Spinner />
                             </Flex>
@@ -188,12 +188,12 @@ function Prizes() {
                                 <Flex alignItems="center" justifyContent="space-between">
                                     <Flex alignItems="center" mb={2}>
                                         <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                        <Text>{format(tx.timestamp, 'PPPP')}</Text>
+                                        <Text>{format(_.head(hashes)?.timestamp as Date, 'PPPP')}</Text>
                                     </Flex>
 
-                                    <Link href={getTxExplorerURL(tx.hash)} isExternal>
+                                    <Link href={getTxExplorerURL(_.head(hashes)?.hash as string)} isExternal>
                                         <Flex alignItems="center">
-                                            <Text>{getShortAddress(tx.hash)}</Text>
+                                            <Text>{getShortAddress(_.head(hashes)?.hash as string)}</Text>
                                             <ExternalLinkIcon ml={1.5} />
                                         </Flex>
                                     </Link>
@@ -227,7 +227,7 @@ function Prizes() {
                                 </Flex>
 
                                 <Flex width="100%" flexDir="column">
-                                    {_.map(tx.winners, (winner, index) => (
+                                    {_.map(winners, (winner, index) => (
                                         <Flex key={index} width="100%" alignItems="center" height="28px" mt={2}>
                                             <Text style={COLUMNS[0].style}>{index + 1}</Text>
 
