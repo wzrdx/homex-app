@@ -2,12 +2,11 @@ import _ from 'lodash';
 import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { API_URL, EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
+import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
-import { Timer } from '../../shared/Timer';
 import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
@@ -153,10 +152,6 @@ function Prizes() {
             ) : _.isEmpty(hashes) ? (
                 <Flex flexDir="column" alignItems="Center">
                     <Text mb={3}>Prizes distribution will be displayed here after the raffle ends</Text>
-
-                    <Flex>
-                        <Timer timestamp={timestamp as Date} isActive isDescending displayDays />
-                    </Flex>
                 </Flex>
             ) : (
                 <Flex minW="600px">
