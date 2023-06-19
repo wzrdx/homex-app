@@ -14,6 +14,7 @@ import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
 import { useRewards } from '../Rewards';
+import { isAfter } from 'date-fns';
 
 const COLUMNS = [
     {
@@ -155,7 +156,7 @@ function Leaderboard() {
                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                 </Flex>
 
-                {!!timestamp && (
+                {!!timestamp && isAfter(timestamp, new Date()) && (
                     <>
                         <Box mx={1.5} opacity="0.9">
                             <Separator type="vertical" width="1px" height="34px" />
