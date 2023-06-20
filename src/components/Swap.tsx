@@ -23,7 +23,7 @@ function Swap() {
     const [isButtonLoading, setButtonLoading] = useState(false);
 
     const { address } = useGetAccountInfo();
-    const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { setPendingTxs, isTxPending, isGamePaused } = useTransactionsContext() as TransactionsContextType;
 
     const onEnergyInputChange = (value) => {
         if (value === '') {
@@ -236,6 +236,7 @@ function Swap() {
                         <ActionButton
                             isLoading={isButtonLoading || isTxPending(TransactionType.Swap)}
                             disabled={
+                                isGamePaused ||
                                 !energyValue ||
                                 Number.parseFloat(energyValue) > resources.energy ||
                                 Number.parseFloat(energyValue) < 0.1

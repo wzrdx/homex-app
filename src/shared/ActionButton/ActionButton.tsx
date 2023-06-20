@@ -2,7 +2,6 @@ import { FunctionComponent, PropsWithChildren } from 'react';
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 import style from './ActionButton.module.scss';
 import { isEmpty } from 'lodash';
-import { useTransactionsContext, TransactionsContextType } from '../../services/transactions';
 
 export const ActionButton: FunctionComponent<
     PropsWithChildren<{
@@ -11,12 +10,11 @@ export const ActionButton: FunctionComponent<
         onClick?: () => void;
         colorScheme?: string;
         customStyle?: any;
+        isStakingButton?: boolean;
     }>
 > = ({ children, isLoading, disabled, onClick, colorScheme = 'default', customStyle }) => {
-    const { isGamePaused } = useTransactionsContext() as TransactionsContextType;
-
     const getColorScheme = () => {
-        if (isDisabled()) {
+        if (disabled) {
             return style.disabled;
         } else if (colorScheme) {
             return style[colorScheme];
@@ -25,8 +23,6 @@ export const ActionButton: FunctionComponent<
         }
     };
 
-    const isDisabled = () => isGamePaused || disabled;
-
     return (
         <Flex
             className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
@@ -34,13 +30,13 @@ export const ActionButton: FunctionComponent<
             width={[160, 160, 160, 200]}
             padding={['0.375rem', '0.375rem', '0.375rem', '0.45rem']}
             onClick={() => {
-                if (!isDisabled() && !isLoading && onClick) {
+                if (!disabled && !isLoading && onClick) {
                     onClick();
                 }
             }}
             alignItems="center"
             justifyContent="center"
-            cursor={isLoading || isDisabled() ? 'not-allowed' : 'pointer'}
+            cursor={isLoading || disabled ? 'not-allowed' : 'pointer'}
             style={!isEmpty(customStyle) ? customStyle : {}}
         >
             {isLoading && (

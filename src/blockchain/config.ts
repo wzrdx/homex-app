@@ -25,7 +25,7 @@ export const COLLECTION_SIZE = getEnvValue(200, 3333);
 export const TRAVELERS_COLLECTION_ID = getEnvValue('PTESTERS-8fd15c', 'TRAVELER-51bdef');
 export const TRAVELERS_PADDING = getEnvValue(2, 4);
 export const ELDERS_COLLECTION_ID = getEnvValue('HOLYCOWS-90e467', 'HOMEXELDER-d43957');
-export const ELDERS_PADDING = getEnvValue(2, 2);
+export const ELDERS_PADDING = 2;
 
 export const TICKETS_TOKEN_ID = getEnvValue('HOMETICKET-9112c2', 'HOMETICKET-257a32');
 export const ENERGY_TOKEN_ID = getEnvValue('ENERGY-01690d', 'ENERGY-36fb1d');

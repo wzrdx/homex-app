@@ -118,7 +118,7 @@ function Prizes() {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === ELDERS_COLLECTION_ID) {
+                    if (operation.type === 'nft' && operation.collection === ELDERS_COLLECTION_ID) {
                         prize = (
                             <Flex alignItems="center">
                                 <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
@@ -169,7 +169,7 @@ function Prizes() {
             ) : _.isEmpty(txs) ? (
                 <Text>No prizes to display</Text>
             ) : (
-                <Flex minW="600px">
+                <Flex minW="660px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
                         <Text>Trial #1</Text>

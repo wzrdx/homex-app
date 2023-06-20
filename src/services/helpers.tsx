@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL, EXPLORER_URL, GATEWAY_URL } from '../blockchain/config';
+import { API_URL, EXPLORER_URL, GATEWAY_URL, TRAVELERS_PADDING } from '../blockchain/config';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -68,3 +68,5 @@ export const getTx = (hash: string) => {
         },
     });
 };
+
+export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? TRAVELERS_PADDING : 2);
