@@ -197,7 +197,7 @@ export const QUESTS: any[] = [
         name: 'Seed Hunt',
         description: (
             <Text layerStyle="questDescription">
-                Journey deep into the forest to capture and bring back a rare bird to trade for valuable seeds and herbs for the
+                Journey deep into the forest to capture and bring back a rare bird to trade for valuable seeds and gems for the
                 city's use. Beware of the bird's elusive nature and the treacherous terrain you'll have to navigate to reach it.
             </Text>
         ),

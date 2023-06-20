@@ -8,7 +8,7 @@ import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
 import { Participant } from '../../blockchain/types';
-import { getEldersLogo, getFullTicket } from '../../services/assets';
+import { getEldersLogo, getFullTicket, getSmallLogo } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
@@ -95,27 +95,37 @@ function Leaderboard() {
     };
 
     const getPot = () => (
+        // 6 NFTs + 10 Egld + 32 Tickets + 600 Essence
         <Flex ml={1.5} alignItems="center">
             <Flex alignItems="center">
-                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
-                <Text fontWeight={500} color="redClrs">
-                    2 Elders
+                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Elder" />
+                <Text fontWeight={500} color="primary">
+                    6 Travelers
                 </Text>
             </Flex>
 
-            <Text mx={1}>+</Text>
+            <Text mx={1.5}>+</Text>
 
             <Text color="brightBlue" fontWeight={500}>
-                25 $EGLD
+                10 $EGLD
             </Text>
 
-            <Text mx={1}>+</Text>
+            <Text mx={1.5}>+</Text>
 
             <Flex alignItems="center">
                 <Text mr={1.5} fontWeight={500} color="brightWheat">
-                    20
+                    32
                 </Text>
                 <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+            </Flex>
+
+            <Text mx={1.5}>+</Text>
+
+            <Flex alignItems="center">
+                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color}>
+                    600
+                </Text>
+                <Image height="28px" src={RESOURCE_ELEMENTS.essence.icon} />
             </Flex>
         </Flex>
     );

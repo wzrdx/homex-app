@@ -25,6 +25,7 @@ const colors = {
         lightgray: '#8e9e9e',
         gold: '#f4d091',
     },
+    primary: '#de4554',
     almostWhite: 'gainsboro',
     dark: '#1c1c1c',
     darkBlue: '#23242a',
