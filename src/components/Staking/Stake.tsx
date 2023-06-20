@@ -133,7 +133,6 @@ function Stake() {
                         colorScheme="red"
                         customStyle={{ width: '134px' }}
                         onClick={stake}
-                        isStakingButton
                     >
                         <Text>Stake</Text>
                     </ActionButton>
@@ -149,7 +148,6 @@ function Stake() {
                                 isTxPending(TransactionType.Unstake) ||
                                 isTxPending(TransactionType.Stake)
                             }
-                            isStakingButton
                         >
                             <Text>Select all (25 max.)</Text>
                         </ActionButton>

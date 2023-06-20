@@ -50,7 +50,7 @@ function Quests() {
 
     const { address } = useGetAccountInfo();
 
-    const { isQuestTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { isQuestTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const { quest: currentQuest, setQuest, ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
     const { resources, isTicketModalOpen, onTicketModalClose } = useResourcesContext() as ResourcesContextType;
@@ -282,7 +282,7 @@ function Quests() {
                                 isLoading={
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
-                                disabled={!meetsRequirements(resources, currentQuest.id)}
+                                disabled={!meetsRequirements(resources, currentQuest.id) || isGamePaused}
                                 onClick={startQuest}
                             >
                                 <Text>Start</Text>
@@ -302,6 +302,7 @@ function Quests() {
                                 isLoading={
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
+                                disabled={isGamePaused}
                                 colorScheme="green"
                                 onClick={completeQuest}
                             >

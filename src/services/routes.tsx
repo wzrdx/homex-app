@@ -18,8 +18,8 @@ export const routeNames = {
     leaderboard: 'entries',
     raffle: 'raffle',
     prizes: 'prizes',
-    stake: 'stake',
-    unstake: 'unstake',
+    stake: 'available',
+    unstake: 'staked',
 };
 
 // Main routes after login
