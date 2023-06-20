@@ -3,7 +3,7 @@ import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 import Frame_3 from '../assets/frame_3.png';
-import Ritual from '../assets/images/ritual.jpg';
+import Vision from '../assets/images/vision.jpg';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
 import Logo from '../assets/logo_small.png';
@@ -14,7 +14,7 @@ export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
 
 export const getFrame = () => Frame_3;
-export const getRitualImage = () => Ritual;
+export const getVisionImage = () => Vision;
 export const getFullTicket = () => Ticket;
 export const getTicketSFT = () => TicketSFT;
 export const getFrameGlow = () => FrameGlow;

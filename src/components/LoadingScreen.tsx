@@ -2,7 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
-import { getLayoutBackground, getFrame, getRitualImage, getTicketSFT } from '../services/assets';
+import { getLayoutBackground, getFrame, getVisionImage, getTicketSFT } from '../services/assets';
 import { getQuestImage } from '../services/quests';
 import { isAfter } from 'date-fns';
 
@@ -13,7 +13,7 @@ function LoadingScreen({ setIsLoaded }) {
         getFrame(),
         getLayoutBackground(),
         getQuestImage(1),
-        getRitualImage(),
+        getVisionImage(),
         getTicketSFT(),
     ]);
 

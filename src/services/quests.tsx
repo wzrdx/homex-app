@@ -14,8 +14,9 @@ import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
 import SmokeAndClouds from '../assets/quests/videos/1.webm';
 import LightRays from '../assets/quests/videos/3-1.webm';
-import SmokeAndRays from '../assets/quests/videos/4.webm';
+// import SmokeAndRays from '../assets/quests/videos/4.webm';
 import DesertSmoke from '../assets/quests/videos/8-1.webm';
+import Particles from '../assets/quests/videos/particles.webm';
 
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
@@ -28,7 +29,7 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = 60; // minutes
+const BASE_DURATION = 1; // minutes TODO: 60
 const BASE_COST = 15;
 const BASE_REWARD = 10;
 
@@ -119,8 +120,8 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: LightRays,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
         image: Quest_3,
@@ -282,8 +283,8 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: LightRays,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
         image: Quest_8,

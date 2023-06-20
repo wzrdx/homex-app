@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import _, { find, findIndex, map } from 'lodash';
 import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
-import Vision from '../assets/videos/vision.webm';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
@@ -33,12 +32,12 @@ import { Timer } from '../shared/Timer';
 import { isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame, getFrameGlow, getSpinningTicket } from '../services/assets';
+import { getFrame, getFrameGlow, getSpinningTicket, getVisionImage } from '../services/assets';
 import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
-import { hDisplay, mDisplay } from '../services/helpers';
+import { getBackgroundStyle, hDisplay, mDisplay } from '../services/helpers';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
@@ -94,7 +93,7 @@ function Quests() {
                 )
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6000000 + requiredResources.length * 1000000)
+                .withGasLimit(6000000 + requiredResources.length * 500000)
                 .buildTransaction();
 
             await refreshAccount();
@@ -138,12 +137,16 @@ function Quests() {
 
         const user = new Address(address);
 
+        const rewardsCount: number = currentQuest.rewards.length;
+        const isMission: boolean = currentQuest.type === 'final';
+        const gasLimit: number = 5500000 + rewardsCount * 750000 + (isMission ? 1000000 : 0);
+
         try {
             const tx = smartContract.methods
                 .completeQuest([currentQuest.id])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(9000000)
+                .withGasLimit(gasLimit)
                 .buildTransaction();
 
             await refreshAccount();
@@ -442,26 +445,7 @@ function Quests() {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
-                    <ModalBody padding={0}>
-                        <Box>
-                            <video
-                                style={{
-                                    position: 'fixed',
-                                    right: 0,
-                                    bottom: 0,
-                                    minWidth: '100%',
-                                    minHeight: '100%',
-                                    transform: 'translateX(calc((100% - 100vw) / 2))',
-                                    maxWidth: '-webkit-fill-available',
-                                }}
-                                autoPlay={true}
-                                muted={true}
-                                loop={true}
-                            >
-                                <source src={Vision} type="video/webm" />
-                            </video>
-                        </Box>
-                    </ModalBody>
+                    <ModalBody padding={0} style={getBackgroundStyle(getVisionImage())}></ModalBody>
                 </ModalContent>
             </Modal>
         </Flex>
