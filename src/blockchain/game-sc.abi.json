@@ -23,6 +23,20 @@
     },
     "endpoints": [
         {
+            "name": "copyVector",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "clearOperatingVector",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "setQuests",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -148,14 +162,23 @@
             "outputs": []
         },
         {
-            "name": "clearOngoingQuests",
+            "name": "airdropEnergy",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "alloc_per_addr",
+                    "type": "List<u64>"
+                }
+            ],
             "outputs": []
         },
         {
-            "name": "faucet",
+            "name": "clearOngoingQuests",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
@@ -167,7 +190,7 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "winners_count",
+                    "name": "phase",
                     "type": "u32"
                 }
             ],
@@ -181,18 +204,6 @@
                 {
                     "name": "timestamp",
                     "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setRafflePot",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "value",
-                    "type": "u32"
                 }
             ],
             "outputs": []
@@ -239,12 +250,6 @@
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "clear",
-            "mutability": "mutable",
             "inputs": [],
             "outputs": []
         },
@@ -315,6 +320,16 @@
                     "type": "Address"
                 }
             ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getOperatingVectorLength",
+            "mutability": "readonly",
+            "inputs": [],
             "outputs": [
                 {
                     "type": "u32"
@@ -425,28 +440,12 @@
             ]
         },
         {
-            "name": "getLastStakingTimestamp",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getStakedAddresses",
+            "name": "getActivePlayersCount",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<Address>",
-                    "multi_result": true
+                    "type": "u32"
                 }
             ]
         },
@@ -548,64 +547,12 @@
             ]
         },
         {
-            "name": "getActivePlayers",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "getParticipantId",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u16"
-                }
-            ]
-        },
-        {
-            "name": "getParticipantAddress",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "id",
-                    "type": "u16"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "Address"
-                }
-            ]
-        },
-        {
             "name": "getRaffleIndex",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "u16"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleVector",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<u16>",
-                    "multi_result": true
                 }
             ]
         },
@@ -627,16 +574,6 @@
             "outputs": [
                 {
                     "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getRafflePot",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },

@@ -302,7 +302,7 @@ function Quests() {
                                 isLoading={
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
-                                // disabled={isGamePaused} TODO:
+                                disabled={isGamePaused}
                                 colorScheme="green"
                                 onClick={completeQuest}
                             >
