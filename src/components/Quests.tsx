@@ -210,7 +210,7 @@ function Quests() {
     return (
         <Flex height="100%">
             {/* Quest list */}
-            <Flex flex={5} justifyContent="center" overflowY="scroll">
+            <Flex flex={5} justifyContent="center" overflowY="auto">
                 <Flex flexDir="column" width="100%" pl="2px">
                     <Text layerStyle="header1">Herbalism</Text>
                     {getQuestCards('herbalism')}
