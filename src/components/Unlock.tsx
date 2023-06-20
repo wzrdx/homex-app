@@ -14,7 +14,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
+import { ELDERS_COLLECTION_ID, TEAM, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
@@ -57,8 +57,8 @@ const Unlock = () => {
         } else {
             const stakingInfo: StakingInfo | undefined = await getStakingInfo();
 
-            if (stakingInfo?.isStaked) {
-                console.warn('User is staked');
+            if (TEAM.includes(address) || stakingInfo?.isStaked) {
+                console.warn('Bypassing authentication');
             } else {
                 const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
                 const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);

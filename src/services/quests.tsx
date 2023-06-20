@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
-import Quest_1 from '../assets/quests/Q1.jpg';
-import Quest_2 from '../assets/quests/Q2.jpg';
-import Quest_3 from '../assets/quests/Q3.jpg';
-import Quest_4 from '../assets/quests/Q4.jpg';
-import Quest_5 from '../assets/quests/Q5.jpg';
-import Quest_6 from '../assets/quests/Q6.jpg';
-import Quest_7 from '../assets/quests/Q7.jpg';
-import Quest_8 from '../assets/quests/Q8.jpg';
-import Quest_9 from '../assets/quests/Q9.jpg';
-import Quest_10 from '../assets/quests/Q10.jpg';
+import Quest_1 from '../assets/quests/1.jpg';
+import Quest_2 from '../assets/quests/2.jpg';
+import Quest_3 from '../assets/quests/3.jpg';
+import Quest_4 from '../assets/quests/4.jpg';
+import Quest_5 from '../assets/quests/5.jpg';
+import Quest_6 from '../assets/quests/6.jpg';
+import Quest_7 from '../assets/quests/7.jpg';
+import Quest_8 from '../assets/quests/8.jpg';
+import Quest_9 from '../assets/quests/9.jpg';
 
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
-import Q1 from '../assets/quests/videos/1.webm';
+import SmokeAndClouds from '../assets/quests/videos/1.webm';
 import LightRays from '../assets/quests/videos/3-1.webm';
-import Q3 from '../assets/quests/videos/3.webm';
-import Q4 from '../assets/quests/videos/4.webm';
-import Q5 from '../assets/quests/videos/5.webm';
-import Q6 from '../assets/quests/videos/6.webm';
-import Mine from '../assets/quests/videos/7-1.webm';
+import SmokeAndRays from '../assets/quests/videos/4.webm';
 import DesertSmoke from '../assets/quests/videos/8-1.webm';
-import Q9 from '../assets/quests/videos/9.webm';
 
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
@@ -34,8 +28,9 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = 30; // minutes
-const BASE_COST = 10;
+const BASE_DURATION = 60; // minutes
+const BASE_COST = 15;
+const BASE_REWARD = 10;
 
 const getId = () => ++ID;
 
@@ -44,27 +39,27 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'City Scouting',
+        name: 'Botanical Exploration',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a journey to uncover the secrets of the city and earn a reward. This adventure requires some energy to
-                keep you focused on your path.
+                Journey to the botanical rim in the western side of Menhir to gather a rare root that will bring new life to the
+                Menhir's gardens. The root is guarded by treacherous vines and thorny bushes.
             </Text>
         ),
         requirements: {
-            energy: BASE_COST,
+            energy: 1 * BASE_COST,
         },
         duration: BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 2 * BASE_COST,
+                value: 2 * BASE_REWARD,
             },
         ],
         layers: [
             {
-                source: Q1,
+                source: LightRays,
                 mode: 'normal',
             },
         ],
@@ -73,84 +68,82 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Menhir Summit',
+        name: 'Waterfall Pilgrimage',
         description: (
             <Text layerStyle="questDescription">
-                You seek to gain a better understanding of the city's layout and its surroundings, and decide to climb to its
-                highest point. The journey is treacherous and challenging, but the view from the top is breathtaking and
-                awe-inspiring.
-            </Text>
-        ),
-        requirements: {
-            energy: 2 * BASE_COST,
-        },
-        duration: 2 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 4 * BASE_COST,
-            },
-        ],
-        layers: [
-            {
-                source: Q3,
-                mode: 'normal',
-            },
-        ],
-        image: Quest_2,
-    },
-    {
-        id: getId(),
-        type: 'herbalism',
-        name: 'Shadowy Figure',
-        description: (
-            <Text layerStyle="questDescription">
-                As you explore the city, you come across a mysterious figure who offers you a strange substance and a diagram in
-                exchange for some valuables. Upon consuming the substance, you feel a surge of energy. Although it may take some
-                time, the transaction could potentially be valuable.
+                Embark on a pilgrimage to a hidden temple behind a roaring waterfall, where you will start a ritual to announce
+                the arrival of spring by burning eucalyptus in an incense burner.
             </Text>
         ),
         requirements: {
             energy: 3 * BASE_COST,
         },
-        duration: 3 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 6 * BASE_COST,
+                value: 6 * BASE_REWARD,
             },
         ],
         layers: [
             {
-                source: Q6,
+                source: SmokeAndClouds,
                 mode: 'normal',
             },
         ],
-        image: Quest_3,
+        image: Quest_2,
     },
 
     // Jewelcrafting
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Craft Compass',
+        name: 'Fountain of Youth',
         description: (
             <Text layerStyle="questDescription">
-                After reaching a crossroads, you find yourself lost and disoriented. To find your way, you must craft a compass.
-                This task will require significant energy and time, but the reward awaits those who succeed.
+                Discover the hidden fountain from Menhir and retrieve a goblet of its magical water for Menhir's spring
+                celebration. The clear water can only be consumed from one of the goblets tied to the fountain.
             </Text>
         ),
         requirements: {
-            energy: BASE_COST,
+            energy: 1 * BASE_COST,
         },
         duration: BASE_DURATION,
         rewards: [
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: BASE_COST,
+                value: 1 * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: LightRays,
+                mode: 'normal',
+            },
+        ],
+        image: Quest_3,
+    },
+    {
+        id: getId(),
+        type: 'jewelcrafting',
+        name: 'Garden of Light',
+        description: (
+            <Text layerStyle="questDescription">
+                Venture into the hidden Garden of Light inside a palace courtyard and retrieve the chlorophyll from a
+                transparent crystal flower, symbolizing life and energy from the sun's light.
+            </Text>
+        ),
+        requirements: {
+            energy: 3 * BASE_COST,
+        },
+        duration: 4 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 3 * BASE_REWARD,
             },
         ],
         layers: [
@@ -161,93 +154,32 @@ export const QUESTS: any[] = [
         ],
         image: Quest_4,
     },
-    {
-        id: getId(),
-        type: 'jewelcrafting',
-        name: 'Tales Unveiled',
-        description: (
-            <Text layerStyle="questDescription">
-                As a seasoned traveler, you long to share your tales of adventure with the people of Menhir. They are eager to
-                hear your stories, and in exchange, offer you a reward of precious gems. But to captivate your audience, you
-                must spend time gathering enough listeners to hear your tales.
-            </Text>
-        ),
-        requirements: {
-            energy: 2 * BASE_COST,
-        },
-        duration: 2 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 2 * BASE_COST,
-            },
-        ],
-        layers: [
-            {
-                source: Q4,
-                mode: 'normal',
-            },
-        ],
-        image: Quest_5,
-    },
-    {
-        id: getId(),
-        type: 'jewelcrafting',
-        name: 'Encounter Merchant',
-        description: (
-            <Text layerStyle="questDescription">
-                While exploring the city, you come across an old vendor and strike a deal. For a small price, you acquire a
-                revigorating potion that restores your energy and a diagram leading to a secret location. The transaction takes
-                a bit of your time, but it may prove to be worth it.
-            </Text>
-        ),
-        requirements: {
-            energy: 3 * BASE_COST,
-        },
-        duration: 3 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 3 * BASE_COST,
-            },
-        ],
-        layers: [
-            {
-                source: Q5,
-                mode: 'hard-light',
-            },
-        ],
-        image: Quest_6,
-    },
 
     // Enchanting
     {
         id: getId(),
         type: 'enchanting',
-        name: 'Beneath the Depths',
+        name: 'Bloom Market',
         description: (
             <Text layerStyle="questDescription">
-                You dare to venture into the labyrinthine underworld beneath the city. Navigate twisting tunnels and unravel
-                cryptic puzzles to discover forgotten relics. Your courage and wit shall reveal the ancient mysteries concealed
-                in the depths, rewarding those who dare to explore.
+                Exchange precious gems for rare and exotic flowers to add to the Menhir's gardens. Rumor has it that there's a
+                rare bloom being sold by a mysterious vendor that only appears once a year.
             </Text>
         ),
         requirements: {
             energy: 4 * BASE_COST,
         },
-        duration: 4 * BASE_DURATION,
+        duration: 6 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 4 * BASE_COST,
+                value: 4 * BASE_REWARD,
             },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 2 * BASE_COST,
+                value: 2 * BASE_REWARD,
             },
         ],
         layers: [
@@ -256,64 +188,65 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
-        image: Quest_7,
+        image: Quest_5,
+    },
+    {
+        id: getId(),
+        type: 'enchanting',
+        name: 'Seed Hunt',
+        description: (
+            <Text layerStyle="questDescription">
+                Journey deep into the forest to capture and bring back a rare bird to trade for valuable seeds and herbs for the
+                city's use. Beware of the bird's elusive nature and the treacherous terrain you'll have to navigate to reach it.
+            </Text>
+        ),
+        requirements: {
+            energy: 6 * BASE_COST,
+        },
+        duration: 9 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 6 * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 3 * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: LightRays,
+                mode: 'normal',
+            },
+        ],
+        image: Quest_6,
     },
 
     // Divination
     {
         id: getId(),
         type: 'divination',
-        name: 'Underground Blueprint',
+        name: 'Spring Cleaning',
         description: (
             <Text layerStyle="questDescription">
-                While exploring the city's outskirts, you stumble upon an ancient mine filled with toxic substances. You manage
-                to navigate through the harsh underground environment and discover a hidden diagram, but not without using a
-                significant amount of resources. In the process, you obtain a rare essence. The journey to complete this task is
-                not an easy one and requires considerable effort.
-            </Text>
-        ),
-        requirements: {
-            energy: 2 * BASE_COST,
-            herbs: 4 * BASE_COST,
-            gems: 2 * BASE_COST,
-        },
-        duration: 2 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'essence',
-                name: 'Nimbus Orb',
-                value: BASE_COST,
-            },
-        ],
-        layers: [
-            {
-                source: Mine,
-                mode: 'normal',
-            },
-        ],
-        image: Quest_8,
-    },
-    {
-        id: getId(),
-        type: 'divination',
-        name: 'Mystic Labyrinth',
-        description: (
-            <Text layerStyle="questDescription">
-                As you journey through the outside world, you come across an ancient labyrinth filled with mysteries and
-                challenges. You successfully navigate through it and uncover a hidden Diagram.
+                Help to purify the polluted water sources around the city. Retrieve special cleansing herbs from the nearby
+                swamp to use in the purification process. Beware of the swamp creatures and treacherous terrain along the way.
             </Text>
         ),
         requirements: {
             energy: 4 * BASE_COST,
-            herbs: 8 * BASE_COST,
-            gems: 4 * BASE_COST,
+            herbs: 4 * BASE_COST,
+            gems: 2 * BASE_COST,
         },
-        duration: 4 * BASE_DURATION,
+        duration: 3 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 2 * BASE_COST,
+                value: 1 * BASE_REWARD,
             },
         ],
         layers: [
@@ -322,7 +255,38 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
-        image: Quest_9,
+        image: Quest_7,
+    },
+    {
+        id: getId(),
+        type: 'divination',
+        name: 'Renewal Ritual',
+        description: (
+            <Text layerStyle="questDescription">
+                Join a sacred ceremony to celebrate the arrival of spring and receive the essence of renewal to prepare the land
+                for the butterfly's magic.
+            </Text>
+        ),
+        requirements: {
+            energy: 8 * BASE_COST,
+            herbs: 8 * BASE_COST,
+            gems: 4 * BASE_COST,
+        },
+        duration: 6 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 2 * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: LightRays,
+                mode: 'normal',
+            },
+        ],
+        image: Quest_8,
     },
 
     // Final
@@ -330,20 +294,20 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Adraka Narcotic',
+        name: 'Enchanted Butterfly',
         description: (
             <Text layerStyle="questDescription">
-                Retrieve the Adraka Narcotic hidden in a linen tent palace in the city's marketplace to protect yourself from
-                desert mirages. Get the narcotic back to the Dome to receive your Ticket as a reward for your true intentions.
+                To retrieve the colorful butterfly you would have to use all of your skills and wit to capture it. Secure it
+                safely for transport back to the city and wait for it to bring new life to the land.
             </Text>
         ),
         requirements: {
-            energy: 10 * BASE_COST,
+            energy: 20 * BASE_COST,
             herbs: 20 * BASE_COST,
             gems: 10 * BASE_COST,
-            essence: 6 * BASE_COST,
+            essence: 10 * BASE_COST,
         },
-        duration: 8 * BASE_DURATION,
+        duration: 16 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',
@@ -353,11 +317,11 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: Q9,
+                source: LightRays,
                 mode: 'normal',
             },
         ],
-        image: Quest_10,
+        image: Quest_9,
     },
 ];
 
