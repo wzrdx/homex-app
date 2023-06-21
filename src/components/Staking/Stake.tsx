@@ -176,7 +176,7 @@ function Stake() {
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
                                     <AlertIcon />
-                                    There are no NFTs from the Home X collections in your wallet
+                                    You have no NFTs available for staking. View your staked NFT in the 'Staked' tab.
                                 </Alert>
                             </Flex>
                         </Flex>
