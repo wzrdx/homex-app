@@ -387,6 +387,7 @@ function Unstake() {
                                             name={token.name}
                                             url={token.url}
                                             type={token?.type}
+                                            rarity={null}
                                         />
                                     </Box>
                                 ))}

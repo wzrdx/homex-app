@@ -32,3 +32,11 @@ export enum NFTType {
     Traveler = 'Traveler',
     Elder = 'Elder',
 }
+
+export enum RarityClass {
+    Common = 1,
+    Uncommon = 2,
+    Rare = 3,
+    Royal = 4,
+    OneOfOne = 5,
+}
