@@ -37,8 +37,6 @@ export const getRarityClasses = async (nonces: number[]) => {
             rarityClass: item?.rarity_class?.toNumber(),
         }));
 
-        console.log(parsedArray);
-
         return parsedArray;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);

@@ -62,7 +62,7 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
 
     return (
         <Flex className="NFT" flexDir="column">
-            <Box position="relative" minWidth="170px" minHeight="170px">
+            <Flex position="relative" minWidth="170px" minHeight="170px">
                 {isSelected && (
                     <Flex
                         justifyContent="center"
@@ -93,15 +93,15 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
                 )}
 
                 {rarity && (
-                    <Flex position="absolute" right={0} bottom={0} mb="7px">
+                    <Flex position="absolute" right={0} bottom={0}>
                         {getRarityLabel(rarity.rarityClass)}
                     </Flex>
                 )}
 
                 <LazyLoadImage src={url} alt="NFT" loading="lazy" effect="opacity" />
-            </Box>
+            </Flex>
 
-            <Text fontWeight={500} userSelect="none" color={getColor()}>
+            <Text mt={1} fontSize="12.5px" fontWeight={500} userSelect="none" color={getColor()}>
                 {name}
             </Text>
         </Flex>
