@@ -9,9 +9,15 @@ import Quest_7 from '../assets/quests/7.jpg';
 import Quest_8 from '../assets/quests/8.jpg';
 import Quest_9 from '../assets/quests/9.jpg';
 
+import Quest_10 from '../assets/quests/10.jpg';
+import Quest_11 from '../assets/quests/11.jpg';
+import Quest_12 from '../assets/quests/12.jpg';
+import Quest_13 from '../assets/quests/13.jpg';
+
 import { createContext, useContext } from 'react';
 import { Text } from '@chakra-ui/react';
 import { Quest } from '../types';
+
 import SmokeAndClouds from '../assets/quests/videos/1.webm';
 import LightRays from '../assets/quests/videos/3-1.webm';
 // import SmokeAndRays from '../assets/quests/videos/4.webm';
@@ -29,7 +35,7 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = process.env.NODE_ENV === 'development' ? 1 : 60; // minutes
+const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 10;
 
@@ -38,7 +44,7 @@ const getId = () => ++ID;
 export const QUESTS: any[] = [
     // Herbalism
     {
-        id: getId(),
+        id: 1,
         type: 'herbalism',
         name: 'Botanical Exploration',
         description: (
@@ -67,7 +73,7 @@ export const QUESTS: any[] = [
         image: Quest_1,
     },
     {
-        id: getId(),
+        id: 2,
         type: 'herbalism',
         name: 'Waterfall Pilgrimage',
         description: (
@@ -98,7 +104,7 @@ export const QUESTS: any[] = [
 
     // Jewelcrafting
     {
-        id: getId(),
+        id: 3,
         type: 'jewelcrafting',
         name: 'Fountain of Youth',
         description: (
@@ -127,7 +133,7 @@ export const QUESTS: any[] = [
         image: Quest_3,
     },
     {
-        id: getId(),
+        id: 4,
         type: 'jewelcrafting',
         name: 'Garden of Light',
         description: (
@@ -158,7 +164,7 @@ export const QUESTS: any[] = [
 
     // Enchanting
     {
-        id: getId(),
+        id: 5,
         type: 'enchanting',
         name: 'Bloom Market',
         description: (
@@ -192,7 +198,7 @@ export const QUESTS: any[] = [
         image: Quest_5,
     },
     {
-        id: getId(),
+        id: 6,
         type: 'enchanting',
         name: 'Seed Hunt',
         description: (
@@ -228,7 +234,7 @@ export const QUESTS: any[] = [
 
     // Divination
     {
-        id: getId(),
+        id: 7,
         type: 'divination',
         name: 'Spring Cleaning',
         description: (
@@ -259,7 +265,7 @@ export const QUESTS: any[] = [
         image: Quest_7,
     },
     {
-        id: getId(),
+        id: 8,
         type: 'divination',
         name: 'Renewal Ritual',
         description: (
@@ -290,9 +296,130 @@ export const QUESTS: any[] = [
         image: Quest_8,
     },
 
+    // Alchemy
+    {
+        id: 10,
+        type: 'alchemy',
+        name: 'Sunshine Symphony',
+        description: (
+            <Text layerStyle="questDescription">
+                Discover the hidden location of the Sun Harp, a legendary musical instrument that harnesses the power of
+                sunlight. Embark on a musical journey through sunlit valleys and ancient ruins, collecting harmonious notes
+                along the way.
+            </Text>
+        ),
+        requirements: {
+            energy: (1 / 3) * BASE_COST,
+        },
+        duration: BASE_DURATION / 2,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: Particles,
+                mode: 'overlay',
+            },
+        ],
+        image: Quest_10,
+    },
+    {
+        id: 11,
+        type: 'alchemy',
+        name: 'Spring Swap Meet',
+        description: (
+            <Text layerStyle="questDescription">
+                Join the bustling Spring Swap Meet in Menhir, where traders from all corners gather to exchange their unique and
+                rare inventory. Navigate through the vibrant marketplace, interacting with merchants and collectors who have an
+                array of items, from colorful flower seeds and ornate gardening tools to enchanted springtime accessories.
+            </Text>
+        ),
+        requirements: {
+            energy: (1 / 3) * BASE_COST,
+        },
+        duration: BASE_DURATION / 2,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: (1 / 2) * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: DesertSmoke,
+                mode: 'normal',
+            },
+        ],
+        image: Quest_11,
+    },
+    {
+        id: 12,
+        type: 'alchemy',
+        name: "Blossom's Blessing",
+        description: (
+            <Text layerStyle="questDescription">
+                Venture deep into the Enchanted Forest and seek out the ancient tree known as Blossom's Heart. This tree holds
+                the power to rejuvenate and awaken dormant plants. Overcome mystical challenges and cleverly navigate the forest
+                to collect petals from the tree's magnificent blooms.
+            </Text>
+        ),
+        requirements: {
+            energy: 4 * BASE_COST,
+        },
+        duration: 6 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 12 * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: LightRays,
+                mode: 'plus-lighter',
+            },
+        ],
+        image: Quest_12,
+    },
+    {
+        id: 13,
+        type: 'alchemy',
+        name: 'Raindrop Rhapsody',
+        description: (
+            <Text layerStyle="questDescription">
+                Embark on a journey to the Cloud Peaks, where magical raindrops are said to hold the essence of the season.
+                Ascend the misty heights and brave the elements to collect these shimmering droplets.
+            </Text>
+        ),
+        requirements: {
+            energy: 4 * BASE_COST,
+        },
+        duration: 6 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 6 * BASE_REWARD,
+            },
+        ],
+        layers: [
+            {
+                source: SmokeAndClouds,
+                mode: 'normal',
+            },
+        ],
+        image: Quest_13,
+    },
+
     // Final
     {
-        id: getId(),
+        id: 9,
         type: 'final',
         isFinal: true,
         name: 'Enchanted Butterfly',

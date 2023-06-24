@@ -223,6 +223,9 @@ function Quests() {
                     <Text layerStyle="header1">Divination</Text>
                     {getQuestCards('divination')}
 
+                    <Text layerStyle="header1">Alchemy</Text>
+                    {getQuestCards('alchemy')}
+
                     <Text layerStyle="header1">Mission</Text>
                     {getQuestCards('final')}
                 </Flex>
