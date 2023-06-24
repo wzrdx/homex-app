@@ -68,8 +68,7 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    // TODO:
-                    url: `https://ipfs.io/ipfs/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
+                    // url: `https://ipfs.io/ipfs/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
                     type: NFTType.Traveler,
                 }))
                 .orderBy('nonce', 'asc')

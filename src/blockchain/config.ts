@@ -1,4 +1,4 @@
-// TODO: (process.env.NODE_ENV === 'development' ? devValue : prodValue);
+// (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 
 export const contractAddress = getEnvValue(

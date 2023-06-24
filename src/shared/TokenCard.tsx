@@ -49,7 +49,7 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
                 <Text
                     ml={1}
                     color="whitesmoke"
-                    fontSize="13px"
+                    fontSize="12.5px"
                     letterSpacing="0.25px"
                     fontWeight={500}
                     textTransform="uppercase"
@@ -101,7 +101,7 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
                 <LazyLoadImage src={url} alt="NFT" loading="lazy" effect="opacity" />
             </Flex>
 
-            <Text mt={1} fontSize="12.5px" fontWeight={500} userSelect="none" color={getColor()}>
+            <Text mt={1.5} fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>
                 {name}
             </Text>
         </Flex>

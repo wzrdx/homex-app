@@ -85,7 +85,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
             return '';
         }
 
-        return days > 1 ? `${days} days,` : `one day,`;
+        return days > 1 ? `${days} days, ` : `one day, `;
     };
 
     const getTimestamp = (): string =>

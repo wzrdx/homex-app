@@ -29,7 +29,7 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = 1; // minutes TODO: 60
+const BASE_DURATION = process.env.NODE_ENV === 'development' ? 1 : 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 10;
 
