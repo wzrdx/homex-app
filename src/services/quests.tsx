@@ -20,7 +20,6 @@ import { Quest } from '../types';
 
 import SmokeAndClouds from '../assets/quests/videos/1.webm';
 import LightRays from '../assets/quests/videos/3-1.webm';
-// import SmokeAndRays from '../assets/quests/videos/4.webm';
 import DesertSmoke from '../assets/quests/videos/8-1.webm';
 import Particles from '../assets/quests/videos/particles.webm';
 
