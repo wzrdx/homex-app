@@ -398,7 +398,10 @@ function Unstake() {
                                             name={token.name}
                                             url={token.url}
                                             type={token?.type}
-                                            rarity={_.find(rarities, (rarity) => rarity.nonce === token.nonce)}
+                                            rarity={
+                                                token?.type === NFTType.Traveler &&
+                                                _.find(rarities, (rarity) => rarity.nonce === token.nonce)
+                                            }
                                         />
                                     </Box>
                                 ))}
