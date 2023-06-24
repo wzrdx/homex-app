@@ -14,6 +14,7 @@ import { useStaking } from '../Staking';
 import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 
 function Stake() {
     const { height, checkEgldBalance, displayToast } = useStaking();
@@ -24,6 +25,7 @@ function Stake() {
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
+    const [rarities, setRarities] = useState<Rarity[]>();
 
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
@@ -38,7 +40,15 @@ function Stake() {
 
     useEffect(() => {
         setSelectedTokens([]);
+
+        if (!_.isEmpty(travelers)) {
+            getRarities();
+        }
     }, [travelers, elders]);
+
+    const getRarities = async () => {
+        setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
+    };
 
     const stake = async () => {
         if (!stakingInfo) {
@@ -242,6 +252,7 @@ function Stake() {
                                             name={token.name}
                                             url={token.url}
                                             type={token?.type}
+                                            rarity={_.find(rarities, (rarity) => rarity.nonce === token.nonce)}
                                         />
                                     </Box>
                                 ))}

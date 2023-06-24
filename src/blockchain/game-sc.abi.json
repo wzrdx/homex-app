@@ -49,6 +49,22 @@
             "outputs": []
         },
         {
+            "name": "loadRarityClasses",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "nonces",
+                    "type": "List<u16>"
+                },
+                {
+                    "name": "classes",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "setCollectionIds",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -440,12 +456,32 @@
             ]
         },
         {
-            "name": "getActivePlayersCount",
+            "name": "getRarityClasses",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "nonces",
+                    "type": "List<u16>"
+                }
+            ],
             "outputs": [
                 {
-                    "type": "u32"
+                    "type": "List<Rarity>"
+                }
+            ]
+        },
+        {
+            "name": "getRarityClass",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u8"
                 }
             ]
         },
@@ -660,6 +696,19 @@
                 {
                     "name": "rewards",
                     "type": "List<u64>"
+                }
+            ]
+        },
+        "Rarity": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nonce",
+                    "type": "u16"
+                },
+                {
+                    "name": "rarity_class",
+                    "type": "u8"
                 }
             ]
         },

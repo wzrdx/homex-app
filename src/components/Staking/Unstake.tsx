@@ -22,6 +22,7 @@ import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getStakedNFTs } from '../../services/authentication';
 import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
+import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 
 function Unstake() {
     const { height, checkEgldBalance } = useStaking();
@@ -36,6 +37,8 @@ function Unstake() {
     const [travelers, setTravelers] = useState<NFT[]>();
     const [elders, setElders] = useState<NFT[]>();
 
+    const [rarities, setRarities] = useState<Rarity[]>();
+
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
             nonce: number;
@@ -47,6 +50,16 @@ function Unstake() {
         setSelectedTokens([]);
         getNFTs();
     }, [nonces]);
+
+    useEffect(() => {
+        if (!_.isEmpty(travelers)) {
+            getRarities();
+        }
+    }, [travelers, elders]);
+
+    const getRarities = async () => {
+        setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
+    };
 
     const getNFTs = async () => {
         if (!nonces) {
@@ -122,8 +135,6 @@ function Unstake() {
             .orderBy('nonce', 'asc')
             .value();
 
-        console.log(travelers);
-
         setTravelers(travelers);
         setElders(elders);
     };
@@ -164,7 +175,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6000000 + 1000000 * count)
+                .withGasLimit(8000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
@@ -387,6 +398,7 @@ function Unstake() {
                                             name={token.name}
                                             url={token.url}
                                             type={token?.type}
+                                            rarity={_.find(rarities, (rarity) => rarity.nonce === token.nonce)}
                                         />
                                     </Box>
                                 ))}
