@@ -444,7 +444,7 @@ function Unstake() {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Energy Yield per hour</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalCloseButton _focusVisible={{ outline: 0 }} />
 
                     <ModalBody>
                         <Flex pb={3} mt={-1}>

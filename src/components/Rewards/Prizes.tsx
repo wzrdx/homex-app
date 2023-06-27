@@ -1,15 +1,32 @@
 import _ from 'lodash';
-import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon, Box } from '@chakra-ui/react';
+import {
+    Flex,
+    Spinner,
+    Text,
+    Link,
+    Image,
+    Alert,
+    AlertIcon,
+    Box,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
-import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { ActionButton } from '../../shared/ActionButton/ActionButton';
 
 const COLUMNS = [
     {
@@ -38,6 +55,7 @@ const COLUMNS = [
 
 function Prizes() {
     const { height } = useRewards();
+    const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
     const [winners, setWinners] = useState<
         Array<{
@@ -183,27 +201,19 @@ function Prizes() {
                             </Flex>
                         ) : (
                             <>
-                                <Flex alignItems="center" mb={2}>
-                                    <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                    <Text>{format(_.head(txs)?.timestamp as Date, 'PPPP')}</Text>
-                                </Flex>
-
-                                <Text mb={1} fontWeight={600} fontSize="17px">
-                                    Hashes
-                                </Text>
-
-                                <Box display="grid" gridAutoColumns="1fr" gridTemplateColumns="1fr 1fr 1fr" rowGap={1}>
-                                    {_.map(txs, (tx, index) => (
-                                        <Flex key={index} alignItems="center" justifyContent="space-between">
-                                            <Link href={getTxExplorerURL(tx?.hash as string)} isExternal>
-                                                <Flex alignItems="center">
-                                                    <Text>{getShortAddress(tx?.hash as string)}</Text>
-                                                    <ExternalLinkIcon ml={1.5} />
-                                                </Flex>
-                                            </Link>
+                                <Flex alignItems="flex-start" justifyContent="space-between">
+                                    <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
+                                        <Flex alignItems="center">
+                                            <InfoOutlineIcon />
+                                            <Text ml={1.5}>View Transactions</Text>
                                         </Flex>
-                                    ))}
-                                </Box>
+                                    </ActionButton>
+
+                                    <Flex alignItems="center">
+                                        <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
+                                        <Text>{format(_.head(txs)?.timestamp as Date, 'PPPP')}</Text>
+                                    </Flex>
+                                </Flex>
 
                                 {isWinner() && (
                                     <Flex mt={4} backgroundColor="#000000e3">
@@ -257,6 +267,35 @@ function Prizes() {
                     </Flex>
                 </Flex>
             )}
+
+            {/* Hashes */}
+            <Modal onClose={onHashesClose} isOpen={isHashesOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Transaction Hashes</ModalHeader>
+                    <ModalCloseButton _focusVisible={{ outline: 0 }} />
+
+                    <ModalBody>
+                        <Flex flexDir="column" pb={2}>
+                            {_.map(txs, (tx, index) => (
+                                <Flex
+                                    key={index}
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                    _notLast={{ marginBottom: 1 }}
+                                >
+                                    <Link href={getTxExplorerURL(tx?.hash as string)} isExternal>
+                                        <Flex alignItems="center">
+                                            <Text minW="130px">{getShortAddress(tx?.hash as string, 6)}</Text>
+                                            <ExternalLinkIcon ml={1.5} />
+                                        </Flex>
+                                    </Link>
+                                </Flex>
+                            ))}
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }
