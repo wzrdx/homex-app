@@ -1,4 +1,4 @@
-import { Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex, Alert, AlertIcon } from '@chakra-ui/react';
 import { NFT, RarityClass } from '../blockchain/types';
 import { Rarity } from '../blockchain/api/getRarityClasses';
 import { useEffect, useState } from 'react';
@@ -52,8 +52,34 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
         }
     }, [travelers, elders, rarities]);
 
+    const getLegend = (): JSX.Element => {
+        const array = Array.from({ length: 5 }, (_, i) => i + 1);
+
+        return (
+            <Flex flexDir="column">
+                {_.map(array, (item, index) => {
+                    let { label, color, energyYield } = getRarityClassInfo(item);
+
+                    return (
+                        <Flex key={index} justifyContent="space-between">
+                            <Text color={color} minW="106px">
+                                {label}
+                            </Text>
+                            <Text color="energyBright">{energyYield}</Text>
+                        </Flex>
+                    );
+                })}
+            </Flex>
+        );
+    };
+
     return (
-        <Flex flexDir="column">
+        <Flex flexDir="column" width="100%">
+            <Alert status="info" mb={5}>
+                <AlertIcon />
+                {getLegend()}
+            </Alert>
+
             <Text
                 mb={1.5}
                 color="brightWheat"
