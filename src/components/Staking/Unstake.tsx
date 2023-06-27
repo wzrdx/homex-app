@@ -1,18 +1,26 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner, AlertIcon, Alert } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    Text,
+    Spinner,
+    AlertIcon,
+    Alert,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    ModalHeader,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import {
-    CHAIN_ID,
-    ELDERS_COLLECTION_ID,
-    ELDERS_PADDING,
-    TRAVELERS_COLLECTION_ID,
-    TRAVELERS_PADDING,
-} from '../../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
@@ -23,10 +31,13 @@ import { getStakedNFTs } from '../../services/authentication';
 import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
+import Yield from '../../shared/Yield';
 
 function Unstake() {
     const { height, checkEgldBalance } = useStaking();
     const { address } = useGetAccountInfo();
+
+    const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
 
     const { stakingInfo, nonces } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
@@ -282,7 +293,7 @@ function Unstake() {
                                 }
                                 isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
                                 colorScheme="blue"
-                                customStyle={{ width: '134px' }}
+                                customStyle={{ width: '120px' }}
                                 onClick={unstake}
                             >
                                 <Text>Unstake</Text>
@@ -291,7 +302,7 @@ function Unstake() {
                             <Box ml={4}>
                                 <ActionButton
                                     colorScheme="default"
-                                    customStyle={{ width: '186px' }}
+                                    customStyle={{ width: '142px' }}
                                     onClick={selectAll}
                                     disabled={
                                         !stakingInfo ||
@@ -313,17 +324,30 @@ function Unstake() {
                         </Flex>
 
                         {stakingInfo?.isStaked && (
-                            <ActionButton
-                                disabled={
-                                    !stakingInfo || isTxPending(TransactionType.Stake) || isTxPending(TransactionType.Unstake)
-                                }
-                                isLoading={isClaimButtonLoading || isTxPending(TransactionType.Claim)}
-                                colorScheme="blue"
-                                customStyle={{ width: '154px' }}
-                                onClick={claim}
-                            >
-                                <Text>Claim Energy</Text>
-                            </ActionButton>
+                            <Flex>
+                                <ActionButton colorScheme="default" onClick={onYieldOpen} disabled={_.isEmpty(rarities)}>
+                                    <Flex alignItems="center">
+                                        <InfoOutlineIcon />
+                                        <Text ml={1.5}>View Yield</Text>
+                                    </Flex>
+                                </ActionButton>
+
+                                <Box ml={4}>
+                                    <ActionButton
+                                        disabled={
+                                            !stakingInfo ||
+                                            isTxPending(TransactionType.Stake) ||
+                                            isTxPending(TransactionType.Unstake)
+                                        }
+                                        isLoading={isClaimButtonLoading || isTxPending(TransactionType.Claim)}
+                                        colorScheme="blue"
+                                        customStyle={{ width: '144px' }}
+                                        onClick={claim}
+                                    >
+                                        <Text>Claim Energy</Text>
+                                    </ActionButton>
+                                </Box>
+                            </Flex>
                         )}
                     </Flex>
 
@@ -414,6 +438,21 @@ function Unstake() {
                     <Spinner size="md" />
                 </Flex>
             )}
+
+            {/* Yield */}
+            <Modal onClose={onYieldClose} isOpen={isYieldOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Energy Yield per hour</ModalHeader>
+                    <ModalCloseButton />
+
+                    <ModalBody>
+                        <Flex pb={3} mt={-1}>
+                            {travelers && elders && <Yield travelers={travelers} elders={elders} rarities={rarities} />}
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }

@@ -2,40 +2,13 @@ import { Image, Flex, Text, Box } from '@chakra-ui/react';
 import { NFTType, RarityClass } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { getRarityClassInfo } from '../services/helpers';
 
 function TokenCard({ isSelected, name, url, type, rarity }) {
     const getColor = () => (type === NFTType.Traveler ? 'whitesmoke' : 'redClrs');
 
     const getRarityLabel = (rarityClass: RarityClass) => {
-        let label: string;
-        let color: string;
-
-        switch (rarityClass) {
-            case RarityClass.Common:
-                label = 'Common';
-                color = 'gray';
-                break;
-
-            case RarityClass.Uncommon:
-                label = 'Uncommon';
-                color = 'white';
-                break;
-
-            case RarityClass.Rare:
-                label = 'Rare';
-                color = 'dodgerblue';
-                break;
-
-            case RarityClass.Royal:
-                label = 'Royal';
-                color = '#fe3bff';
-                break;
-
-            case RarityClass.OneOfOne:
-                label = '1/1';
-                color = 'orange';
-                break;
-        }
+        let { label, color } = getRarityClassInfo(rarityClass);
 
         return (
             <Flex

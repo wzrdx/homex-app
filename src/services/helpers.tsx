@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL, EXPLORER_URL, GATEWAY_URL, TRAVELERS_PADDING } from '../blockchain/config';
+import { RarityClass } from '../blockchain/types';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -70,3 +71,53 @@ export const getTx = (hash: string) => {
 };
 
 export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? TRAVELERS_PADDING : 2);
+
+export const getRarityClassInfo = (rarityClass: RarityClass): { label: string; color: string; energyYield: number } => {
+    let label: string;
+    let color: string;
+    let energyYield: number;
+
+    switch (rarityClass) {
+        case RarityClass.Elder:
+            label = 'Elder';
+            color = 'redClrs';
+            energyYield = 9;
+            break;
+
+        case RarityClass.Common:
+            label = 'Common';
+            color = 'gray';
+            energyYield = 3;
+            break;
+
+        case RarityClass.Uncommon:
+            label = 'Uncommon';
+            color = 'white';
+            energyYield = 4;
+            break;
+
+        case RarityClass.Rare:
+            label = 'Rare';
+            color = 'dodgerblue';
+            energyYield = 6;
+            break;
+
+        case RarityClass.Royal:
+            label = 'Royal';
+            color = '#fe3bff';
+            energyYield = 8;
+            break;
+
+        case RarityClass.OneOfOne:
+            label = '1/1';
+            color = 'orange';
+            energyYield = 10;
+            break;
+    }
+
+    return {
+        label,
+        color,
+        energyYield,
+    };
+};

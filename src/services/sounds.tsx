@@ -31,7 +31,7 @@ const reducer = (previousState: any, nextState: any) => {
 
 export const SoundsProvider = ({ children }) => {
     const [isMusicOn, setIsMusicOn] = useReducer(reducer, false);
-    const [areSoundsOn, setAreSoundsOn] = useState(true);
+    const [areSoundsOn, setAreSoundsOn] = useState(process.env.NODE_ENV === 'development' ? false : true);
 
     const volume = 0.5;
 

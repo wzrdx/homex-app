@@ -27,8 +27,8 @@ export const ActionButton: FunctionComponent<
         <Flex
             className={`${style.actionButton} ${getColorScheme()} ${isLoading ? style.loading : ''}`}
             position="relative"
-            width={[160, 160, 160, 200]}
-            padding={['0.375rem', '0.375rem', '0.375rem', '0.45rem']}
+            width={[160, 160, 160, 160]}
+            padding={['0.375rem', '0.375rem', '0.375rem', '0.4rem']}
             onClick={() => {
                 if (!disabled && !isLoading && onClick) {
                     onClick();

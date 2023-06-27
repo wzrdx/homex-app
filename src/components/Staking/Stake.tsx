@@ -141,7 +141,7 @@ function Stake() {
                         disabled={!stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)}
                         isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
                         colorScheme="red"
-                        customStyle={{ width: '134px' }}
+                        customStyle={{ width: '120px' }}
                         onClick={stake}
                     >
                         <Text>Stake</Text>
@@ -150,7 +150,7 @@ function Stake() {
                     <Box ml={4}>
                         <ActionButton
                             colorScheme="default"
-                            customStyle={{ width: '186px' }}
+                            customStyle={{ width: '192px' }}
                             onClick={selectAll}
                             disabled={
                                 !stakingInfo ||
