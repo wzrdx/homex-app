@@ -7,7 +7,6 @@ import {
     Image,
     Alert,
     AlertIcon,
-    Box,
     useDisclosure,
     Modal,
     ModalBody,
@@ -72,10 +71,10 @@ function Prizes() {
         }>
     >();
 
-    const [index, setIndex] = useState<number>(1);
+    const [currentIndex, setCurrentIndex] = useState<number>(1);
     const [timestamp, setTimestamp] = useState<Date>();
 
-    const [isLoadingHashes, setLoadingHashes] = useState<boolean>(true);
+    const [isLoadingTrials, setLoadingTrials] = useState<boolean>(true);
 
     const { address: userAddress } = useGetAccountInfo();
 
@@ -83,14 +82,28 @@ function Prizes() {
         init();
     }, []);
 
+    useEffect(() => {
+        onTrialClick(1);
+    }, [trials]);
+
     const init = async () => {
         try {
-            const trials = await getTrials();
-            setTrials(trials);
-            parseTrial(_(trials).sortBy('index').first());
+            setTrials(await getTrials());
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const onTrialClick = (index: number) => {
+        if (!trials) {
+            return;
+        }
+
+        setWinners([]);
+
+        setCurrentIndex(index);
+        const trial: Trial = trials[index - 1];
+        parseTrial(trial);
     };
 
     const parseTrial = async (trial?: Trial) => {
@@ -108,7 +121,7 @@ function Prizes() {
         );
 
         setTimestamp(_.first(result)?.timestamp as Date);
-        setLoadingHashes(false);
+        setLoadingTrials(false);
     };
 
     const getTransaction = async (hash: string) => {
@@ -176,20 +189,31 @@ function Prizes() {
 
     return (
         <Flex height={`calc(100% - ${height}px)`} justifyContent="center">
-            {isLoadingHashes ? (
+            {isLoadingTrials ? (
                 <Spinner />
             ) : (
                 <Flex minW="660px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        {_.map(trials, (trial, index) => (
-                            <Text fontSize="17px" mb={2} key={index}>{`Trial #${trial.index}`}</Text>
+                        {_.map(trials, (trial, i) => (
+                            <Text
+                                key={i}
+                                color={trial.index === currentIndex ? 'white' : 'header.gray'}
+                                _notLast={{ mb: 2 }}
+                                fontSize="17px"
+                                cursor="pointer"
+                                transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                                _hover={{ color: '#e3e3e3' }}
+                                onClick={() => onTrialClick(trial.index)}
+                            >
+                                Trial #{trial.index}
+                            </Text>
                         ))}
                     </Flex>
 
                     {/* Right */}
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
-                        {!winners ? (
+                        {_.isEmpty(winners) ? (
                             <Flex justifyContent="center">
                                 <Spinner />
                             </Flex>
@@ -272,7 +296,7 @@ function Prizes() {
                     <ModalBody>
                         <Flex flexDir="column" pb={2}>
                             {trials &&
-                                _.map(trials[index - 1]?.hashes, (hash, index) => (
+                                _.map(trials[currentIndex - 1]?.hashes, (hash, index) => (
                                     <Flex
                                         key={index}
                                         alignItems="center"

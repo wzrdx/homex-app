@@ -2,7 +2,7 @@ import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
-import { map } from 'lodash';
+import { map, sortBy } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
@@ -31,13 +31,16 @@ export const getTrials = async () => {
         }));
 
         // TODO:
-        return [
-            ...parsedArray,
-            ...map(trials, (trial) => ({
-                index: 2,
-                hashes: map(trial?.hashes, (hash) => Buffer.from(hash).toString('hex')),
-            })),
-        ];
+        return sortBy(
+            [
+                ...parsedArray,
+                ...map(trials, (trial) => ({
+                    index: 2,
+                    hashes: map(trial?.hashes, (hash) => Buffer.from(hash).toString('hex')).slice(0, 2),
+                })),
+            ],
+            'index'
+        );
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
         return [];
