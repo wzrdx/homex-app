@@ -83,9 +83,11 @@ function Quests() {
     // Trial timestamp handling
     useEffect(() => {
         if (trialTimestamp && differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL && !isGamePaused) {
+            const difference = differenceInHours(trialTimestamp, new Date());
+
             displayToast(
                 'time',
-                `Trial ends in about ${differenceInHours(trialTimestamp, new Date())} hours`,
+                `Trial ends in ${difference} hour${difference > 1 ? 's' : ''}`,
                 'Claim your quest rewards before the end or they will be lost',
                 'orangered',
                 8000,
