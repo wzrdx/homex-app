@@ -28,7 +28,7 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
-import { isAfter, isBefore } from 'date-fns';
+import { differenceInHours, isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getSpinningTicket, getVisionImage } from '../services/assets';
@@ -37,12 +37,15 @@ import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, hDisplay, mDisplay } from '../services/helpers';
+import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
 
+const GRACE_PERIOD_INTERVAL = 48;
+
 function Quests() {
-    const { checkEgldBalance } = useLayout();
+    const { checkEgldBalance, displayToast, closeToast } = useLayout();
     const navigate = useNavigate();
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
 
@@ -56,6 +59,8 @@ function Quests() {
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
 
+    const [trialTimestamp, setTrialTimestamp] = useState<Date>();
+
     const isQuestDefault = () => findIndex(ongoingQuests, (q) => q.id === currentQuest.id) < 0;
     const isQuestOngoing = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
@@ -64,8 +69,34 @@ function Quests() {
 
     // Init
     useEffect(() => {
-        getOngoingQuests();
+        init();
     }, []);
+
+    // Trial timestamp handling
+    useEffect(() => {
+        if (trialTimestamp && differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL && !isGamePaused) {
+            displayToast(
+                'time',
+                `Trial ends in about ${differenceInHours(trialTimestamp, new Date())} hours`,
+                'Claim your quest rewards before the end or they will be lost',
+                'orangered',
+                8000,
+                'top-right',
+                {
+                    margin: '2rem',
+                }
+            );
+        }
+
+        return () => {
+            closeToast();
+        };
+    }, [trialTimestamp]);
+
+    const init = async () => {
+        getOngoingQuests();
+        setTrialTimestamp(await getRaffleTimestamp());
+    };
 
     const startQuest = async () => {
         setStartButtonLoading(true);

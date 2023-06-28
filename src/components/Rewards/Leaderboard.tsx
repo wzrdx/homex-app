@@ -8,7 +8,7 @@ import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
 import { Participant } from '../../blockchain/types';
-import { getEldersLogo, getFullTicket, getSmallLogo } from '../../services/assets';
+import { getFullTicket, getSmallLogo } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
