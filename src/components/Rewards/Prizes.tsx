@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { getTxHashes } from '../../blockchain/api/getTxHashes';
+import { Trial, getTrials } from '../../blockchain/api/getTrials';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
 import { getEldersLogo } from '../../services/assets';
@@ -65,12 +65,16 @@ function Prizes() {
         }>
     >();
 
-    const [txs, setTxs] = useState<
+    const [trials, setTrials] = useState<
         Array<{
-            timestamp: Date;
-            hash: string;
+            index: number;
+            hashes: string[];
         }>
     >();
+
+    const [index, setIndex] = useState<number>(1);
+    const [timestamp, setTimestamp] = useState<Date>();
+
     const [isLoadingHashes, setLoadingHashes] = useState<boolean>(true);
 
     const { address: userAddress } = useGetAccountInfo();
@@ -81,14 +85,16 @@ function Prizes() {
 
     const init = async () => {
         try {
-            bundleHashes(await getTxHashes());
+            const trials = await getTrials();
+            setTrials(trials);
+            parseTrial(_(trials).sortBy('index').first());
         } catch (error) {
             console.error(error);
         }
     };
 
-    const bundleHashes = async (hashes: string[]) => {
-        const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
+    const parseTrial = async (trial?: Trial) => {
+        const result = await Promise.all(_.map(trial?.hashes, (hash) => getTransaction(hash)));
 
         setWinners(
             _(result)
@@ -101,19 +107,7 @@ function Prizes() {
             }>
         );
 
-        setTxs(
-            _(result)
-                .map((hashResult) => ({
-                    hash: hashResult?.hash,
-                    timestamp: hashResult?.timestamp,
-                }))
-                .flatten()
-                .value() as Array<{
-                timestamp: Date;
-                hash: string;
-            }>
-        );
-
+        setTimestamp(_.first(result)?.timestamp as Date);
         setLoadingHashes(false);
     };
 
@@ -181,16 +175,16 @@ function Prizes() {
     };
 
     return (
-        <Flex height={_.isEmpty(txs) ? 'auto' : `calc(100% - ${height}px)`} justifyContent="center">
+        <Flex height={`calc(100% - ${height}px)`} justifyContent="center">
             {isLoadingHashes ? (
                 <Spinner />
-            ) : _.isEmpty(txs) ? (
-                <Text>No prizes to display</Text>
             ) : (
                 <Flex minW="660px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        <Text>Trial #1</Text>
+                        {_.map(trials, (trial, index) => (
+                            <Text fontSize="17px" mb={2} key={index}>{`Trial #${trial.index}`}</Text>
+                        ))}
                     </Flex>
 
                     {/* Right */}
@@ -211,7 +205,7 @@ function Prizes() {
 
                                     <Flex alignItems="center">
                                         <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                        <Text>{format(_.head(txs)?.timestamp as Date, 'PPPP')}</Text>
+                                        <Text>{format(timestamp as Date, 'PPPP')}</Text>
                                     </Flex>
                                 </Flex>
 
@@ -277,21 +271,22 @@ function Prizes() {
 
                     <ModalBody>
                         <Flex flexDir="column" pb={2}>
-                            {_.map(txs, (tx, index) => (
-                                <Flex
-                                    key={index}
-                                    alignItems="center"
-                                    justifyContent="space-between"
-                                    _notLast={{ marginBottom: 1 }}
-                                >
-                                    <Link href={getTxExplorerURL(tx?.hash as string)} isExternal>
-                                        <Flex alignItems="center">
-                                            <Text minW="130px">{getShortAddress(tx?.hash as string, 6)}</Text>
-                                            <ExternalLinkIcon ml={1.5} />
-                                        </Flex>
-                                    </Link>
-                                </Flex>
-                            ))}
+                            {trials &&
+                                _.map(trials[index - 1]?.hashes, (hash, index) => (
+                                    <Flex
+                                        key={index}
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                        _notLast={{ marginBottom: 1 }}
+                                    >
+                                        <Link href={getTxExplorerURL(hash)} isExternal>
+                                            <Flex alignItems="center">
+                                                <Text minW="130px">{getShortAddress(hash, 6)}</Text>
+                                                <ExternalLinkIcon ml={1.5} />
+                                            </Flex>
+                                        </Link>
+                                    </Flex>
+                                ))}
                         </Flex>
                     </ModalBody>
                 </ModalContent>

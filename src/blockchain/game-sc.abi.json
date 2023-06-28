@@ -23,6 +23,25 @@
     },
     "endpoints": [
         {
+            "name": "copyHashes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "initializeTrial",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "copyVector",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -471,6 +490,21 @@
             ]
         },
         {
+            "name": "getTravelerRewards",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "getRarityClass",
             "mutability": "readonly",
             "inputs": [
@@ -614,6 +648,17 @@
             ]
         },
         {
+            "name": "getTrials",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Trial>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getTxHashes",
             "mutability": "readonly",
             "inputs": [],
@@ -621,6 +666,16 @@
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCurrentTrial",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -747,6 +802,19 @@
                 {
                     "name": "most_earned",
                     "type": "u32"
+                }
+            ]
+        },
+        "Trial": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "hashes",
+                    "type": "List<array32<u8>>"
                 }
             ]
         }

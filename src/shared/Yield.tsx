@@ -4,6 +4,7 @@ import { Rarity } from '../blockchain/api/getRarityClasses';
 import { useEffect, useState } from 'react';
 import { getRarityClassInfo } from '../services/helpers';
 import _ from 'lodash';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 interface YieldEntry {
     count: number;
@@ -56,7 +57,7 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
         const array = Array.from({ length: 5 }, (_, i) => i + 1);
 
         return (
-            <Flex flexDir="column">
+            <Flex flexDir="column" width="44%">
                 {_.map(array, (item, index) => {
                     let { label, color, energyYield } = getRarityClassInfo(item);
 
@@ -74,13 +75,11 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
     };
 
     return (
-        <Flex flexDir="column" width="100%">
-            <Alert status="info" mb={5}>
-                <AlertIcon />
-                {getLegend()}
-            </Alert>
+        <Flex flexDir="column">
+            {getLegend()}
 
             <Text
+                mt={5}
                 mb={1.5}
                 color="brightWheat"
                 textTransform="uppercase"

@@ -6,9 +6,14 @@ import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
-const FUNCTION_NAME = 'getTxHashes';
+const FUNCTION_NAME = 'getTrials';
 
-export const getTxHashes = async () => {
+export interface Trial {
+    index: number;
+    hashes: string[];
+}
+
+export const getTrials = async () => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
@@ -18,10 +23,21 @@ export const getTxHashes = async () => {
         const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
 
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-        const array = firstValue?.valueOf();
+        const trials = firstValue?.valueOf();
 
-        const parsedArray = map(array, (hash) => Buffer.from(hash).toString('hex'));
-        return parsedArray;
+        const parsedArray = map(trials, (trial) => ({
+            index: trial?.index?.toNumber() as number,
+            hashes: map(trial?.hashes, (hash) => Buffer.from(hash).toString('hex')),
+        }));
+
+        // TODO:
+        return [
+            ...parsedArray,
+            ...map(trials, (trial) => ({
+                index: 2,
+                hashes: map(trial?.hashes, (hash) => Buffer.from(hash).toString('hex')),
+            })),
+        ];
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
         return [];
