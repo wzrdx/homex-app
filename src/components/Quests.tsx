@@ -20,7 +20,7 @@ import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
 import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import Requirement from '../shared/Requirement';
-import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
+import { TimeIcon, CheckIcon, InfoOutlineIcon, WarningIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
@@ -28,7 +28,7 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
-import { differenceInHours, isAfter, isBefore } from 'date-fns';
+import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import Reward from '../shared/Reward';
 import { getFrame, getFrameGlow, getSpinningTicket, getVisionImage } from '../services/assets';
@@ -66,6 +66,14 @@ function Quests() {
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
     const isQuestComplete = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
+
+    const canBeCompleted = (): boolean => {
+        if (!trialTimestamp) {
+            return false;
+        }
+
+        return isBefore(addMinutes(new Date(), currentQuest.duration), trialTimestamp);
+    };
 
     // Init
     useEffect(() => {
@@ -318,7 +326,7 @@ function Quests() {
                                 isLoading={
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
-                                disabled={!meetsRequirements(resources, currentQuest.id) || isGamePaused}
+                                disabled={isGamePaused || !meetsRequirements(resources, currentQuest.id) || !canBeCompleted()}
                                 onClick={startQuest}
                             >
                                 <Text>Start</Text>
@@ -346,6 +354,12 @@ function Quests() {
                             </ActionButton>
                         )}
                     </Box>
+
+                    {isQuestDefault() && !canBeCompleted() && (
+                        <Flex alignItems="center">
+                            <Text color="redClrs">Quest duration exceeds end of Trial</Text>
+                        </Flex>
+                    )}
 
                     <Box>
                         {isQuestDefault() && (
