@@ -13,8 +13,13 @@ import { getParticipants } from '../blockchain/api/getParticipants';
 
 const COLUMNS = [
     {
+        name: 'No.',
+        width: '68px',
+        align: 'left',
+    },
+    {
         name: 'Player',
-        width: '274px',
+        width: '268px',
         align: 'left',
     },
     {
@@ -132,11 +137,13 @@ function RaffleDetails() {
 
                     {_.map(participants, (participant: Participant, index: number) => (
                         <Flex mt={2} alignItems="center" key={index}>
-                            <Text pr={6} layerStyle="ellipsis" width={COLUMNS[0].width}>
+                            <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
+
+                            <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
                                 {participant.username}
                             </Text>
 
-                            <Flex minWidth={COLUMNS[1].width}>
+                            <Flex minWidth={COLUMNS[2].width}>
                                 <Text minWidth="24px">{participant.ticketsCount}</Text>
                                 <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                             </Flex>
