@@ -116,7 +116,8 @@ function Layout() {
                     height={{ md: '82%', lg: '86%' }}
                     layerStyle="layout"
                     margin="0 auto"
-                    py={{ md: 8, lg: 10, xl: 16, '2xl': 20 }}
+                    pt={{ md: 3, lg: 10, xl: 16, '2xl': 20 }}
+                    pb={{ md: 6, lg: 10, xl: 16, '2xl': 20 }}
                 >
                     <Outlet context={{ checkEgldBalance, displayToast, closeToast, routes, routeNames }} />
                 </Box>

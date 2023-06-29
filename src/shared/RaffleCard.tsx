@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
@@ -84,11 +84,11 @@ function RaffleCard() {
             flexDir="column"
             alignItems="center"
             border="2px solid #fdefce26"
-            minWidth="372px"
+            minWidth={{ md: '304px', lg: '372px' }}
             borderRadius="2px"
             overflow="hidden"
             backgroundColor="#181111"
-            transition="all 0.15s ease-in"
+            transition="all 0.1s ease-in"
             _hover={{ border: '2px solid #fdefce40' }}
         >
             <Box display="grid" gridTemplateRows="1fr 1fr" gridTemplateColumns="1fr 1fr">
@@ -96,13 +96,18 @@ function RaffleCard() {
                     backgroundColor="#521d23"
                     justifyContent="center"
                     alignItems="center"
-                    width="186px"
-                    height="186px"
+                    width={{ md: '172px', lg: '186px' }}
+                    height={{ md: '152px', lg: '186px' }}
                     userSelect="none"
                 >
                     <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex justifyContent="center" alignItems="center" height="100px" width="100px">
-                            <Image src={getLogoBox()} height="90px" alt="Traveler" />
+                        <Flex
+                            justifyContent="center"
+                            alignItems="center"
+                            height={{ md: '88px', lg: '100px' }}
+                            width={{ md: '80px', lg: '100px' }}
+                        >
+                            <Image src={getLogoBox()} height={{ md: '78px', lg: '90px' }} alt="Traveler" />
                         </Flex>
 
                         <Text textTransform="uppercase" color="primaryDark" fontWeight={600}>
@@ -115,13 +120,18 @@ function RaffleCard() {
                     backgroundColor="#333333"
                     justifyContent="center"
                     alignItems="center"
-                    width="186px"
-                    height="186px"
+                    width={{ md: '172px', lg: '186px' }}
+                    height={{ md: '152px', lg: '186px' }}
                     userSelect="none"
                 >
                     <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex justifyContent="center" alignItems="center" height="100px" width="100px">
-                            <Image src={getMvxLogo()} height="66px" alt="MultiversX" />
+                        <Flex
+                            justifyContent="center"
+                            alignItems="center"
+                            height={{ md: '88px', lg: '100px' }}
+                            width={{ md: '80px', lg: '100px' }}
+                        >
+                            <Image src={getMvxLogo()} height={{ md: '54px', lg: '66px' }} alt="MultiversX" />
                         </Flex>
 
                         <Text textTransform="uppercase" color="whitesmoke" fontWeight={600}>
@@ -134,13 +144,18 @@ function RaffleCard() {
                     backgroundColor="#8c5816"
                     justifyContent="center"
                     alignItems="center"
-                    width="186px"
-                    height="186px"
+                    width={{ md: '172px', lg: '186px' }}
+                    height={{ md: '152px', lg: '186px' }}
                     userSelect="none"
                 >
                     <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex justifyContent="center" alignItems="center" height="100px" width="100px">
-                            <Image src={getFullTicket()} height="82px" alt="Ticket" />
+                        <Flex
+                            justifyContent="center"
+                            alignItems="center"
+                            height={{ md: '88px', lg: '100px' }}
+                            width={{ md: '80px', lg: '100px' }}
+                        >
+                            <Image src={getFullTicket()} height={{ md: '70px', lg: '82px' }} alt="Ticket" />
                         </Flex>
 
                         <Text textTransform="uppercase" color="brightWheat" fontWeight={600}>
@@ -153,13 +168,18 @@ function RaffleCard() {
                     backgroundColor="#3a182d"
                     justifyContent="center"
                     alignItems="center"
-                    width="186px"
-                    height="186px"
+                    width={{ md: '172px', lg: '186px' }}
+                    height={{ md: '152px', lg: '186px' }}
                     userSelect="none"
                 >
                     <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex justifyContent="center" alignItems="center" height="100px" width="100px">
-                            <Image src={RESOURCE_ELEMENTS.essence.icon} height="72px" alt="Essence" />
+                        <Flex
+                            justifyContent="center"
+                            alignItems="center"
+                            height={{ md: '88px', lg: '100px' }}
+                            width={{ md: '80px', lg: '100px' }}
+                        >
+                            <Image src={RESOURCE_ELEMENTS.essence.icon} height={{ md: '60px', lg: '72px' }} alt="Essence" />
                         </Flex>
 
                         <Text textTransform="uppercase" color="resources.essence" fontWeight={600}>
@@ -169,31 +189,47 @@ function RaffleCard() {
                 </Flex>
             </Box>
 
-            <Flex
-                py={3.5}
-                px={4}
-                width="100%"
-                alignItems="center"
-                justifyContent="space-between"
-                borderBottom="2px solid #fdefce26"
-            >
-                <Flex flexDir="column" userSelect="none">
-                    <Text layerStyle="header3">Total tickets</Text>
-                    <Text fontWeight={500} letterSpacing="0.25px">
-                        138
-                    </Text>
+            <Flex flexDir="column" pb={{ md: 2.5, lg: 3.5 }} borderBottom="2px solid #fdefce26" width="100%">
+                <Flex
+                    py={{ md: 2.5, lg: 3.5 }}
+                    px={{ md: 3, lg: 4 }}
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="space-between"
+                >
+                    <Flex flexDir="column" userSelect="none">
+                        <Text layerStyle="header3">Total tickets</Text>
+                        <Text fontWeight={500} letterSpacing="0.25px">
+                            138
+                        </Text>
+                    </Flex>
+
+                    <Flex flexDir="column" userSelect="none">
+                        <Text layerStyle="header3">Your submission</Text>
+                        <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                            0/4
+                        </Text>
+                    </Flex>
                 </Flex>
 
-                <Flex flexDir="column" userSelect="none">
-                    <Text layerStyle="header3">Your submission</Text>
-                    <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                        0/4
-                    </Text>
+                <Flex width="100%" justifyContent="center">
+                    <Flex
+                        alignItems="center"
+                        px={2}
+                        transition="all 0.1s ease-in"
+                        cursor="pointer"
+                        _hover={{ color: '#b8b8b8' }}
+                    >
+                        <AiOutlineEye fontSize="19px" />
+                        <Text ml={1} textTransform="uppercase" fontWeight={500} fontSize="15px" letterSpacing="0.25px">
+                            View details
+                        </Text>
+                    </Flex>
                 </Flex>
             </Flex>
 
             {timestamp && (
-                <Flex pt={3.5} width="100%" alignItems="center" justifyContent="center">
+                <Flex pt={{ md: 2.5, lg: 3.5 }} width="100%" alignItems="center" justifyContent="center">
                     <Text textTransform="uppercase" mr={1} fontSize="15px" fontWeight={500} userSelect="none">
                         Ends in
                     </Text>
@@ -208,7 +244,7 @@ function RaffleCard() {
                 </Flex>
             )}
 
-            <Flex pt={2} pb={3} alignItems="center">
+            <Flex pt={{ md: 1.5, lg: 2 }} pb={{ md: 2, lg: 3 }} alignItems="center">
                 <Box
                     px="1"
                     cursor="pointer"
