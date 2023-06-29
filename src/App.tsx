@@ -304,8 +304,12 @@ function App() {
                                     />
                                 )}
 
-                                {route.children?.map((child, index) => (
-                                    <Route path={child.path} key={'child-route-key-' + index} element={<child.component />} />
+                                {route.children?.map((childRoute, index) => (
+                                    <Route
+                                        path={childRoute.path}
+                                        key={'child-route-key-' + index}
+                                        element={<childRoute.component />}
+                                    />
                                 ))}
                             </Route>
                         ))}

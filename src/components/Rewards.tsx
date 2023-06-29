@@ -34,13 +34,16 @@ function Rewards() {
     return (
         <Flex height="100%" flexDir="column" alignItems="center">
             <Flex ref={ref} className="Rewards-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
-                {_.map(route?.children, (route, index) => (
-                    <Box key={index}>
-                        <NavLink to={route.path}>
-                            <Tab text={route.path} />
-                        </NavLink>
-                    </Box>
-                ))}
+                {_(route?.children)
+                    .filter((route) => route.isTabRoute)
+                    .map((route, index) => (
+                        <Box key={index}>
+                            <NavLink to={route.path}>
+                                <Tab text={route.path} />
+                            </NavLink>
+                        </Box>
+                    ))
+                    .value()}
             </Flex>
 
             <Outlet context={{ height }} />

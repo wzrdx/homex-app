@@ -14,6 +14,8 @@ import { ActionButton } from './ActionButton/ActionButton';
 import { getFullTicket, getLogoBox, getMvxLogo, getSmallLogo } from '../services/assets';
 import { Timer } from './Timer';
 import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
+import { isAfter } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 function RaffleCard() {
     const [amount, setAmount] = useState(0);
@@ -23,6 +25,7 @@ function RaffleCard() {
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
+    const navigate = useNavigate();
 
     // Init
     useEffect(() => {
@@ -117,7 +120,7 @@ function RaffleCard() {
                 </Flex>
 
                 <Flex
-                    backgroundColor="#333333"
+                    backgroundColor="#2b2d31"
                     justifyContent="center"
                     alignItems="center"
                     width={{ md: '172px', lg: '186px' }}
@@ -219,6 +222,7 @@ function RaffleCard() {
                         transition="all 0.1s ease-in"
                         cursor="pointer"
                         _hover={{ color: '#b8b8b8' }}
+                        onClick={() => navigate('/rewards/raffles/1')}
                     >
                         <AiOutlineEye fontSize="19px" />
                         <Text ml={1} textTransform="uppercase" fontWeight={500} fontSize="15px" letterSpacing="0.25px">
@@ -282,7 +286,7 @@ function RaffleCard() {
 
             <Box width="100%">
                 <ActionButton
-                    disabled={isGamePaused || !resources.tickets}
+                    disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}
                     isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
                     colorScheme="red"
                     onClick={joinRaffle}
