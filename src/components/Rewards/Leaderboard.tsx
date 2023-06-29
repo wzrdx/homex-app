@@ -95,7 +95,6 @@ function Leaderboard() {
     };
 
     const getPot = () => (
-        // 6 NFTs + 10 Egld + 32 Tickets + 600 Essence
         <Flex ml={2} alignItems="center">
             <Flex alignItems="center">
                 <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Traveler" />
@@ -196,12 +195,8 @@ function Leaderboard() {
                         <Flex flexDir="column" justifyContent="center" alignItems="center">
                             <Image my={2} height="256px" src={getFullTicket()} />
                             <Text mt={5} textAlign="center" maxWidth="464px">
-                                No traveler has entered the Raffle yet. Become the first one by completing the{' '}
-                                <Text as="span" color="brightBlue">
-                                    final mission
-                                </Text>{' '}
-                                and earning a{' '}
-                                <Text as="span" color="brightBlue">
+                                No traveler has entered the Leaderboard yet. Become the first one by submitting a{' '}
+                                <Text as="span" color="ticketGold">
                                     Ticket
                                 </Text>
                                 .
@@ -210,13 +205,7 @@ function Leaderboard() {
                     ) : (
                         <Flex mb={1}>
                             {_.map(COLUMNS, (column: any, index: number) => (
-                                <Text
-                                    key={index}
-                                    minWidth={column.width}
-                                    textAlign={column.align}
-                                    fontWeight={600}
-                                    fontSize="17px"
-                                >
+                                <Text key={index} layerStyle="header2" minWidth={column.width} textAlign={column.align}>
                                     {column.name}
                                 </Text>
                             ))}

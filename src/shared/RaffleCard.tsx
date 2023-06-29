@@ -11,17 +11,24 @@ import { smartContract } from '../blockchain/smartContract';
 import { useResourcesContext, ResourcesContextType, RESOURCE_ELEMENTS } from '../services/resources';
 import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
 import { ActionButton } from './ActionButton/ActionButton';
-import { getFullTicket, getLogoBox, getMvxLogo, getSmallLogo } from '../services/assets';
+import { getFullTicket, getLogoBox, getMvxLogo } from '../services/assets';
 import { Timer } from './Timer';
 import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
 import { isAfter } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
+import { getSubmittedTicketsTotal } from '../blockchain/api/getSubmittedTicketsTotal';
+
+const MAX_ENTRY = 4;
 
 function RaffleCard() {
     const [amount, setAmount] = useState(0);
     const { resources } = useResourcesContext() as ResourcesContextType;
+
     const [isButtonLoading, setButtonLoading] = useState(false);
     const [timestamp, setTimestamp] = useState<Date>();
+    const [myTickets, setMyTickets] = useState<number>();
+    const [totalTickets, setTotalTickets] = useState<number>();
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
@@ -35,6 +42,8 @@ function RaffleCard() {
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
         setTimestamp(await getRaffleTimestamp());
+        setMyTickets(await getSubmittedTickets());
+        setTotalTickets(await getSubmittedTicketsTotal());
     };
 
     const joinRaffle = async () => {
@@ -203,14 +212,14 @@ function RaffleCard() {
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
                         <Text fontWeight={500} letterSpacing="0.25px">
-                            138
+                            {totalTickets}
                         </Text>
                     </Flex>
 
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Your submission</Text>
                         <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                            0/4
+                            {myTickets}/4
                         </Text>
                     </Flex>
                 </Flex>
@@ -223,6 +232,7 @@ function RaffleCard() {
                         cursor="pointer"
                         _hover={{ color: '#b8b8b8' }}
                         onClick={() => navigate('/rewards/raffles/1')}
+                        userSelect="none"
                     >
                         <AiOutlineEye fontSize="19px" />
                         <Text ml={1} textTransform="uppercase" fontWeight={500} fontSize="15px" letterSpacing="0.25px">
@@ -275,7 +285,11 @@ function RaffleCard() {
                     transition="all 0.1s ease-in"
                     _hover={{ color: '#b8b8b8' }}
                     onClick={() => {
-                        if (amount < resources.tickets) {
+                        if (myTickets === undefined) {
+                            return;
+                        }
+
+                        if (amount < MAX_ENTRY - myTickets) {
                             setAmount(amount + 1);
                         }
                     }}

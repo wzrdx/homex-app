@@ -16,7 +16,7 @@ export const routeNames = {
     staking: 'staking',
     quests: 'quests',
     rewards: 'rewards',
-    leaderboard: 'entries',
+    leaderboard: 'leaderboard',
     raffles: 'raffles',
     prizes: 'prizes',
     stake: 'available',
