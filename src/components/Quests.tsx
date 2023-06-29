@@ -357,7 +357,7 @@ function Quests() {
                         )}
                     </Box>
 
-                    {isQuestDefault() && !canBeCompleted() && (
+                    {trialTimestamp && isQuestDefault() && !canBeCompleted() && (
                         <Flex alignItems="center">
                             <Text color="redClrs">Quest duration exceeds end of Trial</Text>
                         </Flex>

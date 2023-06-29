@@ -26,6 +26,7 @@ const colors = {
         gold: '#f4d091',
     },
     primary: '#de4554',
+    primaryDark: '#ce404e',
     almostWhite: 'gainsboro',
     dark: '#1c1c1c',
     darkBlue: '#23242a',
@@ -68,6 +69,12 @@ const layerStyles = {
         textTransform: 'uppercase',
         fontWeight: 600,
         letterSpacing: '0.75px',
+    },
+    header3: {
+        textTransform: 'uppercase',
+        fontWeight: 600,
+        fontSize: '15px',
+        letterSpacing: '0.5px',
     },
     value: {
         textTransform: 'uppercase',

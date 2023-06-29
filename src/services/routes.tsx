@@ -3,7 +3,7 @@ import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
 import Rewards from '../components/Rewards';
 import Leaderboard from '../components/Rewards/Leaderboard';
-import Raffle from '../components/Rewards/Raffle';
+import Raffles from '../components/Rewards/Raffles';
 import Prizes from '../components/Rewards/Prizes';
 import Stake from '../components/Staking/Stake';
 import Unstake from '../components/Staking/Unstake';
@@ -16,7 +16,7 @@ export const routeNames = {
     quests: 'quests',
     rewards: 'rewards',
     leaderboard: 'entries',
-    raffle: 'raffle',
+    raffles: 'raffles',
     prizes: 'prizes',
     stake: 'available',
     unstake: 'staked',
@@ -56,8 +56,8 @@ export const routes = [
         authenticatedRoute: true,
         children: [
             {
-                path: routeNames.raffle,
-                component: Raffle,
+                path: routeNames.raffles,
+                component: Raffles,
             },
             {
                 path: routeNames.leaderboard,

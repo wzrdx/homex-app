@@ -98,7 +98,7 @@ function Leaderboard() {
         // 6 NFTs + 10 Egld + 32 Tickets + 600 Essence
         <Flex ml={2} alignItems="center">
             <Flex alignItems="center">
-                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Elder" />
+                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Traveler" />
                 <Text fontWeight={500} color="primary">
                     6 Travelers
                 </Text>

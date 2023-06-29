@@ -1,8 +1,9 @@
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
-import { hDisplay, mDisplay, sDisplay, zeroPad } from '../services/helpers';
+import { zeroPad } from '../services/helpers';
 import { differenceInSeconds, intervalToDuration } from 'date-fns';
+import { isEmpty } from 'lodash';
 
 export const Timer: FunctionComponent<
     PropsWithChildren<{
@@ -12,8 +13,19 @@ export const Timer: FunctionComponent<
         isDescending?: boolean;
         isCompact?: boolean;
         displayDays?: boolean;
+        displayClock?: boolean;
+        customStyle?: any;
     }>
-> = ({ isActive, timestamp, callback, isDescending = false, isCompact = false, displayDays = false }) => {
+> = ({
+    isActive,
+    timestamp,
+    callback,
+    isDescending = false,
+    isCompact = false,
+    displayDays = false,
+    displayClock = true,
+    customStyle,
+}) => {
     const [duration, setDuration] = useState<Duration>({
         seconds: 0,
         minutes: 0,
@@ -79,13 +91,17 @@ export const Timer: FunctionComponent<
     const isDisplayingDays = (): boolean => !!displayDays && (duration.days as number) > 0;
 
     return (
-        <Flex alignItems="center" justifyContent="center">
-            <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />
+        <Flex alignItems="center" justifyContent="center" style={!isEmpty(customStyle) ? customStyle : {}}>
+            {displayClock && <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />}
+
             {isCompact ? (
                 <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
-                <Text minWidth={isDisplayingDays() ? '128px' : '70px'}>
-                    {isDisplayingDays() && <Text as="span">{`${duration.days} days, `}</Text>}
+                <Text minWidth={isDisplayingDays() ? '108px' : '70px'}>
+                    {isDisplayingDays() && (
+                        <Text as="span">{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''}, `}</Text>
+                    )}
+
                     <Text as="span">
                         {`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
                     </Text>

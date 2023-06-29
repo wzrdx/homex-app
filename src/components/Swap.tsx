@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { CHAIN_ID, EGLD_DENOMINATION, ENERGY_SWAP_RATE, ENERGY_TOKEN_ID } from '../blockchain/config';
 import { round } from '../services/helpers';
 import { ArrowDownIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { getMvxLogo } from '../services/assets';
+import { getMvxImage } from '../services/assets';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
@@ -210,7 +210,7 @@ function Swap() {
                                         width="28px"
                                         height="28px"
                                         mr={1.5}
-                                        src={getMvxLogo()}
+                                        src={getMvxImage()}
                                         alt="MultiversX"
                                         border="1px solid #474747"
                                     />
