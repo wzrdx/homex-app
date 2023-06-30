@@ -48,7 +48,7 @@ function Staking() {
 
     return (
         <Flex height="100%" flexDir="column" alignItems="center">
-            <Flex ref={ref} className="Rewards-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
+            <Flex ref={ref} className="Second-Header-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
                 {_.map(route?.children, (route, index) => (
                     <Box key={index}>
                         <NavLink to={route.path}>

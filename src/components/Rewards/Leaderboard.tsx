@@ -13,7 +13,7 @@ import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
-import { useRewards } from '../Rewards';
+import { useRewards } from '../Raffles';
 import { isAfter } from 'date-fns';
 
 const COLUMNS = [

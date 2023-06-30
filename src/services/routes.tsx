@@ -1,13 +1,14 @@
 import Staking from '../components/Staking';
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
-import Rewards from '../components/Rewards';
+import Rewards from '../components/Raffles';
 import Leaderboard from '../components/Rewards/Leaderboard';
-import Raffles from '../components/Rewards/Raffles';
+import Raffles from '../components/Rewards/RafflesGrid';
 import Prizes from '../components/Rewards/Prizes';
 import Stake from '../components/Staking/Stake';
 import Unstake from '../components/Staking/Unstake';
 import RaffleDetails from '../shared/RaffleDetails';
+import RafflesGrid from '../components/Rewards/RafflesGrid';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -15,12 +16,12 @@ export const routeNames = {
     gameplay: 'gameplay',
     staking: 'staking',
     quests: 'quests',
-    rewards: 'rewards',
-    leaderboard: 'leaderboard',
     raffles: 'raffles',
-    prizes: 'prizes',
+    battles: 'battles',
     stake: 'available',
     unstake: 'staked',
+    current: 'current',
+    past: 'past',
 };
 
 export const routes = [
@@ -51,31 +52,25 @@ export const routes = [
         authenticatedRoute: true,
     },
     {
-        path: routeNames.rewards,
+        path: routeNames.raffles,
         component: Rewards,
         authenticatedRoute: true,
         children: [
             {
-                path: routeNames.raffles,
-                component: Raffles,
-                isTabRoute: true,
-            },
-
-            {
-                path: routeNames.leaderboard,
-                component: Leaderboard,
+                path: routeNames.past,
+                component: RafflesGrid,
                 isTabRoute: true,
             },
             {
-                path: routeNames.prizes,
-                component: Prizes,
+                path: routeNames.current,
+                component: RafflesGrid,
                 isTabRoute: true,
             },
             {
-                path: `${routeNames.raffles}/:id`,
+                path: `:id`,
                 component: RaffleDetails,
             },
         ],
-        defaultChildRoute: routeNames.leaderboard,
+        defaultChildRoute: routeNames.current,
     },
 ];

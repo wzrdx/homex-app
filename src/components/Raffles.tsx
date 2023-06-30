@@ -11,7 +11,7 @@ export function useRewards() {
     return useOutletContext<RewardsContext>();
 }
 
-function Rewards() {
+function Raffles() {
     const { routes, routeNames } = useLayout();
 
     // The height of the menu
@@ -21,7 +21,7 @@ function Rewards() {
 
     // Init
     useEffect(() => {
-        setRoute(routes.find((route) => route.path === routeNames.rewards));
+        setRoute(routes.find((route) => route.path === routeNames.raffles));
     }, []);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ function Rewards() {
 
     return (
         <Flex height="100%" flexDir="column" alignItems="center">
-            <Flex ref={ref} className="Rewards-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
+            <Flex ref={ref} className="Second-Header-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
                 {_(route?.children)
                     .filter((route) => route.isTabRoute)
                     .map((route, index) => (
@@ -51,4 +51,4 @@ function Rewards() {
     );
 }
 
-export default Rewards;
+export default Raffles;

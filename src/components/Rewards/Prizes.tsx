@@ -21,7 +21,7 @@ import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../..
 import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Trial, getTrials } from '../../blockchain/api/getTrials';
 import { format } from 'date-fns';
-import { useRewards } from '../Rewards';
+import { useRewards } from '../Raffles';
 import { getEldersLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
