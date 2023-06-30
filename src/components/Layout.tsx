@@ -1,5 +1,5 @@
-import { Box, Flex, StyleProps, Text, ToastPosition, useToast } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex, StyleProps, Text, ToastId, ToastPosition, useToast } from '@chakra-ui/react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
@@ -14,7 +14,16 @@ import { useTransactionsContext, TransactionsContextType } from '../services/tra
 
 type LayoutContext = {
     checkEgldBalance: () => Promise<boolean>;
-    displayToast: (type: string, title: string, description: string, color: string) => void;
+    displayToast: (
+        type: string,
+        title: string,
+        description: string,
+        color: string,
+        duration?: number,
+        position?: ToastPosition,
+        containerStyle?: StyleProps
+    ) => void;
+    closeToast: () => void;
     routes;
     routeNames;
 };
@@ -30,6 +39,7 @@ function Layout() {
     const { isGamePaused, getGameState } = useTransactionsContext() as TransactionsContextType;
 
     const toast = useToast();
+    const toastIdRef = useRef<ToastId>();
 
     // Init
     useEffect(() => {
@@ -75,7 +85,7 @@ function Layout() {
             marginRight: '2rem',
         }
     ) => {
-        toast({
+        toastIdRef.current = toast({
             position,
             containerStyle,
             duration,
@@ -85,6 +95,12 @@ function Layout() {
                 </CustomToast>
             ),
         });
+    };
+
+    const closeToast = () => {
+        if (toastIdRef.current) {
+            toast.close(toastIdRef.current);
+        }
     };
 
     return (
@@ -100,9 +116,10 @@ function Layout() {
                     height={{ md: '82%', lg: '86%' }}
                     layerStyle="layout"
                     margin="0 auto"
-                    py={{ md: 8, lg: 10, xl: 16, '2xl': 20 }}
+                    pt={{ md: 3, lg: 10, xl: 16, '2xl': 20 }}
+                    pb={{ md: 6, lg: 10, xl: 16, '2xl': 20 }}
                 >
-                    <Outlet context={{ checkEgldBalance, displayToast, routes, routeNames }} />
+                    <Outlet context={{ checkEgldBalance, displayToast, closeToast, routes, routeNames }} />
                 </Box>
             </Flex>
         </>
