@@ -97,7 +97,7 @@ export const Timer: FunctionComponent<
             {isCompact ? (
                 <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
-                <Text minWidth={isDisplayingDays() ? '108px' : '70px'}>
+                <Text>
                     {isDisplayingDays() && (
                         <Text as="span">{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''}, `}</Text>
                     )}
