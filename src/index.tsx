@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
-import { apiTimeout, walletConnectV2ProjectId, API_URL } from './blockchain/config';
+import { apiTimeout, walletConnectV2ProjectId, API_URL, PUBLIC_API } from './blockchain/config';
 import { TransactionsProvider } from './services/transactions';
 import { SoundsProvider } from './services/sounds';
 import { ResourcesProvider } from './services/resources';
@@ -21,7 +21,7 @@ root.render(
                 name: 'customConfig',
                 apiTimeout,
                 walletConnectV2ProjectId,
-                apiAddress: API_URL,
+                apiAddress: PUBLIC_API,
             }}
         >
             <TransactionsProvider>
