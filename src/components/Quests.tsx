@@ -111,10 +111,10 @@ function Quests() {
     const startQuest = async () => {
         setStartButtonLoading(true);
 
-        if (!(await checkEgldBalance())) {
-            setStartButtonLoading(false);
-            return;
-        }
+        // if (!(await checkEgldBalance())) {
+        //     setStartButtonLoading(false);
+        //     return;
+        // }
 
         const user = new Address(address);
         const requiredResources: string[] = Object.keys(currentQuest.requirements);
@@ -170,10 +170,10 @@ function Quests() {
     const completeQuest = async () => {
         setFinishButtonLoading(true);
 
-        if (!(await checkEgldBalance())) {
-            setFinishButtonLoading(false);
-            return;
-        }
+        // if (!(await checkEgldBalance())) {
+        //     setFinishButtonLoading(false);
+        //     return;
+        // }
 
         const user = new Address(address);
 
