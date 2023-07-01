@@ -52,7 +52,7 @@ const COLUMNS = [
     },
 ];
 
-function Prizes() {
+function Battles() {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
@@ -319,4 +319,4 @@ function Prizes() {
     );
 }
 
-export default Prizes;
+export default Battles;

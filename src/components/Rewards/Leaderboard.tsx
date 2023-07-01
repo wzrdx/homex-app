@@ -13,7 +13,7 @@ import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
-import { useRewards } from '../Raffles';
+import { useSection } from '../Section';
 import { isAfter } from 'date-fns';
 
 const COLUMNS = [
@@ -35,7 +35,7 @@ const COLUMNS = [
 ];
 
 function Leaderboard() {
-    const { height } = useRewards();
+    const { height } = useSection();
 
     const [participants, setParticipants] = useState<Participant[]>();
     const [myTickets, setMyTickets] = useState<number>();

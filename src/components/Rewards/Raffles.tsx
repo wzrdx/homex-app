@@ -4,7 +4,7 @@ import RaffleCard from '../../shared/RaffleCard';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
-function RafflesGrid() {
+function Raffles() {
     const location = useLocation();
 
     // Init
@@ -21,4 +21,4 @@ function RafflesGrid() {
     );
 }
 
-export default RafflesGrid;
+export default Raffles;

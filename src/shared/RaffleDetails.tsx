@@ -5,7 +5,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { getFullTicket } from '../services/assets';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIcon, WarningIcon } from '@chakra-ui/icons';
-import { useRewards } from '../components/Raffles';
+import { useSection } from '../components/Section';
 import { Participant } from '../blockchain/types';
 import { getParticipantsCount } from '../blockchain/api/getParticipantsCount';
 import { getUsername, pairwise } from '../services/helpers';
@@ -30,7 +30,7 @@ const COLUMNS = [
 ];
 
 function RaffleDetails() {
-    const { height } = useRewards();
+    const { height } = useSection();
     const navigate = useNavigate();
 
     // let { id } = useParams();

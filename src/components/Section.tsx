@@ -1,18 +1,19 @@
 import _ from 'lodash';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import { useLayout } from './Layout';
 import Tab from '../shared/Tab';
 
-type RewardsContext = { height: number };
+type SectionContext = { height: number };
 
-export function useRewards() {
-    return useOutletContext<RewardsContext>();
+export function useSection() {
+    return useOutletContext<SectionContext>();
 }
 
-function Raffles() {
-    const { routes, routeNames } = useLayout();
+function Section() {
+    const { routes } = useLayout();
+    const location = useLocation();
 
     // The height of the menu
     const [height, setHeight] = useState<number>(0);
@@ -21,7 +22,8 @@ function Raffles() {
 
     // Init
     useEffect(() => {
-        setRoute(routes.find((route) => route.path === routeNames.raffles));
+        const currentRoute = location.pathname.replace('/', '');
+        setRoute(routes.find((route) => route.path === currentRoute));
     }, []);
 
     useEffect(() => {
@@ -51,4 +53,4 @@ function Raffles() {
     );
 }
 
-export default Raffles;
+export default Section;

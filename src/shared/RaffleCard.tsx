@@ -253,7 +253,7 @@ function RaffleCard() {
                         transition="all 0.1s ease-in"
                         cursor="pointer"
                         _hover={{ color: '#b8b8b8' }}
-                        onClick={() => navigate('/rewards/raffles/1')}
+                        onClick={() => navigate('/raffles/1')}
                         userSelect="none"
                     >
                         <AiOutlineEye fontSize="19px" />
