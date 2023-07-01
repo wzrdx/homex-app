@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
@@ -14,7 +14,7 @@ import { ActionButton } from './ActionButton/ActionButton';
 import { getFullTicket, getLogoBox, getMvxLogo } from '../services/assets';
 import { Timer } from './Timer';
 import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
-import { isAfter } from 'date-fns';
+import { format, isAfter } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../blockchain/api/getSubmittedTicketsTotal';
@@ -28,7 +28,10 @@ function RaffleCard() {
     const [isButtonLoading, setButtonLoading] = useState(false);
     const [timestamp, setTimestamp] = useState<Date>();
     const [myTickets, setMyTickets] = useState<number>();
-    const [totalTickets, setTotalTickets] = useState<number>();
+    const [totalTickets, setTotalTickets] = useState<number>(-1);
+
+    // TODO:
+    const [isCompleted, setCompleted] = useState(true);
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
@@ -225,7 +228,7 @@ function RaffleCard() {
             <Flex flexDir="column" pb={{ md: 2.5, lg: 3.5 }} borderBottom="2px solid #fdefce26" width="100%">
                 <Flex
                     pt={{ md: 2.5, lg: 3.5 }}
-                    pb={{ md: 0, lg: 3.5 }}
+                    pb={{ md: 2.5, lg: 3.5 }}
                     px={{ md: 3, lg: 4 }}
                     width="100%"
                     alignItems="center"
@@ -233,17 +236,36 @@ function RaffleCard() {
                 >
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
-                        <Text fontWeight={500} letterSpacing="0.25px">
-                            {totalTickets}
-                        </Text>
+                        {totalTickets === -1 ? (
+                            <Flex alignItems="center" height="24px">
+                                <Spinner size="sm" />
+                            </Flex>
+                        ) : (
+                            <Text fontWeight={500} letterSpacing="0.25px">
+                                {totalTickets}
+                            </Text>
+                        )}
                     </Flex>
 
-                    <Flex flexDir="column" userSelect="none">
-                        <Text layerStyle="header3">Your submission</Text>
-                        <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                            {myTickets}/4
-                        </Text>
-                    </Flex>
+                    {isCompleted ? (
+                        <Flex flexDir="column" userSelect="none">
+                            <Text layerStyle="header3" textAlign="right">
+                                Timestamp
+                            </Text>
+                            <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                                July 1st, 2023
+                            </Text>
+                        </Flex>
+                    ) : (
+                        <Flex flexDir="column" userSelect="none">
+                            <Text layerStyle="header3" textAlign="right">
+                                Your submission
+                            </Text>
+                            <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                                {myTickets}/4
+                            </Text>
+                        </Flex>
+                    )}
                 </Flex>
 
                 <Flex width="100%" justifyContent="center">
@@ -270,7 +292,7 @@ function RaffleCard() {
                 </Flex>
             </Flex>
 
-            {timestamp && (
+            {!isCompleted && timestamp && (
                 <Flex pt={{ md: 2.5, lg: 3.5 }} width="100%" alignItems="center" justifyContent="center">
                     <Text textTransform="uppercase" mr={1} fontSize="15px" fontWeight={500} userSelect="none">
                         Ends in
@@ -286,61 +308,65 @@ function RaffleCard() {
                 </Flex>
             )}
 
-            <Flex pt={{ md: 1, lg: 2 }} pb={{ md: 2, lg: 3 }} alignItems="center">
-                <Box
-                    px="1"
-                    cursor="pointer"
-                    transition="all 0.1s ease-in"
-                    _hover={{ color: '#b8b8b8' }}
-                    onClick={() => {
-                        if (amount > 1) {
-                            setAmount(amount - 1);
-                        }
-                    }}
-                >
-                    <Box fontSize={{ md: '17px', lg: '19px' }}>
-                        <AiOutlineMinus />
+            {!isCompleted && (
+                <Flex pt={{ md: 1, lg: 2 }} pb={{ md: 2, lg: 3 }} alignItems="center">
+                    <Box
+                        px="1"
+                        cursor="pointer"
+                        transition="all 0.1s ease-in"
+                        _hover={{ color: '#b8b8b8' }}
+                        onClick={() => {
+                            if (amount > 1) {
+                                setAmount(amount - 1);
+                            }
+                        }}
+                    >
+                        <Box fontSize={{ md: '17px', lg: '19px' }}>
+                            <AiOutlineMinus />
+                        </Box>
                     </Box>
-                </Box>
 
-                <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
-                    <Text textAlign="center" fontSize={{ md: '17px', lg: '18px' }} fontWeight={500} userSelect="none">
-                        {amount}
-                    </Text>
-                </Box>
-
-                <Box
-                    px="1"
-                    cursor="pointer"
-                    transition="all 0.1s ease-in"
-                    _hover={{ color: '#b8b8b8' }}
-                    onClick={() => {
-                        if (myTickets === undefined) {
-                            return;
-                        }
-
-                        if (amount < MAX_ENTRY - myTickets) {
-                            setAmount(amount + 1);
-                        }
-                    }}
-                >
-                    <Box fontSize={{ md: '17px', lg: '19px' }}>
-                        <AiOutlinePlus />
+                    <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
+                        <Text textAlign="center" fontSize={{ md: '17px', lg: '18px' }} fontWeight={500} userSelect="none">
+                            {amount}
+                        </Text>
                     </Box>
-                </Box>
-            </Flex>
 
-            <Box width="100%">
-                <ActionButton
-                    disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}
-                    isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
-                    colorScheme="red"
-                    onClick={joinRaffle}
-                    customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}
-                >
-                    <Text userSelect="none">Join Raffle</Text>
-                </ActionButton>
-            </Box>
+                    <Box
+                        px="1"
+                        cursor="pointer"
+                        transition="all 0.1s ease-in"
+                        _hover={{ color: '#b8b8b8' }}
+                        onClick={() => {
+                            if (myTickets === undefined) {
+                                return;
+                            }
+
+                            if (amount < MAX_ENTRY - myTickets) {
+                                setAmount(amount + 1);
+                            }
+                        }}
+                    >
+                        <Box fontSize={{ md: '17px', lg: '19px' }}>
+                            <AiOutlinePlus />
+                        </Box>
+                    </Box>
+                </Flex>
+            )}
+
+            {!isCompleted && (
+                <Box width="100%">
+                    <ActionButton
+                        disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
+                        colorScheme="red"
+                        onClick={joinRaffle}
+                        customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}
+                    >
+                        <Text userSelect="none">Join Raffle</Text>
+                    </ActionButton>
+                </Box>
+            )}
         </Flex>
     );
 }
