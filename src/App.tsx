@@ -201,7 +201,7 @@ function App() {
         toast({
             position: 'top-right',
             containerStyle: {
-                marginTop: '2rem',
+                marginTop: '1rem',
                 marginRight: '2rem',
             },
             duration: 8000,
@@ -215,7 +215,7 @@ function App() {
         toast({
             position: 'top-right',
             containerStyle: {
-                marginTop: '2rem',
+                marginTop: '1rem',
                 marginRight: '2rem',
             },
             duration: 8000,
