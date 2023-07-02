@@ -3,7 +3,6 @@ import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
 import Section from '../components/Section';
 import Leaderboard from '../components/Rewards/Leaderboard';
-import Prizes from '../components/Rewards/Prizes';
 import Stake from '../components/Staking/Stake';
 import Unstake from '../components/Staking/Unstake';
 import RaffleDetails from '../shared/RaffleDetails';
