@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getStakingInfo';
 
 export interface StakingInfo {

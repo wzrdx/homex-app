@@ -4,7 +4,7 @@ import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getRaffleTimestamp';
 
 export const getRaffleTimestamp = async (): Promise<Date> => {

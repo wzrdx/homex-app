@@ -23,20 +23,21 @@
     },
     "endpoints": [
         {
-            "name": "copyHashes",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "initializeTrial",
+            "name": "addRaffle",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "index",
+                    "name": "id",
                     "type": "u32"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "participants",
+                    "type": "List<Address>"
                 }
             ],
             "outputs": []
@@ -411,6 +412,16 @@
             ]
         },
         {
+            "name": "getRaffles",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<CompactRaffle>"
+                }
+            ]
+        },
+        {
             "name": "getTicketStats",
             "mutability": "readonly",
             "inputs": [],
@@ -648,17 +659,6 @@
             ]
         },
         {
-            "name": "getTrials",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Trial>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
             "name": "getTxHashes",
             "mutability": "readonly",
             "inputs": [],
@@ -666,16 +666,6 @@
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "getCurrentTrial",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },
@@ -703,6 +693,23 @@
     "events": [],
     "hasCallback": true,
     "types": {
+        "CompactRaffle": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "u32"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "vector_size",
+                    "type": "u32"
+                }
+            ]
+        },
         "OngoingQuest": {
             "type": "struct",
             "fields": [
@@ -802,19 +809,6 @@
                 {
                     "name": "most_earned",
                     "type": "u32"
-                }
-            ]
-        },
-        "Trial": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "index",
-                    "type": "u32"
-                },
-                {
-                    "name": "hashes",
-                    "type": "List<array32<u8>>"
                 }
             ]
         }

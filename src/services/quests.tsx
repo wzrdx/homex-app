@@ -487,7 +487,7 @@ export const QuestsProvider = ({ children }) => {
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
-        const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
+        const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 
         try {
             const address = await getAddress();

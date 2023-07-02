@@ -18,20 +18,16 @@ import { format, isAfter } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../blockchain/api/getSubmittedTicketsTotal';
+import { RAFFLES } from '../services/raffles';
 
 const MAX_ENTRY = 4;
 
-function RaffleCard() {
+function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date; vectorSize: number }) {
     const [amount, setAmount] = useState(0);
     const { resources } = useResourcesContext() as ResourcesContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
-    const [timestamp, setTimestamp] = useState<Date>();
     const [myTickets, setMyTickets] = useState<number>();
-    const [totalTickets, setTotalTickets] = useState<number>(-1);
-
-    // TODO:
-    const [isCompleted, setCompleted] = useState(true);
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
@@ -44,10 +40,10 @@ function RaffleCard() {
 
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
-        setTimestamp(await getRaffleTimestamp());
         setMyTickets(await getSubmittedTickets());
-        setTotalTickets(await getSubmittedTicketsTotal());
     };
+
+    const isCompleted = (): boolean => isAfter(new Date(), timestamp);
 
     const joinRaffle = async () => {
         if (!amount && amount > resources.tickets) {
@@ -99,7 +95,7 @@ function RaffleCard() {
             flexDir="column"
             alignItems="center"
             border="2px solid #fdefce26"
-            minWidth={{ md: '304px', lg: '372px' }}
+            minWidth={{ md: '324px', lg: '372px' }}
             borderRadius="2px"
             overflow="hidden"
             backgroundColor="#12121287"
@@ -107,125 +103,36 @@ function RaffleCard() {
             transition="all 0.1s ease-in"
             _hover={{ border: '2px solid #fdefce40' }}
         >
-            <Box display="grid" gridTemplateRows="1fr 1fr" gridTemplateColumns="1fr 1fr">
-                <Flex
-                    backgroundColor="#521d23"
-                    justifyContent="center"
-                    alignItems="center"
-                    width={{ md: '172px', lg: '186px' }}
-                    height={{ md: '142px', lg: '186px' }}
-                    userSelect="none"
-                >
-                    <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            height={{ md: '88px', lg: '100px' }}
-                            width={{ md: '80px', lg: '100px' }}
-                        >
-                            <Image src={getLogoBox()} height={{ md: '78px', lg: '90px' }} alt="Traveler" />
+            <Flex flexDir="column" width="100%" height={{ md: '260px', lg: '372px' }}>
+                {_.map(RAFFLES[id - 1].prizes, (prize, index) => (
+                    <Flex
+                        key={index}
+                        backgroundColor={prize.backgroundColor}
+                        justifyContent="center"
+                        alignItems="center"
+                        userSelect="none"
+                        height="100%"
+                    >
+                        <Flex justifyContent="center" alignItems="center">
+                            <Flex justifyContent="center" alignItems="center">
+                                <Image src={prize.imageSrc} height={prize.height} alt="Traveler" />
+                            </Flex>
+
+                            <Text
+                                ml={2.5}
+                                fontSize={{ md: '16px', lg: '18px' }}
+                                textTransform="uppercase"
+                                color={prize.textColor}
+                                fontWeight={600}
+                            >
+                                {prize.text}
+                            </Text>
                         </Flex>
-
-                        <Text
-                            fontSize={{ md: '15px', lg: '16px' }}
-                            textTransform="uppercase"
-                            color="primaryDark"
-                            fontWeight={600}
-                        >
-                            2 Travelers
-                        </Text>
                     </Flex>
-                </Flex>
+                ))}
+            </Flex>
 
-                <Flex
-                    backgroundColor="#2b2d31"
-                    justifyContent="center"
-                    alignItems="center"
-                    width={{ md: '172px', lg: '186px' }}
-                    height={{ md: '142px', lg: '186px' }}
-                    userSelect="none"
-                >
-                    <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            height={{ md: '88px', lg: '100px' }}
-                            width={{ md: '80px', lg: '100px' }}
-                        >
-                            <Image src={getMvxLogo()} height={{ md: '54px', lg: '66px' }} alt="MultiversX" />
-                        </Flex>
-
-                        <Text
-                            fontSize={{ md: '15px', lg: '16px' }}
-                            textTransform="uppercase"
-                            color="whitesmoke"
-                            fontWeight={600}
-                        >
-                            6 EGLD
-                        </Text>
-                    </Flex>
-                </Flex>
-
-                <Flex
-                    backgroundColor="#8c5816"
-                    justifyContent="center"
-                    alignItems="center"
-                    width={{ md: '172px', lg: '186px' }}
-                    height={{ md: '142px', lg: '186px' }}
-                    userSelect="none"
-                >
-                    <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            height={{ md: '88px', lg: '100px' }}
-                            width={{ md: '80px', lg: '100px' }}
-                        >
-                            <Image src={getFullTicket()} height={{ md: '70px', lg: '82px' }} alt="Ticket" />
-                        </Flex>
-
-                        <Text
-                            fontSize={{ md: '15px', lg: '16px' }}
-                            textTransform="uppercase"
-                            color="brightWheat"
-                            fontWeight={600}
-                        >
-                            32 Golden Tickets
-                        </Text>
-                    </Flex>
-                </Flex>
-
-                <Flex
-                    backgroundColor="#3a182d"
-                    justifyContent="center"
-                    alignItems="center"
-                    width={{ md: '172px', lg: '186px' }}
-                    height={{ md: '142px', lg: '186px' }}
-                    userSelect="none"
-                >
-                    <Flex flexDir="column" justifyContent="center" alignItems="center">
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            height={{ md: '88px', lg: '100px' }}
-                            width={{ md: '80px', lg: '100px' }}
-                        >
-                            <Image src={RESOURCE_ELEMENTS.essence.icon} height={{ md: '60px', lg: '72px' }} alt="Essence" />
-                        </Flex>
-
-                        <Text
-                            fontSize={{ md: '15px', lg: '16px' }}
-                            textTransform="uppercase"
-                            color="resources.essence"
-                            fontWeight={600}
-                        >
-                            600 ESSENCE
-                        </Text>
-                    </Flex>
-                </Flex>
-            </Box>
-
-            <Flex flexDir="column" pb={{ md: 2.5, lg: 3.5 }} borderBottom="2px solid #fdefce26" width="100%">
+            <Flex flexDir="column" pb={{ md: 2.5, lg: 3.5 }} width="100%">
                 <Flex
                     pt={{ md: 2.5, lg: 3.5 }}
                     pb={{ md: 2.5, lg: 3.5 }}
@@ -236,24 +143,24 @@ function RaffleCard() {
                 >
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
-                        {totalTickets === -1 ? (
+                        {!vectorSize ? (
                             <Flex alignItems="center" height="24px">
                                 <Spinner size="sm" />
                             </Flex>
                         ) : (
                             <Text fontWeight={500} letterSpacing="0.25px">
-                                {totalTickets}
+                                {vectorSize}
                             </Text>
                         )}
                     </Flex>
 
-                    {isCompleted ? (
+                    {isCompleted() ? (
                         <Flex flexDir="column" userSelect="none">
                             <Text layerStyle="header3" textAlign="right">
                                 Timestamp
                             </Text>
                             <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                                July 1st, 2023
+                                {format(timestamp, 'PP')}
                             </Text>
                         </Flex>
                     ) : (
@@ -292,8 +199,14 @@ function RaffleCard() {
                 </Flex>
             </Flex>
 
-            {!isCompleted && timestamp && (
-                <Flex pt={{ md: 2.5, lg: 3.5 }} width="100%" alignItems="center" justifyContent="center">
+            {!isCompleted() && timestamp && (
+                <Flex
+                    pt={{ md: 2.5, lg: 3.5 }}
+                    borderTop="2px solid #fdefce26"
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Text textTransform="uppercase" mr={1} fontSize="15px" fontWeight={500} userSelect="none">
                         Ends in
                     </Text>
@@ -308,7 +221,7 @@ function RaffleCard() {
                 </Flex>
             )}
 
-            {!isCompleted && (
+            {!isCompleted() && (
                 <Flex pt={{ md: 1, lg: 2 }} pb={{ md: 2, lg: 3 }} alignItems="center">
                     <Box
                         px="1"
@@ -354,7 +267,7 @@ function RaffleCard() {
                 </Flex>
             )}
 
-            {!isCompleted && (
+            {!isCompleted() && (
                 <Box width="100%">
                     <ActionButton
                         disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}

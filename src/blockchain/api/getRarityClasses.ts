@@ -11,7 +11,7 @@ export interface Rarity {
 }
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 12000 });
+const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getRarityClasses';
 
 export const getRarityClasses = async (nonces: number[]) => {

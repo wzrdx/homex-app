@@ -11,6 +11,7 @@ import EldersLogo from '../assets/logo_elders.png';
 import MvxImage from '../assets/multiversx.jpg';
 import MvxLogo from '../assets/logo_x.png';
 import LogoBox from '../assets/logo_box.png';
+import EmptyPNG from '../assets/empty.png';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -27,3 +28,5 @@ export const getLogoBox = () => LogoBox;
 export const getEldersLogo = () => EldersLogo;
 export const getMvxImage = () => MvxImage;
 export const getMvxLogo = () => MvxLogo;
+
+export const getEmptyPNG = () => EmptyPNG;
