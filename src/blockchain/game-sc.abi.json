@@ -352,6 +352,10 @@
             "mutability": "readonly",
             "inputs": [
                 {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
                     "name": "user",
                     "type": "Address"
                 }
@@ -385,7 +389,12 @@
         {
             "name": "getParticipantsCount",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
             "outputs": [
                 {
                     "type": "u32"
@@ -396,6 +405,10 @@
             "name": "getParticipants",
             "mutability": "readonly",
             "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
                 {
                     "name": "start",
                     "type": "u32"

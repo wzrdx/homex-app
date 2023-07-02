@@ -49,11 +49,11 @@ function Leaderboard() {
 
     const init = async () => {
         try {
-            setMyTickets(await getSubmittedTickets());
+            setMyTickets(await getSubmittedTickets(1));
             setTotalTickets(await getSubmittedTicketsTotal());
             setTimestamp(await getRaffleTimestamp());
 
-            const count: number = await getParticipantsCount();
+            const count: number = await getParticipantsCount(1);
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
             const apiCalls: Array<Promise<Participant[]>> = [];
@@ -67,7 +67,7 @@ function Leaderboard() {
                     .unshift(0)
                     .value(),
                 (current: number, next: number) => {
-                    apiCalls.push(getParticipants(current, next));
+                    apiCalls.push(getParticipants(1, current, next));
                 }
             );
 

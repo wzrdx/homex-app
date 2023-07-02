@@ -8,16 +8,13 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
-import { useResourcesContext, ResourcesContextType, RESOURCE_ELEMENTS } from '../services/resources';
+import { useResourcesContext, ResourcesContextType } from '../services/resources';
 import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
 import { ActionButton } from './ActionButton/ActionButton';
-import { getFullTicket, getLogoBox, getMvxLogo } from '../services/assets';
 import { Timer } from './Timer';
-import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
 import { format, isAfter } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
-import { getSubmittedTicketsTotal } from '../blockchain/api/getSubmittedTicketsTotal';
 import { RAFFLES } from '../services/raffles';
 
 const MAX_ENTRY = 4;
@@ -40,7 +37,7 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
 
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
-        setMyTickets(await getSubmittedTickets());
+        setMyTickets(await getSubmittedTickets(id));
     };
 
     const isCompleted = (): boolean => isAfter(new Date(), timestamp);
@@ -143,15 +140,9 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                 >
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
-                        {!vectorSize ? (
-                            <Flex alignItems="center" height="24px">
-                                <Spinner size="sm" />
-                            </Flex>
-                        ) : (
-                            <Text fontWeight={500} letterSpacing="0.25px">
-                                {vectorSize}
-                            </Text>
-                        )}
+                        <Text fontWeight={500} letterSpacing="0.25px">
+                            {vectorSize}
+                        </Text>
                     </Flex>
 
                     {isCompleted() ? (
@@ -168,34 +159,43 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                             <Text layerStyle="header3" textAlign="right">
                                 Your submission
                             </Text>
-                            <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                                {myTickets}/4
-                            </Text>
+
+                            {myTickets === undefined ? (
+                                <Flex alignItems="center" justifyContent="flex-end" height="24px">
+                                    <Spinner size="sm" />
+                                </Flex>
+                            ) : (
+                                <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                                    {myTickets}/4
+                                </Text>
+                            )}
                         </Flex>
                     )}
                 </Flex>
 
                 <Flex width="100%" justifyContent="center">
-                    <Flex
-                        alignItems="center"
-                        px={2}
-                        transition="all 0.1s ease-in"
-                        cursor="pointer"
-                        _hover={{ color: '#b8b8b8' }}
-                        onClick={() => navigate('/raffles/1')}
-                        userSelect="none"
-                    >
-                        <AiOutlineEye fontSize="19px" />
-                        <Text
-                            ml={1}
-                            textTransform="uppercase"
-                            fontWeight={500}
-                            fontSize={{ md: '14px', lg: '15px' }}
-                            letterSpacing="0.25px"
+                    <Link to={`/raffles/${id}?completed=${isCompleted()}`}>
+                        <Flex
+                            alignItems="center"
+                            px={2}
+                            transition="all 0.1s ease-in"
+                            cursor="pointer"
+                            _hover={{ color: '#b8b8b8' }}
+                            // onClick={() => navigate(`/raffles/${id}`)}
+                            userSelect="none"
                         >
-                            View details
-                        </Text>
-                    </Flex>
+                            <AiOutlineEye fontSize="19px" />
+                            <Text
+                                ml={1}
+                                textTransform="uppercase"
+                                fontWeight={500}
+                                fontSize={{ md: '14px', lg: '15px' }}
+                                letterSpacing="0.25px"
+                            >
+                                View details
+                            </Text>
+                        </Flex>
+                    </Link>
                 </Flex>
             </Flex>
 
