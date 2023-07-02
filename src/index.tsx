@@ -21,7 +21,7 @@ root.render(
                 name: 'customConfig',
                 apiTimeout,
                 walletConnectV2ProjectId,
-                apiAddress: PUBLIC_API,
+                apiAddress: API_URL, // PUBLIC_API,
             }}
         >
             <TransactionsProvider>
