@@ -19,7 +19,6 @@ import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
 import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Trial, getTrials } from '../../blockchain/api/getTrials';
 import { format } from 'date-fns';
 import { useSection } from '../Section';
 import { getEldersLogo } from '../../services/assets';
@@ -78,51 +77,7 @@ function Prizes() {
 
     const { address: userAddress } = useGetAccountInfo();
 
-    useEffect(() => {
-        init();
-    }, []);
-
-    useEffect(() => {
-        onTrialClick(1);
-    }, [trials]);
-
-    const init = async () => {
-        try {
-            setTrials(await getTrials());
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const onTrialClick = (index: number) => {
-        if (!trials) {
-            return;
-        }
-
-        setWinners([]);
-
-        setCurrentIndex(index);
-        const trial: Trial = trials[index - 1];
-        parseTrial(trial);
-    };
-
-    const parseTrial = async (trial?: Trial) => {
-        const result = await Promise.all(_.map(trial?.hashes, (hash) => getTransaction(hash)));
-
-        setWinners(
-            _(result)
-                .map((hashResult) => hashResult?.winners)
-                .flatten()
-                .value() as Array<{
-                username: string;
-                address: string;
-                prize: JSX.Element;
-            }>
-        );
-
-        setTimestamp(_.first(result)?.timestamp as Date);
-        setLoadingTrials(false);
-    };
+    useEffect(() => {}, []);
 
     const getTransaction = async (hash: string) => {
         const result = await getTx(hash);
@@ -204,7 +159,6 @@ function Prizes() {
                                 cursor="pointer"
                                 transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                 _hover={{ color: '#e3e3e3' }}
-                                onClick={() => onTrialClick(trial.index)}
                             >
                                 Trial #{trial.index}
                             </Text>

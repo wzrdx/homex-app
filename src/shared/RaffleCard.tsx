@@ -15,7 +15,7 @@ import { Timer } from './Timer';
 import { format, isAfter } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
-import { RAFFLES } from '../services/raffles';
+import { RAFFLES } from '../services/rewards';
 
 const MAX_ENTRY = 4;
 
@@ -181,7 +181,6 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                             transition="all 0.1s ease-in"
                             cursor="pointer"
                             _hover={{ color: '#b8b8b8' }}
-                            // onClick={() => navigate(`/raffles/${id}`)}
                             userSelect="none"
                         >
                             <AiOutlineEye fontSize="19px" />

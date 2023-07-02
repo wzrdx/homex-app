@@ -16,15 +16,17 @@ import {
     ModalOverlay,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
+import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../services/helpers';
+import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { format } from 'date-fns';
-import { useSection } from '../Section';
-import { getEldersLogo } from '../../services/assets';
-import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { useSection } from '../components/Section';
+import { getEldersLogo } from '../services/assets';
+import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
+import { ActionButton } from './ActionButton/ActionButton';
+import { useRewardsContext, RewardsContextType } from '../services/rewards';
+import { getHashes } from '../blockchain/api/getHashes';
 
 const COLUMNS = [
     {
@@ -51,7 +53,7 @@ const COLUMNS = [
     },
 ];
 
-function Battles() {
+function PrizesList({ id }) {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
@@ -63,21 +65,50 @@ function Battles() {
         }>
     >();
 
-    const [trials, setTrials] = useState<
-        Array<{
-            index: number;
-            hashes: string[];
-        }>
-    >();
+    const { raffles } = useRewardsContext() as RewardsContextType;
 
-    const [currentIndex, setCurrentIndex] = useState<number>(1);
-    const [timestamp, setTimestamp] = useState<Date>();
+    const [raffle, setRaffle] = useState<{
+        id: number;
+        timestamp: Date;
+        vectorSize: number;
+    }>();
 
-    const [isLoadingTrials, setLoadingTrials] = useState<boolean>(true);
+    const [hashes, setHashes] = useState<string[]>([]);
 
+    const [isLoading, setLoading] = useState<boolean>(true);
     const { address: userAddress } = useGetAccountInfo();
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        if (!_.isEmpty(raffles)) {
+            setRaffle(_.find(raffles, (raffle) => raffle.id == id));
+        }
+    }, [raffles]);
+
+    useEffect(() => {
+        if (raffle) {
+            init();
+        }
+    }, [raffle]);
+
+    const init = async () => {
+        const hashes = await getHashes(id);
+        setHashes(hashes);
+
+        const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
+
+        setWinners(
+            _(result)
+                .map((hashResult) => hashResult?.winners)
+                .flatten()
+                .value() as Array<{
+                username: string;
+                address: string;
+                prize: JSX.Element;
+            }>
+        );
+
+        setLoading(false);
+    };
 
     const getTransaction = async (hash: string) => {
         const result = await getTx(hash);
@@ -144,28 +175,10 @@ function Battles() {
 
     return (
         <Flex height={`calc(100% - ${height}px)`} justifyContent="center">
-            {isLoadingTrials ? (
-                <Spinner />
+            {isLoading ? (
+                <Spinner mt={6} />
             ) : (
-                <Flex minW="660px">
-                    {/* Left */}
-                    <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        {_.map(trials, (trial, i) => (
-                            <Text
-                                key={i}
-                                color={trial.index === currentIndex ? 'white' : 'header.gray'}
-                                _notLast={{ mb: 2 }}
-                                fontSize="17px"
-                                cursor="pointer"
-                                transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                _hover={{ color: '#e3e3e3' }}
-                            >
-                                Trial #{trial.index}
-                            </Text>
-                        ))}
-                    </Flex>
-
-                    {/* Right */}
+                <Flex minW="500px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         {_.isEmpty(winners) ? (
                             <Flex justifyContent="center">
@@ -183,7 +196,7 @@ function Battles() {
 
                                     <Flex alignItems="center">
                                         <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                        <Text>{format(timestamp as Date, 'PPPP')}</Text>
+                                        <Text>{format(raffle?.timestamp as Date, 'PPPP')}</Text>
                                     </Flex>
                                 </Flex>
 
@@ -249,8 +262,8 @@ function Battles() {
 
                     <ModalBody>
                         <Flex flexDir="column" pb={2}>
-                            {trials &&
-                                _.map(trials[currentIndex - 1]?.hashes, (hash, index) => (
+                            {!_.isEmpty(hashes) &&
+                                _.map(hashes, (hash, index) => (
                                     <Flex
                                         key={index}
                                         alignItems="center"
@@ -273,4 +286,4 @@ function Battles() {
     );
 }
 
-export default Battles;
+export default PrizesList;

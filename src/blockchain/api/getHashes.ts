@@ -1,4 +1,4 @@
-import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
+import { ResultsParser, ContractFunction, U32Value } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
@@ -6,17 +6,18 @@ import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getRaffles';
+const FUNCTION_NAME = 'getHashes';
 
 export interface Trial {
     index: number;
     hashes: string[];
 }
 
-export const getRaffles = async () => {
+export const getHashes = async (raffleId: number) => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
+            args: [new U32Value(raffleId)],
         });
 
         const queryResponse = await proxy.queryContract(query);
@@ -25,15 +26,7 @@ export const getRaffles = async () => {
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
         const array = firstValue?.valueOf();
 
-        const parsedArray = map(array, (raffle) => ({
-            id: raffle?.id?.toNumber() as number,
-            timestamp: new Date(raffle?.timestamp?.toNumber() * 1000),
-            vectorSize: raffle?.vector_size?.toNumber() as number,
-        }));
-
-        // console.log(parsedArray);
-
-        return parsedArray;
+        return map(array, (hash) => Buffer.from(hash).toString('hex'));
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
         return [];

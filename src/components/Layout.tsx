@@ -11,6 +11,7 @@ import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
+import { RewardsProvider } from '../services/rewards';
 
 type LayoutContext = {
     checkEgldBalance: () => Promise<boolean>;
@@ -119,7 +120,9 @@ function Layout() {
                     pt={{ md: 3, lg: 10, xl: 16, '2xl': 20 }}
                     pb={{ md: 6, lg: 10, xl: 16, '2xl': 20 }}
                 >
-                    <Outlet context={{ checkEgldBalance, displayToast, closeToast, routes, routeNames }} />
+                    <RewardsProvider>
+                        <Outlet context={{ checkEgldBalance, displayToast, closeToast, routes, routeNames }} />
+                    </RewardsProvider>
                 </Box>
             </Flex>
         </>

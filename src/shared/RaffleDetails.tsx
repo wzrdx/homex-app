@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useSection } from '../components/Section';
 import ParticipantsList from './ParticipantsList';
+import PrizesList from './PrizesList';
 
 function useQuery() {
     const { search } = useLocation();
@@ -50,7 +51,7 @@ function RaffleDetails() {
                 </Flex>
             </Flex>
 
-            {isLoading ? <Spinner mt={6} /> : isCompleted ? <ParticipantsList id={id} /> : <ParticipantsList id={id} />}
+            {isLoading ? <Spinner mt={6} /> : isCompleted ? <PrizesList id={id} /> : <ParticipantsList id={id} />}
         </Flex>
     );
 }

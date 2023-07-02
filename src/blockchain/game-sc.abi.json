@@ -435,6 +435,21 @@
             ]
         },
         {
+            "name": "getHashes",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<array32<u8>>"
+                }
+            ]
+        },
+        {
             "name": "getTicketStats",
             "mutability": "readonly",
             "inputs": [],

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import { useLayout } from './Layout';
 import Tab from '../shared/Tab';
+import { routeNames } from '../services/routes';
+import { useRewardsContext, RewardsContextType } from '../services/rewards';
 
 type SectionContext = { height: number };
 
@@ -20,10 +22,16 @@ function Section() {
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
+    const { getRaffles } = useRewardsContext() as RewardsContextType;
+
     // Init
     useEffect(() => {
         const currentRoute = location.pathname.replace('/', '');
         setRoute(routes.find((route) => route.path === currentRoute));
+
+        if (currentRoute === routeNames.raffles) {
+            getRaffles();
+        }
     }, []);
 
     useEffect(() => {
