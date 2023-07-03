@@ -1,7 +1,6 @@
 import { findIndex } from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { isGamePausedQuery } from '../blockchain/api/isGamePaused';
-import { isSwappingPausedQuery } from '../blockchain/api/isSwappingPaused';
 
 export enum TransactionType {
     StartQuest,
@@ -10,7 +9,6 @@ export enum TransactionType {
     Stake,
     Unstake,
     Claim,
-    Swap,
 }
 
 export enum TxResolution {
@@ -36,7 +34,6 @@ export interface TransactionsContextType {
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
     isTxPending: (type: TransactionType) => boolean;
     isGamePaused: boolean;
-    isSwappingPaused: boolean;
     getGameState: () => Promise<boolean>;
 }
 
@@ -46,7 +43,6 @@ export const useTransactionsContext = () => useContext(TransactionsContext);
 
 export const TransactionsProvider = ({ children }) => {
     const [isGamePaused, setGamePaused] = useState<boolean>(false);
-    const [isSwappingPaused, setSwappingPaused] = useState<boolean>(false);
 
     const [pendingTxs, setPendingTxs] = useState<Transaction[]>([]);
 
@@ -61,7 +57,6 @@ export const TransactionsProvider = ({ children }) => {
     const getGameState = async (): Promise<boolean> => {
         const isPaused = await isGamePausedQuery();
         setGamePaused(isPaused);
-        setSwappingPaused(await isSwappingPausedQuery());
         return isPaused;
     };
 
@@ -73,7 +68,6 @@ export const TransactionsProvider = ({ children }) => {
                 isQuestTxPending,
                 isTxPending,
                 isGamePaused,
-                isSwappingPaused,
                 getGameState,
             }}
         >

@@ -94,10 +94,6 @@ function App() {
                         displayToast('Ticket/s sent', 'Successfully joined the raffle', 'green.500');
                         break;
 
-                    case TransactionType.Swap:
-                        displayEGLDGain(tx?.hash);
-                        break;
-
                     default:
                         console.error('Unknown TransactionType');
                 }
@@ -251,28 +247,6 @@ function App() {
                 }
 
                 displayResourcesToast('Energy gained', [{ resource: 'energy', value: gain }], 'unstake');
-            }
-        }
-    };
-
-    const displayEGLDGain = async (txHash: string | undefined) => {
-        if (txHash) {
-            const result = await getTx(txHash);
-            if (result.data) {
-                const operation = find(result.data.operations, (op) => op.action === 'transfer' && op.type === 'egld');
-
-                if (!operation) {
-                    return;
-                }
-
-                const gain: number = operation.value / EGLD_DENOMINATION;
-
-                if (!gain || Number.isNaN(gain) || gain === 0) {
-                    return;
-                }
-
-                playSound('swap');
-                displayToast('Swapped ENERGY for EGLD', `You received ${gain} in your wallet`, 'blue.500');
             }
         }
     };

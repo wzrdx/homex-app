@@ -1,13 +1,8 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Image } from '@chakra-ui/react';
+import { Flex, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
-import {
-    COLLECTION_SIZE,
-    ELDER_YIELD_PER_HOUR,
-    REWARDS_QUERYING_INTERVAL,
-    TRAVELER_YIELD_PER_HOUR,
-} from '../../blockchain/config';
+import { COLLECTION_SIZE, REWARDS_QUERYING_INTERVAL } from '../../blockchain/config';
 import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
@@ -69,16 +64,6 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         };
     }, [stakingInfo]);
 
-    const getEnergyPerHour = (): number => {
-        if (!stakingInfo) {
-            return 0;
-        }
-
-        const travelersYield = round(TRAVELER_YIELD_PER_HOUR * stakingInfo?.travelerNonces?.length, 1);
-        const eldersYield = round(ELDER_YIELD_PER_HOUR * stakingInfo?.elderNonces?.length, 1);
-        return round(travelersYield + eldersYield, 1);
-    };
-
     const getDays = (): string => {
         const days: number = duration.days as number;
         if (!days) {
@@ -104,7 +89,6 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
                 <StatsEntry label="Staking rewards" color="energyBright" value={localStakingInfo?.rewards.toString() as string}>
                     <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
                 </StatsEntry>
-                <StatsEntry label="Energy per hour" color="energyBright" value={getEnergyPerHour()} />
                 {stakingInfo?.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
 
                 {/* Global */}

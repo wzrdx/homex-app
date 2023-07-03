@@ -40,7 +40,7 @@ function Gameplay() {
                         <Flex alignItems="center">
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
-                                Can be swapped in-game for{' '}
+                                Can be swapped on JEXchange for{' '}
                                 <Text as="span" color="brightBlue">
                                     $EGLD
                                 </Text>
@@ -58,20 +58,9 @@ function Gameplay() {
                         {Object.keys(RESOURCE_ELEMENTS)
                             .slice(1, 4)
                             .map((resource) => (
-                                <Flex
-                                    width="72px"
-                                    flexDir="column"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    key={resource}
-                                >
+                                <Flex width="72px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
                                     <Image width="48px" src={RESOURCE_ELEMENTS[resource].icon} alt="Resource" />
-                                    <Text
-                                        mt={1}
-                                        fontSize="16px"
-                                        fontWeight={500}
-                                        color={RESOURCE_ELEMENTS[resource].color}
-                                    >
+                                    <Text mt={1} fontSize="16px" fontWeight={500} color={RESOURCE_ELEMENTS[resource].color}>
                                         {RESOURCE_ELEMENTS[resource].name}
                                     </Text>
                                 </Flex>

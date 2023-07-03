@@ -34,7 +34,7 @@ import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses'
 import Yield from '../../shared/Yield';
 
 function Unstake() {
-    const { height, checkEgldBalance } = useStaking();
+    const { height } = useStaking();
     const { address } = useGetAccountInfo();
 
     const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
@@ -155,11 +155,6 @@ function Unstake() {
             return;
         }
 
-        if (!(await checkEgldBalance())) {
-            setUnstakeButtonLoading(false);
-            return;
-        }
-
         setUnstakeButtonLoading(true);
 
         const user = new Address(address);
@@ -186,7 +181,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 1000000 * count)
+                .withGasLimit(9000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
@@ -222,11 +217,6 @@ function Unstake() {
             return;
         }
 
-        if (!(await checkEgldBalance())) {
-            setClaimButtonLoading(false);
-            return;
-        }
-
         setClaimButtonLoading(true);
 
         const user = new Address(address);
@@ -236,7 +226,7 @@ function Unstake() {
                 .claimStakingRewards()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6000000)
+                .withGasLimit(8000000)
                 .buildTransaction();
 
             await refreshAccount();
@@ -443,7 +433,7 @@ function Unstake() {
             <Modal onClose={onYieldClose} isOpen={isYieldOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Energy Yield per hour</ModalHeader>
+                    <ModalHeader>Energy per hour</ModalHeader>
                     <ModalCloseButton _focusVisible={{ outline: 0 }} />
 
                     <ModalBody>

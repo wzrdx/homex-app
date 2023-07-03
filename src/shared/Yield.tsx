@@ -4,7 +4,6 @@ import { Rarity } from '../blockchain/api/getRarityClasses';
 import { useEffect, useState } from 'react';
 import { getRarityClassInfo } from '../services/helpers';
 import _ from 'lodash';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 interface YieldEntry {
     count: number;
@@ -53,11 +52,23 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
         }
     }, [travelers, elders, rarities]);
 
+    const getTotal = (): number => {
+        if (!travelerEntries || !otherEntries) {
+            return 0;
+        }
+
+        const energyYield = _([...travelerEntries, ...otherEntries])
+            .map((entry) => entry.count * entry.yield)
+            .sum();
+
+        return energyYield;
+    };
+
     const getLegend = (): JSX.Element => {
         const array = Array.from({ length: 5 }, (_, i) => i + 1);
 
         return (
-            <Flex flexDir="column" width="44%">
+            <Flex flexDir="column" width="50%" backgroundColor="#b3daf50d" borderRadius="2px" px={3} py={1.5}>
                 {_.map(array, (item, index) => {
                     let { label, color, energyYield } = getRarityClassInfo(item);
 
@@ -151,6 +162,22 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
                     ))}
                 </>
             )}
+
+            <Text
+                mt={5}
+                mb={1.5}
+                color="brightWheat"
+                textTransform="uppercase"
+                fontWeight={600}
+                fontSize="18px"
+                letterSpacing="0.75px"
+            >
+                Total Energy per hour
+            </Text>
+
+            <Text fontSize="17px" fontWeight={500}>
+                {getTotal()}
+            </Text>
         </Flex>
     );
 }

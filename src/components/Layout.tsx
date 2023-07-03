@@ -7,14 +7,10 @@ import LoadingScreen from './LoadingScreen';
 import Header from './Header';
 import { getLayoutBackground } from '../services/assets';
 import { CustomToast } from '../shared/CustomToast';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import { getAccountBalance } from '@multiversx/sdk-dapp/utils';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
-import { RewardsProvider } from '../services/rewards';
 
 type LayoutContext = {
-    checkEgldBalance: () => Promise<boolean>;
     displayToast: (
         type: string,
         title: string,
@@ -36,7 +32,6 @@ export function useLayout() {
 function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
-    const { playSound } = useSoundsContext() as SoundsContextType;
     const { isGamePaused, getGameState } = useTransactionsContext() as TransactionsContextType;
 
     const toast = useToast();
@@ -60,19 +55,6 @@ function Layout() {
             });
         }
     }, [isGamePaused]);
-
-    const checkEgldBalance = async (): Promise<boolean> => {
-        const balance = await getAccountBalance();
-
-        if (!balance || balance === '0') {
-            playSound('swap');
-
-            displayToast('error', 'Insufficient balance', 'You need EGLD for gas fees', 'redClrs');
-            return false;
-        } else {
-            return true;
-        }
-    };
 
     const displayToast = (
         type: string,
@@ -120,7 +102,7 @@ function Layout() {
                     pt={{ md: 3, lg: 10, xl: 16, '2xl': 20 }}
                     pb={{ md: 6, lg: 10, xl: 16, '2xl': 20 }}
                 >
-                    <Outlet context={{ checkEgldBalance, displayToast, closeToast, routes, routeNames }} />
+                    <Outlet context={{ displayToast, closeToast, routes, routeNames }} />
                 </Box>
             </Flex>
         </>

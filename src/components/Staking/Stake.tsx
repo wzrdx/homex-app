@@ -17,7 +17,7 @@ import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 
 function Stake() {
-    const { height, checkEgldBalance, displayToast } = useStaking();
+    const { height, displayToast } = useStaking();
 
     const { address } = useGetAccountInfo();
 
@@ -52,11 +52,6 @@ function Stake() {
 
     const stake = async () => {
         if (!stakingInfo) {
-            return;
-        }
-
-        if (!(await checkEgldBalance())) {
-            setButtonLoading(false);
             return;
         }
 

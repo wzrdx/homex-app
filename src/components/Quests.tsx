@@ -45,7 +45,7 @@ const MEDIUM_FRAME_SIZE = 240;
 const GRACE_PERIOD_INTERVAL = 48;
 
 function Quests() {
-    const { checkEgldBalance, displayToast, closeToast } = useLayout();
+    const { displayToast, closeToast } = useLayout();
     const navigate = useNavigate();
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
 
@@ -111,11 +111,6 @@ function Quests() {
     const startQuest = async () => {
         setStartButtonLoading(true);
 
-        if (!(await checkEgldBalance())) {
-            setStartButtonLoading(false);
-            return;
-        }
-
         const user = new Address(address);
         const requiredResources: string[] = Object.keys(currentQuest.requirements);
 
@@ -169,11 +164,6 @@ function Quests() {
 
     const completeQuest = async () => {
         setFinishButtonLoading(true);
-
-        if (!(await checkEgldBalance())) {
-            setFinishButtonLoading(false);
-            return;
-        }
 
         const user = new Address(address);
 

@@ -19,25 +19,20 @@ import { findIndex } from 'lodash';
 import { BsExclamation } from 'react-icons/bs';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
-import { IoIosSwap } from 'react-icons/io';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import { getSmallLogo } from '../services/assets';
-import Swap from './Swap';
-import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
 import _ from 'lodash';
 
 const ROUTE_WIDTH = 104;
 
 function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
-    const { isOpen: isSwapOpen, onOpen: onSwapOpen, onClose: onSwapClose } = useDisclosure();
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
-    const { isSwappingPaused } = useTransactionsContext() as TransactionsContextType;
 
     const location = useLocation();
 
@@ -187,38 +182,6 @@ function Header({ displayToast }) {
                                 Gameplay
                             </Text>
                         </Flex>
-
-                        <Flex
-                            ml={4}
-                            alignItems="center"
-                            padding="7px 16px"
-                            borderRadius="9999px"
-                            backgroundColor="#0e2a35"
-                            cursor="pointer"
-                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#0c3247' }}
-                            onClick={() => {
-                                if (isSwappingPaused) {
-                                    displayToast(
-                                        'time',
-                                        'Swapping disabled',
-                                        'Swapping is temporarily disabled',
-                                        'resources.energy'
-                                    );
-                                    return;
-                                } else {
-                                    playSound('select_quest');
-                                    onSwapOpen();
-                                }
-                            }}
-                        >
-                            <Box transform="rotate(90deg)" mr={-0.5}>
-                                <IoIosSwap fontSize="22px" color="#1eabe2" />
-                            </Box>
-                            <Text ml={2} color="white">
-                                Swap
-                            </Text>
-                        </Flex>
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
@@ -359,23 +322,6 @@ function Header({ displayToast }) {
 
                         <Box position="absolute" bottom="16px" right="24px">
                             <Button onClick={onGameplayClose} colorScheme="red">
-                                Close
-                            </Button>
-                        </Box>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-
-            {/* Swap */}
-            <Modal size="full" onClose={onSwapClose} isOpen={isSwapOpen}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
-                    <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
-                        <Swap />
-
-                        <Box position="absolute" bottom="16px" right="24px">
-                            <Button onClick={onSwapClose} colorScheme="blue">
                                 Close
                             </Button>
                         </Box>

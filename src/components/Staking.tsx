@@ -10,7 +10,6 @@ import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount
 
 type StakingContext = {
     height: number;
-    checkEgldBalance: () => Promise<boolean>;
     displayToast: (type: string, title: string, description: string, color: string) => void;
 };
 
@@ -19,7 +18,7 @@ export function useStaking() {
 }
 
 function Staking() {
-    const { routes, routeNames, checkEgldBalance, displayToast } = useLayout();
+    const { routes, routeNames, displayToast } = useLayout();
 
     // The height of the menu
     const [height, setHeight] = useState<number>(0);
@@ -68,7 +67,7 @@ function Staking() {
                 </Flex>
 
                 <Flex flex={4}>
-                    <Outlet context={{ height, checkEgldBalance, displayToast }} />
+                    <Outlet context={{ height, displayToast }} />
                 </Flex>
             </Flex>
         </Flex>
