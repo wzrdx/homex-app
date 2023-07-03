@@ -114,6 +114,8 @@ export const RewardsProvider = ({ children }) => {
                 vectorSize: raffle?.vector_size?.toNumber() as number,
             }));
 
+            console.log(parsedArray);
+
             setRaffles(parsedArray);
         } catch (err) {
             console.error(`Unable to call ${FUNCTION_NAME}`, err);

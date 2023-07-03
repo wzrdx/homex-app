@@ -26,7 +26,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { ActionButton } from './ActionButton/ActionButton';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
-import { getHashes } from '../blockchain/api/getHashes';
+import { getRaffleHashes } from '../blockchain/api/getRaffleHashes';
 
 const COLUMNS = [
     {
@@ -91,7 +91,7 @@ function PrizesList({ id }) {
     }, [raffle]);
 
     const init = async () => {
-        const hashes = await getHashes(id);
+        const hashes = await getRaffleHashes(id);
         setHashes(hashes);
 
         const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));

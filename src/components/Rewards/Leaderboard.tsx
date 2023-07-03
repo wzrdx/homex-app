@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
 import { getParticipants } from '../../blockchain/api/getParticipants';
 import { getParticipantsCount } from '../../blockchain/api/getParticipantsCount';
-import { getRaffleTimestamp } from '../../blockchain/api/getRaffleTimestamp';
+import { getTrialTimestamp } from '../../blockchain/api/getTrialTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
 import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
 import { Participant } from '../../blockchain/types';
@@ -51,7 +51,7 @@ function Leaderboard() {
         try {
             setMyTickets(await getSubmittedTickets(1));
             setTotalTickets(await getSubmittedTicketsTotal());
-            setTimestamp(await getRaffleTimestamp());
+            setTimestamp(await getTrialTimestamp());
 
             const count: number = await getParticipantsCount(1);
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);

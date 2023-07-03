@@ -13,7 +13,7 @@ import { useTransactionsContext, TransactionsContextType, TransactionType, TxRes
 import { ActionButton } from './ActionButton/ActionButton';
 import { Timer } from './Timer';
 import { format, isAfter } from 'date-fns';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
 import { RAFFLES } from '../services/rewards';
 
@@ -28,7 +28,6 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
-    const navigate = useNavigate();
 
     // Init
     useEffect(() => {
@@ -53,11 +52,11 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
 
         try {
             const tx = smartContract.methods
-                .joinRaffle()
+                .joinRaffle([id])
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000)
+                .withGasLimit(18000000)
                 .buildTransaction();
 
             await refreshAccount();

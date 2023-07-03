@@ -28,10 +28,6 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "id",
-                    "type": "u32"
-                },
-                {
                     "name": "timestamp",
                     "type": "u64"
                 },
@@ -43,17 +39,15 @@
             "outputs": []
         },
         {
-            "name": "copyVector",
+            "name": "copyOperatingVector",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "clearOperatingVector",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
             "outputs": []
         },
         {
@@ -226,20 +220,12 @@
             "mutability": "mutable",
             "inputs": [
                 {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
                     "name": "phase",
                     "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setRaffleTimestamp",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -248,7 +234,12 @@
             "name": "clearRaffle",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
             "outputs": []
         },
         {
@@ -256,6 +247,18 @@
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "setTrialTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
             "outputs": []
         },
         {
@@ -337,7 +340,12 @@
             "name": "joinRaffle",
             "mutability": "mutable",
             "payableInTokens": ["*"],
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
             "outputs": []
         },
         {
@@ -360,26 +368,6 @@
                     "type": "Address"
                 }
             ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getOperatingVectorLength",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getSubmittedTicketsTotal",
-            "mutability": "readonly",
-            "inputs": [],
             "outputs": [
                 {
                     "type": "u32"
@@ -431,21 +419,6 @@
             "outputs": [
                 {
                     "type": "List<CompactRaffle>"
-                }
-            ]
-        },
-        {
-            "name": "getHashes",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<array32<u8>>"
                 }
             ]
         },
@@ -666,23 +639,18 @@
             ]
         },
         {
-            "name": "getRaffleParticipants",
+            "name": "getRaffleHashes",
             "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
+            "inputs": [
                 {
-                    "type": "variadic<Address>",
-                    "multi_result": true
+                    "name": "raffle_id",
+                    "type": "u32"
                 }
-            ]
-        },
-        {
-            "name": "getRaffleTimestamp",
-            "mutability": "readonly",
-            "inputs": [],
+            ],
             "outputs": [
                 {
-                    "type": "u64"
+                    "type": "variadic<array32<u8>>",
+                    "multi_result": true
                 }
             ]
         },
@@ -714,6 +682,16 @@
             "outputs": [
                 {
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getTrialTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
                 }
             ]
         }

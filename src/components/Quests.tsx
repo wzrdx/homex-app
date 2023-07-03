@@ -37,7 +37,7 @@ import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, hDisplay, mDisplay } from '../services/helpers';
-import { getRaffleTimestamp } from '../blockchain/api/getRaffleTimestamp';
+import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
@@ -105,7 +105,7 @@ function Quests() {
 
     const init = async () => {
         getOngoingQuests();
-        setTrialTimestamp(await getRaffleTimestamp());
+        setTrialTimestamp(await getTrialTimestamp());
     };
 
     const startQuest = async () => {
