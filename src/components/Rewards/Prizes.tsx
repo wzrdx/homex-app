@@ -172,7 +172,7 @@ function Prizes() {
                 <Flex minW="660px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        <Text>Trial #1</Text>
+                        <Text>Trial #2</Text>
                     </Flex>
 
                     {/* Right */}
