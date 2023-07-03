@@ -31,7 +31,7 @@ import { EGLD_DENOMINATION, ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockc
 function App() {
     const toast = useToast();
 
-    const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { pendingTxs, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
 
     const { failedTransactionsArray } = useGetFailedTransactions();
@@ -42,6 +42,12 @@ function App() {
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
+
+    useEffect(() => {
+        if (isGamePaused) {
+            displayPauseToast();
+        }
+    }, [isGamePaused]);
 
     useEffect(() => {
         removeTxs(failedTransactionsArray);
@@ -221,8 +227,21 @@ function App() {
             duration: 8000,
             render: () => (
                 <CustomToast type="success" title={title} color={color}>
-                    <Text mt={2}>{text}</Text>
+                    {text && <Text mt={2}>{text}</Text>}
                 </CustomToast>
+            ),
+        });
+    };
+
+    const displayPauseToast = () => {
+        toast({
+            position: 'bottom-left',
+            containerStyle: {
+                margin: '3rem',
+            },
+            duration: 1000000,
+            render: () => (
+                <CustomToast type={'time'} title={'The game is temporarily paused'} color={'whitesmoke'}></CustomToast>
             ),
         });
     };

@@ -36,7 +36,7 @@ function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
-    const { isGamePaused, getGameState } = useTransactionsContext() as TransactionsContextType;
+    const { getGameState } = useTransactionsContext() as TransactionsContextType;
 
     const toast = useToast();
     const toastIdRef = useRef<ToastId>();
@@ -51,14 +51,6 @@ function Layout() {
 
         getGameState();
     }, []);
-
-    useEffect(() => {
-        if (isGamePaused) {
-            displayToast('time', 'The game is temporarily paused', '', 'whitesmoke', 1000000000, 'bottom-left', {
-                margin: '3rem',
-            });
-        }
-    }, [isGamePaused]);
 
     const checkEgldBalance = async (): Promise<boolean> => {
         const balance = await getAccountBalance();
