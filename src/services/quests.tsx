@@ -43,13 +43,14 @@ const getId = () => ++ID;
 export const QUESTS: any[] = [
     // Herbalism
     {
-        id: 1,
+        id: getId(),
         type: 'herbalism',
-        name: 'Botanical Exploration',
+        name: 'Frozen Summit',
         description: (
             <Text layerStyle="questDescription">
-                Journey to the botanical rim in the western side of Menhir to gather a rare root that will bring new life to the
-                Menhir's gardens. The root is guarded by treacherous vines and thorny bushes.
+                Scale the treacherous Frozen Peak, where icy winds howl relentlessly. Seek the legendary Frostbite Flower, a
+                rare bloom said to possess healing properties. Brave freezing temperatures and overcome icy challenges to
+                retrieve the flower.
             </Text>
         ),
         requirements: {
@@ -65,20 +66,22 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: LightRays,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
         image: Quest_1,
     },
     {
-        id: 2,
+        id: getId(),
         type: 'herbalism',
-        name: 'Waterfall Pilgrimage',
+        name: 'Windswept',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a pilgrimage to a hidden temple behind a roaring waterfall, where you will start a ritual to announce
-                the arrival of spring by burning eucalyptus in an incense burner.
+                Ascend the towering rocky hill, perched at great heights where fierce winds reign. Inspired by ancient
+                architects, brave citizens constructed wind power plants harnessing the gusts' might. These plants generate
+                vital energy, sustaining the entire planet. Your mission is to retrieve the coveted Turbine Sketches, the
+                blueprints that reveal the secrets of these ingenious wind turbines.
             </Text>
         ),
         requirements: {
@@ -103,13 +106,14 @@ export const QUESTS: any[] = [
 
     // Jewelcrafting
     {
-        id: 3,
+        id: getId(),
         type: 'jewelcrafting',
-        name: 'Fountain of Youth',
+        name: 'Antrum Region',
         description: (
             <Text layerStyle="questDescription">
-                Discover the hidden fountain from Menhir and retrieve a goblet of its magical water for Menhir's spring
-                celebration. The clear water can only be consumed from one of the goblets tied to the fountain.
+                Venture into the vast Antrum Region, a cavernous mountain housing a bustling city. Millions rely on a narcotic
+                air, generated from the depths, to survive. Your mission is to secure the elusive Narcotic of the Caves,
+                essential for sustaining life underground.
             </Text>
         ),
         requirements: {
@@ -132,13 +136,14 @@ export const QUESTS: any[] = [
         image: Quest_3,
     },
     {
-        id: 4,
+        id: getId(),
         type: 'jewelcrafting',
-        name: 'Garden of Light',
+        name: "Avalon's Embrace",
         description: (
             <Text layerStyle="questDescription">
-                Venture into the hidden Garden of Light inside a palace courtyard and retrieve the chlorophyll from a
-                transparent crystal flower, symbolizing life and energy from the sun's light.
+                Journey to the majestic Avalon Range, a realm of towering peaks and breathtaking vistas. Ascend the mythical
+                peak known as Mount Celestia, where the fabled Celestial Scepter is said to reside. Conquer perilous trails,
+                face elemental trials, and claim the scepter.
             </Text>
         ),
         requirements: {
@@ -163,13 +168,14 @@ export const QUESTS: any[] = [
 
     // Enchanting
     {
-        id: 5,
+        id: getId(),
         type: 'enchanting',
-        name: 'Bloom Market',
+        name: 'Cavesong Orb',
         description: (
             <Text layerStyle="questDescription">
-                Exchange precious gems for rare and exotic flowers to add to the Menhir's gardens. Rumor has it that there's a
-                rare bloom being sold by a mysterious vendor that only appears once a year.
+                Explore the enigmatic Singing Cave, where mystical winds create ethereal melodies. A slumbering ancient creature
+                dwells within the mountain's depths. Retrieve the Cavesong Orb, said to hold the essence of the cave's
+                enchanting melody.
             </Text>
         ),
         requirements: {
@@ -190,20 +196,20 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: LightRays,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
         image: Quest_5,
     },
     {
-        id: 6,
+        id: getId(),
         type: 'enchanting',
-        name: 'Seed Hunt',
+        name: 'Crystal Caravan',
         description: (
             <Text layerStyle="questDescription">
-                Journey deep into the forest to capture and bring back a rare bird to trade for valuable seeds and gems for the
-                city's use. Beware of the bird's elusive nature and the treacherous terrain you'll have to navigate to reach it.
+                Join the Crystal Caravan on a perilous journey through rugged mountain terrain. Safeguard the precious cargo of
+                sparkling crystals and rare items destined for the bustling market of Menhir.
             </Text>
         ),
         requirements: {
@@ -224,8 +230,8 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: LightRays,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
         image: Quest_6,
@@ -233,13 +239,15 @@ export const QUESTS: any[] = [
 
     // Divination
     {
-        id: 7,
+        id: getId(),
         type: 'divination',
-        name: 'Spring Cleaning',
+        name: 'Mountain Harvest',
         description: (
             <Text layerStyle="questDescription">
-                Help to purify the polluted water sources around the city. Retrieve special cleansing herbs from the nearby
-                swamp to use in the purification process. Beware of the swamp creatures and treacherous terrain along the way.
+                Embark on a quest to gather the exotic mountain items. Traverse the steep slopes and hidden valleys to find rare
+                treasures. From the revitalizing Evergreen Moss to the soothing Moonshadow stones, collect a diverse assortment.
+                Return to the mountain village and trade these valuable artifacts for rare potions, enchanted talismans, or
+                other coveted items.
             </Text>
         ),
         requirements: {
@@ -257,20 +265,22 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: DesertSmoke,
+                source: SmokeAndClouds,
                 mode: 'normal',
             },
         ],
         image: Quest_7,
     },
     {
-        id: 8,
+        id: getId(),
         type: 'divination',
-        name: 'Renewal Ritual',
+        name: "Traveler's Bounty",
         description: (
             <Text layerStyle="questDescription">
-                Join a sacred ceremony to celebrate the arrival of spring and receive the essence of renewal to prepare the land
-                for the butterfly's magic.
+                Embark on a quest to recover ancient relics hidden within the majestic mountain range. Explore forgotten
+                temples, treacherous caves, and crumbling ruins to find these valuable artifacts. Return to Menhir and engage in
+                a lively trade, offering these remarkable relics to collectors, scholars, and adventurers seeking their hidden
+                powers.
             </Text>
         ),
         requirements: {
@@ -297,14 +307,14 @@ export const QUESTS: any[] = [
 
     // Alchemy
     {
-        id: 10,
+        id: getId(),
         type: 'alchemy',
-        name: 'Sunshine Symphony',
+        name: 'Mountain Sage Smoke',
         description: (
             <Text layerStyle="questDescription">
-                Discover the hidden location of the Sun Harp, a legendary musical instrument that harnesses the power of
-                sunlight. Embark on a musical journey through sunlit valleys and ancient ruins, collecting harmonious notes
-                along the way.
+                Embark on a daring journey up Almur Mount, a majestic peak covered in lush vegetation. Seek out the sacred
+                Mountain Sage, a powerful plant that purifies the air. Traverse treacherous trails, conquer rugged terrain, and
+                retrieve the herb to bring its cleansing essence to the mountain dwellers.
             </Text>
         ),
         requirements: {
@@ -324,17 +334,18 @@ export const QUESTS: any[] = [
                 mode: 'overlay',
             },
         ],
-        image: Quest_10,
+        image: Quest_9,
     },
     {
-        id: 11,
+        id: getId(),
         type: 'alchemy',
-        name: 'Spring Swap Meet',
+        name: 'Frost Crystal',
         description: (
             <Text layerStyle="questDescription">
-                Join the bustling Spring Swap Meet in Menhir, where traders from all corners gather to exchange their unique and
-                rare inventory. Navigate through the vibrant marketplace, interacting with merchants and collectors who have an
-                array of items, from colorful flower seeds and ornate gardening tools to enchanted springtime accessories.
+                Explore the hidden realm of Glacial Peaks, where icy wonders await. Your mission is to retrieve the legendary
+                Frost Crystal, a rare artifact with the power to freeze and purify water. Journey through icy tunnels, conquer
+                frosty challenges, and claim the crystal. Return to Menhir and use its magic to restore purity to frozen
+                springs.
             </Text>
         ),
         requirements: {
@@ -350,21 +361,21 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: DesertSmoke,
+                source: LightRays,
                 mode: 'normal',
             },
         ],
-        image: Quest_11,
+        image: Quest_10,
     },
     {
-        id: 12,
+        id: getId(),
         type: 'alchemy',
-        name: "Blossom's Blessing",
+        name: 'Cherry Pilgrimage',
         description: (
             <Text layerStyle="questDescription">
-                Venture deep into the Enchanted Forest and seek out the ancient tree known as Blossom's Heart. This tree holds
-                the power to rejuvenate and awaken dormant plants. Overcome mystical challenges and cleverly navigate the forest
-                to collect petals from the tree's magnificent blooms.
+                Scale the frozen heights of Pilgrims Peak, braving snowstorms on a sacred journey. Reach the summit's temple,
+                where a blooming cherry tree stands. Retrieve the cherished Mountain Cherry Ritual, igniting the fragrant wood
+                to foster serenity and connection during pilgrims' rituals.
             </Text>
         ),
         requirements: {
@@ -384,16 +395,17 @@ export const QUESTS: any[] = [
                 mode: 'plus-lighter',
             },
         ],
-        image: Quest_12,
+        image: Quest_11,
     },
     {
-        id: 13,
+        id: getId(),
         type: 'alchemy',
-        name: 'Raindrop Rhapsody',
+        name: 'Volcanic Ashstone',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a journey to the Cloud Peaks, where magical raindrops are said to hold the essence of the season.
-                Ascend the misty heights and brave the elements to collect these shimmering droplets.
+                Brave the towering Ramad Volcano, a majestic formation with periodic lava eruptions. Harvesting the lava through
+                mechanized grooves provides continuous energy for Menhir. Your mission is to obtain the coveted Ashstone, a
+                stone infused with compacted volcanic ash.
             </Text>
         ),
         requirements: {
@@ -409,23 +421,24 @@ export const QUESTS: any[] = [
         ],
         layers: [
             {
-                source: SmokeAndClouds,
-                mode: 'normal',
+                source: Particles,
+                mode: 'soft-light',
             },
         ],
-        image: Quest_13,
+        image: Quest_12,
     },
 
     // Final
     {
-        id: 9,
+        id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Enchanted Butterfly',
+        name: 'Crystal Blade',
         description: (
             <Text layerStyle="questDescription">
-                To retrieve the colorful butterfly you would have to use all of your skills and wit to capture it. Secure it
-                safely for transport back to the city and wait for it to bring new life to the land.
+                Retrieve the Crystal Blade artifact guarded by the harsh winds in the treacherous mountain pass. Use your skills
+                to navigate the dangerous terrain and overcome obstacles to acquire the powerful weapon and bring it back to the
+                city to contribute to its rebirth.
             </Text>
         ),
         requirements: {
@@ -448,7 +461,7 @@ export const QUESTS: any[] = [
                 mode: 'normal',
             },
         ],
-        image: Quest_9,
+        image: Quest_13,
     },
 ];
 
