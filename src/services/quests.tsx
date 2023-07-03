@@ -36,7 +36,7 @@ let ID = 0;
 
 const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
-const BASE_REWARD = 10;
+const BASE_REWARD = 15;
 
 const getId = () => ++ID;
 
@@ -85,14 +85,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 3 * BASE_COST,
+            energy: 6 * BASE_COST,
         },
-        duration: 4 * BASE_DURATION,
+        duration: 6 * 1.25 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 6 * BASE_REWARD,
+                value: 12 * BASE_REWARD,
             },
         ],
         layers: [
@@ -147,14 +147,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 3 * BASE_COST,
+            energy: 6 * BASE_COST,
         },
-        duration: 4 * BASE_DURATION,
+        duration: 6 * 1.25 * BASE_DURATION,
         rewards: [
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 3 * BASE_REWARD,
+                value: 6 * BASE_REWARD,
             },
         ],
         layers: [
@@ -179,19 +179,19 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 4 * BASE_COST,
+            energy: 8 * BASE_COST,
         },
-        duration: 6 * BASE_DURATION,
+        duration: 8 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 4 * BASE_REWARD,
+                value: 8 * BASE_REWARD,
             },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 2 * BASE_REWARD,
+                value: 4 * BASE_REWARD,
             },
         ],
         layers: [
@@ -213,19 +213,19 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 6 * BASE_COST,
+            energy: 16 * BASE_COST,
         },
-        duration: 9 * BASE_DURATION,
+        duration: 16 * 1.25 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 6 * BASE_REWARD,
+                value: 16 * BASE_REWARD,
             },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 3 * BASE_REWARD,
+                value: 8 * BASE_REWARD,
             },
         ],
         layers: [
@@ -255,12 +255,12 @@ export const QUESTS: any[] = [
             herbs: 4 * BASE_COST,
             gems: 2 * BASE_COST,
         },
-        duration: 3 * BASE_DURATION,
+        duration: 2 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 1 * BASE_REWARD,
+                value: 1.5 * BASE_REWARD,
             },
         ],
         layers: [
@@ -284,16 +284,16 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 8 * BASE_COST,
-            herbs: 8 * BASE_COST,
-            gems: 4 * BASE_COST,
+            energy: 12 * BASE_COST,
+            herbs: 12 * BASE_COST,
+            gems: 6 * BASE_COST,
         },
-        duration: 6 * BASE_DURATION,
+        duration: 6 * 1.25 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 2 * BASE_REWARD,
+                value: 4.5 * BASE_REWARD,
             },
         ],
         layers: [
@@ -318,14 +318,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: (1 / 3) * BASE_COST,
+            energy: 30 * BASE_COST,
         },
-        duration: BASE_DURATION / 2,
+        duration: 24 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: BASE_REWARD,
+                value: 48 * BASE_REWARD,
             },
         ],
         layers: [
@@ -349,14 +349,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: (1 / 3) * BASE_COST,
+            energy: 30 * BASE_COST,
         },
-        duration: BASE_DURATION / 2,
+        duration: 24 * BASE_DURATION,
         rewards: [
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: (1 / 2) * BASE_REWARD,
+                value: 24 * BASE_REWARD,
             },
         ],
         layers: [
@@ -379,14 +379,16 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 4 * BASE_COST,
+            energy: 48 * BASE_COST,
+            herbs: 48 * BASE_COST,
+            gems: 24 * BASE_COST,
         },
-        duration: 6 * BASE_DURATION,
+        duration: 18 * BASE_DURATION,
         rewards: [
             {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 12 * BASE_REWARD,
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 18 * BASE_REWARD,
             },
         ],
         layers: [
@@ -409,14 +411,24 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 4 * BASE_COST,
+            energy: 84 * BASE_COST,
         },
-        duration: 6 * BASE_DURATION,
+        duration: 24 * BASE_DURATION,
         rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 32 * BASE_REWARD,
+            },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 6 * BASE_REWARD,
+                value: 16 * BASE_REWARD,
+            },
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 8 * BASE_REWARD,
             },
         ],
         layers: [
@@ -442,12 +454,12 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 20 * BASE_COST,
-            herbs: 20 * BASE_COST,
-            gems: 10 * BASE_COST,
-            essence: 10 * BASE_COST,
+            energy: 4 * BASE_COST,
+            herbs: 16 * BASE_COST,
+            gems: 8 * BASE_COST,
+            essence: 4 * BASE_COST,
         },
-        duration: 16 * BASE_DURATION,
+        duration: 18 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',

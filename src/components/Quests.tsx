@@ -408,7 +408,14 @@ function Quests() {
                         Quest rewards
                     </Text>
 
-                    <Flex justifyContent="space-between" mt={3.5}>
+                    <Box
+                        mt={3.5}
+                        display="grid"
+                        gridAutoColumns="1fr 1fr"
+                        gridTemplateColumns="1fr 1fr "
+                        rowGap={4}
+                        columnGap={4}
+                    >
                         {map(currentQuest.rewards, (reward, index) => {
                             const { name, color, icon, image } = getResourceElements(reward.resource);
                             return (
@@ -417,7 +424,7 @@ function Quests() {
                                 </Box>
                             );
                         })}
-                    </Flex>
+                    </Box>
 
                     {currentQuest.type === 'final' && (
                         <>

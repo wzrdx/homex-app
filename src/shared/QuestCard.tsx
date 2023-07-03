@@ -58,16 +58,21 @@ export const QuestCard: FunctionComponent<
 
         if (size(quest.rewards) == 1) {
             return (
-                <Image
-                    width="28px"
-                    src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon}
-                />
+                <Image width="28px" src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon} />
             );
-        } else {
+        } else if (size(quest.rewards) == 2) {
             return (
                 <Flex flexDir="column" justifyContent="space-between" height="100%" pr="4px">
                     {map(quest.rewards, (reward, index) => (
                         <Image key={index} width="24px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                    ))}
+                </Flex>
+            );
+        } else {
+            return (
+                <Flex flexDir="column" justifyContent="space-between" height="100%" pr="12px">
+                    {map(quest.rewards, (reward, index) => (
+                        <Image key={index} width="16px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
                     ))}
                 </Flex>
             );
