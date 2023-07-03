@@ -87,7 +87,7 @@ function Quests() {
 
             displayToast(
                 'time',
-                `Trial ends in ${difference} hour${difference > 1 ? 's' : ''}`,
+                `Trial ends in about ${difference} hour${difference > 1 ? 's' : ''}`,
                 'Claim your quest rewards before the end or they will be lost',
                 'orangered',
                 8000,
@@ -338,7 +338,6 @@ function Quests() {
                                 isLoading={
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
-                                disabled={isGamePaused}
                                 colorScheme="green"
                                 onClick={completeQuest}
                             >
