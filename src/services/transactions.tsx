@@ -16,7 +16,7 @@ export enum TransactionType {
 export enum TxResolution {
     UpdateResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
-    UpdateTickets = 'UpdateTickets',
+    UpdateTicketsAndRaffles = 'UpdateTickets',
     UpdateStakingInfo = 'UpdateStakingInfo',
     UpdateStakingAndNFTs = 'UpdateStakingAndNFTs',
 }

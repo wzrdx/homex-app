@@ -27,6 +27,7 @@ import { useStoreContext, StoreContextType } from './services/store';
 import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
 import { getTx } from './services/helpers';
 import { EGLD_DENOMINATION, ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
+import { useRewardsContext, RewardsContextType } from './services/rewards';
 
 function App() {
     const toast = useToast();
@@ -42,6 +43,8 @@ function App() {
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
+
+    const { getRaffles } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
         removeTxs(failedTransactionsArray);
@@ -137,8 +140,9 @@ function App() {
                 getEnergy();
                 break;
 
-            case TxResolution.UpdateTickets:
+            case TxResolution.UpdateTicketsAndRaffles:
                 getTickets();
+                getRaffles();
                 break;
 
             case TxResolution.UpdateResources:

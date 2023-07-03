@@ -17,9 +17,27 @@ import { Link } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
 import { RAFFLES } from '../services/rewards';
 
-const MAX_ENTRY = 4;
+// TODO: 4
+const RAFFLE_CAP = 8;
 
-function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date; vectorSize: number }) {
+// _raffles has no use, other than triggering a component update
+function RaffleCard({
+    id,
+    timestamp,
+    vectorSize,
+    _raffles,
+}: {
+    id: number;
+    timestamp: Date;
+    vectorSize: number;
+    _raffles?:
+        | {
+              id: number;
+              timestamp: Date;
+              vectorSize: number;
+          }[]
+        | undefined;
+}) {
     const [amount, setAmount] = useState(0);
     const { resources } = useResourcesContext() as ResourcesContextType;
 
@@ -32,7 +50,7 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
     // Init
     useEffect(() => {
         init();
-    }, []);
+    }, [id, _raffles]);
 
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
@@ -78,7 +96,7 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                 {
                     sessionId,
                     type: TransactionType.JoinRaffle,
-                    resolution: TxResolution.UpdateTickets,
+                    resolution: TxResolution.UpdateTicketsAndRaffles,
                 },
             ]);
         } catch (err) {
@@ -165,7 +183,7 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                                 </Flex>
                             ) : (
                                 <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
-                                    {myTickets}/4
+                                    {myTickets}/{RAFFLE_CAP}
                                 </Text>
                             )}
                         </Flex>
@@ -253,7 +271,7 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
                                 return;
                             }
 
-                            if (amount < MAX_ENTRY - myTickets) {
+                            if (amount < RAFFLE_CAP - myTickets) {
                                 setAmount(amount + 1);
                             }
                         }}
@@ -268,7 +286,13 @@ function RaffleCard({ id, timestamp, vectorSize }: { id: number; timestamp: Date
             {!isCompleted() && (
                 <Box width="100%">
                     <ActionButton
-                        disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}
+                        disabled={
+                            isGamePaused ||
+                            !resources.tickets ||
+                            !timestamp ||
+                            isAfter(new Date(), timestamp) ||
+                            myTickets === RAFFLE_CAP
+                        }
                         isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
                         colorScheme="red"
                         onClick={joinRaffle}

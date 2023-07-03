@@ -37,7 +37,12 @@ function Raffles() {
             <Flex justifyContent="center">
                 {_.map(localRaffles, (raffle, index) => (
                     <Box key={index} px={6}>
-                        <RaffleCard id={raffle.id} timestamp={raffle.timestamp} vectorSize={raffle.vectorSize} />
+                        <RaffleCard
+                            id={raffle.id}
+                            timestamp={raffle.timestamp}
+                            vectorSize={raffle.vectorSize}
+                            _raffles={raffles}
+                        />
                     </Box>
                 ))}
             </Flex>
