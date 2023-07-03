@@ -131,7 +131,7 @@ function Prizes() {
                         prize = (
                             <Flex alignItems="center">
                                 <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
-                                <Text fontWeight={500} color="redClrs">
+                                <Text fontWeight={500} color="primary">
                                     {operation.name}
                                 </Text>
                             </Flex>
