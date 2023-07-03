@@ -2,12 +2,19 @@ import _ from 'lodash';
 import { Flex, Spinner, Text, Link, Image, Alert, AlertIcon, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
+import {
+    EGLD_DENOMINATION,
+    ELDERS_COLLECTION_ID,
+    ESSENCE_TOKEN_ID,
+    TICKETS_TOKEN_ID,
+    TOKEN_DENOMINATION,
+    TRAVELERS_COLLECTION_ID,
+} from '../../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { getTxHashes } from '../../blockchain/api/getTxHashes';
 import { format } from 'date-fns';
 import { useRewards } from '../Rewards';
-import { getEldersLogo } from '../../services/assets';
+import { getEldersLogo, getSmallLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
@@ -29,8 +36,8 @@ const COLUMNS = [
     {
         name: 'Prize',
         style: {
-            width: '180px',
-            minWidth: '180px',
+            width: '230px',
+            minWidth: '230px',
         },
         align: 'right',
     },
@@ -105,6 +112,8 @@ function Prizes() {
         if (result.data) {
             const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
 
+            console.log(operations);
+
             const winners = await Promise.all(
                 _.map(operations, async (operation) => {
                     const username = await getUsername(operation.receiver);
@@ -118,10 +127,10 @@ function Prizes() {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.collection === ELDERS_COLLECTION_ID) {
+                    if (operation.type === 'nft' && operation.collection === TRAVELERS_COLLECTION_ID) {
                         prize = (
                             <Flex alignItems="center">
-                                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
+                                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
                                 <Text fontWeight={500} color="redClrs">
                                     {operation.name}
                                 </Text>
@@ -135,7 +144,18 @@ function Prizes() {
                                 <Text fontWeight={500} color="brightWheat" minWidth="20px">
                                     {operation.value}
                                 </Text>
-                                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                                <Image height="28px" src={RESOURCE_ELEMENTS.tickets.icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                             </Flex>
                         );
                     }
@@ -169,7 +189,7 @@ function Prizes() {
             ) : _.isEmpty(txs) ? (
                 <Text>No prizes to display</Text>
             ) : (
-                <Flex minW="660px">
+                <Flex minW="690px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
                         <Text>Trial #2</Text>
