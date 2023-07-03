@@ -84,10 +84,12 @@ function Quests() {
     useEffect(() => {
         if (trialTimestamp && differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL && !isGamePaused) {
             const difference = differenceInHours(trialTimestamp, new Date());
+            const duration =
+                difference > 1 ? `about ${difference} hours` : difference === 1 ? `about one hour` : 'less than an hour';
 
             displayToast(
                 'time',
-                `Trial ends in ${difference} hour${difference > 1 ? 's' : ''}`,
+                `Trial ends in ${duration}`,
                 'Claim your quest rewards before the end or they will be lost',
                 'orangered',
                 7000,
@@ -348,7 +350,6 @@ function Quests() {
                                 isLoading={
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
-                                disabled={isGamePaused}
                                 colorScheme="green"
                                 onClick={completeQuest}
                             >
