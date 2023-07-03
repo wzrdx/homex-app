@@ -18,6 +18,12 @@ import { getEldersLogo, getSmallLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
+interface Winner {
+    username: string;
+    address: string;
+    prizes: Array<JSX.Element>;
+}
+
 const COLUMNS = [
     {
         name: 'No.',
@@ -46,13 +52,7 @@ const COLUMNS = [
 function Prizes() {
     const { height } = useRewards();
 
-    const [winners, setWinners] = useState<
-        Array<{
-            username: string;
-            address: string;
-            prize: JSX.Element;
-        }>
-    >();
+    const [winners, setWinners] = useState<Array<Winner>>();
 
     const [txs, setTxs] = useState<
         Array<{
@@ -79,16 +79,22 @@ function Prizes() {
     const bundleHashes = async (hashes: string[]) => {
         const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
 
-        setWinners(
-            _(result)
-                .map((hashResult) => hashResult?.winners)
-                .flatten()
-                .value() as Array<{
-                username: string;
-                address: string;
-                prize: JSX.Element;
-            }>
-        );
+        const parsedWinners = _(result)
+            .map((hashResult) => hashResult?.winners)
+            .flatten()
+            .value();
+
+        const winners = _.map(Array.from(new Set(_.map(parsedWinners, (winner) => winner?.username))), (username) => {
+            const entries = _.filter(parsedWinners, (winner) => winner?.username === username);
+
+            return {
+                username,
+                address: entries[0]?.address,
+                prizes: _.map(entries, (entry) => entry?.prize),
+            };
+        });
+
+        setWinners(winners as Winner[]);
 
         setTxs(
             _(result)
@@ -111,8 +117,6 @@ function Prizes() {
 
         if (result.data) {
             const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
-
-            console.log(operations);
 
             const winners = await Promise.all(
                 _.map(operations, async (operation) => {
@@ -267,7 +271,11 @@ function Prizes() {
                                             </Text>
 
                                             <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
-                                                {winner.prize}
+                                                {_.map(winner.prizes, (prize, prizeIndex) => (
+                                                    <Box ml={3} key={prizeIndex}>
+                                                        {prize}
+                                                    </Box>
+                                                ))}
                                             </Flex>
                                         </Flex>
                                     ))}

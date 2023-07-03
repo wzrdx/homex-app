@@ -95,7 +95,6 @@ function Leaderboard() {
     };
 
     const getPot = () => (
-        // 6 NFTs + 10 Egld + 32 Tickets + 600 Essence
         <Flex ml={2} alignItems="center">
             <Flex alignItems="center">
                 <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Elder" />
@@ -123,7 +122,7 @@ function Leaderboard() {
 
             <Flex alignItems="center">
                 <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color}>
-                    600
+                    1000
                 </Text>
                 <Image height="28px" src={RESOURCE_ELEMENTS.essence.icon} />
             </Flex>
