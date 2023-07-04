@@ -17,8 +17,7 @@ import { Link } from 'react-router-dom';
 import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
 import { RAFFLES } from '../services/rewards';
 
-// TODO: 4
-const RAFFLE_CAP = 8;
+const RAFFLE_CAP = 4;
 
 // _raffles has no use, other than triggering a component update
 function RaffleCard({

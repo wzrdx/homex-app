@@ -14,14 +14,22 @@ import {
     ModalContent,
     ModalHeader,
     ModalOverlay,
+    Box,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../services/helpers';
-import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
+import {
+    EGLD_DENOMINATION,
+    ELDERS_COLLECTION_ID,
+    ESSENCE_TOKEN_ID,
+    TICKETS_TOKEN_ID,
+    TOKEN_DENOMINATION,
+    TRAVELERS_COLLECTION_ID,
+} from '../blockchain/config';
 import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { format } from 'date-fns';
 import { useSection } from '../components/Section';
-import { getEldersLogo } from '../services/assets';
+import { getEldersLogo, getSmallLogo } from '../services/assets';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { ActionButton } from './ActionButton/ActionButton';
@@ -46,24 +54,24 @@ const COLUMNS = [
     {
         name: 'Prize',
         style: {
-            width: '180px',
-            minWidth: '180px',
+            width: '230px',
+            minWidth: '230px',
         },
         align: 'right',
     },
 ];
 
+interface Winner {
+    username: string;
+    address: string;
+    prizes: Array<JSX.Element>;
+}
+
 function PrizesList({ id }) {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
-    const [winners, setWinners] = useState<
-        Array<{
-            username: string;
-            address: string;
-            prize: JSX.Element;
-        }>
-    >();
+    const [winners, setWinners] = useState<Array<Winner>>();
 
     const { raffles } = useRewardsContext() as RewardsContextType;
 
@@ -96,17 +104,22 @@ function PrizesList({ id }) {
 
         const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
 
-        setWinners(
-            _(result)
-                .map((hashResult) => hashResult?.winners)
-                .flatten()
-                .value() as Array<{
-                username: string;
-                address: string;
-                prize: JSX.Element;
-            }>
-        );
+        const parsedWinners = _(result)
+            .map((hashResult) => hashResult?.winners)
+            .flatten()
+            .value();
 
+        const winners = _.map(Array.from(new Set(_.map(parsedWinners, (winner) => winner?.username))), (username) => {
+            const entries = _.filter(parsedWinners, (winner) => winner?.username === username);
+
+            return {
+                username,
+                address: entries[0]?.address,
+                prizes: _.map(entries, (entry) => entry?.prize),
+            };
+        });
+
+        setWinners(winners as Winner[]);
         setLoading(false);
     };
 
@@ -140,6 +153,17 @@ function PrizesList({ id }) {
                         );
                     }
 
+                    if (operation.type === 'nft' && operation.collection === TRAVELERS_COLLECTION_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
+                                <Text fontWeight={500} color="primary">
+                                    {operation.name}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
                     if (operation.type === 'nft' && operation.ticker === TICKETS_TOKEN_ID) {
                         prize = (
                             <Flex alignItems="center">
@@ -147,6 +171,17 @@ function PrizesList({ id }) {
                                     {operation.value}
                                 </Text>
                                 <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                             </Flex>
                         );
                     }
@@ -178,7 +213,7 @@ function PrizesList({ id }) {
             {isLoading ? (
                 <Spinner mt={6} />
             ) : (
-                <Flex minW="500px">
+                <Flex minW="560px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         {_.isEmpty(winners) ? (
                             <Flex justifyContent="center">
@@ -242,7 +277,11 @@ function PrizesList({ id }) {
                                             </Text>
 
                                             <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
-                                                {winner.prize}
+                                                {_.map(winner.prizes, (prize, prizeIndex) => (
+                                                    <Box ml={3} key={prizeIndex}>
+                                                        {prize}
+                                                    </Box>
+                                                ))}
                                             </Flex>
                                         </Flex>
                                     ))}
