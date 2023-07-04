@@ -88,24 +88,22 @@ export const Timer: FunctionComponent<
         };
     }, [isActive, timestamp]);
 
-    const isDisplayingDays = (): boolean => !!displayDays && (duration.days as number) > 0;
+    const isDisplayingDays = (): boolean => !!displayDays && ((duration.days as number) > 0 || (duration.months as number) > 0);
 
     return (
         <Flex alignItems="center" justifyContent="center" style={!isEmpty(customStyle) ? customStyle : {}}>
-            {displayClock && <TimeIcon mr="0.5rem" boxSize={4} color="whitesmoke" />}
+            {displayClock && <TimeIcon mr={1} boxSize={4} color="whitesmoke" />}
 
             {isCompact ? (
                 <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
-                <Text>
-                    {isDisplayingDays() && (
-                        <Text as="span">{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''}, `}</Text>
-                    )}
+                <Flex alignItems="center">
+                    {isDisplayingDays() && <Text>{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''},`}</Text>}
 
-                    <Text as="span">
+                    <Text minW="68px" ml={1}>
                         {`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
                     </Text>
-                </Text>
+                </Flex>
             )}
         </Flex>
     );

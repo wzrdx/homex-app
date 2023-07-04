@@ -5,9 +5,9 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { getFullTicket } from '../services/assets';
 import { WarningIcon } from '@chakra-ui/icons';
 import { Participant } from '../blockchain/types';
-import { getParticipantsCount } from '../blockchain/api/getParticipantsCount';
+import { getRaffleParticipantsCount } from '../blockchain/api/getRaffleParticipantsCount';
 import { getUsername, pairwise } from '../services/helpers';
-import { getParticipants } from '../blockchain/api/getParticipants';
+import { getRaffleParticipants } from '../blockchain/api/getRaffleParticipants';
 
 const COLUMNS = [
     {
@@ -38,7 +38,7 @@ function ParticipantsList({ id }) {
 
     const init = async () => {
         try {
-            const count: number = await getParticipantsCount(id);
+            const count: number = await getRaffleParticipantsCount(id);
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
             const apiCalls: Array<Promise<Participant[]>> = [];
@@ -52,7 +52,7 @@ function ParticipantsList({ id }) {
                     .unshift(0)
                     .value(),
                 (current: number, next: number) => {
-                    apiCalls.push(getParticipants(id, current, next));
+                    apiCalls.push(getRaffleParticipants(id, current, next));
                 }
             );
 

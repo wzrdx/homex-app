@@ -47,7 +47,7 @@
             "outputs": []
         },
         {
-            "name": "setRaffletickets",
+            "name": "setRaffleVectorSize",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
@@ -387,7 +387,7 @@
             "outputs": []
         },
         {
-            "name": "getSubmittedTickets",
+            "name": "getRaffleSubmittedTickets",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -406,7 +406,7 @@
             ]
         },
         {
-            "name": "getParticipantsCount",
+            "name": "getRaffleParticipantsCount",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -421,7 +421,7 @@
             ]
         },
         {
-            "name": "getParticipants",
+            "name": "getRaffleParticipants",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -450,6 +450,44 @@
             "outputs": [
                 {
                     "type": "List<Competition>"
+                }
+            ]
+        },
+        {
+            "name": "getBattleParticipantsCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getBattleParticipants",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Participant>"
                 }
             ]
         },
@@ -687,6 +725,25 @@
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getBattleSubmittedTickets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },

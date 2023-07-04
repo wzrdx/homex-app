@@ -83,7 +83,7 @@ function Entry() {
                     userSelect="none"
                 />
 
-                <Text mt={{ md: 3, lg: 5 }} fontSize="17px" textAlign="center" maxWidth="464px" userSelect="none">
+                <Text mt={{ md: 3, lg: 5 }} textAlign="center" maxWidth="464px" userSelect="none">
                     Use{' '}
                     <Text as="span" color="ticketGold">
                         Golden Tickets

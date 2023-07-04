@@ -14,7 +14,7 @@ import { ActionButton } from './ActionButton/ActionButton';
 import { Timer } from './Timer';
 import { format, isAfter } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { getSubmittedTickets } from '../blockchain/api/getSubmittedTickets';
+import { getRaffleSubmittedTickets } from '../blockchain/api/getRaffleSubmittedTickets';
 import { RAFFLES } from '../services/rewards';
 
 const RAFFLE_CAP = 4;
@@ -53,7 +53,7 @@ function RaffleCard({
 
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
-        setMyTickets(await getSubmittedTickets(id));
+        setMyTickets(await getRaffleSubmittedTickets(id));
     };
 
     const isCompleted = (): boolean => isAfter(new Date(), timestamp);

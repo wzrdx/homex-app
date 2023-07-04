@@ -2,10 +2,10 @@ import _ from 'lodash';
 import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
-import { getParticipants } from '../../blockchain/api/getParticipants';
-import { getParticipantsCount } from '../../blockchain/api/getParticipantsCount';
+import { getRaffleParticipants } from '../../blockchain/api/getRaffleParticipants';
+import { getRaffleParticipantsCount } from '../../blockchain/api/getRaffleParticipantsCount';
 import { getTrialTimestamp } from '../../blockchain/api/getTrialTimestamp';
-import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
+import { getRaffleSubmittedTickets } from '../../blockchain/api/getRaffleSubmittedTickets';
 import { Participant } from '../../blockchain/types';
 import { getFullTicket, getSmallLogo } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -14,6 +14,10 @@ import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
 import { useSection } from '../Section';
 import { isAfter } from 'date-fns';
+import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
+import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
+import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
+import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
 
 const COLUMNS = [
     {
@@ -36,23 +40,31 @@ const COLUMNS = [
 function Leaderboard() {
     const { height } = useSection();
 
+    const [battle, setBattle] = useState<Competition>();
     const [participants, setParticipants] = useState<Participant[]>();
     const [myTickets, setMyTickets] = useState<number>();
-    const [totalTickets, setTotalTickets] = useState<number>();
-    const [timestamp, setTimestamp] = useState<Date>();
+
     const [error, setError] = useState<boolean>(false);
+
+    const { battles } = useRewardsContext() as RewardsContextType;
+
+    useEffect(() => {
+        setBattle(_.first(battles));
+    }, [battles]);
 
     useEffect(() => {
         init();
-    }, []);
+    }, [battle]);
 
     const init = async () => {
-        try {
-            setMyTickets(await getSubmittedTickets(1));
-            setTotalTickets(0);
-            setTimestamp(await getTrialTimestamp());
+        if (!battle) {
+            return;
+        }
 
-            const count: number = await getParticipantsCount(1);
+        try {
+            setMyTickets(await getBattleSubmittedTickets(battle.id));
+
+            const count: number = await getBattleParticipantsCount(battle.id);
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
             const apiCalls: Array<Promise<Participant[]>> = [];
@@ -66,7 +78,7 @@ function Leaderboard() {
                     .unshift(0)
                     .value(),
                 (current: number, next: number) => {
-                    apiCalls.push(getParticipants(1, current, next));
+                    apiCalls.push(getBattleParticipants(battle.id, current, next));
                 }
             );
 
@@ -144,7 +156,7 @@ function Leaderboard() {
                     <Text mr={1}>
                         Total:{' '}
                         <Text as="span" fontWeight={500} mx={0.5}>
-                            {totalTickets}
+                            {battle?.tickets}
                         </Text>
                     </Text>
                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
@@ -164,7 +176,7 @@ function Leaderboard() {
                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                 </Flex>
 
-                {!!timestamp && isAfter(timestamp, new Date()) && (
+                {battle && isAfter(battle.timestamp, new Date()) && (
                     <>
                         <Box mx={1.5} opacity="0.9">
                             <Separator type="vertical" width="1px" height="34px" />
@@ -174,7 +186,7 @@ function Leaderboard() {
                             <Text mr={2}>Ends in:</Text>
 
                             <Flex minWidth="158px">
-                                <Timer timestamp={timestamp as Date} isActive isDescending displayDays />
+                                <Timer timestamp={battle.timestamp} isActive isDescending displayDays />
                             </Flex>
                         </Flex>
                     </>
@@ -193,13 +205,17 @@ function Leaderboard() {
                     {!participants?.length ? (
                         <Flex flexDir="column" justifyContent="center" alignItems="center">
                             <Image my={2} height="256px" src={getFullTicket()} />
-                            <Text mt={5} textAlign="center" maxWidth="464px">
-                                No traveler has entered the Leaderboard yet. Become the first one by submitting a{' '}
-                                <Text as="span" color="ticketGold">
-                                    Ticket
+
+                            <Flex mt={5} maxWidth="464px" flexDir="column" justifyContent="center" alignItems="center">
+                                <Text>No traveler has entered the Battle yet.</Text>
+                                <Text>
+                                    Become the first one by submitting a{' '}
+                                    <Text as="span" color="ticketGold">
+                                        Golden Ticket
+                                    </Text>
+                                    .
                                 </Text>
-                                .
-                            </Text>
+                            </Flex>
                         </Flex>
                     ) : (
                         <Flex mb={1}>
