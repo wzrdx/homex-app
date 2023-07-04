@@ -130,7 +130,7 @@ function Quests() {
                 )
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6000000 + requiredResources.length * 500000)
+                .withGasLimit(8000000 + requiredResources.length * 500000)
                 .buildTransaction();
 
             await refreshAccount();
