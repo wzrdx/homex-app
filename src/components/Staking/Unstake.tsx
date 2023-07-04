@@ -181,7 +181,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(9000000 + 1000000 * count)
+                .withGasLimit(12000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
