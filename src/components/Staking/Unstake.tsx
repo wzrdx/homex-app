@@ -315,7 +315,8 @@ function Unstake() {
 
                         {stakingInfo?.isStaked && (
                             <Flex>
-                                <ActionButton colorScheme="default" onClick={onYieldOpen} disabled={_.isEmpty(rarities)}>
+                                {/* TODO: disabled={_.isEmpty(rarities)} */}
+                                <ActionButton colorScheme="default" onClick={onYieldOpen} disabled>
                                     <Flex alignItems="center">
                                         <InfoOutlineIcon />
                                         <Text ml={1.5}>View Yield</Text>
