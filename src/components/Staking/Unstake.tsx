@@ -181,7 +181,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(12000000 + 1000000 * count)
+                .withGasLimit(20000000 + 1000000 * count)
                 .buildTransaction();
 
             await refreshAccount();
@@ -226,7 +226,7 @@ function Unstake() {
                 .claimStakingRewards()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(11000000)
+                .withGasLimit(20000000)
                 .buildTransaction();
 
             await refreshAccount();
