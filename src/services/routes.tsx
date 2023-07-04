@@ -85,7 +85,7 @@ export const routes = [
         path: routeNames.battles,
         component: Section,
         authenticatedRoute: true,
-        isMainRoute: true,
+        isMainRoute: false,
         children: [
             {
                 path: routeNames.past,

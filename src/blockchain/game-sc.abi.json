@@ -51,6 +51,16 @@
             "outputs": []
         },
         {
+            "name": "getOperatingVectorLength",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
             "name": "setQuests",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -220,10 +230,6 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
                     "name": "phase",
                     "type": "u32"
                 }
@@ -263,18 +269,6 @@
         },
         {
             "name": "setGamePaused",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "value",
-                    "type": "bool"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setSwappingPaused",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
@@ -346,13 +340,6 @@
                     "type": "u32"
                 }
             ],
-            "outputs": []
-        },
-        {
-            "name": "swapEnergy",
-            "mutability": "mutable",
-            "payableInTokens": ["*"],
-            "inputs": [],
             "outputs": []
         },
         {
@@ -498,21 +485,6 @@
             "outputs": [
                 {
                     "type": "List<Rarity>"
-                }
-            ]
-        },
-        {
-            "name": "getTravelerRewards",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u64"
                 }
             ]
         },
@@ -667,16 +639,6 @@
         },
         {
             "name": "isGamePaused",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "bool"
-                }
-            ]
-        },
-        {
-            "name": "isSwappingPaused",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
