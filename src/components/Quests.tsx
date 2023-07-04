@@ -20,7 +20,7 @@ import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
 import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import Requirement from '../shared/Requirement';
-import { TimeIcon, CheckIcon, InfoOutlineIcon, WarningIcon } from '@chakra-ui/icons';
+import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
@@ -42,7 +42,7 @@ import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
 
-const GRACE_PERIOD_INTERVAL = 48;
+const GRACE_PERIOD_INTERVAL = 24;
 
 function Quests() {
     const { displayToast, closeToast } = useLayout();
@@ -84,13 +84,15 @@ function Quests() {
     useEffect(() => {
         if (trialTimestamp && differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL && !isGamePaused) {
             const difference = differenceInHours(trialTimestamp, new Date());
+            const duration =
+                difference > 1 ? `about ${difference} hours` : difference === 1 ? `about one hour` : 'less than an hour';
 
             displayToast(
                 'time',
-                `Trial ends in about ${difference} hour${difference > 1 ? 's' : ''}`,
+                `Trial ends in ${duration}`,
                 'Claim your quest rewards before the end or they will be lost',
                 'orangered',
-                8000,
+                7000,
                 'top-right',
                 {
                     margin: '2rem',
@@ -346,7 +348,7 @@ function Quests() {
                         )}
                     </Box>
 
-                    {trialTimestamp && isQuestDefault() && !canBeCompleted() && (
+                    {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
                         <Flex alignItems="center">
                             <Text color="redClrs">Quest duration exceeds end of Trial</Text>
                         </Flex>

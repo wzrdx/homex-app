@@ -1,5 +1,5 @@
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : devValue);
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
 
 export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq03qfld7ypk27r2k0wgux89573pw2htq8ukrqze9mpw',
@@ -7,16 +7,19 @@ export const contractAddress = getEnvValue(
 );
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
-export const apiTimeout = 15000;
+export const apiTimeout = 60000;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
 
 export const CHAIN_ID = getEnvValue('D', '1');
+export const PUBLIC_API = 'https://api.multiversx.com';
 
 export const API_URL = getEnvValue(
     'https://devnet-api.multiversx.com',
     'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b'
 );
+
+// https://api.multiversx.com  https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b
 
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = getEnvValue('https://devnet-explorer.multiversx.com', 'https://explorer.multiversx.com');

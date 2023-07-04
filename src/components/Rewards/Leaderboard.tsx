@@ -122,7 +122,7 @@ function Leaderboard() {
 
             <Flex alignItems="center">
                 <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color}>
-                    600
+                    1000
                 </Text>
                 <Image height="28px" src={RESOURCE_ELEMENTS.essence.icon} />
             </Flex>

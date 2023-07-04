@@ -17,14 +17,26 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../../services/helpers';
-import { EGLD_DENOMINATION, ELDERS_COLLECTION_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
-import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import {
+    EGLD_DENOMINATION,
+    ELDERS_COLLECTION_ID,
+    ESSENCE_TOKEN_ID,
+    TICKETS_TOKEN_ID,
+    TOKEN_DENOMINATION,
+    TRAVELERS_COLLECTION_ID,
+} from '../../blockchain/config';
+import { ExternalLinkIcon, CalendarIcon } from '@chakra-ui/icons';
 import { format } from 'date-fns';
-import { useSection } from '../Section';
-import { getEldersLogo } from '../../services/assets';
+import { getEldersLogo, getSmallLogo } from '../../services/assets';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
+
+interface Winner {
+    username: string;
+    address: string;
+    prizes: Array<JSX.Element>;
+}
 
 const COLUMNS = [
     {
@@ -44,8 +56,8 @@ const COLUMNS = [
     {
         name: 'Prize',
         style: {
-            width: '180px',
-            minWidth: '180px',
+            width: '230px',
+            minWidth: '230px',
         },
         align: 'right',
     },
@@ -55,13 +67,7 @@ function Prizes() {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
-    const [winners, setWinners] = useState<
-        Array<{
-            username: string;
-            address: string;
-            prize: JSX.Element;
-        }>
-    >();
+    const [winners, setWinners] = useState<Array<Winner>>();
 
     const [trials, setTrials] = useState<
         Array<{
@@ -74,6 +80,22 @@ function Prizes() {
     const [timestamp, setTimestamp] = useState<Date>();
 
     const [isLoadingTrials, setLoadingTrials] = useState<boolean>(true);
+    const parsedWinners = _(result)
+        .map((hashResult) => hashResult?.winners)
+        .flatten()
+        .value();
+
+    const winners = _.map(Array.from(new Set(_.map(parsedWinners, (winner) => winner?.username))), (username) => {
+        const entries = _.filter(parsedWinners, (winner) => winner?.username === username);
+
+        return {
+            username,
+            address: entries[0]?.address,
+            prizes: _.map(entries, (entry) => entry?.prize),
+        };
+    });
+
+    setWinners(winners as Winner[]);
 
     const { address: userAddress } = useGetAccountInfo();
 
@@ -98,11 +120,11 @@ function Prizes() {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.collection === ELDERS_COLLECTION_ID) {
+                    if (operation.type === 'nft' && operation.collection === TRAVELERS_COLLECTION_ID) {
                         prize = (
                             <Flex alignItems="center">
-                                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
-                                <Text fontWeight={500} color="redClrs">
+                                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
+                                <Text fontWeight={500} color="primary">
                                     {operation.name}
                                 </Text>
                             </Flex>
@@ -115,7 +137,18 @@ function Prizes() {
                                 <Text fontWeight={500} color="brightWheat" minWidth="20px">
                                     {operation.value}
                                 </Text>
-                                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                                <Image height="28px" src={RESOURCE_ELEMENTS.tickets.icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                             </Flex>
                         );
                     }
@@ -147,22 +180,10 @@ function Prizes() {
             {isLoadingTrials ? (
                 <Spinner />
             ) : (
-                <Flex minW="660px">
+                <Flex minW="690px">
                     {/* Left */}
                     <Flex flex={1} flexDir="column" overflowY="auto" pl={6}>
-                        {_.map(trials, (trial, i) => (
-                            <Text
-                                key={i}
-                                color={trial.index === currentIndex ? 'white' : 'header.gray'}
-                                _notLast={{ mb: 2 }}
-                                fontSize="17px"
-                                cursor="pointer"
-                                transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                _hover={{ color: '#e3e3e3' }}
-                            >
-                                Trial #{trial.index}
-                            </Text>
-                        ))}
+                        <Text>Trial #2</Text>
                     </Flex>
 
                     {/* Right */}
@@ -229,7 +250,11 @@ function Prizes() {
                                             </Text>
 
                                             <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
-                                                {winner.prize}
+                                                {_.map(winner.prizes, (prize, prizeIndex) => (
+                                                    <Box ml={3} key={prizeIndex}>
+                                                        {prize}
+                                                    </Box>
+                                                ))}
                                             </Flex>
                                         </Flex>
                                     ))}
