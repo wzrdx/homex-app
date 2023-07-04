@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 
+// Not used yet
 function Battles() {
     const location = useLocation();
 

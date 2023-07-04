@@ -26,7 +26,7 @@ function Section() {
 
     // Init
     useEffect(() => {
-        const currentRoute = location.pathname.replace('/', '');
+        const currentRoute = location.pathname.split('/')[1];
         setRoute(routes.find((route) => route.path === currentRoute));
 
         if (currentRoute === routeNames.raffles) {
@@ -36,7 +36,7 @@ function Section() {
         if (currentRoute === routeNames.battles) {
             getBattles();
         }
-    }, []);
+    }, [location.pathname.split('/')[1]]);
 
     useEffect(() => {
         if (!(ref?.current as any).clientHeight) {

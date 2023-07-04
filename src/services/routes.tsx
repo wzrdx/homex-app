@@ -8,6 +8,7 @@ import Unstake from '../components/Staking/Unstake';
 import RaffleDetails from '../shared/RaffleDetails';
 import Raffles from '../components/Rewards/Raffles';
 import Battles from '../components/Rewards/Battles';
+import Entry from '../components/Rewards/Entry';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -21,6 +22,8 @@ export const routeNames = {
     unstake: 'staked',
     current: 'current',
     past: 'past',
+    entry: 'entry',
+    leaderboard: 'leaderboard',
 };
 
 export const routes = [
@@ -88,16 +91,16 @@ export const routes = [
         isMainRoute: true,
         children: [
             {
-                path: routeNames.past,
-                component: Battles,
+                path: routeNames.entry,
+                component: Entry,
                 isTabRoute: true,
             },
             {
-                path: routeNames.current,
+                path: routeNames.leaderboard,
                 component: Leaderboard,
                 isTabRoute: true,
             },
         ],
-        defaultChildRoute: routeNames.current,
+        defaultChildRoute: routeNames.leaderboard,
     },
 ];
