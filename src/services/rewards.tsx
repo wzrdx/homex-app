@@ -64,17 +64,21 @@ export const RAFFLES: any[] = [
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getRaffles';
+
+const RAFFLES_FUNCTION_NAME = 'getRaffles';
+const BATTLES_FUNCTION_NAME = 'getBattles';
 
 export interface RewardsContextType {
-    raffles:
-        | {
-              id: number;
-              timestamp: Date;
-              vectorSize: number;
-          }[]
-        | undefined;
+    raffles: Competition[] | undefined;
     getRaffles: () => Promise<any>;
+    battles: Competition[] | undefined;
+    getBattles: () => Promise<any>;
+}
+
+export interface Competition {
+    id: number;
+    timestamp: Date;
+    tickets: number;
 }
 
 const RewardsContext = createContext<RewardsContextType | null>(null);
@@ -82,22 +86,25 @@ const RewardsContext = createContext<RewardsContextType | null>(null);
 export const useRewardsContext = () => useContext(RewardsContext);
 
 export const RewardsProvider = ({ children }) => {
-    const [raffles, setRaffles] = useState<
-        {
-            id: number;
-            timestamp: Date;
-            vectorSize: number;
-        }[]
-    >();
+    const [raffles, setRaffles] = useState<Competition[]>();
+    const [battles, setBattles] = useState<Competition[]>();
 
     const getRaffles = async () => {
+        setRaffles(await getCompetition(RAFFLES_FUNCTION_NAME));
+    };
+
+    const getBattles = async () => {
+        setBattles(await getCompetition(BATTLES_FUNCTION_NAME));
+    };
+
+    const getCompetition = async (functionName: string): Promise<Competition[]> => {
         try {
             const query = smartContract.createQuery({
-                func: new ContractFunction(FUNCTION_NAME),
+                func: new ContractFunction(functionName),
             });
 
             const queryResponse = await proxy.queryContract(query);
-            const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
+            const endpointDefinition = smartContract.getEndpoint(functionName);
 
             const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
             const array = firstValue?.valueOf();
@@ -105,17 +112,17 @@ export const RewardsProvider = ({ children }) => {
             const parsedArray = map(array, (raffle) => ({
                 id: raffle?.id?.toNumber() as number,
                 timestamp: new Date(raffle?.timestamp?.toNumber() * 1000),
-                vectorSize: raffle?.vector_size?.toNumber() as number,
+                tickets: raffle?.tickets?.toNumber() as number,
             }));
 
-            console.log(parsedArray);
+            console.log(functionName, parsedArray);
 
-            setRaffles(parsedArray);
+            return parsedArray;
         } catch (err) {
-            console.error(`Unable to call ${FUNCTION_NAME}`, err);
+            console.error(`Unable to call ${functionName}`, err);
             return [];
         }
     };
 
-    return <RewardsContext.Provider value={{ raffles, getRaffles }}>{children}</RewardsContext.Provider>;
+    return <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles }}>{children}</RewardsContext.Provider>;
 };

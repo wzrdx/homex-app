@@ -78,7 +78,7 @@ function PrizesList({ id }) {
     const [raffle, setRaffle] = useState<{
         id: number;
         timestamp: Date;
-        vectorSize: number;
+        tickets: number;
     }>();
 
     const [hashes, setHashes] = useState<string[]>([]);

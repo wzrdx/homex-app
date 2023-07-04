@@ -6,7 +6,6 @@ import { getParticipants } from '../../blockchain/api/getParticipants';
 import { getParticipantsCount } from '../../blockchain/api/getParticipantsCount';
 import { getTrialTimestamp } from '../../blockchain/api/getTrialTimestamp';
 import { getSubmittedTickets } from '../../blockchain/api/getSubmittedTickets';
-import { getSubmittedTicketsTotal } from '../../blockchain/api/getSubmittedTicketsTotal';
 import { Participant } from '../../blockchain/types';
 import { getFullTicket, getSmallLogo } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -50,7 +49,7 @@ function Leaderboard() {
     const init = async () => {
         try {
             setMyTickets(await getSubmittedTickets(1));
-            setTotalTickets(await getSubmittedTicketsTotal());
+            setTotalTickets(0);
             setTimestamp(await getTrialTimestamp());
 
             const count: number = await getParticipantsCount(1);
@@ -96,20 +95,20 @@ function Leaderboard() {
 
     const getPot = () => (
         <Flex ml={2} alignItems="center">
-            <Flex alignItems="center">
+            {/* <Flex alignItems="center">
                 <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Traveler" />
                 <Text fontWeight={500} color="primary">
                     6 Travelers
                 </Text>
             </Flex>
 
-            <Text mx={1.5}>+</Text>
+            <Text mx={1.5}>+</Text> */}
 
             <Text color="brightBlue" fontWeight={500}>
-                10 $EGLD
+                60 $EGLD
             </Text>
 
-            <Text mx={1.5}>+</Text>
+            {/* <Text mx={1.5}>+</Text>
 
             <Flex alignItems="center">
                 <Text mr={1.5} fontWeight={500} color="brightWheat">
@@ -125,7 +124,7 @@ function Leaderboard() {
                     1000
                 </Text>
                 <Image height="28px" src={RESOURCE_ELEMENTS.essence.icon} />
-            </Flex>
+            </Flex> */}
         </Flex>
     );
 
@@ -133,7 +132,7 @@ function Leaderboard() {
         <Flex height={`calc(100% - ${height}px)`} flexDir="column" alignItems="center">
             <Flex mb={6} justifyContent="center" alignItems="center">
                 <Flex mx={2} justifyContent="center" alignItems="center">
-                    <Text>Pot:</Text>
+                    <Text>Pot value:</Text>
                     {getPot()}
                 </Flex>
 

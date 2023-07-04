@@ -5,18 +5,12 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { isAfter, isBefore } from 'date-fns';
 import { routeNames } from '../../services/routes';
-import { useRewardsContext, RewardsContextType } from '../../services/rewards';
+import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 
 function Raffles() {
     const location = useLocation();
 
-    const [localRaffles, setLocalRaffles] = useState<
-        {
-            id: number;
-            timestamp: Date;
-            vectorSize: number;
-        }[]
-    >();
+    const [localRaffles, setLocalRaffles] = useState<Competition[]>();
 
     const { raffles } = useRewardsContext() as RewardsContextType;
 
@@ -37,12 +31,7 @@ function Raffles() {
             <Flex justifyContent="center">
                 {_.map(localRaffles, (raffle, index) => (
                     <Box key={index} px={6}>
-                        <RaffleCard
-                            id={raffle.id}
-                            timestamp={raffle.timestamp}
-                            vectorSize={raffle.vectorSize}
-                            _raffles={raffles}
-                        />
+                        <RaffleCard id={raffle.id} timestamp={raffle.timestamp} tickets={raffle.tickets} _raffles={raffles} />
                     </Box>
                 ))}
             </Flex>

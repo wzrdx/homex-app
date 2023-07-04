@@ -23,6 +23,18 @@
     },
     "endpoints": [
         {
+            "name": "addBattle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "addRaffle",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -30,10 +42,38 @@
                 {
                     "name": "timestamp",
                     "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setRaffletickets",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
                 },
                 {
-                    "name": "participants",
-                    "type": "List<Address>"
+                    "name": "size",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimAllEnergy",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
                 }
             ],
             "outputs": []
@@ -202,17 +242,17 @@
             "outputs": []
         },
         {
-            "name": "airdropEnergy",
+            "name": "airdropResources",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "addresses",
+                    "name": "users",
                     "type": "List<Address>"
                 },
                 {
-                    "name": "alloc_per_addr",
-                    "type": "List<u64>"
+                    "name": "alloc",
+                    "type": "List<Airdrop>"
                 }
             ],
             "outputs": []
@@ -229,6 +269,10 @@
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
                 {
                     "name": "phase",
                     "type": "u32"
@@ -405,7 +449,17 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "List<CompactRaffle>"
+                    "type": "List<Competition>"
+                }
+            ]
+        },
+        {
+            "name": "getBattles",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<Competition>"
                 }
             ]
         },
@@ -485,6 +539,16 @@
             "outputs": [
                 {
                     "type": "List<Rarity>"
+                }
+            ]
+        },
+        {
+            "name": "getStakedUsersLength",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -627,13 +691,37 @@
             ]
         },
         {
-            "name": "getTxHashes",
+            "name": "getBattleHashes",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                }
+            ],
             "outputs": [
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCompletedQuests",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -661,7 +749,20 @@
     "events": [],
     "hasCallback": true,
     "types": {
-        "CompactRaffle": {
+        "Airdrop": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "tickets",
+                    "type": "u32"
+                },
+                {
+                    "name": "tokens",
+                    "type": "List<u64>"
+                }
+            ]
+        },
+        "Competition": {
             "type": "struct",
             "fields": [
                 {
@@ -673,7 +774,7 @@
                     "type": "u64"
                 },
                 {
-                    "name": "vector_size",
+                    "name": "tickets",
                     "type": "u32"
                 }
             ]

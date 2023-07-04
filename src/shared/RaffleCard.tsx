@@ -23,17 +23,17 @@ const RAFFLE_CAP = 4;
 function RaffleCard({
     id,
     timestamp,
-    vectorSize,
+    tickets,
     _raffles,
 }: {
     id: number;
     timestamp: Date;
-    vectorSize: number;
+    tickets: number;
     _raffles?:
         | {
               id: number;
               timestamp: Date;
-              vectorSize: number;
+              tickets: number;
           }[]
         | undefined;
 }) {
@@ -157,7 +157,7 @@ function RaffleCard({
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
                         <Text fontWeight={500} letterSpacing="0.25px">
-                            {vectorSize}
+                            {tickets}
                         </Text>
                     </Flex>
 
