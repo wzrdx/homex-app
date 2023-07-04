@@ -58,13 +58,7 @@ export const RAFFLES: any[] = [
     },
     {
         id: 3,
-        prizes: [
-            getNFTPrize(6, 'Travelers'),
-            getEGLDPrize(8),
-            getTicketsPrize(46),
-            getEnergyPrize(2400),
-            getEssencePrize(1200),
-        ],
+        prizes: [getEGLDPrize(10), getTicketsPrize(26), getEnergyPrize(3400)],
     },
 ];
 
