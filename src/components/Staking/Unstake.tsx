@@ -226,7 +226,7 @@ function Unstake() {
                 .claimStakingRewards()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000)
+                .withGasLimit(11000000)
                 .buildTransaction();
 
             await refreshAccount();
