@@ -270,7 +270,7 @@ function RaffleCard({
                                 return;
                             }
 
-                            if (amount < RAFFLE_CAP - myTickets) {
+                            if (amount < RAFFLE_CAP - myTickets && amount < resources.tickets) {
                                 setAmount(amount + 1);
                             }
                         }}
