@@ -2,7 +2,7 @@ import { ResultsParser, ContractFunction, U32Value } from '@multiversx/sdk-core/
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
-import { Participant } from '../types';
+import { BattleParticipant } from '../types';
 import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
@@ -22,9 +22,10 @@ export const getBattleParticipants = async (id: number, start: number, end: numb
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
         const array = firstValue?.valueOf();
 
-        const parsedArray: Participant[] = map(array, (item) => ({
+        const parsedArray: BattleParticipant[] = map(array, (item) => ({
             address: item?.address?.bech32(),
             ticketsCount: item?.tickets_count?.toNumber(),
+            quests: item?.quests?.toNumber(),
         }));
 
         return parsedArray;

@@ -2,12 +2,8 @@ import _ from 'lodash';
 import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
-import { getRaffleParticipants } from '../../blockchain/api/getRaffleParticipants';
-import { getRaffleParticipantsCount } from '../../blockchain/api/getRaffleParticipantsCount';
-import { getTrialTimestamp } from '../../blockchain/api/getTrialTimestamp';
-import { getRaffleSubmittedTickets } from '../../blockchain/api/getRaffleSubmittedTickets';
-import { Participant } from '../../blockchain/types';
-import { getFullTicket, getSmallLogo } from '../../services/assets';
+import { BattleParticipant } from '../../blockchain/types';
+import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
@@ -22,17 +18,22 @@ import { getBattleParticipantsCount } from '../../blockchain/api/getBattlePartic
 const COLUMNS = [
     {
         name: 'Rank',
-        width: '88px',
+        width: '84px',
         align: 'left',
     },
     {
         name: 'Player',
-        width: '246px',
+        width: '250px',
         align: 'left',
     },
     {
         name: 'Tickets',
-        width: '60px',
+        width: '118px',
+        align: 'left',
+    },
+    {
+        name: 'Quests',
+        width: '68px',
         align: 'left',
     },
 ];
@@ -41,7 +42,7 @@ function Leaderboard() {
     const { height } = useSection();
 
     const [battle, setBattle] = useState<Competition>();
-    const [participants, setParticipants] = useState<Participant[]>();
+    const [participants, setParticipants] = useState<BattleParticipant[]>();
     const [myTickets, setMyTickets] = useState<number>();
 
     const [error, setError] = useState<boolean>(false);
@@ -67,7 +68,7 @@ function Leaderboard() {
             const count: number = await getBattleParticipantsCount(battle.id);
             const chunks = new Array(Math.floor(count / 100)).fill(100).concat(count % 100);
 
-            const apiCalls: Array<Promise<Participant[]>> = [];
+            const apiCalls: Array<Promise<BattleParticipant[]>> = [];
 
             pairwise(
                 _(chunks)
@@ -91,8 +92,8 @@ function Leaderboard() {
         }
     };
 
-    const parse = async (earners: Participant[]) => {
-        const sorted = _.orderBy(earners, ['ticketsCount'], ['desc']);
+    const parse = async (users: BattleParticipant[]) => {
+        const sorted = _.orderBy(users, ['ticketsCount', 'quests'], ['desc', 'desc']);
         const parsed = await Promise.all(
             _(sorted)
                 .map(async (earner, index) => ({
@@ -107,36 +108,9 @@ function Leaderboard() {
 
     const getPot = () => (
         <Flex ml={2} alignItems="center">
-            {/* <Flex alignItems="center">
-                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="Traveler" />
-                <Text fontWeight={500} color="primary">
-                    6 Travelers
-                </Text>
-            </Flex>
-
-            <Text mx={1.5}>+</Text> */}
-
             <Text color="brightBlue" fontWeight={500}>
                 60 $EGLD
             </Text>
-
-            {/* <Text mx={1.5}>+</Text>
-
-            <Flex alignItems="center">
-                <Text mr={1.5} fontWeight={500} color="brightWheat">
-                    32
-                </Text>
-                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
-            </Flex>
-
-            <Text mx={1.5}>+</Text>
-
-            <Flex alignItems="center">
-                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color}>
-                    1000
-                </Text>
-                <Image height="28px" src={RESOURCE_ELEMENTS.essence.icon} />
-            </Flex> */}
         </Flex>
     );
 
@@ -227,7 +201,7 @@ function Leaderboard() {
                         </Flex>
                     )}
 
-                    {_.map(participants, (participant: Participant, index: number) => (
+                    {_.map(participants, (participant: BattleParticipant, index: number) => (
                         <Flex mt={2} alignItems="center" key={index}>
                             <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
 
@@ -239,6 +213,8 @@ function Leaderboard() {
                                 <Text minWidth="24px">{participant.ticketsCount}</Text>
                                 <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                             </Flex>
+
+                            <Text width={COLUMNS[3].width}>{participant.quests}</Text>
                         </Flex>
                     ))}
                 </Flex>

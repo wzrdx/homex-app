@@ -26,7 +26,7 @@ import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
 import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
 import { getTx } from './services/helpers';
-import { EGLD_DENOMINATION, ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
+import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 import { useRewardsContext, RewardsContextType } from './services/rewards';
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    const { getRaffles } = useRewardsContext() as RewardsContextType;
+    const { getRaffles, getBattles } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
         if (isGamePaused) {
@@ -97,7 +97,11 @@ function App() {
                         break;
 
                     case TransactionType.JoinRaffle:
-                        displayToast('Ticket/s sent', 'Successfully joined the raffle', 'green.500');
+                        displayToast('Tickets sent', 'Successfully joined the raffle', 'green.500');
+                        break;
+
+                    case TransactionType.JoinBattle:
+                        displayToast('Tickets sent', 'Successfully joined the battle', 'green.500');
                         break;
 
                     default:
@@ -145,6 +149,11 @@ function App() {
             case TxResolution.UpdateTicketsAndRaffles:
                 getTickets();
                 getRaffles();
+                break;
+
+            case TxResolution.UpdateTicketsAndBattles:
+                getTickets();
+                getBattles();
                 break;
 
             case TxResolution.UpdateResources:

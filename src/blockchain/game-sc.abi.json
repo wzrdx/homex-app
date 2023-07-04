@@ -387,6 +387,18 @@
             "outputs": []
         },
         {
+            "name": "joinBattle",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "getRaffleSubmittedTickets",
             "mutability": "readonly",
             "inputs": [
@@ -487,7 +499,7 @@
             ],
             "outputs": [
                 {
-                    "type": "List<Participant>"
+                    "type": "List<BattleParticipant>"
                 }
             ]
         },
@@ -816,6 +828,23 @@
                 {
                     "name": "tokens",
                     "type": "List<u64>"
+                }
+            ]
+        },
+        "BattleParticipant": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "tickets_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "quests",
+                    "type": "u32"
                 }
             ]
         },

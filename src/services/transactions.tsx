@@ -6,6 +6,7 @@ export enum TransactionType {
     StartQuest,
     CompleteQuest,
     JoinRaffle,
+    JoinBattle,
     Stake,
     Unstake,
     Claim,
@@ -14,7 +15,8 @@ export enum TransactionType {
 export enum TxResolution {
     UpdateResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
-    UpdateTicketsAndRaffles = 'UpdateTickets',
+    UpdateTicketsAndRaffles = 'UpdateTicketsAndRaffles',
+    UpdateTicketsAndBattles = 'UpdateTicketsAndBattles',
     UpdateStakingInfo = 'UpdateStakingInfo',
     UpdateStakingAndNFTs = 'UpdateStakingAndNFTs',
 }

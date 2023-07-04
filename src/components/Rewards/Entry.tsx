@@ -12,21 +12,30 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { Competition, useRewardsContext, RewardsContextType } from '../../services/rewards';
 
 function Entry() {
     const [amount, setAmount] = useState(0);
+    const [battle, setBattle] = useState<Competition>();
+
     const { resources } = useResourcesContext() as ResourcesContextType;
     const [isButtonLoading, setButtonLoading] = useState(false);
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
 
+    const { battles } = useRewardsContext() as RewardsContextType;
+
+    useEffect(() => {
+        setBattle(_.first(battles));
+    }, [battles]);
+
     useEffect(() => {
         setAmount(resources.tickets > 0 ? 1 : 0);
     }, []);
 
-    const joinRaffle = async () => {
-        if (!amount && amount > resources.tickets) {
+    const joinBattle = async () => {
+        if (!amount || !battle || amount > resources.tickets) {
             return;
         }
 
@@ -36,7 +45,7 @@ function Entry() {
 
         try {
             const tx = smartContract.methods
-                .joinRaffle()
+                .joinBattle([battle.id])
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
@@ -61,12 +70,12 @@ function Entry() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.JoinRaffle,
-                    resolution: TxResolution.UpdateTicketsAndRaffles,
+                    type: TransactionType.JoinBattle,
+                    resolution: TxResolution.UpdateTicketsAndBattles,
                 },
             ]);
         } catch (err) {
-            console.error('Error occured during joinRaffle', err);
+            console.error('Error occured during joinBattle', err);
         }
     };
 
@@ -130,9 +139,9 @@ function Entry() {
                 <Box mt={1.5}>
                     <ActionButton
                         disabled={isGamePaused || !resources.tickets}
-                        isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.JoinBattle)}
                         colorScheme="default"
-                        onClick={joinRaffle}
+                        onClick={joinBattle}
                         customStyle={{ width: '156px' }}
                     >
                         <Text userSelect="none">Join Battle</Text>
