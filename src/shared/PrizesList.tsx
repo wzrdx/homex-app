@@ -241,7 +241,7 @@ function PrizesList({ id }) {
                                             <AlertIcon />
                                             <Flex ml={1} flexDir="column">
                                                 <Text>Congratulations!</Text>
-                                                <Text>You are one of the winners of this trial</Text>
+                                                <Text>You are one of the winners</Text>
                                             </Flex>
                                         </Alert>
                                     </Flex>
