@@ -49,4 +49,7 @@ export const TEAM = [
     'erd12eynzfdsxu0ft4g94a96nhvjhv8y4kff935klj6gfargvgptcfzqtwlxm9',
     'erd1t2k3846w4yw8wv85ckdxhdt5gd3p7g5v7hgt5w25srwaqz7z83xq2kq8pf',
     'erd1jvr26kvxs3xtdzapafrkupnphpzexn4zezr5lwvamam7wxqyasusjntmzr',
+    // TODO: EXO
+    'erd1wqws3um4kat8zrjgsrm2mlz4sygcm2zvgjfme4zkvjhfjevlgw6s5agr68',
+    'erd1l7wp0n00t9tjd33mg68swfqqdqeucukq3cavaqushv8zr6xfcnuq50ee5z',
 ];
