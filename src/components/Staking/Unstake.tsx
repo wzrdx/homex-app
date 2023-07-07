@@ -151,7 +151,7 @@ function Unstake() {
     };
 
     const unstake = async () => {
-        if (!stakingInfo) {
+        if (!stakingInfo || !elders || !travelers) {
             return;
         }
 
@@ -169,9 +169,10 @@ function Unstake() {
             .map((token) => new U64Value(token.nonce))
             .value();
 
-        const count = travelerNonces.length + elderNonces.length;
+        const argNFTsCount = travelerNonces.length + elderNonces.length;
+        const stakedNFTsCount = _.size([...elders, ...travelers]);
 
-        if (!count) {
+        if (!argNFTsCount) {
             setUnstakeButtonLoading(false);
             return;
         }
@@ -181,7 +182,7 @@ function Unstake() {
                 .unstake([travelerNonces, elderNonces])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(26000000 + 2000000 * count)
+                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 770000 * argNFTsCount)
                 .buildTransaction();
 
             await refreshAccount();
@@ -202,7 +203,7 @@ function Unstake() {
                     sessionId,
                     type: TransactionType.Unstake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
-                    data: count,
+                    data: argNFTsCount,
                 },
             ]);
 
@@ -213,6 +214,10 @@ function Unstake() {
     };
 
     const claim = async () => {
+        if (!stakingInfo || !elders || !travelers) {
+            return;
+        }
+
         if (isClaimButtonLoading) {
             return;
         }
@@ -221,12 +226,14 @@ function Unstake() {
 
         const user = new Address(address);
 
+        const stakedNFTsCount = _.size([...elders, ...travelers]);
+
         try {
             const tx = smartContract.methods
                 .claimStakingRewards()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(26000000)
+                .withGasLimit(6000000 + 200000 * stakedNFTsCount)
                 .buildTransaction();
 
             await refreshAccount();

@@ -8,7 +8,7 @@ type RequirementProps = {
 };
 
 const SIZE = '50px';
-const SMALL_SCREEN_SIZE_DIFF = '20px';
+const SMALL_SCREEN_SIZE_DIFF = '10px';
 
 function Requirement({ elements, valueRequired, value }: RequirementProps) {
     return (
@@ -37,7 +37,7 @@ function Requirement({ elements, valueRequired, value }: RequirementProps) {
                 <Text color={valueRequired > value ? '#FF4136' : 'availableResource'} as="span">{`${
                     value >= 10000 ? '10k+' : round(value, 1)
                 }`}</Text>
-                <Text as="span" mx={1}>
+                <Text as="span" mx={0.5}>
                     /
                 </Text>
                 <Text as="span">{valueRequired}</Text>

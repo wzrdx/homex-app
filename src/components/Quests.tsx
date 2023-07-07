@@ -259,7 +259,7 @@ function Quests() {
                     <Text layerStyle="header1">Alchemy</Text>
                     {getQuestCards('alchemy')}
 
-                    <Text layerStyle="header1">Mission</Text>
+                    <Text layerStyle="header1">Missions</Text>
                     {getQuestCards('final')}
                 </Flex>
             </Flex>
@@ -303,7 +303,7 @@ function Quests() {
 
                     <Flex mt={{ md: 5, lg: 8 }} mb={{ md: 4, lg: 7 }}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
-                            <Flex key={resource} width={{ md: '86px', lg: '102px' }} justifyContent="center">
+                            <Flex key={resource} width="102px" justifyContent="center">
                                 <Requirement
                                     elements={getResourceElements(resource)}
                                     valueRequired={currentQuest.requirements[resource]}

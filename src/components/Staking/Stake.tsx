@@ -21,7 +21,7 @@ function Stake() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
+    const { stakingInfo, travelers, elders, getWalletNFTs, nonces } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
@@ -65,6 +65,8 @@ function Stake() {
 
         const user = new Address(address);
 
+        const stakedNFTsCount = _.size(nonces?.travelers) + _.size(nonces?.elders);
+
         try {
             const transfers: TokenTransfer[] = _(selectedTokens)
                 .map((token) =>
@@ -81,7 +83,7 @@ function Stake() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(26000000 + 2000000 * _.size(transfers))
+                .withGasLimit(6500000 + 200000 * stakedNFTsCount + 770000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
