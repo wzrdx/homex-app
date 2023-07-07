@@ -477,73 +477,73 @@ export const QUESTS: any[] = [
         ],
         image: Quest_13,
     },
-    {
-        id: getId(),
-        type: 'final',
-        isFinal: true,
-        name: "Frostfall's Embrace",
-        description: (
-            <Text layerStyle="questDescription">
-                In the unforgiving, icy expanse of Sundsten, a jewel resides deep within the heart of the Frostbound Wyrm.
-                Venture into this frozen wasteland, slay the sacred beast and retrieve the jewel for the glory of Menhir.
-            </Text>
-        ),
-        requirements: {
-            energy: 266 * BASE_COST,
-            herbs: 67 * BASE_COST,
-            gems: 34 * BASE_COST,
-            essence: 16 * BASE_COST,
-        },
-        duration: 8 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'tickets',
-                name: 'Tickets',
-                value: 1,
-            },
-        ],
-        layers: [
-            {
-                source: SmokeAndClouds,
-                mode: 'normal',
-            },
-        ],
-        image: Quest_14,
-    },
-    {
-        id: getId(),
-        type: 'final',
-        isFinal: true,
-        name: 'Veil of Visions',
-        description: (
-            <Text layerStyle="questDescription">
-                Uncover the ethereal mysteries of the future by consuming the sacred white dust, Cocaineum Sanctum. This rare
-                substance grants a temporary surge of stamina and energy, unlocking fleeting visions of the future. Seek out
-                this divine natural resource within the frozen regions of Sundsten. Use with caution as it can cause addiction.
-            </Text>
-        ),
-        requirements: {
-            energy: 2 * 266 * BASE_COST,
-            herbs: 2 * 67 * BASE_COST,
-            gems: 2 * 34 * BASE_COST,
-            essence: 2 * 16 * BASE_COST,
-        },
-        duration: 4 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'tickets',
-                name: 'Tickets',
-                value: 2,
-            },
-        ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'normal',
-            },
-        ],
-        image: Quest_15,
-    },
+    // {
+    //     id: getId(),
+    //     type: 'final',
+    //     isFinal: true,
+    //     name: "Frostfall's Embrace",
+    //     description: (
+    //         <Text layerStyle="questDescription">
+    //             In the unforgiving, icy expanse of Sundsten, a jewel resides deep within the heart of the Frostbound Wyrm.
+    //             Venture into this frozen wasteland, slay the sacred beast and retrieve the jewel for the glory of Menhir.
+    //         </Text>
+    //     ),
+    //     requirements: {
+    //         energy: 266 * BASE_COST,
+    //         herbs: 67 * BASE_COST,
+    //         gems: 34 * BASE_COST,
+    //         essence: 16 * BASE_COST,
+    //     },
+    //     duration: 8 * BASE_DURATION,
+    //     rewards: [
+    //         {
+    //             resource: 'tickets',
+    //             name: 'Tickets',
+    //             value: 1,
+    //         },
+    //     ],
+    //     layers: [
+    //         {
+    //             source: SmokeAndClouds,
+    //             mode: 'normal',
+    //         },
+    //     ],
+    //     image: Quest_14,
+    // },
+    // {
+    //     id: getId(),
+    //     type: 'final',
+    //     isFinal: true,
+    //     name: 'Veil of Visions',
+    //     description: (
+    //         <Text layerStyle="questDescription">
+    //             Uncover the ethereal mysteries of the future by consuming the sacred white dust, Cocaineum Sanctum. This rare
+    //             substance grants a temporary surge of stamina and energy, unlocking fleeting visions of the future. Seek out
+    //             this divine natural resource within the frozen regions of Sundsten. Use with caution as it can cause addiction.
+    //         </Text>
+    //     ),
+    //     requirements: {
+    //         energy: 2 * 266 * BASE_COST,
+    //         herbs: 2 * 67 * BASE_COST,
+    //         gems: 2 * 34 * BASE_COST,
+    //         essence: 2 * 16 * BASE_COST,
+    //     },
+    //     duration: 4 * BASE_DURATION,
+    //     rewards: [
+    //         {
+    //             resource: 'tickets',
+    //             name: 'Tickets',
+    //             value: 2,
+    //         },
+    //     ],
+    //     layers: [
+    //         {
+    //             source: LightRays,
+    //             mode: 'normal',
+    //         },
+    //     ],
+    //     image: Quest_15,
+    // },
 ];
 
 export const getQuest = (id = 1): Quest => {
