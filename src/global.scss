@@ -61,6 +61,11 @@ body {
     }
 }
 
+// Checkbox
+.chakra-checkbox__control {
+    box-shadow: none !important;
+}
+
 // Mvx
 .Login-Button {
     margin: 0 0 1rem !important;

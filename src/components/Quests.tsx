@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     Box,
+    Button,
+    Checkbox,
+    CheckboxGroup,
     Flex,
     Image,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
+    ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Stack,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
@@ -38,6 +43,9 @@ import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, hDisplay, mDisplay } from '../services/helpers';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import { Quest } from '../types';
+import { StringOrNumber } from '@chakra-ui/utils';
+import { DetailedQuestCard } from '../shared/DetailedQuestCard';
 
 const LARGE_FRAME_SIZE = 326;
 const MEDIUM_FRAME_SIZE = 240;
@@ -47,7 +55,9 @@ const GRACE_PERIOD_INTERVAL = 24;
 function Quests() {
     const { displayToast, closeToast } = useLayout();
     const navigate = useNavigate();
+
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
+    const { isOpen: isQuestsModalOpen, onOpen: onQuestsModalOpen, onClose: onQuestsModalClose } = useDisclosure();
 
     const { address } = useGetAccountInfo();
 
@@ -61,7 +71,7 @@ function Quests() {
 
     const [trialTimestamp, setTrialTimestamp] = useState<Date>();
 
-    const isQuestDefault = () => findIndex(ongoingQuests, (q) => q.id === currentQuest.id) < 0;
+    const isQuestDefault = (quest: Quest = currentQuest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
     const isQuestOngoing = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
     const isQuestComplete = () =>
@@ -239,11 +249,25 @@ function Quests() {
         return `${hDisplay(Math.floor(duration / 60))}:${mDisplay(duration % 60)}:00`;
     };
 
+    const onCheckboxGroupChange = useCallback((array: StringOrNumber[]) => {
+        console.log(array);
+    }, []);
+
     return (
         <Flex height="100%">
             {/* Quest list */}
             <Flex flex={5} justifyContent="center" overflowY="auto">
                 <Flex flexDir="column" width="100%" pl="2px">
+                    <Flex mb={6} justifyContent="space-between" mr={8}>
+                        <ActionButton colorScheme="blue" customStyle={{ width: '198px' }} onClick={onQuestsModalOpen}>
+                            <Text>Start multiple quests</Text>
+                        </ActionButton>
+
+                        <ActionButton colorScheme="green" onClick={onQuestsModalOpen}>
+                            <Text>Claim all rewards</Text>
+                        </ActionButton>
+                    </Flex>
+
                     <Text layerStyle="header1">Herbalism</Text>
                     {getQuestCards('herbalism')}
 
@@ -494,6 +518,36 @@ function Quests() {
                 <ModalContent>
                     <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
                     <ModalBody padding={0} style={getBackgroundStyle(getVisionImage())}></ModalBody>
+                </ModalContent>
+            </Modal>
+
+            {/* Multiple quests */}
+            <Modal size="xl" onClose={onQuestsModalClose} isOpen={isQuestsModalOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Start multiple quests</ModalHeader>
+
+                    <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalBody>
+                        <CheckboxGroup onChange={onCheckboxGroupChange} colorScheme="blue" defaultValue={[]}>
+                            <Stack spacing={2} direction="column">
+                                {_(QUESTS)
+                                    .filter((quest) => isQuestDefault(quest))
+                                    .map((quest) => (
+                                        <Checkbox key={quest.id} value={quest.id.toString()}>
+                                            <DetailedQuestCard quest={quest} />
+                                        </Checkbox>
+                                    ))
+                                    .value()}
+                            </Stack>
+                        </CheckboxGroup>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme="blue" onClick={() => console.log('Click')}>
+                            Start Quests
+                        </Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </Flex>
