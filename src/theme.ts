@@ -34,6 +34,7 @@ const colors = {
     brightBlue: '#88ddff',
     lightOrange: '#ee8b1c',
     redClrs: '#FF4136',
+    brightRed: '#FF6868',
     brightWheat: '#ffe1bb',
     ticketGold: '#efbe50',
     energyBright: '#50a3f2',

@@ -34,7 +34,7 @@ function Requirement({ elements, valueRequired, value }: RequirementProps) {
             </Flex>
 
             <Text fontSize="15px" fontWeight={700} textShadow="1px 1px 2px #000">
-                <Text color={valueRequired > value ? '#FF4136' : 'availableResource'} as="span">{`${
+                <Text color={valueRequired > value ? 'redClrs' : 'availableResource'} as="span">{`${
                     value >= 10000 ? '10k+' : round(value, 1)
                 }`}</Text>
                 <Text as="span" mx={0.5}>
