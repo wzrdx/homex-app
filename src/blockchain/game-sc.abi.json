@@ -23,46 +23,6 @@
     },
     "endpoints": [
         {
-            "name": "addBattle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "addRaffle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setRaffleVectorSize",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "size",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "claimAllEnergy",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -79,169 +39,6 @@
             "outputs": []
         },
         {
-            "name": "copyOperatingVector",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "getOperatingVectorLength",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "setQuests",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "quests",
-                    "type": "List<Quest>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "loadRarityClasses",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "nonces",
-                    "type": "List<u16>"
-                },
-                {
-                    "name": "classes",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setCollectionIds",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "travelers_id",
-                    "type": "TokenIdentifier"
-                },
-                {
-                    "name": "elders_id",
-                    "type": "TokenIdentifier"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueTicketsCollection",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": ["EGLD"],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "createTicketsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "royalties",
-                    "type": "BigUint"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueEnergyToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": ["EGLD"],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueHerbsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": ["EGLD"],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueGemsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": ["EGLD"],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueEssenceToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": ["EGLD"],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "airdropResources",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -253,41 +50,6 @@
                 {
                     "name": "alloc",
                     "type": "List<Airdrop>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "clearOngoingQuests",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "drawRaffleWinners",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "phase",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "clearRaffle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
                 }
             ],
             "outputs": []
@@ -324,281 +86,12 @@
             "outputs": []
         },
         {
-            "name": "stake",
-            "mutability": "mutable",
-            "payableInTokens": ["*"],
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "unstake",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "traveler_nonces",
-                    "type": "List<u64>"
-                },
-                {
-                    "name": "elder_nonces",
-                    "type": "List<u64>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "claimStakingRewards",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "startQuest",
-            "mutability": "mutable",
-            "payableInTokens": ["*"],
-            "inputs": [
-                {
-                    "name": "id",
-                    "type": "u8"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "completeQuest",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "id",
-                    "type": "u8"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "joinRaffle",
-            "mutability": "mutable",
-            "payableInTokens": ["*"],
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "joinBattle",
-            "mutability": "mutable",
-            "payableInTokens": ["*"],
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "getRaffleSubmittedTickets",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleParticipantsCount",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleParticipants",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<Participant>"
-                }
-            ]
-        },
-        {
-            "name": "getRaffles",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<Competition>"
-                }
-            ]
-        },
-        {
-            "name": "getBattleParticipantsCount",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getBattleParticipants",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<BattleParticipant>"
-                }
-            ]
-        },
-        {
-            "name": "getBattles",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<Competition>"
-                }
-            ]
-        },
-        {
             "name": "getTicketStats",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "TicketStats"
-                }
-            ]
-        },
-        {
-            "name": "getStakedAddressesCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getStakedNFTsCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getStakingInfo",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "StakingInfo"
-                }
-            ]
-        },
-        {
-            "name": "getUserTokenNonces",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user_address",
-                    "type": "Address"
-                },
-                {
-                    "name": "token_id",
-                    "type": "TokenIdentifier"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<u64>"
-                }
-            ]
-        },
-        {
-            "name": "getRarityClasses",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "nonces",
-                    "type": "List<u16>"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<Rarity>"
-                }
-            ]
-        },
-        {
-            "name": "getStakedUsersLength",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },
@@ -811,6 +304,430 @@
             "outputs": [
                 {
                     "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "addBattle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addRaffle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setRaffleVectorSize",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "size",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "copyOperatingVector",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "drawRaffleWinners",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "phase",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearRaffle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "joinRaffle",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "joinBattle",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getOperatingVectorLength",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleSubmittedTickets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleParticipantsCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleParticipants",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Participant>"
+                }
+            ]
+        },
+        {
+            "name": "getRaffles",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<Competition>"
+                }
+            ]
+        },
+        {
+            "name": "getBattleParticipantsCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getBattleParticipants",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<BattleParticipant>"
+                }
+            ]
+        },
+        {
+            "name": "getBattles",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<Competition>"
+                }
+            ]
+        },
+        {
+            "name": "setQuests",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "quests",
+                    "type": "List<Quest>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearOngoingQuests",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "startQuest",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "u8"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "startQuests",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "ids",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "completeQuest",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "u8"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "stake",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "traveler_nonces",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "elder_nonces",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimStakingRewards",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getStakedAddressesCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getStakedNFTsCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getStakingInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "StakingInfo"
+                }
+            ]
+        },
+        {
+            "name": "getUserTokenNonces",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<u64>"
+                }
+            ]
+        },
+        {
+            "name": "getRarityClasses",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "nonces",
+                    "type": "List<u16>"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Rarity>"
+                }
+            ]
+        },
+        {
+            "name": "getStakedUsersLength",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getStakedUsers",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Address>"
+                }
+            ]
+        },
+        {
+            "name": "getStakeOfUser",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         }

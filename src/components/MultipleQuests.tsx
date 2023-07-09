@@ -20,10 +20,20 @@ import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { round } from '../services/helpers';
 import { Quest } from '../types';
 import { DetailedQuestCard } from '../shared/DetailedQuestCard';
+import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { CHAIN_ID } from '../blockchain/config';
+import { smartContract } from '../blockchain/smartContract';
+import { TransactionType, TxResolution } from '../services/transactions';
 
 function MultipleQuests() {
     const { ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
+
+    const [isButtonLoading, setButtonLoading] = useState(false);
+    const { address } = useGetAccountInfo();
 
     const isQuestDefault = (quest: Quest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
 
@@ -42,6 +52,62 @@ function MultipleQuests() {
 
     const init = async () => {
         getOngoingQuests();
+    };
+
+    const startQuests = async () => {
+        setButtonLoading(true);
+
+        const user = new Address(address);
+        const requirements = getRequiredResources();
+
+        const transfers = _(Object.keys(requirements))
+            .filter((resource) => requirements[resource] > 0)
+            .map((resource) => TokenTransfer.fungibleFromAmount(RESOURCE_ELEMENTS[resource].tokenId, requirements[resource], 6))
+            .value();
+
+        const args = new List(
+            new U8Type(),
+            _.map(selectedQuestIds, (id) => new U8Value(Number.parseInt(id)))
+        );
+
+        try {
+            const tx = smartContract.methods
+                .startQuests([args])
+                .withMultiESDTNFTTransfer(transfers)
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(35000000)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setButtonLoading(false);
+
+            // setPendingTxs((txs) => [
+            //     ...txs,
+            //     {
+            //         sessionId,
+            //         type: TransactionType.StartQuest,
+            //         questId: currentQuest.id,
+            //         resolution: TxResolution.UpdateResources,
+            //         data: {
+            //             resources: Object.keys(currentQuest.requirements),
+            //         },
+            //     },
+            // ]);
+        } catch (err) {
+            console.error('Error occured during startQuests', err);
+        }
     };
 
     const onCheckboxGroupChange = useCallback((array: string[]) => {
@@ -209,7 +275,7 @@ function MultipleQuests() {
                     colorScheme="blue"
                     customStyle={{ width: '142px' }}
                     disabled={!canStartMultipleQuests()}
-                    onClick={() => console.log('Click')}
+                    onClick={startQuests}
                 >
                     <Text>Start Quests</Text>
                 </ActionButton>
