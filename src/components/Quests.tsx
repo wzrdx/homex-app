@@ -69,6 +69,7 @@ function Quests() {
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
+    const [isCompleteAllButtonLoading, setCompleteAllLoading] = useState(false);
 
     const [trialTimestamp, setTrialTimestamp] = useState<Date>();
 
@@ -223,6 +224,51 @@ function Quests() {
         }
     };
 
+    const completeAllQuests = async () => {
+        setCompleteAllLoading(true);
+
+        const user = new Address(address);
+        const gasLimit: number = 16000000;
+
+        try {
+            const tx = smartContract.methods
+                .completeAllQuests()
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(gasLimit)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setCompleteAllLoading(false);
+
+            // setPendingTxs((txs) => [
+            //     ...txs,
+            //     {
+            //         sessionId,
+            //         type: TransactionType.CompleteQuest,
+            //         questId: currentQuest.id,
+            //         resolution: TxResolution.UpdateQuestsAndResources,
+            //         data: {
+            //             resources: map(currentQuest.rewards, (reward) => reward.resource),
+            //         },
+            //     },
+            // ]);
+        } catch (err) {
+            console.error('Error occured during completeQuest', err);
+        }
+    };
+
     const onQuestClick = (id: number | undefined) => {
         playSound('select_quest');
         setQuest(getQuest(id));
@@ -260,7 +306,7 @@ function Quests() {
                             <Text>Start multiple quests</Text>
                         </ActionButton>
 
-                        <ActionButton colorScheme="green" onClick={onQuestsModalOpen}>
+                        <ActionButton colorScheme="green" isLoading={isCompleteAllButtonLoading} onClick={completeAllQuests}>
                             <Text>Claim all rewards</Text>
                         </ActionButton>
                     </Flex>

@@ -55,13 +55,6 @@
             "outputs": []
         },
         {
-            "name": "clearTicketsHistory",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
             "name": "setTrialTimestamp",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -84,16 +77,6 @@
                 }
             ],
             "outputs": []
-        },
-        {
-            "name": "getTicketStats",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "TicketStats"
-                }
-            ]
         },
         {
             "name": "getRarityClass",
@@ -591,6 +574,23 @@
             "outputs": []
         },
         {
+            "name": "completeAllQuests",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getTestVector",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -864,23 +864,6 @@
                 {
                     "name": "elder_nonces",
                     "type": "List<u64>"
-                }
-            ]
-        },
-        "TicketStats": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "earners_count",
-                    "type": "u32"
-                },
-                {
-                    "name": "tickets_count",
-                    "type": "u32"
-                },
-                {
-                    "name": "most_earned",
-                    "type": "u32"
                 }
             ]
         }
