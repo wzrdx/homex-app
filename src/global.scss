@@ -66,6 +66,12 @@ body {
     box-shadow: none !important;
 }
 
+.Detailed-Quest-Checkbox {
+    .chakra-checkbox__label {
+        width: 100%;
+    }
+}
+
 // Mvx
 .Login-Button {
     margin: 0 0 1rem !important;

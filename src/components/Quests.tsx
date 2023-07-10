@@ -36,7 +36,7 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
-import { getBackgroundStyle, hDisplay, mDisplay } from '../services/helpers';
+import { getBackgroundStyle, timeDisplay } from '../services/helpers';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
@@ -247,7 +247,7 @@ function Quests() {
     );
 
     const getQuestDuration = (duration: number) => {
-        return `${hDisplay(Math.floor(duration / 60))}:${mDisplay(duration % 60)}:00`;
+        return `${timeDisplay(Math.floor(duration / 60))}:${timeDisplay(duration % 60)}:00`;
     };
 
     return (

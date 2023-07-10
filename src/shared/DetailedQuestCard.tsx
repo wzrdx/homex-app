@@ -2,12 +2,12 @@ import { Flex, Text, Image } from '@chakra-ui/react';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { map } from 'lodash';
 import { Quest } from '../types';
+import { timeDisplay } from '../services/helpers';
 
 type Props = {
     quest: Quest;
 };
 
-const MAIN_RESOURCES = Object.keys(RESOURCE_ELEMENTS).slice(0, 4);
 const IMAGE_SIZE = '20px';
 
 export const DetailedQuestCard = ({ quest }: Props) => {
@@ -37,15 +37,23 @@ export const DetailedQuestCard = ({ quest }: Props) => {
         );
     };
 
+    const getQuestDuration = (duration: number) => {
+        return `${timeDisplay(Math.floor(duration / 60))}:${timeDisplay(duration % 60)}`;
+    };
+
     return (
-        <Flex alignItems="center">
-            <Flex alignItems="center">{getRequirements()}</Flex>
+        <Flex justifyContent="space-between" alignItems="center">
+            <Flex alignItems="center">
+                <Flex alignItems="center">{getRequirements()}</Flex>
 
-            <Text mx={1} fontWeight={500} color="header.gold">
-                {quest.name}
-            </Text>
+                <Text mx={1} fontWeight={500} color="header.gold">
+                    {quest.name}
+                </Text>
 
-            <Flex alignItems="center">{getRewards()}</Flex>
+                <Flex alignItems="center">{getRewards()}</Flex>
+            </Flex>
+
+            <Text color="#ebeef4">{getQuestDuration(quest.duration)}</Text>
         </Flex>
     );
 };
