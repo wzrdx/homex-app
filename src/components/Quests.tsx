@@ -51,13 +51,20 @@ function Quests() {
     const navigate = useNavigate();
 
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
-    const { isOpen: isQuestsModalOpen, onOpen: onQuestsModalOpen, onClose: onQuestsModalClose } = useDisclosure();
 
     const { address } = useGetAccountInfo();
 
     const { isQuestTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
-    const { quest: currentQuest, setQuest, ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
+    const {
+        quest: currentQuest,
+        setQuest,
+        ongoingQuests,
+        getOngoingQuests,
+        isQuestsModalOpen,
+        onQuestsModalOpen,
+        onQuestsModalClose,
+    } = useQuestsContext() as QuestsContextType;
     const { resources, isTicketModalOpen, onTicketModalClose } = useResourcesContext() as ResourcesContextType;
 
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
@@ -157,7 +164,7 @@ function Quests() {
                     sessionId,
                     type: TransactionType.StartQuest,
                     questId: currentQuest.id,
-                    resolution: TxResolution.UpdateResources,
+                    resolution: TxResolution.UpdateQuestsAndResources,
                     data: {
                         resources: Object.keys(currentQuest.requirements),
                     },
@@ -205,7 +212,7 @@ function Quests() {
                     sessionId,
                     type: TransactionType.CompleteQuest,
                     questId: currentQuest.id,
-                    resolution: TxResolution.UpdateResources,
+                    resolution: TxResolution.UpdateQuestsAndResources,
                     data: {
                         resources: map(currentQuest.rewards, (reward) => reward.resource),
                     },

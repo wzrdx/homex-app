@@ -26,11 +26,13 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
-import { TransactionType, TxResolution } from '../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 function MultipleQuests() {
     const { ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
+    const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
     const { address } = useGetAccountInfo();
@@ -76,7 +78,7 @@ function MultipleQuests() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(35000000)
+                .withGasLimit(8250000 + 250000 * _.size(transfers) + 550000 * _.size(selectedQuestIds))
                 .buildTransaction();
 
             await refreshAccount();
@@ -93,18 +95,18 @@ function MultipleQuests() {
 
             setButtonLoading(false);
 
-            // setPendingTxs((txs) => [
-            //     ...txs,
-            //     {
-            //         sessionId,
-            //         type: TransactionType.StartQuest,
-            //         questId: currentQuest.id,
-            //         resolution: TxResolution.UpdateResources,
-            //         data: {
-            //             resources: Object.keys(currentQuest.requirements),
-            //         },
-            //     },
-            // ]);
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.StartMultipleQuests,
+                    resolution: TxResolution.UpdateQuestsAndResources,
+                    data: {
+                        questIds: selectedQuestIds,
+                        resources: Object.keys(requirements),
+                    },
+                },
+            ]);
         } catch (err) {
             console.error('Error occured during startQuests', err);
         }
@@ -127,17 +129,16 @@ function MultipleQuests() {
         }
     };
 
-    const getRequiredResources = (): {
-        energy: number;
-        herbs: number;
-        gems: number;
-        essence: number;
-    } => {
+    const getRequiredResources = () => {
         const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const requirements = { energy: 0, herbs: 0, gems: 0, essence: 0 };
+        const requirements = {};
 
         _.forEach(quests, (quest) => {
             _.forEach(Object.keys(quest.requirements), (resource) => {
+                if (!requirements[resource]) {
+                    requirements[resource] = 0;
+                }
+
                 requirements[resource] += quest.requirements[resource];
             });
         });
@@ -149,23 +150,32 @@ function MultipleQuests() {
         const requirements = getRequiredResources();
 
         return (
-            <Flex>
-                {_.map(Object.keys(requirements), (resource, index) => (
-                    <Flex key={index} alignItems="center" mr={4}>
-                        <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
-                        <Text ml={1.5}>
-                            <Text
-                                color={requirements[resource] > resources[resource] ? 'redClrs' : 'availableResource'}
-                                as="span"
-                            >{`${resources[resource] >= 10000 ? '10k+' : round(resources[resource], 1)}`}</Text>
-                            <Text as="span" mx={0.5}>
-                                /
-                            </Text>
-                            <Text as="span">{requirements[resource]}</Text>
-                        </Text>
+            <>
+                {_.isEmpty(requirements) ? (
+                    <Flex alignItems="center" minH="30px">
+                        <InfoOutlineIcon />
+                        <Text ml={1.5}>Please select a quest first</Text>
                     </Flex>
-                ))}
-            </Flex>
+                ) : (
+                    <Flex minH="30px">
+                        {_.map(Object.keys(requirements), (resource, index) => (
+                            <Flex key={index} alignItems="center" mr={4}>
+                                <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
+                                <Text ml={1.5}>
+                                    <Text
+                                        color={requirements[resource] > resources[resource] ? 'redClrs' : 'availableResource'}
+                                        as="span"
+                                    >{`${resources[resource] >= 10000 ? '10k+' : round(resources[resource], 1)}`}</Text>
+                                    <Text as="span" mx={0.5}>
+                                        /
+                                    </Text>
+                                    <Text as="span">{requirements[resource]}</Text>
+                                </Text>
+                            </Flex>
+                        ))}
+                    </Flex>
+                )}
+            </>
         );
     };
 
@@ -179,15 +189,30 @@ function MultipleQuests() {
             });
         });
 
+        _.forEach(Object.keys(rewards), (resource) => {
+            if (!rewards[resource]) {
+                delete rewards[resource];
+            }
+        });
+
         return (
-            <Flex>
-                {_.map(Object.keys(rewards), (resource, index) => (
-                    <Flex key={index} alignItems="center" mr={4}>
-                        <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
-                        <Text ml={1.5}>{rewards[resource]}</Text>
+            <>
+                {_.isEmpty(rewards) ? (
+                    <Flex alignItems="center" minH="30px">
+                        <InfoOutlineIcon />
+                        <Text ml={1.5}>Please select a quest first</Text>
                     </Flex>
-                ))}
-            </Flex>
+                ) : (
+                    <Flex minH="30px">
+                        {_.map(Object.keys(rewards), (resource, index) => (
+                            <Flex key={index} alignItems="center" mr={4}>
+                                <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
+                                <Text ml={1.5}>{rewards[resource]}</Text>
+                            </Flex>
+                        ))}
+                    </Flex>
+                )}
+            </>
         );
     };
 
@@ -223,7 +248,7 @@ function MultipleQuests() {
                     <Stack
                         spacing={{ md: 1, lg: 1.5 }}
                         direction="column"
-                        maxHeight={{ md: '348px', lg: '500px' }}
+                        maxHeight={{ md: '354px', lg: '500px' }}
                         overflowY="auto"
                     >
                         {_(QUESTS)
@@ -246,7 +271,7 @@ function MultipleQuests() {
                     </Stack>
                 </CheckboxGroup>
 
-                <Flex alignItems="center" mt={5} mb={1}>
+                <Flex alignItems="center" mt={6}>
                     <Text layerStyle="header2" mr={1}>
                         Total Requirements
                     </Text>
@@ -274,7 +299,8 @@ function MultipleQuests() {
                 <ActionButton
                     colorScheme="blue"
                     customStyle={{ width: '142px' }}
-                    disabled={!canStartMultipleQuests()}
+                    disabled={isGamePaused || !canStartMultipleQuests()}
+                    isLoading={isButtonLoading || isTxPending(TransactionType.StartMultipleQuests)}
                     onClick={startQuests}
                 >
                     <Text>Start Quests</Text>

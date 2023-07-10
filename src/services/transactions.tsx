@@ -1,9 +1,10 @@
-import { findIndex } from 'lodash';
+import { find, findIndex, includes } from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { isGamePausedQuery } from '../blockchain/api/isGamePaused';
 
 export enum TransactionType {
     StartQuest,
+    StartMultipleQuests,
     CompleteQuest,
     JoinRaffle,
     JoinBattle,
@@ -13,7 +14,7 @@ export enum TransactionType {
 }
 
 export enum TxResolution {
-    UpdateResources = 'UpdateResources',
+    UpdateQuestsAndResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
     UpdateTicketsAndRaffles = 'UpdateTicketsAndRaffles',
     UpdateTicketsAndBattles = 'UpdateTicketsAndBattles',
@@ -49,6 +50,12 @@ export const TransactionsProvider = ({ children }) => {
     const [pendingTxs, setPendingTxs] = useState<Transaction[]>([]);
 
     const isQuestTxPending = (type: TransactionType, questId: number): boolean => {
+        const multiQuestsTx = find(pendingTxs, (tx) => tx.type === TransactionType.StartMultipleQuests);
+
+        if (multiQuestsTx && includes(multiQuestsTx.data.questIds, questId.toString())) {
+            return true;
+        }
+
         return findIndex(pendingTxs, (tx) => tx.type === type && tx.questId === questId) > -1;
     };
 

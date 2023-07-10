@@ -17,7 +17,7 @@ import Quest_14 from '../assets/quests/14.jpg';
 import Quest_15 from '../assets/quests/15.jpg';
 
 import { createContext, useContext } from 'react';
-import { Text } from '@chakra-ui/react';
+import { Text, useDisclosure } from '@chakra-ui/react';
 import { Quest } from '../types';
 
 import SmokeAndClouds from '../assets/quests/videos/1.webm';
@@ -569,6 +569,9 @@ export interface QuestsContextType {
     setQuest: React.Dispatch<Quest>;
     ongoingQuests: OngoingQuest[];
     getOngoingQuests: () => Promise<void>;
+    isQuestsModalOpen: boolean;
+    onQuestsModalOpen: () => void;
+    onQuestsModalClose: () => void;
 }
 
 const QuestsContext = createContext<QuestsContextType | null>(null);
@@ -578,6 +581,7 @@ export const useQuestsContext = () => useContext(QuestsContext);
 export const QuestsProvider = ({ children }) => {
     const [quest, setQuest] = useState<Quest>(getQuest());
     const [ongoingQuests, setOngoingQuests] = useState<OngoingQuest[]>([]);
+    const { isOpen: isQuestsModalOpen, onOpen: onQuestsModalOpen, onClose: onQuestsModalClose } = useDisclosure();
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
@@ -612,6 +616,18 @@ export const QuestsProvider = ({ children }) => {
     };
 
     return (
-        <QuestsContext.Provider value={{ quest, setQuest, ongoingQuests, getOngoingQuests }}>{children}</QuestsContext.Provider>
+        <QuestsContext.Provider
+            value={{
+                quest,
+                setQuest,
+                ongoingQuests,
+                getOngoingQuests,
+                isQuestsModalOpen,
+                onQuestsModalOpen,
+                onQuestsModalClose,
+            }}
+        >
+            {children}
+        </QuestsContext.Provider>
     );
 };

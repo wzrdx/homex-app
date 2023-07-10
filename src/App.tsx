@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty, isNaN } from 'lodash';
+import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty, isNaN, size } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -38,7 +38,7 @@ function App() {
     const { failedTransactionsArray } = useGetFailedTransactions();
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
-    const { getOngoingQuests } = useQuestsContext() as QuestsContextType;
+    const { getOngoingQuests, onQuestsModalClose } = useQuestsContext() as QuestsContextType;
     const { getStakingInfo, getWalletNFTs } = useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
@@ -80,6 +80,17 @@ function App() {
 
                     case TransactionType.StartQuest:
                         playSound('start_quest');
+                        break;
+
+                    case TransactionType.StartMultipleQuests:
+                        displayToast(
+                            'Success',
+                            `Successfully started ${size(tx.data.questIds) > 1 ? size(tx.data.questIds) : 'one'} quest${
+                                size(tx.data.questIds) > 1 ? 's' : ''
+                            }`,
+                            'green.500',
+                            'start_quest'
+                        );
                         break;
 
                     case TransactionType.Stake:
@@ -156,9 +167,10 @@ function App() {
                 getBattles();
                 break;
 
-            case TxResolution.UpdateResources:
+            case TxResolution.UpdateQuestsAndResources:
                 const resources: string[] = tx.data.resources;
                 getOngoingQuests();
+                onQuestsModalClose();
 
                 const calls = map(resources, (resource) => getResourceCall(resource));
                 forEach(calls, (call) => call());
