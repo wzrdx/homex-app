@@ -73,7 +73,7 @@ function RaffleCard({
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(18000000)
+                .withGasLimit(22000000)
                 .buildTransaction();
 
             await refreshAccount();
