@@ -36,7 +36,7 @@ import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
-import { getBackgroundStyle, timeDisplay } from '../services/helpers';
+import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
@@ -54,7 +54,7 @@ function Quests() {
 
     const { address } = useGetAccountInfo();
 
-    const { isQuestTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
+    const { isQuestTxPending, isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
     const {
         quest: currentQuest,
@@ -228,7 +228,37 @@ function Quests() {
         setCompleteAllLoading(true);
 
         const user = new Address(address);
-        const gasLimit: number = 16000000;
+
+        const completedQuestsIds = _(ongoingQuests)
+            .filter((quest) => isAfter(new Date(), quest.timestamp))
+            .map((quest) => quest.id)
+            .value();
+
+        const otherOngoingQuestsCount = _(ongoingQuests)
+            .filter((quest) => !isAfter(new Date(), quest.timestamp))
+            .size();
+
+        if (_.isEmpty(completedQuestsIds)) {
+            displayToast('error', `Unable to claim rewards`, 'No quests can be completed yet', 'orangered');
+            return;
+        }
+
+        const completedQuests: Quest[] = _.filter(QUESTS, (quest) => _.includes(completedQuestsIds, quest.id));
+
+        const rewards = getTotalQuestsRewards(completedQuests);
+        const rewardedResources = Object.keys(rewards);
+
+        const gains = _.map(rewardedResources, (resource) => ({
+            resource,
+            value: rewards[resource],
+        }));
+
+        const gasLimit: number =
+            11000000 +
+            250000 * otherOngoingQuestsCount +
+            (rewardedResources.includes('tickets') ? 1500000 : 0) +
+            250000 * _.size(rewardedResources) +
+            250000 * _.size(completedQuests);
 
         try {
             const tx = smartContract.methods
@@ -252,20 +282,21 @@ function Quests() {
 
             setCompleteAllLoading(false);
 
-            // setPendingTxs((txs) => [
-            //     ...txs,
-            //     {
-            //         sessionId,
-            //         type: TransactionType.CompleteQuest,
-            //         questId: currentQuest.id,
-            //         resolution: TxResolution.UpdateQuestsAndResources,
-            //         data: {
-            //             resources: map(currentQuest.rewards, (reward) => reward.resource),
-            //         },
-            //     },
-            // ]);
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.CompleteAllQuests,
+                    resolution: TxResolution.UpdateQuestsAndResources,
+                    data: {
+                        resources: rewardedResources,
+                        completedQuestsIds,
+                        gains,
+                    },
+                },
+            ]);
         } catch (err) {
-            console.error('Error occured during completeQuest', err);
+            console.error('Error occured during completeAllQuests', err);
         }
     };
 
@@ -306,7 +337,11 @@ function Quests() {
                             <Text>Start multiple quests</Text>
                         </ActionButton>
 
-                        <ActionButton colorScheme="green" isLoading={isCompleteAllButtonLoading} onClick={completeAllQuests}>
+                        <ActionButton
+                            colorScheme="green"
+                            isLoading={isCompleteAllButtonLoading || isTxPending(TransactionType.CompleteAllQuests)}
+                            onClick={completeAllQuests}
+                        >
                             <Text>Claim all rewards</Text>
                         </ActionButton>
                     </Flex>

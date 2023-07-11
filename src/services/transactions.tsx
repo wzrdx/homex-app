@@ -6,6 +6,7 @@ export enum TransactionType {
     StartQuest,
     StartMultipleQuests,
     CompleteQuest,
+    CompleteAllQuests,
     JoinRaffle,
     JoinBattle,
     Stake,
@@ -50,9 +51,17 @@ export const TransactionsProvider = ({ children }) => {
     const [pendingTxs, setPendingTxs] = useState<Transaction[]>([]);
 
     const isQuestTxPending = (type: TransactionType, questId: number): boolean => {
+        // StartMultipleQuests
         const multiQuestsTx = find(pendingTxs, (tx) => tx.type === TransactionType.StartMultipleQuests);
 
         if (multiQuestsTx && includes(multiQuestsTx.data.questIds, questId.toString())) {
+            return true;
+        }
+
+        // CompleteAllQuests
+        const completeAllQuestsTx = find(pendingTxs, (tx) => tx.type === TransactionType.CompleteAllQuests);
+
+        if (completeAllQuestsTx && includes(completeAllQuestsTx.data.completedQuestsIds, questId)) {
             return true;
         }
 

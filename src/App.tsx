@@ -78,6 +78,18 @@ function App() {
 
                         break;
 
+                    case TransactionType.CompleteAllQuests:
+                        displayResourcesToast('Quests complete', tx.data.gains, 'ticket');
+
+                        displayToast(
+                            'Success',
+                            `Successfully completed ${
+                                size(tx.data.completedQuestsIds) > 1 ? size(tx.data.completedQuestsIds) : 'one'
+                            } quest${size(tx.data.completedQuestsIds) > 1 ? 's' : ''}`,
+                            'green.500'
+                        );
+                        break;
+
                     case TransactionType.StartQuest:
                         playSound('start_quest');
                         break;

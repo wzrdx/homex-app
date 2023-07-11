@@ -96,8 +96,7 @@ body {
     }
 
     .dapp-modal-dialog-content {
-        border: 1px solid #000 !important;
-        box-shadow: none !important;
+        border: none !important;
     }
 }
 
@@ -200,6 +199,10 @@ body {
 .dapp-core-component__main__btn-light {
     color: #868686 !important;
     background-color: #222222 !important;
+}
+
+.dapp-core-component__dappModalStyles__dappModal {
+    z-index: 9999 !important;
 }
 
 // Scrollbar

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { API_URL, EXPLORER_URL, GATEWAY_URL, TRAVELERS_PADDING } from '../blockchain/config';
 import { RarityClass } from '../blockchain/types';
+import { Quest } from '../types';
+import _ from 'lodash';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -118,4 +120,22 @@ export const getRarityClassInfo = (rarityClass: RarityClass): { label: string; c
         color,
         energyYield,
     };
+};
+
+export const getTotalQuestsRewards = (quests: Quest[]) => {
+    const rewards = { energy: 0, herbs: 0, gems: 0, essence: 0, tickets: 0 };
+
+    _.forEach(quests, (quest) => {
+        _.forEach(quest.rewards, (reward) => {
+            rewards[reward.resource] += reward.value;
+        });
+    });
+
+    _.forEach(Object.keys(rewards), (resource) => {
+        if (!rewards[resource]) {
+            delete rewards[resource];
+        }
+    });
+
+    return rewards;
 };

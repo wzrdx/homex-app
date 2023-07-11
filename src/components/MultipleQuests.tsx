@@ -17,7 +17,7 @@ import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../servic
 import { MdOutlineErrorOutline } from 'react-icons/md';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
-import { round } from '../services/helpers';
+import { getTotalQuestsRewards, round } from '../services/helpers';
 import { Quest } from '../types';
 import { DetailedQuestCard } from '../shared/DetailedQuestCard';
 import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-core/out';
@@ -236,19 +236,7 @@ function MultipleQuests() {
 
     const getTotalRewards = () => {
         const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const rewards = { energy: 0, herbs: 0, gems: 0, essence: 0, tickets: 0 };
-
-        _.forEach(quests, (quest) => {
-            _.forEach(quest.rewards, (reward) => {
-                rewards[reward.resource] += reward.value;
-            });
-        });
-
-        _.forEach(Object.keys(rewards), (resource) => {
-            if (!rewards[resource]) {
-                delete rewards[resource];
-            }
-        });
+        const rewards = getTotalQuestsRewards(quests);
 
         return (
             <>
