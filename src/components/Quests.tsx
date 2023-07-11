@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
+    Alert,
+    AlertIcon,
     Box,
     Flex,
     Image,
@@ -402,7 +404,6 @@ function Quests() {
                             </video>
                         </Flex>
                     </Flex>
-
                     <Flex mt={{ md: 5, lg: 8 }} mb={{ md: 4, lg: 7 }}>
                         {Object.keys(currentQuest.requirements).map((resource) => (
                             <Flex key={resource} width="102px" justifyContent="center">
@@ -414,7 +415,6 @@ function Quests() {
                             </Flex>
                         ))}
                     </Flex>
-
                     <Box mb={2}>
                         {/* Normal - The quest hasn't started */}
                         {isQuestDefault() && (
@@ -451,9 +451,10 @@ function Quests() {
                     </Box>
 
                     {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
-                        <Flex alignItems="center">
-                            <Text color="redClrs">Quest duration exceeds end of Trial</Text>
-                        </Flex>
+                        <Alert status="error">
+                            <AlertIcon />
+                            Quest duration exceeds end of Trial
+                        </Alert>
                     )}
 
                     <Box>
