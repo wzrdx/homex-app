@@ -417,7 +417,7 @@ function Quests() {
                     </Flex>
                     <Box mb={2}>
                         {/* Normal - The quest hasn't started */}
-                        {isQuestDefault() && (
+                        {isQuestDefault() && canBeCompleted() && (
                             <ActionButton
                                 isLoading={
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
@@ -448,14 +448,14 @@ function Quests() {
                                 <Text>Claim Rewards</Text>
                             </ActionButton>
                         )}
-                    </Box>
 
-                    {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
-                        <Alert status="error">
-                            <AlertIcon />
-                            Quest duration exceeds end of Trial
-                        </Alert>
-                    )}
+                        {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
+                            <Alert status="error">
+                                <AlertIcon />
+                                Quest duration exceeds end of Trial
+                            </Alert>
+                        )}
+                    </Box>
 
                     <Box>
                         {isQuestDefault() && (
