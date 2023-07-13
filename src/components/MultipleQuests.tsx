@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
+    Alert,
+    AlertIcon,
     Checkbox,
     CheckboxGroup,
     Flex,
@@ -277,41 +279,61 @@ function MultipleQuests() {
 
             <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
             <ModalBody>
-                <Flex mb={2} px={2} justifyContent="space-between" alignItems="center">
-                    <Checkbox isChecked={areAllQuestsSelected} isIndeterminate={isIndeterminate} onChange={() => onSelectAll()}>
-                        Select all
-                    </Checkbox>
+                {_(QUESTS)
+                    .filter((quest) => isQuestDefault(quest))
+                    .isEmpty() ? (
+                    <Alert status="warning">
+                        <AlertIcon />
+                        No available quests
+                    </Alert>
+                ) : (
+                    <>
+                        <Flex mb={2} px={2} justifyContent="space-between" alignItems="center">
+                            <Checkbox
+                                isChecked={areAllQuestsSelected}
+                                isIndeterminate={isIndeterminate}
+                                onChange={() => onSelectAll()}
+                            >
+                                Select all
+                            </Checkbox>
 
-                    <TimeIcon fontSize="17px" />
-                </Flex>
+                            <TimeIcon fontSize="17px" />
+                        </Flex>
 
-                <CheckboxGroup value={selectedQuestIds} onChange={onCheckboxGroupChange} colorScheme="blue" defaultValue={[]}>
-                    <Stack
-                        spacing={{ md: 1, lg: 1.5 }}
-                        direction="column"
-                        maxHeight={{ md: '354px', lg: '500px' }}
-                        overflowY="auto"
-                    >
-                        {_(QUESTS)
-                            .filter((quest) => isQuestDefault(quest))
-                            .map((quest) => (
-                                <Checkbox
-                                    className="Detailed-Quest-Checkbox"
-                                    key={quest.id}
-                                    value={quest.id.toString()}
-                                    transition="all 0.05s ease-in"
-                                    backgroundColor="#364255"
-                                    _hover={{ backgroundColor: '#3c485c' }}
-                                    px={2}
-                                    py={{ md: 0.5, lg: 1 }}
-                                    borderRadius="2px"
-                                >
-                                    <DetailedQuestCard quest={quest} />
-                                </Checkbox>
-                            ))
-                            .value()}
-                    </Stack>
-                </CheckboxGroup>
+                        <CheckboxGroup
+                            value={selectedQuestIds}
+                            onChange={onCheckboxGroupChange}
+                            colorScheme="blue"
+                            defaultValue={[]}
+                        >
+                            <Stack
+                                spacing={{ md: 1, lg: 1.5 }}
+                                direction="column"
+                                maxHeight={{ md: '354px', lg: '500px' }}
+                                overflowY="auto"
+                            >
+                                {_(QUESTS)
+                                    .filter((quest) => isQuestDefault(quest))
+                                    .map((quest) => (
+                                        <Checkbox
+                                            className="Detailed-Quest-Checkbox"
+                                            key={quest.id}
+                                            value={quest.id.toString()}
+                                            transition="all 0.05s ease-in"
+                                            backgroundColor="#364255"
+                                            _hover={{ backgroundColor: '#3c485c' }}
+                                            px={2}
+                                            py={{ md: 0.5, lg: 1 }}
+                                            borderRadius="2px"
+                                        >
+                                            <DetailedQuestCard quest={quest} />
+                                        </Checkbox>
+                                    ))
+                                    .value()}
+                            </Stack>
+                        </CheckboxGroup>
+                    </>
+                )}
 
                 <Flex alignItems="center" mt={6}>
                     <Text layerStyle="header2" mr={1}>

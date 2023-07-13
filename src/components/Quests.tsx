@@ -242,6 +242,7 @@ function Quests() {
 
         if (_.isEmpty(completedQuestsIds)) {
             displayToast('error', `Unable to claim rewards`, 'No quests can be completed yet', 'orangered');
+            setCompleteAllLoading(false);
             return;
         }
 
@@ -256,8 +257,8 @@ function Quests() {
         }));
 
         const gasLimit: number =
-            11000000 +
-            250000 * otherOngoingQuestsCount +
+            10000000 +
+            300000 * otherOngoingQuestsCount +
             (rewardedResources.includes('tickets') ? 1500000 : 0) +
             250000 * _.size(rewardedResources) +
             250000 * _.size(completedQuests);
