@@ -36,7 +36,7 @@ import { BigNumber } from 'bignumber.js';
 
 let ID = 0;
 
-const BASE_DURATION = 1; // minutes TODO: 60
+const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
