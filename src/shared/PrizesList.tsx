@@ -21,6 +21,7 @@ import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../servic
 import {
     EGLD_DENOMINATION,
     ELDERS_COLLECTION_ID,
+    ENERGY_TOKEN_ID,
     ESSENCE_TOKEN_ID,
     TICKETS_TOKEN_ID,
     TOKEN_DENOMINATION,
@@ -186,6 +187,17 @@ function PrizesList({ id }) {
                         );
                     }
 
+                    if (operation.type === 'esdt' && operation.identifier === ENERGY_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.energy.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.energy.icon} />
+                            </Flex>
+                        );
+                    }
+
                     return {
                         username,
                         prize,
@@ -212,82 +224,81 @@ function PrizesList({ id }) {
         <Flex height={`calc(100% - ${height}px)`} justifyContent="center">
             {isLoading ? (
                 <Spinner mt={6} />
+            ) : _.isEmpty(hashes) ? (
+                <Flex justifyContent="center" alignItems="flex-start">
+                    <Alert status="warning">
+                        <AlertIcon />
+                        The raffle prizes have not been drawn yet
+                    </Alert>
+                </Flex>
             ) : (
                 <Flex minW="560px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
-                        {_.isEmpty(winners) ? (
-                            <Flex justifyContent="center">
-                                <Spinner />
+                        <Flex alignItems="flex-start" justifyContent="space-between">
+                            <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
+                                <Flex alignItems="center">
+                                    <InfoOutlineIcon />
+                                    <Text ml={1.5}>View Transactions</Text>
+                                </Flex>
+                            </ActionButton>
+
+                            <Flex alignItems="center">
+                                <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
+                                <Text>{format(raffle?.timestamp as Date, 'PPPP')}</Text>
                             </Flex>
-                        ) : (
-                            <>
-                                <Flex alignItems="flex-start" justifyContent="space-between">
-                                    <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
-                                        <Flex alignItems="center">
-                                            <InfoOutlineIcon />
-                                            <Text ml={1.5}>View Transactions</Text>
-                                        </Flex>
-                                    </ActionButton>
+                        </Flex>
 
-                                    <Flex alignItems="center">
-                                        <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                        <Text>{format(raffle?.timestamp as Date, 'PPPP')}</Text>
+                        {isWinner() && (
+                            <Flex mt={4} backgroundColor="#000000e3">
+                                <Alert status="success">
+                                    <AlertIcon />
+                                    <Flex ml={1} flexDir="column">
+                                        <Text>Congratulations!</Text>
+                                        <Text>You are one of the winners</Text>
                                     </Flex>
-                                </Flex>
-
-                                {isWinner() && (
-                                    <Flex mt={4} backgroundColor="#000000e3">
-                                        <Alert status="success">
-                                            <AlertIcon />
-                                            <Flex ml={1} flexDir="column">
-                                                <Text>Congratulations!</Text>
-                                                <Text>You are one of the winners</Text>
-                                            </Flex>
-                                        </Alert>
-                                    </Flex>
-                                )}
-
-                                {/* Header */}
-                                <Flex mb={1} mt={6}>
-                                    {_.map(COLUMNS, (column: any, index: number) => (
-                                        <Text
-                                            key={index}
-                                            style={column.style}
-                                            textAlign={column.align}
-                                            fontWeight={600}
-                                            fontSize="17px"
-                                        >
-                                            {column.name}
-                                        </Text>
-                                    ))}
-                                </Flex>
-
-                                <Flex width="100%" flexDir="column">
-                                    {_.map(winners, (winner, index) => (
-                                        <Flex key={index} width="100%" alignItems="center" height="28px" mt={2}>
-                                            <Text style={COLUMNS[0].style}>{index + 1}</Text>
-
-                                            <Text
-                                                pr={6}
-                                                layerStyle="ellipsis"
-                                                style={COLUMNS[1].style}
-                                                color={winner.address === userAddress ? 'redClrs' : '#F5F5F5'}
-                                            >
-                                                {winner.username}
-                                            </Text>
-
-                                            <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
-                                                {_.map(winner.prizes, (prize, prizeIndex) => (
-                                                    <Box ml={3} key={prizeIndex}>
-                                                        {prize}
-                                                    </Box>
-                                                ))}
-                                            </Flex>
-                                        </Flex>
-                                    ))}
-                                </Flex>
-                            </>
+                                </Alert>
+                            </Flex>
                         )}
+
+                        {/* Header */}
+                        <Flex mb={1} mt={6}>
+                            {_.map(COLUMNS, (column: any, index: number) => (
+                                <Text
+                                    key={index}
+                                    style={column.style}
+                                    textAlign={column.align}
+                                    fontWeight={600}
+                                    fontSize="17px"
+                                >
+                                    {column.name}
+                                </Text>
+                            ))}
+                        </Flex>
+
+                        <Flex width="100%" flexDir="column">
+                            {_.map(winners, (winner, index) => (
+                                <Flex key={index} width="100%" alignItems="center" height="28px" mt={2}>
+                                    <Text style={COLUMNS[0].style}>{index + 1}</Text>
+
+                                    <Text
+                                        pr={6}
+                                        layerStyle="ellipsis"
+                                        style={COLUMNS[1].style}
+                                        color={winner.address === userAddress ? 'redClrs' : '#F5F5F5'}
+                                    >
+                                        {winner.username}
+                                    </Text>
+
+                                    <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
+                                        {_.map(winner.prizes, (prize, prizeIndex) => (
+                                            <Box ml={3} key={prizeIndex}>
+                                                {prize}
+                                            </Box>
+                                        ))}
+                                    </Flex>
+                                </Flex>
+                            ))}
+                        </Flex>
                     </Flex>
                 </Flex>
             )}
