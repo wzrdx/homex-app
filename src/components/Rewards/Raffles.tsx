@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Flex } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Flex, Spinner } from '@chakra-ui/react';
 import RaffleCard from '../../shared/RaffleCard';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 function Raffles() {
     const location = useLocation();
 
+    const [isLoading, setLoading] = useState<boolean>(true);
     const [localRaffles, setLocalRaffles] = useState<Competition[]>();
 
     const { raffles } = useRewardsContext() as RewardsContextType;
@@ -22,18 +23,34 @@ function Raffles() {
     }, [location, raffles]);
 
     const init = async (pathname: string) => {
+        setLoading(true);
         const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
         setLocalRaffles(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
+        setLoading(false);
     };
 
     return (
         <Flex flexDir="column">
             <Flex justifyContent="center">
-                {_.map(localRaffles, (raffle, index) => (
-                    <Box key={index} px={6}>
-                        <RaffleCard id={raffle.id} timestamp={raffle.timestamp} tickets={raffle.tickets} _raffles={raffles} />
-                    </Box>
-                ))}
+                {isLoading ? (
+                    <Spinner />
+                ) : _.isEmpty(localRaffles) ? (
+                    <Alert status="warning">
+                        <AlertIcon />
+                        There are no raffles to display
+                    </Alert>
+                ) : (
+                    _.map(localRaffles, (raffle, index) => (
+                        <Box key={index} px={6}>
+                            <RaffleCard
+                                id={raffle.id}
+                                timestamp={raffle.timestamp}
+                                tickets={raffle.tickets}
+                                _raffles={raffles}
+                            />
+                        </Box>
+                    ))
+                )}
             </Flex>
         </Flex>
     );

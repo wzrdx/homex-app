@@ -232,7 +232,7 @@ function PrizesList({ id }) {
                     </Alert>
                 </Flex>
             ) : (
-                <Flex minW="560px">
+                <Flex minW="600px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         <Flex alignItems="flex-start" justifyContent="space-between">
                             <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
