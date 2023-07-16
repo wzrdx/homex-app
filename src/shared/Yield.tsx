@@ -39,16 +39,22 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
             setTravelerEntries(travelerEntries);
 
             // Elders
-            let { label: elderLabel, color: elderColor, energyYield: elderYield } = getRarityClassInfo(RarityClass.Elder);
+            let others: Array<YieldEntry> = [];
 
-            const elderEntry = {
-                count: _.size(elders),
-                yield: elderYield,
-                color: elderColor,
-                label: elderLabel,
-            };
+            if (!_.isEmpty(elders)) {
+                let { label: elderLabel, color: elderColor, energyYield: elderYield } = getRarityClassInfo(RarityClass.Elder);
 
-            setOtherEntries([elderEntry]);
+                const elderEntry = {
+                    count: _.size(elders),
+                    yield: elderYield,
+                    color: elderColor,
+                    label: elderLabel,
+                };
+
+                others = [elderEntry];
+            }
+
+            setOtherEntries(others);
         }
     }, [travelers, elders, rarities]);
 
