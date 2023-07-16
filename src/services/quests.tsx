@@ -8,22 +8,20 @@ import Quest_6 from '../assets/quests/6.jpg';
 import Quest_7 from '../assets/quests/7.jpg';
 import Quest_8 from '../assets/quests/8.jpg';
 import Quest_9 from '../assets/quests/9.jpg';
-
 import Quest_10 from '../assets/quests/10.jpg';
 import Quest_11 from '../assets/quests/11.jpg';
 import Quest_12 from '../assets/quests/12.jpg';
 import Quest_13 from '../assets/quests/13.jpg';
 import Quest_14 from '../assets/quests/14.jpg';
-import Quest_15 from '../assets/quests/15.jpg';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
 import { Quest } from '../types';
 
-import SmokeAndClouds from '../assets/quests/videos/1.webm';
-import LightRays from '../assets/quests/videos/3-1.webm';
-import DesertSmoke from '../assets/quests/videos/8-1.webm';
-import Particles from '../assets/quests/videos/particles.webm';
+// import SmokeAndClouds from '../assets/quests/videos/1.webm';
+// import LightRays from '../assets/quests/videos/3-1.webm';
+// import DesertSmoke from '../assets/quests/videos/8-1.webm';
+// import Particles from '../assets/quests/videos/particles.webm';
 
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
@@ -47,12 +45,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Frozen Summit',
+        name: 'The Spaceship',
         description: (
             <Text layerStyle="questDescription">
-                Scale the treacherous Frozen Peak, where icy winds howl relentlessly. Seek the legendary Frostbite Flower, a
-                rare bloom said to possess healing properties. Brave freezing temperatures and overcome icy challenges to
-                retrieve the flower.
+                Seek scattered starship fragments across the city. Gather vital pieces to mend the vessel's wounded hull. Each
+                discovery fuels hope as Travelers venture through Ut wonders in a mission to cross into a parallel dimension.
             </Text>
         ),
         requirements: {
@@ -66,24 +63,18 @@ export const QUESTS: any[] = [
                 value: 2 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'soft-light',
-            },
-        ],
+        layers: [],
         image: Quest_1,
     },
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Windswept',
+        name: 'Interdimensional',
         description: (
             <Text layerStyle="questDescription">
-                Ascend the towering rocky hill, perched at great heights where fierce winds reign. Inspired by ancient
-                architects, brave citizens constructed wind power plants harnessing the gusts' might. These plants generate
-                vital energy, sustaining the entire planet. Your mission is to retrieve the coveted Turbine Sketches, the
-                blueprints that reveal the secrets of these ingenious wind turbines.
+                Empowered by your restored starship, you transcend the cosmos, embarking on a perilous voyage into a parallel
+                dimension. Now, as part of an unified crew, you face a divergent mission, distinct from your prior roles as
+                Traveler.
             </Text>
         ),
         requirements: {
@@ -97,12 +88,7 @@ export const QUESTS: any[] = [
                 value: 12 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: SmokeAndClouds,
-                mode: 'normal',
-            },
-        ],
+        layers: [],
         image: Quest_2,
     },
 
@@ -110,12 +96,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Antrum Region',
+        name: 'The Mission',
         description: (
             <Text layerStyle="questDescription">
-                Venture into the vast Antrum Region, a cavernous mountain housing a bustling city. Millions rely on a narcotic
-                air, generated from the depths, to survive. Your mission is to secure the elusive Narcotic of the Caves,
-                essential for sustaining life underground.
+                The mission was nothing short of audacious—a journey that transcended the boundaries of Earth itself. As the
+                starship soared through the infinite abyss of space, your crew of intrepid explorers braced themselves for the
+                unprecedented challenge that lay ahead. Their destination: Mars, the enigmatic crimson jewel of the cosmos.
+                Their purpose: to pave the way for the imminent dawn of human colonization.
             </Text>
         ),
         requirements: {
@@ -129,23 +116,20 @@ export const QUESTS: any[] = [
                 value: 1 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'soft-light',
-            },
-        ],
+        layers: [],
         image: Quest_3,
     },
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Avalon's Embrace",
+        name: 'The Crew',
         description: (
             <Text layerStyle="questDescription">
-                Journey to the majestic Avalon Range, a realm of towering peaks and breathtaking vistas. Ascend the mythical
-                peak known as Mount Celestia, where the fabled Celestial Scepter is said to reside. Conquer perilous trails,
-                face elemental trials, and claim the scepter.
+                The crew stood united, a trio bound by purpose and determination. With only three souls aboard the vessel, each
+                role held immense significance. The commander, a beacon of leadership, guided their path through the cosmic
+                abyss. The first officer, skilled and resolute, ensured the smooth operation of their interstellar voyage. And
+                the science officer, ever curious and analytical, delved into the mysteries of the cosmos, seeking answers that
+                would shape their destiny and yourself.
             </Text>
         ),
         requirements: {
@@ -159,12 +143,7 @@ export const QUESTS: any[] = [
                 value: 6 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'normal',
-            },
-        ],
+        layers: [],
         image: Quest_4,
     },
 
@@ -172,12 +151,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'enchanting',
-        name: 'Cavesong Orb',
+        name: 'The Monolith',
         description: (
             <Text layerStyle="questDescription">
-                Explore the enigmatic Singing Cave, where mystical winds create ethereal melodies. A slumbering ancient creature
-                dwells within the mountain's depths. Retrieve the Cavesong Orb, said to hold the essence of the cave's
-                enchanting melody.
+                Bathed in the eerie glow of the Martian sun, the crew's eyes widened in awe as they stumbled upon an enigma that
+                defied all reason. Before them stood a colossal monolith, an otherworldly sentinel that beckoned with silent
+                allure. Towering over the desolate landscape, the monolith exuded an ethereal energy, its surface composed of a
+                gleaming, unfamiliar alloy that defied earthly comprehension.
             </Text>
         ),
         requirements: {
@@ -196,22 +176,18 @@ export const QUESTS: any[] = [
                 value: 4 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'soft-light',
-            },
-        ],
+        layers: [],
         image: Quest_5,
     },
     {
         id: getId(),
         type: 'enchanting',
-        name: 'Crystal Caravan',
+        name: 'The Martifacts',
         description: (
             <Text layerStyle="questDescription">
-                Join the Crystal Caravan on a perilous journey through rugged mountain terrain. Safeguard the precious cargo of
-                sparkling crystals and rare items destined for the bustling market of Menhir.
+                Embark on a trade expedition across the rust-hued terrain of Mars. Unearth valuable Martian relics and exchange
+                them with local settlers for vital resources. Unveil the secrets of this ancient planet as you barter your way
+                to prosperity.
             </Text>
         ),
         requirements: {
@@ -230,12 +206,7 @@ export const QUESTS: any[] = [
                 value: 8 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'soft-light',
-            },
-        ],
+        layers: [],
         image: Quest_6,
     },
 
@@ -243,13 +214,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Mountain Harvest',
+        name: 'The Stellar Harvest',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a quest to gather the exotic mountain items. Traverse the steep slopes and hidden valleys to find rare
-                treasures. From the revitalizing Evergreen Moss to the soothing Moonshadow stones, collect a diverse assortment.
-                Return to the mountain village and trade these valuable artifacts for rare potions, enchanted talismans, or
-                other coveted items.
+                Venture into the breathtaking Martian highlands, where the atmosphere holds unique crystalline formations known
+                as Atmosphere Gems. These exquisite gems, formed by the interaction of Mars' atmospheric gases, possess
+                mesmerizing colors and unparalleled beauty. Brave rugged Martian landscapes, traverse treacherous canyons, and
+                overcome atmospheric anomalies to gather these remarkable gems.
             </Text>
         ),
         requirements: {
@@ -265,24 +236,18 @@ export const QUESTS: any[] = [
                 value: 1.5 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: SmokeAndClouds,
-                mode: 'normal',
-            },
-        ],
+        layers: [],
         image: Quest_7,
     },
     {
         id: getId(),
         type: 'divination',
-        name: "Traveler's Bounty",
+        name: 'The Red Market',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a quest to recover ancient relics hidden within the majestic mountain range. Explore forgotten
-                temples, treacherous caves, and crumbling ruins to find these valuable artifacts. Return to Menhir and engage in
-                a lively trade, offering these remarkable relics to collectors, scholars, and adventurers seeking their hidden
-                powers.
+                Join the Red Planet expedition on a daring mission to explore the mysteries of Mars. Collect samples of Martian
+                rocks and soil and search for signs of life. Avoid sandstorms and make it back to the spaceship. Deliver the
+                valuable data safely and earn the respect of the crew.
             </Text>
         ),
         requirements: {
@@ -298,12 +263,7 @@ export const QUESTS: any[] = [
                 value: 4.5 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'soft-light',
-            },
-        ],
+        layers: [],
         image: Quest_8,
     },
 
@@ -311,12 +271,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Mountain Sage Smoke',
+        name: 'The Mining Operation',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a daring journey up Almur Mount, a majestic peak covered in lush vegetation. Seek out the sacred
-                Mountain Sage, a powerful plant that purifies the air. Traverse treacherous trails, conquer rugged terrain, and
-                retrieve the herb to bring its cleansing essence to the mountain dwellers.
+                Join the Martian Mining Operation on a lucrative venture to extract rare minerals from the depths of Mars. Drill
+                through the hard crust and blast away obstacles. Protect the precious cargo of ores and metals from raiders and
+                rival corporations. Deliver the valuable minerals safely and enjoy a hefty profit.
             </Text>
         ),
         requirements: {
@@ -330,24 +290,20 @@ export const QUESTS: any[] = [
                 value: 48 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: Particles,
-                mode: 'overlay',
-            },
-        ],
+        layers: [],
         image: Quest_9,
     },
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Frost Crystal',
+        name: 'The Cave',
         description: (
             <Text layerStyle="questDescription">
-                Explore the hidden realm of Glacial Peaks, where icy wonders await. Your mission is to retrieve the legendary
-                Frost Crystal, a rare artifact with the power to freeze and purify water. Journey through icy tunnels, conquer
-                frosty challenges, and claim the crystal. Return to Menhir and use its magic to restore purity to frozen
-                springs.
+                With bated breath, the crew ventured forth, tracing the trail of inky black sludge that oozed from the enigmatic
+                monolith. The path led them deep into an underground labyrinth, a hidden realm beneath the Martian surface. Each
+                step echoed with a sense of foreboding as they descended further into the unknown, guided by the eerie glow of
+                phosphorescent moss clinging to the damp cave walls. The air grew heavy with anticipation, their senses
+                heightened by the faint whispers of ancient mysteries lurking just beyond their grasp.
             </Text>
         ),
         requirements: {
@@ -361,23 +317,21 @@ export const QUESTS: any[] = [
                 value: 24 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'normal',
-            },
-        ],
+        layers: [],
         image: Quest_10,
     },
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Cherry Pilgrimage',
+        name: 'The Creators',
         description: (
             <Text layerStyle="questDescription">
-                Scale the frozen heights of Pilgrims Peak, braving snowstorms on a sacred journey. Reach the summit's temple,
-                where a blooming cherry tree stands. Retrieve the cherished Mountain Cherry Ritual, igniting the fragrant wood
-                to foster serenity and connection during pilgrims' rituals.
+                An enigmatic being emerged from the shadows, a fusion of man and machine. Its form, once human, now intertwined
+                with cybernetic enhancements, spoke of a lineage that spanned eons. Time had sculpted this entity into a
+                custodian, a sentinel entrusted with a purpose. It revealed that it had been patiently awaiting the day when
+                humans would traverse the stars and set foot on Mars. The crew, humbled and awestruck, realized that they stood
+                before an emissary of a forgotten epoch, a bridge between worlds that would shape the course of their mission
+                and unravel the tapestry of their own existence.
             </Text>
         ),
         requirements: {
@@ -393,23 +347,21 @@ export const QUESTS: any[] = [
                 value: 18 * BASE_REWARD,
             },
         ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'plus-lighter',
-            },
-        ],
+        layers: [],
         image: Quest_11,
     },
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Volcanic Ashstone',
+        name: 'The Origins',
         description: (
             <Text layerStyle="questDescription">
-                Brave the towering Ramad Volcano, a majestic formation with periodic lava eruptions. Harvesting the lava through
-                mechanized grooves provides continuous energy for Menhir. Your mission is to obtain the coveted Ashstone, a
-                stone infused with compacted volcanic ash.
+                Their civilization, long gone but immortalized through the monoliths, had been the architects of life on Earth.
+                With purposeful intent, they had scattered the seeds of existence across the cosmos, planting the spark of
+                vitality on ten thousand other planets. Each monolith held the power to ignite life, fostering the emergence of
+                diverse species and shaping the tapestry of the universe. The crew's mission, they realized, was not merely an
+                act of exploration but a continuation of a profound legacy, entrusted with the guardianship of life's
+                proliferation.
             </Text>
         ),
         requirements: {
@@ -433,13 +385,45 @@ export const QUESTS: any[] = [
                 value: 8 * BASE_REWARD,
             },
         ],
-        layers: [
+        layers: [],
+        image: Quest_12,
+    },
+    {
+        id: getId(),
+        type: 'alchemy',
+        name: 'The Choice',
+        description: (
+            <Text layerStyle="questDescription">
+                Their collective gaze shifted from the desolate expanse of the cosmos to the dormant monoliths before them. It
+                was a choice that held the power to reshape the very fabric of existence. Stay alone, isolated in the vastness
+                of the universe, or embrace their destiny, becoming the catalysts for life on ten thousand worlds. In that
+                pivotal moment, the crew would need to choose not only their own fate, but the destiny of an unfathomable
+                multitude of worlds, forever intertwining their legacy with the grand tapestry of the cosmos.
+            </Text>
+        ),
+        requirements: {
+            energy: 1 * BASE_COST,
+        },
+        duration: 1 * BASE_DURATION,
+        rewards: [
             {
-                source: Particles,
-                mode: 'soft-light',
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 1 * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 1 * BASE_REWARD,
+            },
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 1 * BASE_REWARD,
             },
         ],
-        image: Quest_12,
+        layers: [],
+        image: Quest_13,
     },
 
     // Final
@@ -447,12 +431,13 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Crystal Blade',
+        name: 'The Return',
         description: (
             <Text layerStyle="questDescription">
-                Retrieve the Crystal Blade artifact guarded by the harsh winds in the treacherous mountain pass. Use your skills
-                to navigate the dangerous terrain and overcome obstacles to acquire the powerful weapon and bring it back to the
-                city to contribute to its rebirth.
+                Embark on a mind-bending cosmic odyssey as you warp through space-time, guided by vivid visions from your
+                Martian experiences. Carry the orb, a crystalline artifact infused with the essence of another world, to Menhir.
+                Witness the merging of realms as the city awakens to its true destiny. Prepare for a transcendent journey that
+                will reshape reality itself.
             </Text>
         ),
         requirements: {
@@ -469,81 +454,9 @@ export const QUESTS: any[] = [
                 value: 1,
             },
         ],
-        layers: [
-            {
-                source: LightRays,
-                mode: 'normal',
-            },
-        ],
+        layers: [],
         image: Quest_13,
     },
-    // {
-    //     id: getId(),
-    //     type: 'final',
-    //     isFinal: true,
-    //     name: "Frostfall's Embrace",
-    //     description: (
-    //         <Text layerStyle="questDescription">
-    //             In the unforgiving, icy expanse of Sundsten, a jewel resides deep within the heart of the Frostbound Wyrm.
-    //             Venture into this frozen wasteland, slay the sacred beast and retrieve the jewel for the glory of Menhir.
-    //         </Text>
-    //     ),
-    //     requirements: {
-    //         energy: 266 * BASE_COST,
-    //         herbs: 67 * BASE_COST,
-    //         gems: 34 * BASE_COST,
-    //         essence: 16 * BASE_COST,
-    //     },
-    //     duration: 8 * BASE_DURATION,
-    //     rewards: [
-    //         {
-    //             resource: 'tickets',
-    //             name: 'Tickets',
-    //             value: 1,
-    //         },
-    //     ],
-    //     layers: [
-    //         {
-    //             source: SmokeAndClouds,
-    //             mode: 'normal',
-    //         },
-    //     ],
-    //     image: Quest_14,
-    // },
-    // {
-    //     id: getId(),
-    //     type: 'final',
-    //     isFinal: true,
-    //     name: 'Veil of Visions',
-    //     description: (
-    //         <Text layerStyle="questDescription">
-    //             Uncover the ethereal mysteries of the future by consuming the sacred white dust, Cocaineum Sanctum. This rare
-    //             substance grants a temporary surge of stamina and energy, unlocking fleeting visions of the future. Seek out
-    //             this divine natural resource within the frozen regions of Sundsten. Use with caution as it can cause addiction.
-    //         </Text>
-    //     ),
-    //     requirements: {
-    //         energy: 2 * 266 * BASE_COST,
-    //         herbs: 2 * 67 * BASE_COST,
-    //         gems: 2 * 34 * BASE_COST,
-    //         essence: 2 * 16 * BASE_COST,
-    //     },
-    //     duration: 4 * BASE_DURATION,
-    //     rewards: [
-    //         {
-    //             resource: 'tickets',
-    //             name: 'Tickets',
-    //             value: 2,
-    //         },
-    //     ],
-    //     layers: [
-    //         {
-    //             source: LightRays,
-    //             mode: 'normal',
-    //         },
-    //     ],
-    //     image: Quest_15,
-    // },
 ];
 
 export const getQuest = (id = 1): Quest => {

@@ -43,8 +43,8 @@ import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
 
-const LARGE_FRAME_SIZE = 326;
-const MEDIUM_FRAME_SIZE = 240;
+const LARGE_FRAME_SIZE = 426;
+const MEDIUM_FRAME_SIZE = 350;
 
 const GRACE_PERIOD_INTERVAL = 24;
 
@@ -382,27 +382,15 @@ function Quests() {
                             pointerEvents="none"
                         />
 
-                        {map(currentQuest.layers, (layer) => (
-                            <VideoLayer source={layer.source} mode={layer.mode} key={layer.source} />
-                        ))}
-
                         <Flex layerStyle="absoluteCentered">
                             <Image
                                 src={getQuestImage(currentQuest.id)}
                                 alt="Quest-Image"
+                                transform="scale(0.8)"
                                 zIndex={2}
-                                transform="scale(1.2)"
-                                mt="16px"
-                                clipPath="polygon(50% 3%, 69% 10%, 82% 27%, 82% 95%, 18% 95%, 18% 27%, 31% 10%)"
                                 userSelect="none"
                                 pointerEvents="none"
                             />
-                        </Flex>
-
-                        <Flex layerStyle="absoluteCentered" zIndex={1} userSelect="none" pointerEvents="none">
-                            <video style={{ maxWidth: '114%' }} autoPlay={true} muted={true} loop={true}>
-                                <source src={getFrameGlow()} type="video/webm" />
-                            </video>
                         </Flex>
                     </Flex>
                     <Flex mt={{ md: 5, lg: 8 }} mb={{ md: 4, lg: 7 }}>
@@ -510,7 +498,14 @@ function Quests() {
 
                     <Box>{currentQuest.description}</Box>
 
-                    <Text fontSize="20px" lineHeight="22px" fontWeight={600} letterSpacing="0.5px" color="header.gold" mt={10}>
+                    <Text
+                        fontSize="20px"
+                        lineHeight="22px"
+                        fontWeight={600}
+                        letterSpacing="0.5px"
+                        color="header.gold"
+                        mt={{ md: 5, lg: 10 }}
+                    >
                         Quest rewards
                     </Text>
 
