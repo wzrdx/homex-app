@@ -17,9 +17,7 @@ import EmptyPNG from '../assets/empty.png';
 import BannerLargeLeft from '../assets/images/banner_large_left.png';
 import BannerLargeRight from '../assets/images/banner_large_right.png';
 import EXOTicket from '../assets/images/exo.png';
-
-// import BannerSmallLeft from '../assets/images/banner_small_left.png';
-// import BannerSmallRight from '../assets/images/banner_small_right.png';
+import LogoEXO from '../assets/logo_exo.png';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -41,7 +39,6 @@ export const getEmptyPNG = () => EmptyPNG;
 
 export const getBannerLargeLeft = () => BannerLargeLeft;
 export const getBannerLargeRight = () => BannerLargeRight;
-export const getEXOTicket = () => EXOTicket;
 
-// export const getBannerSmallLeft = () => BannerSmallLeft;
-// export const getBannerSmallRight = () => BannerSmallRight;
+export const getEXOTicket = () => EXOTicket;
+export const getEXOLogo = () => LogoEXO;

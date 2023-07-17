@@ -13,6 +13,7 @@ import Quest_11 from '../assets/quests/11.jpg';
 import Quest_12 from '../assets/quests/12.jpg';
 import Quest_13 from '../assets/quests/13.jpg';
 import Quest_14 from '../assets/quests/14.jpg';
+import Quest_15 from '../assets/quests/15.jpg';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
@@ -80,7 +81,7 @@ export const QUESTS: any[] = [
         requirements: {
             energy: 6 * BASE_COST,
         },
-        duration: 6 * 1.25 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
@@ -91,11 +92,9 @@ export const QUESTS: any[] = [
         layers: [],
         image: Quest_2,
     },
-
-    // Jewelcrafting
     {
         id: getId(),
-        type: 'jewelcrafting',
+        type: 'herbalism',
         name: 'The Mission',
         description: (
             <Text layerStyle="questDescription">
@@ -106,14 +105,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 1 * BASE_COST,
+            energy: 12 * BASE_COST,
         },
-        duration: BASE_DURATION,
+        duration: 8 * BASE_DURATION,
         rewards: [
             {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 1 * BASE_REWARD,
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 24 * BASE_REWARD,
             },
         ],
         layers: [],
@@ -121,7 +120,7 @@ export const QUESTS: any[] = [
     },
     {
         id: getId(),
-        type: 'jewelcrafting',
+        type: 'herbalism',
         name: 'The Crew',
         description: (
             <Text layerStyle="questDescription">
@@ -133,24 +132,24 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 6 * BASE_COST,
+            energy: 24 * BASE_COST,
         },
-        duration: 6 * 1.25 * BASE_DURATION,
+        duration: 12 * BASE_DURATION,
         rewards: [
             {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 6 * BASE_REWARD,
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 48 * BASE_REWARD,
             },
         ],
         layers: [],
         image: Quest_4,
     },
 
-    // Enchanting
+    // Jewelcrafting
     {
         id: getId(),
-        type: 'enchanting',
+        type: 'jewelcrafting',
         name: 'The Monolith',
         description: (
             <Text layerStyle="questDescription">
@@ -161,19 +160,14 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 8 * BASE_COST,
+            energy: 1 * BASE_COST,
         },
-        duration: 8 * BASE_DURATION,
+        duration: 1 * BASE_DURATION,
         rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 8 * BASE_REWARD,
-            },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 4 * BASE_REWARD,
+                value: 1 * BASE_REWARD,
             },
         ],
         layers: [],
@@ -181,7 +175,7 @@ export const QUESTS: any[] = [
     },
     {
         id: getId(),
-        type: 'enchanting',
+        type: 'jewelcrafting',
         name: 'The Martifacts',
         description: (
             <Text layerStyle="questDescription">
@@ -191,29 +185,22 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 16 * BASE_COST,
+            energy: 6 * BASE_COST,
         },
-        duration: 16 * 1.25 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 16 * BASE_REWARD,
-            },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 8 * BASE_REWARD,
+                value: 6 * BASE_REWARD,
             },
         ],
         layers: [],
         image: Quest_6,
     },
-
-    // Divination
     {
         id: getId(),
-        type: 'divination',
+        type: 'jewelcrafting',
         name: 'The Stellar Harvest',
         description: (
             <Text layerStyle="questDescription">
@@ -221,6 +208,58 @@ export const QUESTS: any[] = [
                 as Atmosphere Gems. These exquisite gems, formed by the interaction of Mars' atmospheric gases, possess
                 mesmerizing colors and unparalleled beauty. Brave rugged Martian landscapes, traverse treacherous canyons, and
                 overcome atmospheric anomalies to gather these remarkable gems.
+            </Text>
+        ),
+        requirements: {
+            energy: 12 * BASE_COST,
+        },
+        duration: 8 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 12 * BASE_REWARD,
+            },
+        ],
+        layers: [],
+        image: Quest_7,
+    },
+    {
+        id: getId(),
+        type: 'jewelcrafting',
+        name: 'The Red Market',
+        description: (
+            <Text layerStyle="questDescription">
+                Join the Red Planet expedition on a daring mission to explore the mysteries of Mars. Collect samples of Martian
+                rocks and soil and search for signs of life. Avoid sandstorms and make it back to the spaceship. Deliver the
+                valuable data safely and earn the respect of the crew.
+            </Text>
+        ),
+        requirements: {
+            energy: 24 * BASE_COST,
+        },
+        duration: 12 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 24 * BASE_REWARD,
+            },
+        ],
+        layers: [],
+        image: Quest_8,
+    },
+
+    // Divination
+    {
+        id: getId(),
+        type: 'divination',
+        name: 'The Mining Operation',
+        description: (
+            <Text layerStyle="questDescription">
+                Join the Martian Mining Operation on a lucrative venture to extract rare minerals from the depths of Mars. Drill
+                through the hard crust and blast away obstacles. Protect the precious cargo of ores and metals from raiders and
+                rival corporations. Deliver the valuable minerals safely and enjoy a hefty profit.
             </Text>
         ),
         requirements: {
@@ -233,61 +272,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 1.5 * BASE_REWARD,
-            },
-        ],
-        layers: [],
-        image: Quest_7,
-    },
-    {
-        id: getId(),
-        type: 'divination',
-        name: 'The Red Market',
-        description: (
-            <Text layerStyle="questDescription">
-                Join the Red Planet expedition on a daring mission to explore the mysteries of Mars. Collect samples of Martian
-                rocks and soil and search for signs of life. Avoid sandstorms and make it back to the spaceship. Deliver the
-                valuable data safely and earn the respect of the crew.
-            </Text>
-        ),
-        requirements: {
-            energy: 12 * BASE_COST,
-            herbs: 12 * BASE_COST,
-            gems: 6 * BASE_COST,
-        },
-        duration: 6 * 1.25 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'essence',
-                name: 'Nimbus Orb',
-                value: 4.5 * BASE_REWARD,
-            },
-        ],
-        layers: [],
-        image: Quest_8,
-    },
-
-    // Alchemy
-    {
-        id: getId(),
-        type: 'alchemy',
-        name: 'The Mining Operation',
-        description: (
-            <Text layerStyle="questDescription">
-                Join the Martian Mining Operation on a lucrative venture to extract rare minerals from the depths of Mars. Drill
-                through the hard crust and blast away obstacles. Protect the precious cargo of ores and metals from raiders and
-                rival corporations. Deliver the valuable minerals safely and enjoy a hefty profit.
-            </Text>
-        ),
-        requirements: {
-            energy: 30 * BASE_COST,
-        },
-        duration: 24 * BASE_DURATION,
-        rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 48 * BASE_REWARD,
+                value: 1 * BASE_REWARD,
             },
         ],
         layers: [],
@@ -295,7 +280,7 @@ export const QUESTS: any[] = [
     },
     {
         id: getId(),
-        type: 'alchemy',
+        type: 'divination',
         name: 'The Cave',
         description: (
             <Text layerStyle="questDescription">
@@ -307,14 +292,16 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 30 * BASE_COST,
+            energy: 12 * BASE_COST,
+            herbs: 12 * BASE_COST,
+            gems: 6 * BASE_COST,
         },
-        duration: 24 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 24 * BASE_REWARD,
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 3 * BASE_REWARD,
             },
         ],
         layers: [],
@@ -322,7 +309,7 @@ export const QUESTS: any[] = [
     },
     {
         id: getId(),
-        type: 'alchemy',
+        type: 'divination',
         name: 'The Creators',
         description: (
             <Text layerStyle="questDescription">
@@ -335,16 +322,16 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 48 * BASE_COST,
-            herbs: 48 * BASE_COST,
-            gems: 24 * BASE_COST,
+            energy: 24 * BASE_COST,
+            herbs: 24 * BASE_COST,
+            gems: 12 * BASE_COST,
         },
-        duration: 18 * BASE_DURATION,
+        duration: 8 * BASE_DURATION,
         rewards: [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 18 * BASE_REWARD,
+                value: 6 * BASE_REWARD,
             },
         ],
         layers: [],
@@ -352,7 +339,7 @@ export const QUESTS: any[] = [
     },
     {
         id: getId(),
-        type: 'alchemy',
+        type: 'divination',
         name: 'The Origins',
         description: (
             <Text layerStyle="questDescription">
@@ -365,29 +352,23 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 84 * BASE_COST,
+            energy: 48 * BASE_COST,
+            herbs: 48 * BASE_COST,
+            gems: 24 * BASE_COST,
         },
-        duration: 24 * BASE_DURATION,
+        duration: 12 * BASE_DURATION,
         rewards: [
-            {
-                resource: 'herbs',
-                name: 'Cereus',
-                value: 32 * BASE_REWARD,
-            },
-            {
-                resource: 'gems',
-                name: 'Magnesite',
-                value: 16 * BASE_REWARD,
-            },
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 8 * BASE_REWARD,
+                value: 12 * BASE_REWARD,
             },
         ],
         layers: [],
         image: Quest_12,
     },
+
+    // Alchemy
     {
         id: getId(),
         type: 'alchemy',
@@ -402,31 +383,55 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 1 * BASE_COST,
+            energy: 96 * BASE_COST,
         },
-        duration: 1 * BASE_DURATION,
+        duration: 4 * BASE_DURATION,
         rewards: [
             {
                 resource: 'herbs',
                 name: 'Cereus',
-                value: 1 * BASE_REWARD,
+                value: 48 * BASE_REWARD,
             },
             {
                 resource: 'gems',
                 name: 'Magnesite',
-                value: 1 * BASE_REWARD,
-            },
-            {
-                resource: 'essence',
-                name: 'Nimbus Orb',
-                value: 1 * BASE_REWARD,
+                value: 24 * BASE_REWARD,
             },
         ],
         layers: [],
         image: Quest_13,
     },
 
-    // Final
+    // Missions
+    {
+        id: getId(),
+        type: 'final',
+        isFinal: true,
+        name: 'Cosmic Harmony',
+        description: (
+            <Text layerStyle="questDescription">
+                Return from Mars with the Cosmic Resonators. Activate them across Menhir to unleash a symphony of cosmic energy.
+                Witness the city's transformation into a beacon of harmony and enlightenment. Embrace your interstellar journey
+                and unlock Menhir's cosmic destiny.
+            </Text>
+        ),
+        requirements: {
+            energy: 16 * BASE_COST,
+            herbs: 32 * BASE_COST,
+            gems: 16 * BASE_COST,
+            essence: 12 * BASE_COST,
+        },
+        duration: 8 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'tickets',
+                name: 'Tickets',
+                value: 1,
+            },
+        ],
+        layers: [],
+        image: Quest_14,
+    },
     {
         id: getId(),
         type: 'final',
@@ -441,21 +446,21 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: 4 * BASE_COST,
-            herbs: 16 * BASE_COST,
-            gems: 8 * BASE_COST,
-            essence: 4 * BASE_COST,
+            energy: 2 * 16 * BASE_COST,
+            herbs: 2 * 32 * BASE_COST,
+            gems: 2 * 16 * BASE_COST,
+            essence: 2 * 12 * BASE_COST,
         },
-        duration: 18 * BASE_DURATION,
+        duration: 16 * BASE_DURATION,
         rewards: [
             {
                 resource: 'tickets',
                 name: 'Tickets',
-                value: 1,
+                value: 2,
             },
         ],
         layers: [],
-        image: Quest_13,
+        image: Quest_15,
     },
 ];
 

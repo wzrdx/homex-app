@@ -360,9 +360,6 @@ function Quests() {
                     <Text layerStyle="header1">Jewelcrafting</Text>
                     {getQuestCards('jewelcrafting')}
 
-                    <Text layerStyle="header1">Enchanting</Text>
-                    {getQuestCards('enchanting')}
-
                     <Text layerStyle="header1">Divination</Text>
                     {getQuestCards('divination')}
 
