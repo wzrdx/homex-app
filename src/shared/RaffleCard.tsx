@@ -43,7 +43,7 @@ function RaffleCard({
     const [isButtonLoading, setButtonLoading] = useState(false);
     const [myTickets, setMyTickets] = useState<number>();
 
-    const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
+    const { isRaffleTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { address } = useGetAccountInfo();
 
     // Init
@@ -95,6 +95,9 @@ function RaffleCard({
                 {
                     sessionId,
                     type: TransactionType.JoinRaffle,
+                    data: {
+                        id,
+                    },
                     resolution: TxResolution.UpdateTicketsAndRaffles,
                 },
             ]);
@@ -118,7 +121,7 @@ function RaffleCard({
         >
             <Flex flexDir="column" width="100%" height="260px">
                 {RAFFLES[id - 1].isSingleImage ? (
-                    <Image src={RAFFLES[id - 1].imageSrc} height="100%" />
+                    <Image src={RAFFLES[id - 1].imageSrc} height="100%" userSelect="none" />
                 ) : (
                     _.map(RAFFLES[id - 1].prizes, (prize, index) => (
                         <Flex
@@ -273,7 +276,7 @@ function RaffleCard({
                             isAfter(new Date(), timestamp) ||
                             myTickets === RAFFLE_CAP
                         }
-                        isLoading={isButtonLoading || isTxPending(TransactionType.JoinRaffle)}
+                        isLoading={isButtonLoading || isRaffleTxPending(TransactionType.JoinRaffle, id)}
                         colorScheme="red"
                         onClick={joinRaffle}
                         customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}

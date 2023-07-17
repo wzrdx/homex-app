@@ -11,8 +11,8 @@ function Reward({ image, name, value, icon }) {
                     src={image}
                     alt="Reward"
                     borderRadius="50%"
-                    width="100px"
-                    height="100px"
+                    width="90px"
+                    height="90px"
                     boxShadow="0 0 6px 3px #0000008c"
                     backgroundColor="black"
                 />

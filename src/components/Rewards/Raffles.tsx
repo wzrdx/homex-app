@@ -29,30 +29,41 @@ function Raffles() {
         setLoading(false);
     };
 
+    <Alert status="warning">
+        <AlertIcon />
+        There are no raffles to display
+    </Alert>;
+
     return (
-        <Flex layerStyle="layout" flexDir="column" pr={_.size(localRaffles) > 4 ? 4 : 0} overflowY="auto">
-            <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
-                {isLoading ? (
-                    <Spinner />
-                ) : _.isEmpty(localRaffles) ? (
-                    <Alert status="warning">
-                        <AlertIcon />
-                        There are no raffles to display
-                    </Alert>
-                ) : (
-                    _.map(localRaffles, (raffle, index) => (
-                        <Box key={index}>
-                            <RaffleCard
-                                id={raffle.id}
-                                timestamp={raffle.timestamp}
-                                tickets={raffle.tickets}
-                                _raffles={raffles}
-                            />
+        <>
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <Flex flexDir="column" pr={_.size(localRaffles) > 4 ? 4 : 0} overflowY="auto">
+                    {_.isEmpty(localRaffles) ? (
+                        <Flex justifyContent="center">
+                            <Alert status="warning">
+                                <AlertIcon />
+                                There are no raffles to display
+                            </Alert>
+                        </Flex>
+                    ) : (
+                        <Box layerStyle="layout" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
+                            {_.map(localRaffles, (raffle, index) => (
+                                <Box key={index}>
+                                    <RaffleCard
+                                        id={raffle.id}
+                                        timestamp={raffle.timestamp}
+                                        tickets={raffle.tickets}
+                                        _raffles={raffles}
+                                    />
+                                </Box>
+                            ))}
                         </Box>
-                    ))
-                )}
-            </Box>
-        </Flex>
+                    )}
+                </Flex>
+            )}
+        </>
     );
 }
 
