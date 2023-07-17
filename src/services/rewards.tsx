@@ -100,7 +100,7 @@ export const RAFFLES: any[] = [
     {
         id: getId(),
         prizes: [getTicketsPrize(50)],
-        winners: 10,
+        winners: 5,
     },
 ];
 
