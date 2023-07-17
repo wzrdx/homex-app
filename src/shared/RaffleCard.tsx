@@ -108,7 +108,7 @@ function RaffleCard({
             flexDir="column"
             alignItems="center"
             border="2px solid #fdefce26"
-            minWidth={{ md: '324px', lg: '372px' }}
+            width="322.5px"
             borderRadius="2px"
             overflow="hidden"
             backgroundColor="#12121287"
@@ -116,44 +116,35 @@ function RaffleCard({
             transition="all 0.1s ease-in"
             _hover={{ border: '2px solid #fdefce40' }}
         >
-            <Flex flexDir="column" width="100%" height={{ md: '260px', lg: '372px' }}>
-                {_.map(RAFFLES[id - 1].prizes, (prize, index) => (
-                    <Flex
-                        key={index}
-                        backgroundColor={prize.backgroundColor}
-                        justifyContent="center"
-                        alignItems="center"
-                        userSelect="none"
-                        height="100%"
-                    >
-                        <Flex justifyContent="center" alignItems="center">
+            <Flex flexDir="column" width="100%" height="260px">
+                {RAFFLES[id - 1].isSingleImage ? (
+                    <Image src={RAFFLES[id - 1].imageSrc} height="100%" />
+                ) : (
+                    _.map(RAFFLES[id - 1].prizes, (prize, index) => (
+                        <Flex
+                            key={index}
+                            backgroundColor={prize.backgroundColor}
+                            justifyContent="center"
+                            alignItems="center"
+                            userSelect="none"
+                            height="100%"
+                        >
                             <Flex justifyContent="center" alignItems="center">
-                                <Image src={prize.imageSrc} height={prize.height} alt="Traveler" />
-                            </Flex>
+                                <Flex justifyContent="center" alignItems="center">
+                                    <Image src={prize.imageSrc} height={prize.height} alt="Traveler" />
+                                </Flex>
 
-                            <Text
-                                ml={2.5}
-                                fontSize={{ md: '16px', lg: '18px' }}
-                                textTransform="uppercase"
-                                color={prize.textColor}
-                                fontWeight={600}
-                            >
-                                {prize.text}
-                            </Text>
+                                <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
+                                    {prize.text}
+                                </Text>
+                            </Flex>
                         </Flex>
-                    </Flex>
-                ))}
+                    ))
+                )}
             </Flex>
 
-            <Flex flexDir="column" pb={{ md: 2.5, lg: 3.5 }} width="100%">
-                <Flex
-                    pt={{ md: 2.5, lg: 3.5 }}
-                    pb={{ md: 2.5, lg: 3.5 }}
-                    px={{ md: 3, lg: 4 }}
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="space-between"
-                >
+            <Flex flexDir="column" pb={2.5} width="100%">
+                <Flex pt={2.5} pb={2.5} px={3} width="100%" alignItems="center" justifyContent="space-between">
                     <Flex flexDir="column" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
                         <Text fontWeight={500} letterSpacing="0.25px">
@@ -200,13 +191,7 @@ function RaffleCard({
                             userSelect="none"
                         >
                             <AiOutlineEye fontSize="19px" />
-                            <Text
-                                ml={1}
-                                textTransform="uppercase"
-                                fontWeight={500}
-                                fontSize={{ md: '14px', lg: '15px' }}
-                                letterSpacing="0.25px"
-                            >
+                            <Text ml={1} textTransform="uppercase" fontWeight={500} fontSize="14px" letterSpacing="0.25px">
                                 View details
                             </Text>
                         </Flex>
@@ -215,13 +200,7 @@ function RaffleCard({
             </Flex>
 
             {!isCompleted() && timestamp && (
-                <Flex
-                    pt={{ md: 2.5, lg: 3.5 }}
-                    borderTop="2px solid #fdefce26"
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                >
+                <Flex pt={2.5} borderTop="2px solid #fdefce26" width="100%" alignItems="center" justifyContent="center">
                     <Text textTransform="uppercase" mr={1} fontSize="15px" fontWeight={500} userSelect="none">
                         Ends in
                     </Text>
@@ -237,7 +216,7 @@ function RaffleCard({
             )}
 
             {!isCompleted() && (
-                <Flex pt={{ md: 1, lg: 2 }} pb={{ md: 2, lg: 3 }} alignItems="center">
+                <Flex pt={1} pb={2} alignItems="center">
                     <Box
                         px="1"
                         cursor="pointer"
@@ -249,13 +228,13 @@ function RaffleCard({
                             }
                         }}
                     >
-                        <Box fontSize={{ md: '17px', lg: '19px' }}>
+                        <Box fontSize="17px">
                             <AiOutlineMinus />
                         </Box>
                     </Box>
 
                     <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
-                        <Text textAlign="center" fontSize={{ md: '17px', lg: '18px' }} fontWeight={500} userSelect="none">
+                        <Text textAlign="center" fontSize="17px" fontWeight={500} userSelect="none">
                             {amount}
                         </Text>
                     </Box>
@@ -275,7 +254,7 @@ function RaffleCard({
                             }
                         }}
                     >
-                        <Box fontSize={{ md: '17px', lg: '19px' }}>
+                        <Box fontSize="17px">
                             <AiOutlinePlus />
                         </Box>
                     </Box>

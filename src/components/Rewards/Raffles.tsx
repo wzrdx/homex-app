@@ -30,8 +30,8 @@ function Raffles() {
     };
 
     return (
-        <Flex flexDir="column">
-            <Flex justifyContent="center">
+        <Flex layerStyle="layout" flexDir="column" pr={_.size(localRaffles) > 4 ? 4 : 0} overflowY="auto">
+            <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
                 {isLoading ? (
                     <Spinner />
                 ) : _.isEmpty(localRaffles) ? (
@@ -41,7 +41,7 @@ function Raffles() {
                     </Alert>
                 ) : (
                     _.map(localRaffles, (raffle, index) => (
-                        <Box key={index} px={6}>
+                        <Box key={index}>
                             <RaffleCard
                                 id={raffle.id}
                                 timestamp={raffle.timestamp}
@@ -51,7 +51,7 @@ function Raffles() {
                         </Box>
                     ))
                 )}
-            </Flex>
+            </Box>
         </Flex>
     );
 }

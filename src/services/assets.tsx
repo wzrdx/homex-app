@@ -1,4 +1,4 @@
-import Layout from '../assets/backgrounds/4.jpg';
+import Layout from '../assets/backgrounds/1.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
@@ -13,6 +13,13 @@ import MvxImage from '../assets/multiversx.jpg';
 import MvxLogo from '../assets/logo_x.png';
 import LogoBox from '../assets/logo_box.png';
 import EmptyPNG from '../assets/empty.png';
+
+import BannerLargeLeft from '../assets/images/banner_large_left.png';
+import BannerLargeRight from '../assets/images/banner_large_right.png';
+import EXOTicket from '../assets/images/exo.png';
+
+// import BannerSmallLeft from '../assets/images/banner_small_left.png';
+// import BannerSmallRight from '../assets/images/banner_small_right.png';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -31,3 +38,10 @@ export const getMvxImage = () => MvxImage;
 export const getMvxLogo = () => MvxLogo;
 
 export const getEmptyPNG = () => EmptyPNG;
+
+export const getBannerLargeLeft = () => BannerLargeLeft;
+export const getBannerLargeRight = () => BannerLargeRight;
+export const getEXOTicket = () => EXOTicket;
+
+// export const getBannerSmallLeft = () => BannerSmallLeft;
+// export const getBannerSmallRight = () => BannerSmallRight;

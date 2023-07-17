@@ -3,7 +3,7 @@ import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
-import { getFullTicket } from '../../services/assets';
+import { getBannerLargeLeft, getBannerLargeRight, getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
@@ -175,48 +175,54 @@ function Leaderboard() {
                     <Text ml={2}>Unable to fetch leaderboard</Text>
                 </Flex>
             ) : (
-                <Flex px={6} flexDir="column" overflowY="auto" overflowX="hidden">
-                    {!participants?.length ? (
-                        <Flex flexDir="column" justifyContent="center" alignItems="center">
-                            <Image my={2} height="256px" src={getFullTicket()} />
+                <Flex layerStyle="layout" justifyContent="space-between" overflowY="auto" overflowX="hidden">
+                    <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeLeft()} />
 
-                            <Flex mt={5} maxWidth="464px" flexDir="column" justifyContent="center" alignItems="center">
-                                <Text>No traveler has entered the Battle yet.</Text>
-                                <Text>
-                                    Become the first one by submitting a{' '}
-                                    <Text as="span" color="ticketGold">
-                                        Golden Ticket
+                    <Flex px={6} flexDir="column" overflowY="auto" overflowX="hidden">
+                        {!participants?.length ? (
+                            <Flex flexDir="column" justifyContent="center" alignItems="center">
+                                <Image my={2} height="256px" src={getFullTicket()} />
+
+                                <Flex mt={5} maxWidth="464px" flexDir="column" justifyContent="center" alignItems="center">
+                                    <Text>No traveler has entered the Battle yet.</Text>
+                                    <Text>
+                                        Become the first one by submitting a{' '}
+                                        <Text as="span" color="ticketGold">
+                                            Golden Ticket
+                                        </Text>
+                                        .
                                     </Text>
-                                    .
-                                </Text>
+                                </Flex>
                             </Flex>
-                        </Flex>
-                    ) : (
-                        <Flex mb={1}>
-                            {_.map(COLUMNS, (column: any, index: number) => (
-                                <Text key={index} layerStyle="header2" minWidth={column.width} textAlign={column.align}>
-                                    {column.name}
-                                </Text>
-                            ))}
-                        </Flex>
-                    )}
-
-                    {_.map(participants, (participant: BattleParticipant, index: number) => (
-                        <Flex mt={2} alignItems="center" key={index}>
-                            <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
-
-                            <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
-                                {participant.username}
-                            </Text>
-
-                            <Flex minWidth={COLUMNS[2].width}>
-                                <Text minWidth="24px">{participant.ticketsCount}</Text>
-                                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                        ) : (
+                            <Flex mb={1}>
+                                {_.map(COLUMNS, (column: any, index: number) => (
+                                    <Text key={index} layerStyle="header2" minWidth={column.width} textAlign={column.align}>
+                                        {column.name}
+                                    </Text>
+                                ))}
                             </Flex>
+                        )}
 
-                            <Text width={COLUMNS[3].width}>{participant.quests}</Text>
-                        </Flex>
-                    ))}
+                        {_.map(participants, (participant: BattleParticipant, index: number) => (
+                            <Flex mt={2} alignItems="center" key={index}>
+                                <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
+
+                                <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
+                                    {participant.username}
+                                </Text>
+
+                                <Flex minWidth={COLUMNS[2].width}>
+                                    <Text minWidth="24px">{participant.ticketsCount}</Text>
+                                    <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                                </Flex>
+
+                                <Text width={COLUMNS[3].width}>{participant.quests}</Text>
+                            </Flex>
+                        ))}
+                    </Flex>
+
+                    <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeRight()} />
                 </Flex>
             )}
         </Flex>

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { getFullTicket, getLogoBox, getMvxLogo } from './assets';
+import { getEXOTicket, getFullTicket, getLogoBox, getMvxLogo } from './assets';
 import { RESOURCE_ELEMENTS } from './resources';
 import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
@@ -47,18 +47,47 @@ const getEnergyPrize = (amount: number) => ({
     text: `${amount} ENERGY`,
 });
 
+let ID = 0;
+const getId = () => ++ID;
+
 export const RAFFLES: any[] = [
     {
-        id: 1,
+        id: getId(),
         prizes: [getNFTPrize(2, 'Elders'), getEGLDPrize(25), getTicketsPrize(20)],
     },
     {
-        id: 2,
+        id: getId(),
         prizes: [getNFTPrize(6, 'Travelers'), getEGLDPrize(10), getTicketsPrize(32), getEssencePrize(1000)],
     },
     {
-        id: 3,
+        id: getId(),
         prizes: [getEGLDPrize(10), getTicketsPrize(26), getEnergyPrize(3400)],
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getEXOTicket(),
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getEXOTicket(),
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getEXOTicket(),
+    },
+    {
+        id: getId(),
+        prizes: [getEGLDPrize(2)],
+    },
+    {
+        id: getId(),
+        prizes: [getEGLDPrize(2)],
     },
 ];
 

@@ -10,13 +10,14 @@ import {
     Text,
     Image,
     useDisclosure,
+    Link,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
-import { BsExclamation } from 'react-icons/bs';
+import { BsExclamation, BsTwitter, BsGlobe, BsDiscord } from 'react-icons/bs';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
 import Wallet from '../shared/Wallet';
@@ -25,6 +26,7 @@ import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
 import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
+import Separator from '../shared/Separator';
 
 const ROUTE_WIDTH = 104;
 
@@ -220,6 +222,7 @@ function Header({ displayToast }) {
                     bottom={0}
                     left={0}
                     alignItems="center"
+                    justifyContent="space-between"
                     py={3.5}
                     pointerEvents="none"
                     margin="0 auto"
@@ -308,6 +311,31 @@ function Header({ displayToast }) {
                                 </Box>
                             </Flex>
                         )}
+                    </Flex>
+
+                    <Flex alignItems="center" pointerEvents="all">
+                        <Text fontSize="15px">
+                            The current Trial is sponsored by{' '}
+                            <Text as="span" fontWeight={500}>
+                                EXO
+                            </Text>
+                        </Text>
+
+                        <Box ml={3}>
+                            <Separator type="vertical" width="1px" height="26px" />
+                        </Box>
+
+                        <Link href="https://twitter.com/ExoMultiversX" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                            <BsTwitter cursor="pointer" />
+                        </Link>
+
+                        <Link href="https://exo.game/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                            <BsGlobe cursor="pointer" />
+                        </Link>
+
+                        <Link href="https://discord.com/invite/m3gmUhGq3E" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                            <BsDiscord cursor="pointer" />
+                        </Link>
                     </Flex>
                 </Flex>
             </Flex>
