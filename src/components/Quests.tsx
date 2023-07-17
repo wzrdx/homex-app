@@ -96,7 +96,12 @@ function Quests() {
 
     // Trial timestamp handling
     useEffect(() => {
-        if (trialTimestamp && differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL && !isGamePaused) {
+        if (
+            trialTimestamp &&
+            differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL &&
+            !isGamePaused &&
+            isBefore(new Date(), trialTimestamp)
+        ) {
             const difference = differenceInHours(trialTimestamp, new Date());
             const duration =
                 difference > 1 ? `about ${difference} hours` : difference === 1 ? `about one hour` : 'less than an hour';

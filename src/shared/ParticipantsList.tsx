@@ -94,7 +94,7 @@ function ParticipantsList({ id }) {
                         <Flex flexDir="column" justifyContent="center" alignItems="center">
                             <Image my={2} height="256px" src={getFullTicket()} />
                             <Text mt={5} textAlign="center" maxWidth="464px">
-                                No traveler has entered this Raffle yet. Become the first one by submitting a{' '}
+                                No traveler has entered this Raffle yet. <br /> Become the first one by submitting a{' '}
                                 <Text as="span" color="ticketGold">
                                     Ticket
                                 </Text>

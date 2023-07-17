@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import { getRaffleSubmittedTickets } from '../blockchain/api/getRaffleSubmittedTickets';
 import { RAFFLES } from '../services/rewards';
 
-const RAFFLE_CAP = 4;
+const RAFFLE_CAP = 5;
 
 // _raffles has no use, other than triggering a component update
 function RaffleCard({
@@ -144,8 +144,8 @@ function RaffleCard({
             </Flex>
 
             <Flex flexDir="column" pb={2.5} width="100%">
-                <Flex pt={2.5} pb={2.5} px={3} width="100%" alignItems="center" justifyContent="space-between">
-                    <Flex flexDir="column" userSelect="none">
+                <Flex flexDir="column" py={2.5} px={3} width="100%">
+                    <Flex alignItems="center" justifyContent="space-between" userSelect="none">
                         <Text layerStyle="header3">Total tickets</Text>
                         <Text fontWeight={500} letterSpacing="0.25px">
                             {tickets}
@@ -153,31 +153,33 @@ function RaffleCard({
                     </Flex>
 
                     {isCompleted() ? (
-                        <Flex flexDir="column" userSelect="none">
-                            <Text layerStyle="header3" textAlign="right">
-                                Timestamp
-                            </Text>
-                            <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                        <Flex alignItems="center" justifyContent="space-between" userSelect="none">
+                            <Text layerStyle="header3">Timestamp</Text>
+                            <Text fontWeight={500} letterSpacing="0.25px">
                                 {format(timestamp, 'PP')}
                             </Text>
                         </Flex>
                     ) : (
-                        <Flex flexDir="column" userSelect="none">
-                            <Text layerStyle="header3" textAlign="right">
-                                Your submission
-                            </Text>
-
+                        <Flex alignItems="center" justifyContent="space-between" userSelect="none">
+                            <Text layerStyle="header3">Your submission</Text>
                             {myTickets === undefined ? (
                                 <Flex alignItems="center" justifyContent="flex-end" height="24px">
                                     <Spinner size="sm" />
                                 </Flex>
                             ) : (
-                                <Text fontWeight={500} textAlign="right" letterSpacing="0.25px">
+                                <Text fontWeight={500} letterSpacing="0.25px">
                                     {myTickets}/{RAFFLE_CAP}
                                 </Text>
                             )}
                         </Flex>
                     )}
+
+                    <Flex alignItems="center" justifyContent="space-between" userSelect="none">
+                        <Text layerStyle="header3">Winners</Text>
+                        <Text fontWeight={500} letterSpacing="0.25px">
+                            {RAFFLES[id - 1].winners}
+                        </Text>
+                    </Flex>
                 </Flex>
 
                 <Flex width="100%" justifyContent="center">

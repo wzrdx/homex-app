@@ -54,40 +54,53 @@ export const RAFFLES: any[] = [
     {
         id: getId(),
         prizes: [getNFTPrize(2, 'Elders'), getEGLDPrize(25), getTicketsPrize(20)],
+        winners: 30,
     },
     {
         id: getId(),
         prizes: [getNFTPrize(6, 'Travelers'), getEGLDPrize(10), getTicketsPrize(32), getEssencePrize(1000)],
+        winners: 30,
     },
     {
         id: getId(),
         prizes: [getEGLDPrize(10), getTicketsPrize(26), getEnergyPrize(3400)],
+        winners: 20,
     },
     {
         id: getId(),
         prizes: [],
         isSingleImage: true,
         imageSrc: getEXOTicket(),
+        winners: 1,
     },
     {
         id: getId(),
         prizes: [],
         isSingleImage: true,
         imageSrc: getEXOTicket(),
+        winners: 1,
     },
     {
         id: getId(),
         prizes: [],
         isSingleImage: true,
         imageSrc: getEXOTicket(),
+        winners: 1,
     },
     {
         id: getId(),
         prizes: [getEGLDPrize(2)],
+        winners: 2,
     },
     {
         id: getId(),
         prizes: [getEGLDPrize(2)],
+        winners: 2,
+    },
+    {
+        id: getId(),
+        prizes: [getTicketsPrize(50)],
+        winners: 10,
     },
 ];
 
