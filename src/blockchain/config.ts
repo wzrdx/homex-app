@@ -73,6 +73,6 @@ export const TEAM = [
     'erd163fk5eg4j9mezwd62c9rz2aqt5r0avaeq6rv8dxfmhf6xjgzpsyqq47vjj',
     'erd19xegymcjdj6808fzc3xrd7xppq6llplzr33z83cy8kauhmjq5x2swt2fjh',
     'erd18hpaswq474n9n37wt3jyweahsal2t9j4mtx4emyt8nylsgf590tsja4n7v',
-    // 1
     'erd1nnml8mlel6x2m2jc0hfegva24a7wdxmm30dxmr3hn54x9m7ye2vs03g7t3',
+    'erd1fyst4anfy52k7sqcqg67jzxaeqya27wtnuy3m5xmxj2rqghtmxtscwpqvt',
 ];
