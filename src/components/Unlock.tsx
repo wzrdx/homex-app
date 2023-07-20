@@ -82,18 +82,6 @@ const Unlock = () => {
                 {text}
             </Text>
 
-            {/* {displayTimer && (
-                <Box mt={3}>
-                    <Timer
-                        timestamp={}
-                        callback={() => checkAuthentication()}
-                        isActive
-                        isDescending
-                        displayDays
-                    />
-                </Box>
-            )} */}
-
             <Box mt={5}>
                 <Wallet
                     callback={() => {

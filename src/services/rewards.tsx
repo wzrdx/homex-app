@@ -6,6 +6,7 @@ import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
+import { getElderRewards } from '../blockchain/api/getElderRewards';
 
 const getNFTPrize = (amount: number, type: 'Elders' | 'Travelers') => ({
     backgroundColor: '#421218',
@@ -23,12 +24,12 @@ const getEGLDPrize = (amount: number) => ({
     text: `${amount} EGLD`,
 });
 
-const getTicketsPrize = (amount: number) => ({
+export const getTicketsPrize = (amount: number) => ({
     backgroundColor: '#8c5816',
     imageSrc: getFullTicket(),
     height: { md: '36px', lg: '50px' },
     textColor: 'brightWheat',
-    text: `${amount} Golden Tickets`,
+    text: `${amount} Golden Ticket${amount > 1 ? 's' : ''}`,
 });
 
 const getEssencePrize = (amount: number) => ({
@@ -115,6 +116,8 @@ export interface RewardsContextType {
     getRaffles: () => Promise<any>;
     battles: Competition[] | undefined;
     getBattles: () => Promise<any>;
+    ticketsAmount: number | undefined;
+    getTicketsAmount: () => Promise<void>;
 }
 
 export interface Competition {
@@ -130,6 +133,7 @@ export const useRewardsContext = () => useContext(RewardsContext);
 export const RewardsProvider = ({ children }) => {
     const [raffles, setRaffles] = useState<Competition[]>();
     const [battles, setBattles] = useState<Competition[]>();
+    const [ticketsAmount, setTicketsAmount] = useState<number>();
 
     const getRaffles = async () => {
         setRaffles(await getCompetition(RAFFLES_FUNCTION_NAME));
@@ -157,8 +161,6 @@ export const RewardsProvider = ({ children }) => {
                 tickets: raffle?.tickets?.toNumber() as number,
             }));
 
-            // console.log(functionName, parsedArray);
-
             return parsedArray;
         } catch (err) {
             console.error(`Unable to call ${functionName}`, err);
@@ -166,5 +168,13 @@ export const RewardsProvider = ({ children }) => {
         }
     };
 
-    return <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles }}>{children}</RewardsContext.Provider>;
+    const getTicketsAmount = async () => {
+        setTicketsAmount(await getElderRewards());
+    };
+
+    return (
+        <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles, ticketsAmount, getTicketsAmount }}>
+            {children}
+        </RewardsContext.Provider>
+    );
 };

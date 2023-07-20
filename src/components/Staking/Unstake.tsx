@@ -252,7 +252,7 @@ function Unstake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Claim,
+                    type: TransactionType.ClaimEnergy,
                     resolution: TxResolution.UpdateStakingInfo,
                 },
             ]);
@@ -286,7 +286,9 @@ function Unstake() {
                         <Flex alignItems="center">
                             <ActionButton
                                 disabled={
-                                    !stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Stake)
+                                    !stakingInfo ||
+                                    isTxPending(TransactionType.ClaimEnergy) ||
+                                    isTxPending(TransactionType.Stake)
                                 }
                                 isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
                                 colorScheme="blue"
@@ -303,7 +305,7 @@ function Unstake() {
                                     onClick={selectAll}
                                     disabled={
                                         !stakingInfo ||
-                                        isTxPending(TransactionType.Claim) ||
+                                        isTxPending(TransactionType.ClaimEnergy) ||
                                         isTxPending(TransactionType.Unstake) ||
                                         isTxPending(TransactionType.Stake)
                                     }
@@ -327,7 +329,7 @@ function Unstake() {
                                     onClick={onYieldOpen}
                                     disabled={
                                         _.isEmpty(rarities) ||
-                                        isTxPending(TransactionType.Claim) ||
+                                        isTxPending(TransactionType.ClaimEnergy) ||
                                         isTxPending(TransactionType.Unstake) ||
                                         isTxPending(TransactionType.Stake)
                                     }
@@ -345,7 +347,7 @@ function Unstake() {
                                             isTxPending(TransactionType.Stake) ||
                                             isTxPending(TransactionType.Unstake)
                                         }
-                                        isLoading={isClaimButtonLoading || isTxPending(TransactionType.Claim)}
+                                        isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
                                         colorScheme="blue"
                                         customStyle={{ width: '144px' }}
                                         onClick={claim}

@@ -452,7 +452,7 @@ function Quests() {
                         {isQuestDefault() && (
                             <Flex alignItems="center">
                                 <TimeIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={2}>{getQuestDuration(currentQuest.duration)}</Text>
+                                <Text ml={1.5}>{getQuestDuration(currentQuest.duration)}</Text>
                             </Flex>
                         )}
 

@@ -44,7 +44,7 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    const { getRaffles, getBattles } = useRewardsContext() as RewardsContextType;
+    const { getRaffles, getBattles, getTicketsAmount } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
         if (isGamePaused) {
@@ -115,7 +115,7 @@ function App() {
                         displayEnergyGain(tx?.hash);
                         break;
 
-                    case TransactionType.Claim:
+                    case TransactionType.ClaimEnergy:
                         displayEnergyGain(tx?.hash);
                         break;
 
@@ -125,6 +125,15 @@ function App() {
 
                     case TransactionType.JoinBattle:
                         displayToast('Tickets sent', 'Successfully joined the battle', 'green.500');
+                        break;
+
+                    case TransactionType.ClaimReward:
+                        displayResourcesToast(
+                            'Successfully claimed reward',
+                            [{ resource: 'tickets', value: tx.data.ticketsAmount }],
+                            'ticket'
+                        );
+
                         break;
 
                     default:
@@ -167,6 +176,11 @@ function App() {
         switch (tx.resolution) {
             case TxResolution.UpdateEnergy:
                 getEnergy();
+                break;
+
+            case TxResolution.UpdateTicketsAndRewards:
+                getTickets();
+                getTicketsAmount();
                 break;
 
             case TxResolution.UpdateTicketsAndRaffles:

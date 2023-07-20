@@ -2,13 +2,14 @@ import Staking from '../components/Staking';
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
 import Section from '../components/Section';
-import Leaderboard from '../components/Rewards/Leaderboard';
+import Leaderboard from '../components/Competitions/Leaderboard';
 import Stake from '../components/Staking/Stake';
 import Unstake from '../components/Staking/Unstake';
 import RaffleDetails from '../shared/RaffleDetails';
-import Raffles from '../components/Rewards/Raffles';
-import Battles from '../components/Rewards/Battles';
-import Entry from '../components/Rewards/Entry';
+import Raffles from '../components/Competitions/Raffles';
+import Battles from '../components/Competitions/Battles';
+import Entry from '../components/Competitions/Entry';
+import Rewards from '../components/Rewards';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -24,6 +25,7 @@ export const routeNames = {
     past: 'past',
     entry: 'entry',
     leaderboard: 'leaderboard',
+    rewards: 'rewards',
 };
 
 export const routes = [
@@ -102,5 +104,12 @@ export const routes = [
             },
         ],
         defaultChildRoute: routeNames.leaderboard,
+    },
+    // Rewards
+    {
+        path: routeNames.rewards,
+        component: Rewards,
+        authenticatedRoute: true,
+        isMainRoute: true,
     },
 ];

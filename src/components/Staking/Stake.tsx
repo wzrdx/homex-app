@@ -135,7 +135,9 @@ function Stake() {
             <Flex pb={6} alignItems="center" justifyContent="space-between">
                 <Flex alignItems="center">
                     <ActionButton
-                        disabled={!stakingInfo || isTxPending(TransactionType.Claim) || isTxPending(TransactionType.Unstake)}
+                        disabled={
+                            !stakingInfo || isTxPending(TransactionType.ClaimEnergy) || isTxPending(TransactionType.Unstake)
+                        }
                         isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
                         colorScheme="red"
                         customStyle={{ width: '120px' }}
@@ -151,7 +153,7 @@ function Stake() {
                             onClick={selectAll}
                             disabled={
                                 !stakingInfo ||
-                                isTxPending(TransactionType.Claim) ||
+                                isTxPending(TransactionType.ClaimEnergy) ||
                                 isTxPending(TransactionType.Unstake) ||
                                 isTxPending(TransactionType.Stake)
                             }

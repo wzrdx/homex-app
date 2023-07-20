@@ -28,7 +28,7 @@ import { getEXOLogo, getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 
-const ROUTE_WIDTH = 104;
+const ROUTE_WIDTH = 98;
 
 function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();

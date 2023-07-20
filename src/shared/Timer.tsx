@@ -92,15 +92,17 @@ export const Timer: FunctionComponent<
 
     return (
         <Flex alignItems="center" justifyContent="center" style={!isEmpty(customStyle) ? customStyle : {}}>
-            {displayClock && <TimeIcon mr={1} boxSize={4} color="whitesmoke" />}
+            {displayClock && <TimeIcon mr={0.5} boxSize={4} color="whitesmoke" />}
 
             {isCompact ? (
                 <Text>{`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}`}</Text>
             ) : (
                 <Flex alignItems="center">
-                    {isDisplayingDays() && <Text>{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''},`}</Text>}
+                    {isDisplayingDays() && (
+                        <Text mr={1}>{`${duration.days} day${(duration.days as number) > 1 ? 's' : ''},`}</Text>
+                    )}
 
-                    <Text minW="68px" ml={1}>
+                    <Text minW="69px">
                         {`${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
                     </Text>
                 </Flex>

@@ -11,12 +11,14 @@ export enum TransactionType {
     JoinBattle,
     Stake,
     Unstake,
-    Claim,
+    ClaimEnergy,
+    ClaimReward,
 }
 
 export enum TxResolution {
     UpdateQuestsAndResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
+    UpdateTicketsAndRewards = 'UpdateTicketsAndRewards',
     UpdateTicketsAndRaffles = 'UpdateTicketsAndRaffles',
     UpdateTicketsAndBattles = 'UpdateTicketsAndBattles',
     UpdateStakingInfo = 'UpdateStakingInfo',
@@ -38,6 +40,7 @@ export interface TransactionsContextType {
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
     isTxPending: (type: TransactionType) => boolean;
     isRaffleTxPending: (type: TransactionType, raffleId: number) => boolean;
+    isClaimRewardTxPending: (type: TransactionType, id: number) => boolean;
     isGamePaused: boolean;
     getGameState: () => Promise<boolean>;
 }
@@ -73,6 +76,10 @@ export const TransactionsProvider = ({ children }) => {
         return findIndex(pendingTxs, (tx) => tx.type === type && tx.data.id === raffleId) > -1;
     };
 
+    const isClaimRewardTxPending = (type: TransactionType, id: number): boolean => {
+        return findIndex(pendingTxs, (tx) => tx.type === type && tx.data.id === id) > -1;
+    };
+
     const isTxPending = (type: TransactionType): boolean => {
         return findIndex(pendingTxs, (tx) => tx.type === type) > -1;
     };
@@ -90,6 +97,7 @@ export const TransactionsProvider = ({ children }) => {
                 setPendingTxs,
                 isQuestTxPending,
                 isRaffleTxPending,
+                isClaimRewardTxPending,
                 isTxPending,
                 isGamePaused,
                 getGameState,
