@@ -1,6 +1,8 @@
 import React from 'react';
 import { Howl } from 'howler';
 import { createContext, useContext, useReducer, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { MUSIC_KEY } from '../components/Settings';
 
 const OST = new Howl({
     src: ['/exo.mp3'],
@@ -31,7 +33,9 @@ const reducer = (previousState: any, nextState: any) => {
 
 export const SoundsProvider = ({ children }) => {
     const [isMusicOn, setIsMusicOn] = useReducer(reducer, false);
-    const [areSoundsOn, setAreSoundsOn] = useState(process.env.NODE_ENV === 'development' ? false : true);
+    const [areSoundsOn, setAreSoundsOn] = useState(
+        process.env.NODE_ENV === 'development' ? false : !isEmpty(window.localStorage[MUSIC_KEY])
+    );
 
     const volume = 0.5;
 

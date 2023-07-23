@@ -1,3 +1,6 @@
+import { isEmpty } from 'lodash';
+import { API_KEY } from '../components/Settings';
+
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 
@@ -15,7 +18,9 @@ export const CHAIN_ID = getEnvValue('D', '1');
 
 export const API_URL = getEnvValue(
     'https://devnet-api.multiversx.com',
-    'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b'
+    isEmpty(window.localStorage[API_KEY])
+        ? 'https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b'
+        : 'https://api.multiversx.com'
 );
 
 // https://api.multiversx.com  https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b

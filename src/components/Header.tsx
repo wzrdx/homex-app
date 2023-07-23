@@ -18,6 +18,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
 import { BsExclamation, BsTwitter, BsGlobe, BsDiscord } from 'react-icons/bs';
+import { AiOutlineSetting } from 'react-icons/ai';
 import { IoVolumeHighOutline, IoVolumeMuteOutline, IoDocumentTextOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
 import Wallet from '../shared/Wallet';
@@ -27,11 +28,13 @@ import Gameplay from './Gameplay';
 import { getEXOLogo, getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
+import Settings from './Settings';
 
 const ROUTE_WIDTH = 98;
 
 function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
+    const { isOpen: isSettingsOpen, onOpen: onSettingsOpen, onClose: onSettingsClose } = useDisclosure();
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
@@ -188,6 +191,23 @@ function Header({ displayToast }) {
 
                     <Flex alignItems="center" pointerEvents="all">
                         <Wallet />
+
+                        <Flex
+                            ml={2.5}
+                            alignItems="center"
+                            padding="7px 16px"
+                            borderRadius="9999px"
+                            backgroundColor="#3c180d"
+                            cursor="pointer"
+                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                            _hover={{ backgroundColor: '#4d1e0e' }}
+                            onClick={() => onSettingsOpen()}
+                        >
+                            <AiOutlineSetting fontSize="20px" color="rgb(249 115 22)" />
+                            <Text ml={2} color="white">
+                                Settings
+                            </Text>
+                        </Flex>
 
                         <Box ml={6} mr="-2px">
                             <Image width="68px" opacity={0.9} src={getSmallLogo()} />
@@ -356,6 +376,12 @@ function Header({ displayToast }) {
                         </Box>
                     </ModalBody>
                 </ModalContent>
+            </Modal>
+
+            {/* Settings */}
+            <Modal size="md" onClose={onSettingsClose} isOpen={isSettingsOpen} isCentered>
+                <ModalOverlay />
+                <Settings />
             </Modal>
         </Flex>
     );
