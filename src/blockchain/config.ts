@@ -23,8 +23,6 @@ export const API_URL = getEnvValue(
         : 'https://api.multiversx.com'
 );
 
-// https://api.multiversx.com  https://elrond-api.blastapi.io/66bcc344-d7d2-4bdf-8f41-a0ee9d91318b
-
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = getEnvValue('https://devnet-explorer.multiversx.com', 'https://explorer.multiversx.com');
 

@@ -52,6 +52,10 @@ function Header({ displayToast }) {
                 .map((route) => route.path)
                 .value()
         );
+
+        if (isMusicOn) {
+            setIsMusicOn(true);
+        }
     }, []);
 
     useEffect(() => {
