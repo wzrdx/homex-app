@@ -168,7 +168,7 @@ function PrizesList({ id }) {
                     if (operation.type === 'nft' && operation.ticker === TICKETS_TOKEN_ID) {
                         prize = (
                             <Flex alignItems="center">
-                                <Text fontWeight={500} color="brightWheat" minWidth="20px">
+                                <Text mr={1} fontWeight={500} color="brightWheat" minWidth="20px" textAlign="center">
                                     {operation.value}
                                 </Text>
                                 <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
