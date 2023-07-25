@@ -1,5 +1,14 @@
 import { createContext, useContext, useState } from 'react';
-import { getEXOTicket, getFullTicket, getLogoBox, getMvxLogo } from './assets';
+import {
+    getEXOTicket,
+    getFullTicket,
+    getLogoBox,
+    getMvxLogo,
+    getRaffleGiants,
+    getRaffleHomeX,
+    getRaffleRektNerds,
+    getRaffleSuperVictor,
+} from './assets';
 import { RESOURCE_ELEMENTS } from './resources';
 import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
@@ -97,6 +106,54 @@ export const RAFFLES: any[] = [
         id: getId(),
         prizes: [getEGLDPrize(2)],
         winners: 2,
+    },
+    {
+        id: getId(),
+        prizes: [getTicketsPrize(50)],
+        winners: 5,
+    },
+    // Trial 5
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleSuperVictor(),
+        winners: 1,
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleSuperVictor(),
+        winners: 1,
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleGiants(),
+        winners: 1,
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleRektNerds(),
+        winners: 1,
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleRektNerds(),
+        winners: 1,
+    },
+    {
+        id: getId(),
+        prizes: [],
+        isSingleImage: true,
+        imageSrc: getRaffleHomeX(),
+        winners: 1,
     },
     {
         id: getId(),

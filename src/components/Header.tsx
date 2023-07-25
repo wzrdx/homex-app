@@ -25,7 +25,7 @@ import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
-import { getEXOLogo, getSmallLogo } from '../services/assets';
+import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
@@ -338,7 +338,7 @@ function Header({ displayToast }) {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        <Text fontSize="15px">Trial sponsored by</Text>
+                        {/* <Text fontSize="15px">Trial sponsored by</Text>
 
                         <Image ml={2} mt="2px" src={getEXOLogo()} width="54px" />
 
@@ -360,7 +360,7 @@ function Header({ displayToast }) {
 
                         <Link href="https://discord.com/invite/m3gmUhGq3E" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" />
-                        </Link>
+                        </Link> */}
                     </Flex>
                 </Flex>
             </Flex>

@@ -3,7 +3,7 @@ import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
-import { getBannerLargeLeft, getBannerLargeRight, getFullTicket } from '../../services/assets';
+import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
@@ -175,8 +175,8 @@ function Leaderboard() {
                     <Text ml={2}>Unable to fetch leaderboard</Text>
                 </Flex>
             ) : (
-                <Flex layerStyle="layout" justifyContent="space-between" overflowY="auto" overflowX="hidden">
-                    <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeLeft()} />
+                <Flex layerStyle="layout" justifyContent="center" overflowY="auto" overflowX="hidden">
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeLeft()} /> */}
 
                     <Flex px={6} flexDir="column" overflowY="auto" overflowX="hidden">
                         {!participants?.length ? (
@@ -222,7 +222,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeRight()} />
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeRight()} /> */}
                 </Flex>
             )}
         </Flex>

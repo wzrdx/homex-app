@@ -14,10 +14,12 @@ import MvxLogo from '../assets/logo_x.png';
 import LogoBox from '../assets/logo_box.png';
 import EmptyPNG from '../assets/empty.png';
 
-import BannerLargeLeft from '../assets/images/banner_large_left.png';
-import BannerLargeRight from '../assets/images/banner_large_right.png';
 import EXOTicket from '../assets/images/exo.png';
-import LogoEXO from '../assets/logo_exo.png';
+
+import RaffleGiants from '../assets/images/raffles/2GiantsVillage.jpg';
+import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
+import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
+import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 export const getLayoutBackground = () => Layout;
 export const getUnlockBackground = () => Unlock;
@@ -37,8 +39,9 @@ export const getMvxLogo = () => MvxLogo;
 
 export const getEmptyPNG = () => EmptyPNG;
 
-export const getBannerLargeLeft = () => BannerLargeLeft;
-export const getBannerLargeRight = () => BannerLargeRight;
-
 export const getEXOTicket = () => EXOTicket;
-export const getEXOLogo = () => LogoEXO;
+
+export const getRaffleGiants = () => RaffleGiants;
+export const getRaffleHomeX = () => RaffleHomeX;
+export const getRaffleRektNerds = () => RaffleRektNerds;
+export const getRaffleSuperVictor = () => RaffleSuperVictor;

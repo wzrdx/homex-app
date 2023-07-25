@@ -14,6 +14,7 @@ import Quest_12 from '../assets/quests/12.jpg';
 import Quest_13 from '../assets/quests/13.jpg';
 import Quest_14 from '../assets/quests/14.jpg';
 import Quest_15 from '../assets/quests/15.jpg';
+import Quest_16 from '../assets/quests/16.jpg';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
@@ -46,11 +47,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'The Spaceship',
+        name: 'Sunlit Haven',
         description: (
             <Text layerStyle="questDescription">
-                Seek scattered starship fragments across the city. Gather vital pieces to mend the vessel's wounded hull. Each
-                discovery fuels hope as Travelers venture through Ut wonders in a mission to cross into a parallel dimension.
+                Journey to Wood Village next to Menhir, cursed by eternal clouds. Retrieve the Warmth Crystal from the heart of
+                the Sunlit Haven, a sacred glade hidden in the forest. As the crystal radiates its vibrant glow, the clouds
+                disperse, and the wood stacks bask in the sun, ready for construction.
             </Text>
         ),
         requirements: {
@@ -70,12 +72,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Interdimensional',
+        name: 'Eternal Sunrise',
         description: (
             <Text layerStyle="questDescription">
-                Empowered by your restored starship, you transcend the cosmos, embarking on a perilous voyage into a parallel
-                dimension. Now, as part of an unified crew, you face a divergent mission, distinct from your prior roles as
-                Traveler.
+                Venture into the Sunflower Field, where time stands still for the flowers. Solve the Celestial Sundial puzzle to
+                unlock their connection with the sun. Retrieve the Sunflower Scent from the central flower, and as its aroma
+                fills the air, the field bursts into life, following the sun's path once more.
             </Text>
         ),
         requirements: {
@@ -95,13 +97,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'The Mission',
+        name: 'Winds of Grain',
         description: (
             <Text layerStyle="questDescription">
-                The mission was nothing short of audacious—a journey that transcended the boundaries of Earth itself. As the
-                starship soared through the infinite abyss of space, your crew of intrepid explorers braced themselves for the
-                unprecedented challenge that lay ahead. Their destination: Mars, the enigmatic crimson jewel of the cosmos.
-                Their purpose: to pave the way for the imminent dawn of human colonization.
+                Embark on a journey to the Windmill Farm, a realm of mechanized wheat harvesting. Unravel the ancient
+                machineries' secrets to operate them. Retrieve the golden Wheat Harvest, and as the windmills whirl, a bountiful
+                wheat harvest blesses the fields.
             </Text>
         ),
         requirements: {
@@ -121,14 +122,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'The Crew',
+        name: 'Everlasting Bloom',
         description: (
             <Text layerStyle="questDescription">
-                The crew stood united, a trio bound by purpose and determination. With only three souls aboard the vessel, each
-                role held immense significance. The commander, a beacon of leadership, guided their path through the cosmic
-                abyss. The first officer, skilled and resolute, ensured the smooth operation of their interstellar voyage. And
-                the science officer, ever curious and analytical, delved into the mysteries of the cosmos, seeking answers that
-                would shape their destiny and yourself.
+                Seek the Altar of Bloom nestled among the mountains, where couples once wed. Perform a sacred ritual and
+                retrieve the Ring of Bloom, an eternal symbol of summer's maturity. As you return it to the altar, the land
+                flourishes with vibrant flora, celebrating the essence of summer's growth.
             </Text>
         ),
         requirements: {
@@ -150,13 +149,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Monolith',
+        name: 'Enigmatic Glyphs',
         description: (
             <Text layerStyle="questDescription">
-                Bathed in the eerie glow of the Martian sun, the crew's eyes widened in awe as they stumbled upon an enigma that
-                defied all reason. Before them stood a colossal monolith, an otherworldly sentinel that beckoned with silent
-                allure. Towering over the desolate landscape, the monolith exuded an ethereal energy, its surface composed of a
-                gleaming, unfamiliar alloy that defied earthly comprehension.
+                Explore the Zabedia Temple, surrounded by agricole wonders. Decode the ancient runes etched in stone and
+                retrieve the Sun Bowl. As the bowl's magic activates, the temple is infused with summer's essence, and the land
+                flourishes with abundant crops.
             </Text>
         ),
         requirements: {
@@ -176,12 +174,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Martifacts',
+        name: 'Temporal Convergence',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a trade expedition across the rust-hued terrain of Mars. Unearth valuable Martian relics and exchange
-                them with local settlers for vital resources. Unveil the secrets of this ancient planet as you barter your way
-                to prosperity.
+                Enter the Chrono Maze, a labyrinth where time intertwines. Overcome challenges and retrieve the Hourglass of
+                Summer. As you turn the sands, the maze transforms into a magical Chronospace, where you can borrow extra
+                daylight hours to savor the splendors of summer.
             </Text>
         ),
         requirements: {
@@ -201,13 +199,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Stellar Harvest',
+        name: "Emberheart's Embrace",
         description: (
             <Text layerStyle="questDescription">
-                Venture into the breathtaking Martian highlands, where the atmosphere holds unique crystalline formations known
-                as Atmosphere Gems. These exquisite gems, formed by the interaction of Mars' atmospheric gases, possess
-                mesmerizing colors and unparalleled beauty. Brave rugged Martian landscapes, traverse treacherous canyons, and
-                overcome atmospheric anomalies to gather these remarkable gems.
+                Venture into the frozen Alaiy Forest, perpetually shrouded in darkness. Unearth the secret of igniting eternal
+                flames and retrieve the Everburn Ember. As warmth spreads, the forest blooms, and its creatures awaken, turning
+                the once-frigid forest into a sanctuary of life.
             </Text>
         ),
         requirements: {
@@ -227,12 +224,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Red Market',
+        name: 'Sands of Memory',
         description: (
             <Text layerStyle="questDescription">
-                Join the Red Planet expedition on a daring mission to explore the mysteries of Mars. Collect samples of Martian
-                rocks and soil and search for signs of life. Avoid sandstorms and make it back to the spaceship. Deliver the
-                valuable data safely and earn the respect of the crew.
+                Brave the depths of Tam Ocean to retrieve the Sand of Summers Past. Embrace its nostalgic magic, transporting
+                you to cherished memories of summer days gone by. As the sand's light touches Menhir's shores, the city is
+                filled with a sense of joy and nostalgia, honoring the spirit of summertime.
             </Text>
         ),
         requirements: {
@@ -254,12 +251,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Mining Operation',
+        name: 'Starlight Prophecy',
         description: (
             <Text layerStyle="questDescription">
-                Join the Martian Mining Operation on a lucrative venture to extract rare minerals from the depths of Mars. Drill
-                through the hard crust and blast away obstacles. Protect the precious cargo of ores and metals from raiders and
-                rival corporations. Deliver the valuable minerals safely and enjoy a hefty profit.
+                Ascend the celestial observatory to decipher the Summer Constellation. Retrieve the Guiding Star Crystal, an
+                ethereal gem reflecting summer's secrets. As its light illuminates the night sky, the stars reveal insights into
+                the realm's destiny.
             </Text>
         ),
         requirements: {
@@ -281,14 +278,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Cave',
+        name: 'Radiant Riddles',
         description: (
             <Text layerStyle="questDescription">
-                With bated breath, the crew ventured forth, tracing the trail of inky black sludge that oozed from the enigmatic
-                monolith. The path led them deep into an underground labyrinth, a hidden realm beneath the Martian surface. Each
-                step echoed with a sense of foreboding as they descended further into the unknown, guided by the eerie glow of
-                phosphorescent moss clinging to the damp cave walls. The air grew heavy with anticipation, their senses
-                heightened by the faint whispers of ancient mysteries lurking just beyond their grasp.
+                Enter the Garden of Oracle Blossoms, where enchanted flowers offer enigmatic wisdom. Solve the puzzles of the
+                Blooming Enigma to retrieve the Oracle Petals. As their mystical essence spreads, Menhir's inhabitants gain
+                newfound clarity and purpose.
             </Text>
         ),
         requirements: {
@@ -310,15 +305,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Creators',
+        name: 'Solstice Serenade',
         description: (
             <Text layerStyle="questDescription">
-                An enigmatic being emerged from the shadows, a fusion of man and machine. Its form, once human, now intertwined
-                with cybernetic enhancements, spoke of a lineage that spanned eons. Time had sculpted this entity into a
-                custodian, a sentinel entrusted with a purpose. It revealed that it had been patiently awaiting the day when
-                humans would traverse the stars and set foot on Mars. The crew, humbled and awestruck, realized that they stood
-                before an emissary of a forgotten epoch, a bridge between worlds that would shape the course of their mission
-                and unravel the tapestry of their own existence.
+                Venture to the ancient Solstice Standing Stones, a sacred place of divine revelation. Harmonize the stones to
+                reveal the Sun Song Scroll. As the scroll is played, celestial melodies resonate, guiding Menhir towards its
+                destined summer prosperity.
             </Text>
         ),
         requirements: {
@@ -340,15 +332,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Origins',
+        name: 'Eclipsed Visions',
         description: (
             <Text layerStyle="questDescription">
-                Their civilization, long gone but immortalized through the monoliths, had been the architects of life on Earth.
-                With purposeful intent, they had scattered the seeds of existence across the cosmos, planting the spark of
-                vitality on ten thousand other planets. Each monolith held the power to ignite life, fostering the emergence of
-                diverse species and shaping the tapestry of the universe. The crew's mission, they realized, was not merely an
-                act of exploration but a continuation of a profound legacy, entrusted with the guardianship of life's
-                proliferation.
+                Seek the ethereal Eclipse Nexus, where light and shadow dance. Retrieve the Solar Lens, a crystalline tool for
+                seeing beyond veiled truths. As you peer through its magical lens, mysteries of the cosmos and Menhir's future
+                unfold.
             </Text>
         ),
         requirements: {
@@ -372,14 +361,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'The Choice',
+        name: 'Luminous Elixir',
         description: (
             <Text layerStyle="questDescription">
-                Their collective gaze shifted from the desolate expanse of the cosmos to the dormant monoliths before them. It
-                was a choice that held the power to reshape the very fabric of existence. Stay alone, isolated in the vastness
-                of the universe, or embrace their destiny, becoming the catalysts for life on ten thousand worlds. In that
-                pivotal moment, the crew would need to choose not only their own fate, but the destiny of an unfathomable
-                multitude of worlds, forever intertwining their legacy with the grand tapestry of the cosmos.
+                Brave the luminous Albedo Abyss, where daylight eludes. Retrieve the Elixir of Eternal Glow. As it touches the
+                land, night transforms into day, filling Menhir with radiant light, enhancing growth, and invoking eternal
+                summertime splendor.
             </Text>
         ),
         requirements: {
@@ -401,25 +388,61 @@ export const QUESTS: any[] = [
         layers: [],
         image: Quest_13,
     },
+    {
+        id: getId(),
+        type: 'alchemy',
+        name: 'Celestial Tincture',
+        description: (
+            <Text layerStyle="questDescription">
+                Ascend to the Cosmic Apex, where celestial energies converge. Extract the Celestial Tincture, a potent essence
+                of astral harmony. As the tincture is infused into the city's fountains, Menhir resonates with cosmic
+                equilibrium, bringing prosperity and balance throughout the realm.
+            </Text>
+        ),
+        requirements: {
+            energy: 3 * 96 * BASE_COST,
+        },
+        duration: 8 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 48 * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 24 * BASE_REWARD,
+            },
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 12 * BASE_REWARD,
+            },
+        ],
+        layers: [],
+        image: Quest_14,
+    },
 
     // Missions
     {
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Cosmic Harmony',
+        name: 'Flames of Solstice',
         description: (
             <Text layerStyle="questDescription">
-                Return from Mars with the Cosmic Resonators. Activate them across Menhir to unleash a symphony of cosmic energy.
-                Witness the city's transformation into a beacon of harmony and enlightenment. Embrace your interstellar journey
-                and unlock Menhir's cosmic destiny.
+                As the first rays of dawn grace Menhir, embark on a perilous journey through the scorching Desert Dunes. Amid
+                shifting sands, retrieve the Flames of Solstice, a blazing relic with the power to harness the sun's eternal
+                radiance. Master the elemental trials, withstand the blazing heat, and harness the Flames' energy to ignite a
+                celestial beacon that illuminates Menhir throughout eternity.
             </Text>
         ),
         requirements: {
-            energy: 16 * BASE_COST,
-            herbs: 32 * BASE_COST,
-            gems: 16 * BASE_COST,
-            essence: 12 * BASE_COST,
+            energy: Math.round(1.1 * 16 * BASE_COST),
+            herbs: Math.round(1.1 * 32 * BASE_COST),
+            gems: Math.round(1.1 * 16 * BASE_COST),
+            essence: Math.round(1.1 * 12 * BASE_COST),
         },
         duration: 8 * BASE_DURATION,
         rewards: [
@@ -430,26 +453,27 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_14,
+        image: Quest_15,
     },
     {
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'The Return',
+        name: 'Celestial Rebirth',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a mind-bending cosmic odyssey as you warp through space-time, guided by vivid visions from your
-                Martian experiences. Carry the orb, a crystalline artifact infused with the essence of another world, to Menhir.
-                Witness the merging of realms as the city awakens to its true destiny. Prepare for a transcendent journey that
-                will reshape reality itself.
+                Prepare for the ultimate trial at the Celestial Peak, the realm's highest summit, where summer's energy
+                converges. Scale treacherous cliffs, traverse celestial paths, and face formidable challenges to reach the
+                mystical Astral Altar. Invoke the Starfire Sigil, an ancient artifact that channels the celestial energies of
+                the cosmos into the realm, bestowing Menhir with eternal summer and ushering in a new era of prosperity and
+                growth.
             </Text>
         ),
         requirements: {
-            energy: 2 * 16 * BASE_COST,
-            herbs: 2 * 32 * BASE_COST,
-            gems: 2 * 16 * BASE_COST,
-            essence: 2 * 12 * BASE_COST,
+            energy: Math.round(1.1 * 2 * 16 * BASE_COST),
+            herbs: Math.round(1.1 * 2 * 32 * BASE_COST),
+            gems: Math.round(1.1 * 2 * 16 * BASE_COST),
+            essence: Math.round(1.1 * 2 * 12 * BASE_COST),
         },
         duration: 16 * BASE_DURATION,
         rewards: [
@@ -460,7 +484,7 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_15,
+        image: Quest_16,
     },
 ];
 
