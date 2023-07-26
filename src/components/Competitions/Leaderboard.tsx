@@ -14,6 +14,8 @@ import {
     ModalOverlay,
     useDisclosure,
     ModalHeader,
+    Alert,
+    AlertIcon,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ArrowForwardIcon, WarningIcon } from '@chakra-ui/icons';
@@ -283,10 +285,17 @@ function Leaderboard() {
                                 fontSize="18px"
                                 letterSpacing="0.75px"
                             >
-                                Assets
+                                Prizes
                             </Text>
 
                             <Text fontWeight={500}>5 EXO Tickets</Text>
+
+                            <Flex mt={2.5}>
+                                <Alert status="info" width="auto">
+                                    <AlertIcon />
+                                    The rest of the prizes will be announced soon
+                                </Alert>
+                            </Flex>
                         </Flex>
                     </ModalBody>
 
