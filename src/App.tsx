@@ -46,6 +46,11 @@ function App() {
 
     const { getRaffles, getBattles, getTicketsAmount } = useRewardsContext() as RewardsContextType;
 
+    // Init
+    useEffect(() => {
+        window.localStorage['chakra-ui-color-mode'] = 'dark';
+    }, []);
+
     useEffect(() => {
         if (isGamePaused) {
             displayPauseToast();
