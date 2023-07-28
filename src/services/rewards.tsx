@@ -25,7 +25,7 @@ const getNFTPrize = (amount: number, type: 'Elders' | 'Travelers') => ({
     text: `${amount} ${type}`,
 });
 
-const getEGLDPrize = (amount: number) => ({
+export const getEGLDPrize = (amount: number = 0) => ({
     backgroundColor: '#2b2d31',
     imageSrc: getMvxLogo(),
     height: { md: '30px', lg: '42px' },
@@ -159,6 +159,14 @@ export const RAFFLES: any[] = [
         id: getId(),
         prizes: [getTicketsPrize(50)],
         winners: 5,
+    },
+];
+
+export const BATTLES: any[] = [
+    {
+        id: getId(),
+        amount: 60,
+        winners: 10,
     },
 ];
 

@@ -134,7 +134,7 @@ function RaffleCard({
                         >
                             <Flex justifyContent="center" alignItems="center">
                                 <Flex justifyContent="center" alignItems="center">
-                                    <Image src={prize.imageSrc} height={prize.height} alt="Traveler" />
+                                    <Image src={prize.imageSrc} height={prize.height} alt="Prize" />
                                 </Flex>
 
                                 <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
