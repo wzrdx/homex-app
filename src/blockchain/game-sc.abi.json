@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.69.0-nightly",
-            "commitHash": "31f858d9a511f24fedb8ed997b28304fec809630",
-            "commitDate": "2023-02-28",
+            "version": "1.72.0-nightly",
+            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
+            "commitDate": "2023-06-22",
             "channel": "Nightly",
-            "short": "rustc 1.69.0-nightly (31f858d9a 2023-02-28)"
+            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -22,6 +22,26 @@
         "outputs": []
     },
     "endpoints": [
+        {
+            "name": "withdraw",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                },
+                {
+                    "name": "identifier",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
         {
             "name": "claimAllEnergy",
             "onlyOwner": true,
@@ -89,6 +109,22 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "getStakedTokens",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Stake>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "getRarityClass",
@@ -313,6 +349,18 @@
             ]
         },
         {
+            "name": "debug",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "addBattle",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -332,22 +380,6 @@
                 {
                     "name": "timestamp",
                     "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setRaffleVectorSize",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "size",
-                    "type": "u32"
                 }
             ],
             "outputs": []
@@ -374,7 +406,7 @@
                     "type": "u32"
                 },
                 {
-                    "name": "phase",
+                    "name": "winners",
                     "type": "u32"
                 }
             ],
@@ -393,9 +425,27 @@
             "outputs": []
         },
         {
+            "name": "completeBattle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "winners",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "joinRaffle",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "raffle_id",
@@ -407,7 +457,9 @@
         {
             "name": "joinBattle",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "battle_id",
@@ -563,7 +615,9 @@
         {
             "name": "startQuest",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "id",
@@ -575,7 +629,9 @@
         {
             "name": "startQuests",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "ids",
@@ -602,9 +658,18 @@
             "outputs": []
         },
         {
+            "name": "migrateTokens",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [],
             "outputs": []
         },
@@ -875,6 +940,31 @@
                 {
                     "name": "rarity_class",
                     "type": "u8"
+                }
+            ]
+        },
+        "Stake": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "u32"
+                },
+                {
+                    "name": "unbond_time",
+                    "type": "u32"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64"
                 }
             ]
         },

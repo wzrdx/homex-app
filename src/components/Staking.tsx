@@ -7,6 +7,7 @@ import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
+import { getStakedTokens } from '../blockchain/api/getStakedTokens';
 
 type StakingContext = {
     height: number;
@@ -31,7 +32,13 @@ function Staking() {
     // Init
     useEffect(() => {
         setRoute(routes.find((route) => route.path === routeNames.staking));
+        init();
     }, []);
+
+    // TODO:
+    const init = async () => {
+        await getStakedTokens();
+    };
 
     useEffect(() => {
         getUserTokenNonces();
