@@ -34,6 +34,7 @@ function Section() {
         }
 
         if (currentRoute === routeNames.battles) {
+            console.log('[Section] getBattles');
             getBattles();
         }
     }, [location.pathname.split('/')[1]]);

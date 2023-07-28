@@ -69,7 +69,8 @@ function Leaderboard() {
     const { battles } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
-        setBattle(_.first(battles));
+        // Displays the most recent battle
+        setBattle(_(battles).orderBy('timestamp', 'desc').first());
     }, [battles]);
 
     useEffect(() => {
@@ -131,7 +132,7 @@ function Leaderboard() {
                 <Flex
                     mr={2}
                     alignItems="center"
-                    padding="6px 15px"
+                    padding="7px 16px"
                     borderRadius="9999px"
                     backgroundColor="#3c180d"
                     cursor="pointer"

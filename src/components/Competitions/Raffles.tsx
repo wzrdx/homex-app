@@ -11,7 +11,7 @@ function Raffles() {
     const location = useLocation();
 
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [localRaffles, setLocalRaffles] = useState<Competition[]>();
+    const [competitions, setCompetitions] = useState<Competition[]>();
 
     const { raffles } = useRewardsContext() as RewardsContextType;
 
@@ -25,7 +25,7 @@ function Raffles() {
     const init = async (pathname: string) => {
         setLoading(true);
         const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
-        setLocalRaffles(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
+        setCompetitions(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
         setLoading(false);
     };
 
@@ -39,8 +39,8 @@ function Raffles() {
             {isLoading ? (
                 <Spinner />
             ) : (
-                <Flex flexDir="column" pr={_.size(localRaffles) > 4 ? 4 : 0} overflowY="auto">
-                    {_.isEmpty(localRaffles) ? (
+                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto">
+                    {_.isEmpty(competitions) ? (
                         <Flex justifyContent="center">
                             <Alert status="warning">
                                 <AlertIcon />
@@ -49,7 +49,7 @@ function Raffles() {
                         </Flex>
                     ) : (
                         <Box layerStyle="layout" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
-                            {_.map(localRaffles, (raffle, index) => (
+                            {_.map(competitions, (raffle, index) => (
                                 <Box key={index}>
                                     <RaffleCard
                                         id={raffle.id}

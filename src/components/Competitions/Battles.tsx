@@ -1,38 +1,53 @@
 import _ from 'lodash';
-import { Box, Flex } from '@chakra-ui/react';
-import { useLocation } from 'react-router-dom';
+import { Alert, AlertIcon, Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
+import { isBefore } from 'date-fns';
 
-// Not used yet
 function Battles() {
-    const location = useLocation();
-
+    const [isLoading, setLoading] = useState<boolean>(true);
     const [competitions, setCompetitions] = useState<Competition[]>();
 
     const { battles } = useRewardsContext() as RewardsContextType;
 
     // Location
     useEffect(() => {
-        if (location && !_.isEmpty(battles)) {
-            init(location.pathname);
+        if (!_.isEmpty(battles)) {
+            init();
         }
-    }, [location, battles]);
+    }, [battles]);
 
-    const init = async (pathname: string) => {
-        // const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
-        // setCompetitions(_.filter(battles, (raffle) => predicate(new Date(), raffle.timestamp)));
-        setCompetitions([]);
+    const init = async () => {
+        setLoading(true);
+        setCompetitions(_.filter(battles, (raffle) => isBefore(new Date(), raffle.timestamp)));
+        setLoading(false);
     };
 
     return (
-        <Flex flexDir="column">
-            <Flex justifyContent="center">
-                {_.map(competitions, (raffle, index) => (
-                    <Box key={index} px={6}></Box>
-                ))}
-            </Flex>
-        </Flex>
+        <>
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto">
+                    {_.isEmpty(competitions) ? (
+                        <Flex justifyContent="center">
+                            <Alert status="warning">
+                                <AlertIcon />
+                                There are no raffles to display
+                            </Alert>
+                        </Flex>
+                    ) : (
+                        <Box layerStyle="layout" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
+                            {_.map(competitions, (battle, index) => (
+                                <Box key={index}>
+                                    <Text>{battle.id}</Text>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
+                </Flex>
+            )}
+        </>
     );
 }
 

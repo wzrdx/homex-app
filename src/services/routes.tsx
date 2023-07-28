@@ -93,13 +93,18 @@ export const routes = [
         isMainRoute: true,
         children: [
             {
-                path: routeNames.entry,
-                component: Entry,
+                path: routeNames.past,
+                component: Battles,
                 isTabRoute: true,
             },
             {
                 path: routeNames.leaderboard,
                 component: Leaderboard,
+                isTabRoute: true,
+            },
+            {
+                path: routeNames.entry,
+                component: Entry,
                 isTabRoute: true,
             },
         ],

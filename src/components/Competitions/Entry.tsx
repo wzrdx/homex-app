@@ -27,7 +27,8 @@ function Entry() {
     const { battles } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
-        setBattle(_.first(battles));
+        // Sets the most recent battle
+        setBattle(_(battles).orderBy('timestamp', 'desc').first());
     }, [battles]);
 
     useEffect(() => {
