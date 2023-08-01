@@ -186,7 +186,7 @@ function PrizesList({ id }) {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === 'SUPERVIC-f07785') {
+                    if (operation.type === 'nft' && operation.collection === 'SUPERVIC-f07785') {
                         prize = (
                             <Flex alignItems="center">
                                 <Text fontWeight={500} color="whitesmoke" minWidth="20px">
@@ -196,7 +196,7 @@ function PrizesList({ id }) {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === 'GIANTS-93cadd') {
+                    if (operation.type === 'nft' && operation.collection === 'GIANTS-93cadd') {
                         prize = (
                             <Flex alignItems="center">
                                 <Text fontWeight={500} color="whitesmoke" minWidth="20px">
@@ -206,7 +206,7 @@ function PrizesList({ id }) {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === 'NERD-794a0d') {
+                    if (operation.type === 'nft' && operation.collection === 'NERD-794a0d') {
                         prize = (
                             <Flex alignItems="center">
                                 <Text fontWeight={500} color="whitesmoke" minWidth="20px">
