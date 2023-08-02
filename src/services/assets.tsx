@@ -3,7 +3,8 @@ import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 // import Frame_3 from '../assets/frame_3.png';
-import FrameQuare from '../assets/frame_square.png';
+// TODO: Remove after Trial 6
+import FrameQuare from '../assets/frame_square_bh.png';
 import Vision from '../assets/images/vision.jpg';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
