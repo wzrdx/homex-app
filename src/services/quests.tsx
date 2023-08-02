@@ -439,10 +439,10 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: Math.round(1.1 * 16 * BASE_COST),
-            herbs: Math.round(1.1 * 32 * BASE_COST),
-            gems: Math.round(1.1 * 16 * BASE_COST),
-            essence: Math.round(1.1 * 12 * BASE_COST),
+            energy: Math.round(1.2 * 16 * BASE_COST),
+            herbs: Math.round(1.2 * 32 * BASE_COST),
+            gems: Math.round(1.2 * 16 * BASE_COST),
+            essence: Math.round(1.2 * 12 * BASE_COST),
         },
         duration: 8 * BASE_DURATION,
         rewards: [
@@ -470,10 +470,10 @@ export const QUESTS: any[] = [
             </Text>
         ),
         requirements: {
-            energy: Math.round(1.1 * 2 * 16 * BASE_COST),
-            herbs: Math.round(1.1 * 2 * 32 * BASE_COST),
-            gems: Math.round(1.1 * 2 * 16 * BASE_COST),
-            essence: Math.round(1.1 * 2 * 12 * BASE_COST),
+            energy: Math.round(1.2 * 2 * 16 * BASE_COST),
+            herbs: Math.round(1.2 * 2 * 32 * BASE_COST),
+            gems: Math.round(1.2 * 2 * 16 * BASE_COST),
+            essence: Math.round(1.2 * 2 * 12 * BASE_COST),
         },
         duration: 16 * BASE_DURATION,
         rewards: [

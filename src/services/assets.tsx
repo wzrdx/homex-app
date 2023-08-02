@@ -1,4 +1,5 @@
-import Layout from '../assets/backgrounds/1.jpg';
+// import Layout from '../assets/backgrounds/1.jpg';
+import Layout from '../assets/backgrounds/bh_bg.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';

@@ -14,6 +14,7 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
+import Banner from '../../assets/images/bhero.png';
 
 const COLUMNS = [
     {
@@ -37,6 +38,8 @@ const COLUMNS = [
         align: 'left',
     },
 ];
+
+const isSponsored = true;
 
 function Leaderboard() {
     const { height } = useSection();
@@ -175,10 +178,15 @@ function Leaderboard() {
                     <Text ml={2}>Unable to fetch leaderboard</Text>
                 </Flex>
             ) : (
-                <Flex layerStyle="layout" justifyContent="center" overflowY="auto" overflowX="hidden">
-                    {/* <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeLeft()} /> */}
+                <Flex
+                    layerStyle="layout"
+                    justifyContent={isSponsored ? 'space-between' : 'center'}
+                    overflowY="auto"
+                    overflowX="hidden"
+                >
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
 
-                    <Flex px={6} flexDir="column" overflowY="auto" overflowX="hidden">
+                    <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
                             <Flex flexDir="column" justifyContent="center" alignItems="center">
                                 <Image my={2} height="256px" src={getFullTicket()} />
@@ -222,7 +230,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    {/* <Image height={{ md: '430px', lg: '560px' }} src={getBannerLargeRight()} /> */}
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
                 </Flex>
             )}
         </Flex>
