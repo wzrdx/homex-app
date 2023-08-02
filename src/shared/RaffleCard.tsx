@@ -16,6 +16,7 @@ import { format, isAfter } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { getRaffleSubmittedTickets } from '../blockchain/api/getRaffleSubmittedTickets';
 import { RAFFLES, RewardType } from '../services/rewards';
+import { getBackgroundStyle } from '../services/helpers';
 
 const RAFFLE_CAP = 5;
 
@@ -138,6 +139,34 @@ function RaffleCard({
                             </Flex>
                         ))}
                     </>
+                );
+
+            case RewardType.NFT:
+                return (
+                    <Flex position="relative" style={getBackgroundStyle(raffle.url)} height="100%">
+                        <Flex position="absolute" right={0} bottom={0}>
+                            <Flex
+                                alignItems="center"
+                                background="linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.65) 30%)"
+                                pr={1.5}
+                                pl={6}
+                                py="2px"
+                            >
+                                <Text
+                                    pt="3px"
+                                    ml={1}
+                                    mr={0.5}
+                                    color="whitesmoke"
+                                    fontSize="12.5px"
+                                    letterSpacing="0.25px"
+                                    fontWeight={500}
+                                    textTransform="uppercase"
+                                >
+                                    {`${raffle.name} • ${raffle.rank}`}
+                                </Text>
+                            </Flex>
+                        </Flex>
+                    </Flex>
                 );
 
             default:
