@@ -5,7 +5,7 @@ import Section from '../components/Section';
 import Leaderboard from '../components/Competitions/Leaderboard';
 import Stake from '../components/Staking/Stake';
 import Unstake from '../components/Staking/Unstake';
-import RaffleDetails from '../shared/RaffleDetails';
+import CompetitionDetails from '../shared/CompetitionDetails';
 import Raffles from '../components/Competitions/Raffles';
 import Battles from '../components/Competitions/Battles';
 import Entry from '../components/Competitions/Entry';
@@ -80,7 +80,7 @@ export const routes = [
             },
             {
                 path: `:id`,
-                component: RaffleDetails,
+                component: CompetitionDetails,
             },
         ],
         defaultChildRoute: routeNames.current,
@@ -93,14 +93,23 @@ export const routes = [
         isMainRoute: true,
         children: [
             {
-                path: routeNames.entry,
-                component: Entry,
+                path: routeNames.past,
+                component: Battles,
                 isTabRoute: true,
             },
             {
                 path: routeNames.leaderboard,
                 component: Leaderboard,
                 isTabRoute: true,
+            },
+            {
+                path: routeNames.entry,
+                component: Entry,
+                isTabRoute: true,
+            },
+            {
+                path: `:id`,
+                component: CompetitionDetails,
             },
         ],
         defaultChildRoute: routeNames.leaderboard,

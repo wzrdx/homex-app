@@ -7,12 +7,17 @@ import { useSection } from '../components/Section';
 import ParticipantsList from './ParticipantsList';
 import PrizesList from './PrizesList';
 
+export enum CompetitionType {
+    Raffle = 'Raffle',
+    Battle = 'Battle',
+}
+
 function useQuery() {
     const { search } = useLocation();
     return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function RaffleDetails() {
+function CompetitionDetails() {
     const { height } = useSection();
     const navigate = useNavigate();
 
@@ -21,6 +26,7 @@ function RaffleDetails() {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isCompleted, setCompleted] = useState<boolean>(false);
+    const [type, setType] = useState<CompetitionType>();
 
     // Init
     useEffect(() => {
@@ -28,6 +34,9 @@ function RaffleDetails() {
     }, []);
 
     const init = async () => {
+        console.log(location.pathname.includes('raffles') ? CompetitionType.Raffle : CompetitionType.Battle);
+
+        setType(location.pathname.includes('raffles') ? CompetitionType.Raffle : CompetitionType.Battle);
         setCompleted(query.get('completed') === 'true');
         setIsLoading(false);
     };
@@ -51,9 +60,15 @@ function RaffleDetails() {
                 </Flex>
             </Flex>
 
-            {isLoading ? <Spinner mt={6} /> : isCompleted ? <PrizesList id={id} /> : <ParticipantsList id={id} />}
+            {isLoading ? (
+                <Spinner mt={6} />
+            ) : isCompleted ? (
+                <PrizesList id={Number.parseInt(id as string)} type={type as CompetitionType} />
+            ) : (
+                <ParticipantsList id={id} />
+            )}
         </Flex>
     );
 }
 
-export default RaffleDetails;
+export default CompetitionDetails;

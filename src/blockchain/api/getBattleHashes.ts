@@ -6,14 +6,14 @@ import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getRaffleHashes';
+const FUNCTION_NAME = 'getBattleHashes';
 
 export interface Trial {
     index: number;
     hashes: string[];
 }
 
-export const getRaffleHashes = async (id: number) => {
+export const getBattleHashes = async (id: number) => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),

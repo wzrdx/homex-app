@@ -1,7 +1,24 @@
 import _ from 'lodash';
-import { Box, Flex, Spinner, Text, Image } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    Spinner,
+    Text,
+    Image,
+    ModalFooter,
+    Button,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    useDisclosure,
+    ModalHeader,
+    Alert,
+    AlertIcon,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { WarningIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
 import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -15,6 +32,7 @@ import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmitt
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
 import Banner from '../../assets/images/bhero.png';
+import { AiOutlineEye } from 'react-icons/ai';
 
 const COLUMNS = [
     {
@@ -43,6 +61,7 @@ const isSponsored = true;
 
 function Leaderboard() {
     const { height } = useSection();
+    const { isOpen: isPotOpen, onOpen: onPotOpen, onClose: onPotClose } = useDisclosure();
 
     const [battle, setBattle] = useState<Competition>();
     const [participants, setParticipants] = useState<BattleParticipant[]>();
@@ -53,7 +72,8 @@ function Leaderboard() {
     const { battles } = useRewardsContext() as RewardsContextType;
 
     useEffect(() => {
-        setBattle(_.first(battles));
+        // Displays the most recent battle
+        setBattle(_(battles).orderBy('timestamp', 'desc').first());
     }, [battles]);
 
     useEffect(() => {
@@ -109,20 +129,24 @@ function Leaderboard() {
         setParticipants(parsed);
     };
 
-    const getPot = () => (
-        <Flex ml={2} alignItems="center">
-            <Text color="brightBlue" fontWeight={500}>
-                60 $EGLD
-            </Text>
-        </Flex>
-    );
-
     return (
         <Flex height={`calc(100% - ${height}px)`} flexDir="column" alignItems="center">
             <Flex mb={6} justifyContent="center" alignItems="center">
-                <Flex mx={2} justifyContent="center" alignItems="center">
-                    <Text>Pot value:</Text>
-                    {getPot()}
+                <Flex
+                    mr={2}
+                    alignItems="center"
+                    padding="7px 16px"
+                    borderRadius="9999px"
+                    backgroundColor="#3c180d"
+                    cursor="pointer"
+                    transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                    _hover={{ backgroundColor: '#4d1e0e' }}
+                    onClick={onPotOpen}
+                >
+                    <AiOutlineEye fontSize="20px" color="rgb(249 115 22)" />
+                    <Text ml={2} color="white">
+                        Prize Pool
+                    </Text>
                 </Flex>
 
                 <Box mx={1.5} opacity="0.9">
@@ -233,6 +257,64 @@ function Leaderboard() {
                     <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
                 </Flex>
             )}
+
+            {/* Pot */}
+            <Modal size="xl" onClose={onPotClose} isOpen={isPotOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Battle Prize Pool</ModalHeader>
+
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ boxShadow: '0 0 transparent' }}
+                        borderRadius="3px"
+                    />
+                    <ModalBody>
+                        <Flex flexDir="column">
+                            <Text
+                                mb={1.5}
+                                color="brightWheat"
+                                textTransform="uppercase"
+                                fontWeight={600}
+                                fontSize="18px"
+                                letterSpacing="0.75px"
+                            >
+                                Total value
+                            </Text>
+
+                            <Text fontWeight={500}>60 $EGLD</Text>
+
+                            <Text
+                                mt={5}
+                                mb={1.5}
+                                color="brightWheat"
+                                textTransform="uppercase"
+                                fontWeight={600}
+                                fontSize="18px"
+                                letterSpacing="0.75px"
+                            >
+                                Prizes
+                            </Text>
+
+                            <Text fontWeight={500}>5 EXO Tickets</Text>
+
+                            <Flex mt={2.5}>
+                                <Alert status="info" width="auto">
+                                    <AlertIcon />
+                                    The rest of the prizes will be announced soon
+                                </Alert>
+                            </Flex>
+                        </Flex>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button onClick={onPotClose} colorScheme="red">
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }

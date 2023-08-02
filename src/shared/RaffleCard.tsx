@@ -15,7 +15,7 @@ import { Timer } from './Timer';
 import { format, isAfter } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { getRaffleSubmittedTickets } from '../blockchain/api/getRaffleSubmittedTickets';
-import { RAFFLES } from '../services/rewards';
+import { RAFFLES, RewardType } from '../services/rewards';
 
 const RAFFLE_CAP = 5;
 
@@ -106,6 +106,45 @@ function RaffleCard({
         }
     };
 
+    const getContent = (): JSX.Element => {
+        const raffle = RAFFLES[id - 1];
+        let element = <></>;
+
+        switch (raffle.type) {
+            case RewardType.SingleImage:
+                return <Image src={raffle.imageSrc} height="100%" userSelect="none" />;
+
+            case RewardType.Prizes:
+                return (
+                    <>
+                        {_.map(RAFFLES[id - 1].prizes, (prize, index) => (
+                            <Flex
+                                key={index}
+                                backgroundColor={prize.backgroundColor}
+                                justifyContent="center"
+                                alignItems="center"
+                                userSelect="none"
+                                height="100%"
+                            >
+                                <Flex justifyContent="center" alignItems="center">
+                                    <Flex justifyContent="center" alignItems="center">
+                                        <Image src={prize.imageSrc} height={prize.height} alt="Prize" />
+                                    </Flex>
+
+                                    <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
+                                        {prize.text}
+                                    </Text>
+                                </Flex>
+                            </Flex>
+                        ))}
+                    </>
+                );
+
+            default:
+                return element;
+        }
+    };
+
     return (
         <Flex
             flexDir="column"
@@ -120,30 +159,7 @@ function RaffleCard({
             _hover={{ border: '2px solid #fdefce40' }}
         >
             <Flex flexDir="column" width="100%" height="260px">
-                {RAFFLES[id - 1].isSingleImage ? (
-                    <Image src={RAFFLES[id - 1].imageSrc} height="100%" userSelect="none" />
-                ) : (
-                    _.map(RAFFLES[id - 1].prizes, (prize, index) => (
-                        <Flex
-                            key={index}
-                            backgroundColor={prize.backgroundColor}
-                            justifyContent="center"
-                            alignItems="center"
-                            userSelect="none"
-                            height="100%"
-                        >
-                            <Flex justifyContent="center" alignItems="center">
-                                <Flex justifyContent="center" alignItems="center">
-                                    <Image src={prize.imageSrc} height={prize.height} alt="Traveler" />
-                                </Flex>
-
-                                <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
-                                    {prize.text}
-                                </Text>
-                            </Flex>
-                        </Flex>
-                    ))
-                )}
+                {getContent()}
             </Flex>
 
             <Flex flexDir="column" pb={2.5} width="100%">

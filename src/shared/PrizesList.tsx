@@ -36,6 +36,8 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { ActionButton } from './ActionButton/ActionButton';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
 import { getRaffleHashes } from '../blockchain/api/getRaffleHashes';
+import { CompetitionType } from './CompetitionDetails';
+import { getBattleHashes } from '../blockchain/api/getBattleHashes';
 
 const COLUMNS = [
     {
@@ -68,15 +70,15 @@ interface Winner {
     prizes: Array<JSX.Element>;
 }
 
-function PrizesList({ id }) {
+function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
     const [winners, setWinners] = useState<Array<Winner>>();
 
-    const { raffles } = useRewardsContext() as RewardsContextType;
+    const { raffles, battles } = useRewardsContext() as RewardsContextType;
 
-    const [raffle, setRaffle] = useState<{
+    const [competition, setCompetition] = useState<{
         id: number;
         timestamp: Date;
         tickets: number;
@@ -88,19 +90,25 @@ function PrizesList({ id }) {
     const { address: userAddress } = useGetAccountInfo();
 
     useEffect(() => {
-        if (!_.isEmpty(raffles)) {
-            setRaffle(_.find(raffles, (raffle) => raffle.id == id));
+        if (type === CompetitionType.Raffle && !_.isEmpty(raffles)) {
+            setCompetition(_.find(raffles, (raffle) => raffle.id == id));
         }
-    }, [raffles]);
+
+        if (type === CompetitionType.Battle && !_.isEmpty(battles)) {
+            setCompetition(_.find(battles, (battle) => battle.id == id));
+        }
+    }, [raffles, battles]);
 
     useEffect(() => {
-        if (raffle) {
+        if (competition) {
             init();
         }
-    }, [raffle]);
+    }, [competition]);
 
     const init = async () => {
-        const hashes = await getRaffleHashes(id);
+        const hashesQuery = type === CompetitionType.Raffle ? getRaffleHashes : getBattleHashes;
+
+        const hashes = await hashesQuery(id);
         setHashes(hashes);
 
         const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));
@@ -268,7 +276,7 @@ function PrizesList({ id }) {
                 <Flex justifyContent="center" alignItems="flex-start">
                     <Alert status="warning">
                         <AlertIcon />
-                        The raffle prizes have not been drawn yet
+                        The prizes have not been drawn yet
                     </Alert>
                 </Flex>
             ) : (
@@ -284,7 +292,7 @@ function PrizesList({ id }) {
 
                             <Flex alignItems="center">
                                 <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />
-                                <Text>{format(raffle?.timestamp as Date, 'PPPP')}</Text>
+                                <Text>{format(competition?.timestamp as Date, 'PPPP')}</Text>
                             </Flex>
                         </Flex>
 
