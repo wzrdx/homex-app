@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from 'react';
 import { StakingInfo, useGetStakingInfo } from '../blockchain/hooks/useGetStakingInfo';
-import { useGetUserTokenNonces } from '../blockchain/hooks/useGetUserTokenNonces';
 import { NFT, NFTType } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces } from './authentication';
 import { pairwise } from './helpers';
@@ -11,16 +10,6 @@ import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID } from '../blockchain/con
 export interface StoreContextType {
     stakingInfo: StakingInfo | undefined;
     getStakingInfo: () => Promise<StakingInfo | undefined>;
-    nonces:
-        | {
-              travelers: number[];
-              elders: number[];
-          }
-        | undefined;
-    getUserTokenNonces: () => Promise<{
-        travelers: number[];
-        elders: number[];
-    }>;
     travelers: NFT[] | undefined;
     elders: NFT[] | undefined;
     getWalletNFTs: () => Promise<void>;
@@ -32,7 +21,6 @@ export const useStoreContext = () => useContext(StoreContext);
 
 export const StoreProvider = ({ children }) => {
     const { stakingInfo, getStakingInfo } = useGetStakingInfo();
-    const { nonces, getUserTokenNonces } = useGetUserTokenNonces();
     let { address } = useGetAccountInfo();
 
     const [travelers, setTravelers] = useState<NFT[]>();
@@ -68,7 +56,6 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    // url: `https://ipfs.io/ipfs/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/${nft.nonce}.png`,
                     type: NFTType.Traveler,
                 }))
                 .orderBy('nonce', 'asc')
@@ -109,9 +96,7 @@ export const StoreProvider = ({ children }) => {
     };
 
     return (
-        <StoreContext.Provider
-            value={{ stakingInfo, getStakingInfo, nonces, getUserTokenNonces, travelers, elders, getWalletNFTs }}
-        >
+        <StoreContext.Provider value={{ stakingInfo, getStakingInfo, travelers, elders, getWalletNFTs }}>
             {children}
         </StoreContext.Provider>
     );

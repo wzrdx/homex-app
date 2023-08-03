@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
@@ -32,7 +32,6 @@ import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpe
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import Yield from '../../shared/Yield';
-import { getStakedNFTs } from '../../blockchain/api/getStakedNFTs';
 
 function Unstake() {
     const { height } = useStaking();
@@ -40,7 +39,7 @@ function Unstake() {
 
     const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
 
-    const { stakingInfo, nonces } = useStoreContext() as StoreContextType;
+    const { stakingInfo } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
@@ -61,7 +60,7 @@ function Unstake() {
     useEffect(() => {
         setSelectedTokens([]);
         getNFTs();
-    }, [nonces]);
+    }, [stakingInfo]);
 
     useEffect(() => {
         if (!_.isEmpty(travelers)) {
@@ -74,21 +73,34 @@ function Unstake() {
     };
 
     const getNFTs = async () => {
-        if (!nonces) {
+        if (!stakingInfo) {
             return;
         }
+
+        const availableTokens = _.filter(stakingInfo.tokens, (token) => !token.timestamp);
+
+        const filteredNonces = {
+            travelers: _(availableTokens)
+                .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID)
+                .map((token) => token.nonce)
+                .value(),
+            elders: _(availableTokens)
+                .filter((token) => token.tokenId === ELDERS_COLLECTION_ID)
+                .map((token) => token.nonce)
+                .value(),
+        };
 
         setTravelers(undefined);
         setElders(undefined);
 
-        const travelersCount = _.size(nonces?.travelers);
-        const eldersCount = _.size(nonces?.elders);
+        const travelersCount = _.size(filteredNonces?.travelers);
+        const eldersCount = _.size(filteredNonces?.elders);
 
         const travelerChunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
         const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
         const travelerIds = _.map(
-            nonces?.travelers,
+            filteredNonces?.travelers,
             (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
         );
 
@@ -120,7 +132,10 @@ function Unstake() {
         const elderChunks = new Array(Math.floor(eldersCount / 25)).fill(25).concat(eldersCount % 25);
         const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
-        const elderIds = _.map(nonces?.elders, (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`);
+        const elderIds = _.map(
+            filteredNonces?.elders,
+            (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`
+        );
 
         pairwise(
             _(elderChunks)
@@ -160,10 +175,9 @@ function Unstake() {
 
         const user = new Address(address);
 
-        const stakedTokens = await getStakedNFTs();
         const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
 
-        const args = _(stakedTokens)
+        const args = _(stakingInfo.tokens)
             .filter((token) => _.includes(selectedNonces, token.nonce))
             .map((token) => ({
                 token_id: new TokenIdentifierValue(token.tokenId),

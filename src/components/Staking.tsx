@@ -7,7 +7,7 @@ import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
-import { getStakedNFTs } from '../blockchain/api/getStakedNFTs';
+import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 
 type StakingContext = {
     height: number;
@@ -26,22 +26,15 @@ function Staking() {
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
-    const { stakingInfo, nonces, getUserTokenNonces } = useStoreContext() as StoreContextType;
+    const { stakingInfo } = useStoreContext() as StoreContextType;
     const { stakedNFTsCount, getStakedNFTsCount } = useGetStakedNFTsCount();
 
     // Init
     useEffect(() => {
         setRoute(routes.find((route) => route.path === routeNames.staking));
-        init();
     }, []);
 
-    // TODO:
-    const init = async () => {
-        await getStakedNFTs();
-    };
-
     useEffect(() => {
-        getUserTokenNonces();
         getStakedNFTsCount();
     }, [stakingInfo]);
 
@@ -68,8 +61,12 @@ function Staking() {
                 <Flex flex={1}>
                     <Stats
                         stakedNFTsCount={stakedNFTsCount}
-                        travelersCount={_.size(nonces?.travelers)}
-                        eldersCount={_.size(nonces?.elders)}
+                        travelersCount={_(stakingInfo?.tokens)
+                            .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID)
+                            .size()}
+                        eldersCount={_(stakingInfo?.tokens)
+                            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID)
+                            .size()}
                     />
                 </Flex>
 

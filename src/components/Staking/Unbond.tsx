@@ -21,7 +21,7 @@ function Unbond() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, travelers, elders, getWalletNFTs, nonces } = useStoreContext() as StoreContextType;
+    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
@@ -65,7 +65,7 @@ function Unbond() {
 
         const user = new Address(address);
 
-        const stakedNFTsCount = _.size(nonces?.travelers) + _.size(nonces?.elders);
+        const stakedNFTsCount = _.size(stakingInfo.tokens);
 
         try {
             const transfers: TokenTransfer[] = _(selectedTokens)
