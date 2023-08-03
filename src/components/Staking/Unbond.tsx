@@ -77,7 +77,7 @@ function Unbond() {
             return;
         }
 
-        const availableTokens = _.filter(stakingInfo.tokens, (token) => !token.timestamp);
+        const availableTokens = _.filter(stakingInfo.tokens, (token) => !!token.timestamp);
 
         const filteredNonces = {
             travelers: _(availableTokens)
