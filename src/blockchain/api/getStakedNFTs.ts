@@ -1,15 +1,16 @@
-import { ResultsParser, ContractFunction, U32Value, AddressValue, Address } from '@multiversx/sdk-core/out';
+import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { map } from 'lodash';
+import { Stake } from '../hooks/useGetStakingInfo';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getStakedNFTs';
 
-export const getStakedNFTs = async () => {
+export const getStakedNFTs = async (): Promise<Stake[]> => {
     try {
         const address = await getAddress();
 

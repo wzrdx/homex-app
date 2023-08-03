@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
-import BigNumber from 'bignumber.js';
 import { map, size } from 'lodash';
 
 const resultsParser = new ResultsParser();
@@ -55,7 +54,7 @@ export const useGetStakingInfo = () => {
                 })),
             };
 
-            console.log(FUNCTION_NAME, info);
+            // console.log(FUNCTION_NAME, info);
 
             setStakingInfo(info);
 

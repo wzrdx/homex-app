@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, U64Value } from '@multiversx/sdk-core/out';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
@@ -27,11 +27,12 @@ import { useStaking } from '../Staking';
 import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { getStakedNFTs } from '../../services/authentication';
+import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import Yield from '../../shared/Yield';
+import { getStakedNFTs } from '../../blockchain/api/getStakedNFTs';
 
 function Unstake() {
     const { height } = useStaking();
@@ -101,7 +102,7 @@ function Unstake() {
                 .value(),
             (from: number, to: number) => {
                 const slice = travelerIds.slice(from, to);
-                travelersApiCalls.push(getStakedNFTs(TRAVELERS_COLLECTION_ID, slice.join(',')));
+                travelersApiCalls.push(getContractNFTs(TRAVELERS_COLLECTION_ID, slice.join(',')));
             }
         );
 
@@ -131,7 +132,7 @@ function Unstake() {
                 .value(),
             (from: number, to: number) => {
                 const slice = elderIds.slice(from, to);
-                eldersApiCalls.push(getStakedNFTs(ELDERS_COLLECTION_ID, slice.join(',')));
+                eldersApiCalls.push(getContractNFTs(ELDERS_COLLECTION_ID, slice.join(',')));
             }
         );
 
@@ -159,30 +160,32 @@ function Unstake() {
 
         const user = new Address(address);
 
-        const travelerNonces = _(selectedTokens)
-            .filter((token) => token.type === NFTType.Traveler)
-            .map((token) => new U64Value(token.nonce))
+        const stakedTokens = await getStakedNFTs();
+        const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
+
+        const args = _(stakedTokens)
+            .filter((token) => _.includes(selectedNonces, token.nonce))
+            .map((token) => ({
+                token_id: new TokenIdentifierValue(token.tokenId),
+                nonce: new U16Value(token.nonce),
+                amount: new U16Value(token.amount),
+                timestamp: new OptionValue(new OptionType(new U64Type()), null),
+            }))
             .value();
 
-        const elderNonces = _(selectedTokens)
-            .filter((token) => token.type === NFTType.Elder)
-            .map((token) => new U64Value(token.nonce))
-            .value();
-
-        const argNFTsCount = travelerNonces.length + elderNonces.length;
         const stakedNFTsCount = _.size([...elders, ...travelers]);
 
-        if (!argNFTsCount) {
+        if (_.isEmpty(args)) {
             setUnstakeButtonLoading(false);
             return;
         }
 
         try {
             const tx = smartContract.methods
-                .unstake([travelerNonces, elderNonces])
+                .unstake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 770000 * argNFTsCount)
+                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -203,7 +206,7 @@ function Unstake() {
                     sessionId,
                     type: TransactionType.Unstake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
-                    data: argNFTsCount,
+                    data: _.size(args),
                 },
             ]);
 

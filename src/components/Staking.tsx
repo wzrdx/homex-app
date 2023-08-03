@@ -7,7 +7,7 @@ import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
-import { getStakedNFTs } from '../blockchain/api/getStakedTokens';
+import { getStakedNFTs } from '../blockchain/api/getStakedNFTs';
 
 type StakingContext = {
     height: number;
