@@ -19,7 +19,7 @@ export const routeNames = {
     quests: 'quests',
     raffles: 'raffles',
     battles: 'battles',
-    stake: 'available',
+    stake: 'unstaked',
     unstake: 'staked',
     current: 'current',
     past: 'past',
