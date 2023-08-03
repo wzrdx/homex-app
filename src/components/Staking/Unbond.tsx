@@ -1,30 +1,53 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    Text,
+    Spinner,
+    AlertIcon,
+    Alert,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    ModalHeader,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/smartContract';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import { NFT, NFTType } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
-import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { getContractNFTs } from '../../services/authentication';
+import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
+import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
+import Yield from '../../shared/Yield';
 
 function Unbond() {
-    const { height, displayToast } = useStaking();
-
+    const { height } = useStaking();
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
+    const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
+
+    const { stakingInfo } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
-    const [isButtonLoading, setButtonLoading] = useState(false);
+    const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
+    const [isClaimButtonLoading, setClaimButtonLoading] = useState(false);
+
+    const [travelers, setTravelers] = useState<NFT[]>();
+    const [elders, setElders] = useState<NFT[]>();
+
     const [rarities, setRarities] = useState<Rarity[]>();
 
     const [selectedTokens, setSelectedTokens] = useState<
@@ -35,12 +58,11 @@ function Unbond() {
     >([]);
 
     useEffect(() => {
-        getWalletNFTs();
-    }, []);
+        setSelectedTokens([]);
+        getNFTs();
+    }, [stakingInfo]);
 
     useEffect(() => {
-        setSelectedTokens([]);
-
         if (!_.isEmpty(travelers)) {
             getRarities();
         }
@@ -50,40 +72,134 @@ function Unbond() {
         setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
     };
 
-    const stake = async () => {
+    const getNFTs = async () => {
         if (!stakingInfo) {
             return;
         }
 
-        if (_.isEmpty(selectedTokens)) {
-            displayToast('error', 'Nothing to stake', 'Please select some NFTs first', 'redClrs');
+        const availableTokens = _.filter(stakingInfo.tokens, (token) => !token.timestamp);
 
+        const filteredNonces = {
+            travelers: _(availableTokens)
+                .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID)
+                .map((token) => token.nonce)
+                .value(),
+            elders: _(availableTokens)
+                .filter((token) => token.tokenId === ELDERS_COLLECTION_ID)
+                .map((token) => token.nonce)
+                .value(),
+        };
+
+        setTravelers(undefined);
+        setElders(undefined);
+
+        const travelersCount = _.size(filteredNonces?.travelers);
+        const eldersCount = _.size(filteredNonces?.elders);
+
+        const travelerChunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
+        const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
+
+        const travelerIds = _.map(
+            filteredNonces?.travelers,
+            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
+        );
+
+        pairwise(
+            _(travelerChunks)
+                .filter(_.identity)
+                .map((chunk, index) => {
+                    return index * 25 + chunk;
+                })
+                .unshift(0)
+                .value(),
+            (from: number, to: number) => {
+                const slice = travelerIds.slice(from, to);
+                travelersApiCalls.push(getContractNFTs(TRAVELERS_COLLECTION_ID, slice.join(',')));
+            }
+        );
+
+        const travelers = _(await Promise.all(travelersApiCalls))
+            .flatten()
+            .map((result) => result.data)
+            .flatten()
+            .map((nft) => ({
+                ...nft,
+                type: NFTType.Traveler,
+            }))
+            .orderBy('nonce', 'asc')
+            .value();
+
+        const elderChunks = new Array(Math.floor(eldersCount / 25)).fill(25).concat(eldersCount % 25);
+        const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
+
+        const elderIds = _.map(
+            filteredNonces?.elders,
+            (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`
+        );
+
+        pairwise(
+            _(elderChunks)
+                .filter(_.identity)
+                .map((chunk, index) => {
+                    return index * 25 + chunk;
+                })
+                .unshift(0)
+                .value(),
+            (from: number, to: number) => {
+                const slice = elderIds.slice(from, to);
+                eldersApiCalls.push(getContractNFTs(ELDERS_COLLECTION_ID, slice.join(',')));
+            }
+        );
+
+        const elders = _(await Promise.all(eldersApiCalls))
+            .flatten()
+            .map((result) => result.data)
+            .flatten()
+            .map((nft) => ({
+                ...nft,
+                type: NFTType.Elder,
+            }))
+            .orderBy('nonce', 'asc')
+            .value();
+
+        setTravelers(travelers);
+        setElders(elders);
+    };
+
+    const unstake = async () => {
+        if (!stakingInfo || !elders || !travelers) {
             return;
         }
 
-        setButtonLoading(true);
+        setUnstakeButtonLoading(true);
 
         const user = new Address(address);
 
-        const stakedNFTsCount = _.size(stakingInfo.tokens);
+        const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
+
+        const args = _(stakingInfo.tokens)
+            .filter((token) => _.includes(selectedNonces, token.nonce))
+            .map((token) => ({
+                token_id: new TokenIdentifierValue(token.tokenId),
+                nonce: new U16Value(token.nonce),
+                amount: new U16Value(token.amount),
+                timestamp: new OptionValue(new OptionType(new U64Type()), null),
+            }))
+            .value();
+
+        const stakedNFTsCount = _.size([...elders, ...travelers]);
+
+        if (_.isEmpty(args)) {
+            setUnstakeButtonLoading(false);
+            return;
+        }
 
         try {
-            const transfers: TokenTransfer[] = _(selectedTokens)
-                .map((token) =>
-                    TokenTransfer.nonFungible(
-                        token.type === NFTType.Traveler ? TRAVELERS_COLLECTION_ID : ELDERS_COLLECTION_ID,
-                        token.nonce
-                    )
-                )
-                .value();
-
             const tx = smartContract.methods
-                .stake()
-                .withMultiESDTNFTTransfer(transfers)
+                .unstake([args])
                 .withSender(user)
-                .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6500000 + 200000 * stakedNFTsCount + 770000 * _.size(transfers))
+                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -102,15 +218,65 @@ function Unbond() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Stake,
+                    type: TransactionType.Unstake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
-                    data: _.size(transfers),
+                    data: _.size(args),
                 },
             ]);
 
-            setButtonLoading(false);
+            setUnstakeButtonLoading(false);
         } catch (err) {
-            console.error('Error occured while staking', err);
+            console.error('Error occured ', err);
+        }
+    };
+
+    const claim = async () => {
+        if (!stakingInfo || !elders || !travelers) {
+            return;
+        }
+
+        if (isClaimButtonLoading) {
+            return;
+        }
+
+        setClaimButtonLoading(true);
+
+        const user = new Address(address);
+
+        const stakedNFTsCount = _.size([...elders, ...travelers]);
+
+        try {
+            const tx = smartContract.methods
+                .claimStakingRewards()
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(6000000 + 200000 * stakedNFTsCount)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.ClaimEnergy,
+                    resolution: TxResolution.UpdateStakingInfo,
+                },
+            ]);
+
+            setClaimButtonLoading(false);
+        } catch (err) {
+            console.error('Error occured while sending tx', err);
         }
     };
 
@@ -121,7 +287,6 @@ function Unbond() {
 
         setSelectedTokens(
             _([...elders, ...travelers])
-                .take(25)
                 .map((token) => ({
                     nonce: token.nonce,
                     type: token.type as NFTType,
@@ -132,60 +297,91 @@ function Unbond() {
 
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
-            <Flex pb={6} alignItems="center" justifyContent="space-between">
-                <Flex alignItems="center">
-                    <ActionButton
-                        disabled={
-                            !stakingInfo || isTxPending(TransactionType.ClaimEnergy) || isTxPending(TransactionType.Unstake)
-                        }
-                        isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
-                        colorScheme="red"
-                        customStyle={{ width: '120px' }}
-                        onClick={stake}
-                    >
-                        <Text>Stake</Text>
-                    </ActionButton>
-
-                    <Box ml={4}>
-                        <ActionButton
-                            colorScheme="default"
-                            customStyle={{ width: '192px' }}
-                            onClick={selectAll}
-                            disabled={
-                                !stakingInfo ||
-                                isTxPending(TransactionType.ClaimEnergy) ||
-                                isTxPending(TransactionType.Unstake) ||
-                                isTxPending(TransactionType.Stake)
-                            }
-                        >
-                            <Text>Select all (25 max.)</Text>
-                        </ActionButton>
-                    </Box>
-
-                    <Flex ml={4} alignItems="center">
-                        <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                        <Text color="almostWhite">Select some NFTs in order to stake</Text>
-                    </Flex>
-                </Flex>
-
-                <Flex ml={4} alignItems="center">
-                    <InfoIcon mr={1.5} color="brightWheat" />
-                    <Text color="brightWheat">Staking will automatically claim your rewards</Text>
-                </Flex>
-            </Flex>
-
-            {!(elders && travelers) ? (
-                <Flex alignItems="center" justifyContent="center" height="100%">
-                    <Spinner size="md" />
-                </Flex>
-            ) : (
+            {elders && travelers ? (
                 <>
-                    {_.isEmpty(elders) && _.isEmpty(travelers) ? (
+                    <Flex pb={6} alignItems="center" justifyContent="space-between">
+                        <Flex alignItems="center">
+                            <ActionButton
+                                disabled={
+                                    !stakingInfo ||
+                                    isTxPending(TransactionType.ClaimEnergy) ||
+                                    isTxPending(TransactionType.Stake)
+                                }
+                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
+                                colorScheme="blue"
+                                customStyle={{ width: '120px' }}
+                                onClick={unstake}
+                            >
+                                <Text>Unstake</Text>
+                            </ActionButton>
+
+                            <Box ml={4}>
+                                <ActionButton
+                                    colorScheme="default"
+                                    customStyle={{ width: '142px' }}
+                                    onClick={selectAll}
+                                    disabled={
+                                        !stakingInfo ||
+                                        isTxPending(TransactionType.ClaimEnergy) ||
+                                        isTxPending(TransactionType.Unstake) ||
+                                        isTxPending(TransactionType.Stake)
+                                    }
+                                >
+                                    <Text>Select all</Text>
+                                </ActionButton>
+                            </Box>
+
+                            {stakingInfo?.isStaked && (
+                                <Flex ml={4} alignItems="center">
+                                    <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                                    <Text color="almostWhite">Select some NFTs in order to unstake</Text>
+                                </Flex>
+                            )}
+                        </Flex>
+
+                        {stakingInfo?.isStaked && (
+                            <Flex>
+                                <ActionButton
+                                    colorScheme="default"
+                                    onClick={onYieldOpen}
+                                    disabled={
+                                        _.isEmpty(rarities) ||
+                                        isTxPending(TransactionType.ClaimEnergy) ||
+                                        isTxPending(TransactionType.Unstake) ||
+                                        isTxPending(TransactionType.Stake)
+                                    }
+                                >
+                                    <Flex alignItems="center">
+                                        <InfoOutlineIcon />
+                                        <Text ml={1.5}>View Yield</Text>
+                                    </Flex>
+                                </ActionButton>
+
+                                <Box ml={4}>
+                                    <ActionButton
+                                        disabled={
+                                            !stakingInfo ||
+                                            isTxPending(TransactionType.Stake) ||
+                                            isTxPending(TransactionType.Unstake)
+                                        }
+                                        isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
+                                        colorScheme="blue"
+                                        customStyle={{ width: '144px' }}
+                                        onClick={claim}
+                                    >
+                                        <Text>Claim Energy</Text>
+                                    </ActionButton>
+                                </Box>
+                            </Flex>
+                        )}
+                    </Flex>
+
+                    {_.isEmpty(travelers) && _.isEmpty(elders) ? (
                         <Flex py={4}>
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
                                     <AlertIcon />
-                                    You have no NFTs available for staking. View your staked NFT in the 'Staked' tab.
+                                    You have no staked NFTs to display
                                 </Alert>
                             </Flex>
                         </Flex>
@@ -205,12 +401,12 @@ function Unbond() {
                                 rowGap={4}
                                 columnGap={4}
                             >
-                                {_.map([...(elders as NFT[]), ...(travelers as NFT[])], (token, index) => (
+                                {_.map([...elders, ...travelers], (token, index) => (
                                     <Box
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.Stake)) {
                                                 return;
                                             }
 
@@ -262,7 +458,26 @@ function Unbond() {
                         </Flex>
                     )}
                 </>
+            ) : (
+                <Flex alignItems="center" justifyContent="center" height="100%">
+                    <Spinner size="md" />
+                </Flex>
             )}
+
+            {/* Yield */}
+            <Modal onClose={onYieldClose} isOpen={isYieldOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Energy per hour</ModalHeader>
+                    <ModalCloseButton _focusVisible={{ outline: 0 }} />
+
+                    <ModalBody>
+                        <Flex pb={3} mt={-1}>
+                            {travelers && elders && <Yield travelers={travelers} elders={elders} rarities={rarities} />}
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }
