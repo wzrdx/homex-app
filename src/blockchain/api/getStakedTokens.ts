@@ -7,9 +7,9 @@ import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getStakedTokens';
+const FUNCTION_NAME = 'getStakedNFTs';
 
-export const getStakedTokens = async () => {
+export const getStakedNFTs = async () => {
     try {
         const address = await getAddress();
 
@@ -25,14 +25,13 @@ export const getStakedTokens = async () => {
         const array = firstValue?.valueOf();
 
         const parsedArray = map(array, (item) => ({
+            tokenId: item?.token_id,
             amount: item?.amount?.toNumber(),
             nonce: item?.nonce?.toNumber(),
-            timestamp: item?.timestamp?.toNumber() === 0 ? null : new Date(item?.timestamp?.toNumber() * 1000),
-            tokenId: item?.token_id,
-            unbondTime: item?.unbond_time?.toNumber(),
+            timestamp: !item?.timestamp ? null : new Date(item?.timestamp?.toNumber() * 1000),
         }));
 
-        console.log(parsedArray);
+        console.log(FUNCTION_NAME, parsedArray);
 
         return parsedArray;
     } catch (err) {

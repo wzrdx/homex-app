@@ -111,7 +111,7 @@
             "outputs": []
         },
         {
-            "name": "getStakedTokens",
+            "name": "getStakedNFTs",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -347,18 +347,6 @@
                     "type": "u16"
                 }
             ]
-        },
-        {
-            "name": "debug",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
         },
         {
             "name": "addBattle",
@@ -678,12 +666,19 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "traveler_nonces",
-                    "type": "List<u64>"
-                },
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [
                 {
-                    "name": "elder_nonces",
-                    "type": "List<u64>"
+                    "name": "tokens",
+                    "type": "List<Stake>"
                 }
             ],
             "outputs": []
@@ -952,19 +947,15 @@
                 },
                 {
                     "name": "nonce",
-                    "type": "u64"
+                    "type": "u16"
                 },
                 {
                     "name": "amount",
-                    "type": "u32"
-                },
-                {
-                    "name": "unbond_time",
-                    "type": "u32"
+                    "type": "u16"
                 },
                 {
                     "name": "timestamp",
-                    "type": "u64"
+                    "type": "Option<u64>"
                 }
             ]
         },
@@ -980,12 +971,8 @@
                     "type": "u64"
                 },
                 {
-                    "name": "traveler_nonces",
-                    "type": "List<u64>"
-                },
-                {
-                    "name": "elder_nonces",
-                    "type": "List<u64>"
+                    "name": "tokens",
+                    "type": "List<Stake>"
                 }
             ]
         }
