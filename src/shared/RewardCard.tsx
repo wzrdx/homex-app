@@ -150,7 +150,6 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
             <Box width="100%">
                 <ActionButton
                     isLoading={isButtonLoading || isClaimRewardTxPending(TransactionType.ClaimReward, id)}
-                    disabled={isGamePaused}
                     colorScheme="red"
                     onClick={claimReward}
                     customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}

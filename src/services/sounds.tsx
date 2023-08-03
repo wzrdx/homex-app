@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { MUSIC_KEY, SOUNDS_KEY } from '../components/Settings';
 
 const OST = new Howl({
-    src: ['/exo.mp3'],
+    src: ['/ost.mp3'],
     loop: true,
     volume: 0.4,
 });

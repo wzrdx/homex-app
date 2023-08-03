@@ -194,6 +194,36 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         );
                     }
 
+                    if (operation.type === 'nft' && operation.collection === 'SUPERVIC-f07785') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Super Victor`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'GIANTS-93cadd') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Giants Village`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'NERD-794a0d') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Rekt Nerds`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
                     if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
                         prize = (
                             <Flex alignItems="center">

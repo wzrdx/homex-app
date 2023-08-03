@@ -47,12 +47,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Sunlit Haven',
+        name: 'Desert Mirage',
         description: (
             <Text layerStyle="questDescription">
-                Journey to Wood Village next to Menhir, cursed by eternal clouds. Retrieve the Warmth Crystal from the heart of
-                the Sunlit Haven, a sacred glade hidden in the forest. As the crystal radiates its vibrant glow, the clouds
-                disperse, and the wood stacks bask in the sun, ready for construction.
+                Amidst the scorching desert, hidden beneath a mirage's veil, lies the enigmatic base launchpad of underground
+                exploration. Embark on a journey to decipher ancient clues scattered across the arid dunes. Upon uncovering the
+                hidden base, descend to the subterranean realm, where the true essence of the desert is unveiled, and a realm of
+                untold wonders awaits discovery.
             </Text>
         ),
         requirements: {
@@ -72,12 +73,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Eternal Sunrise',
+        name: 'Oceanic Depths',
         description: (
             <Text layerStyle="questDescription">
-                Venture into the Sunflower Field, where time stands still for the flowers. Solve the Celestial Sundial puzzle to
-                unlock their connection with the sun. Retrieve the Sunflower Scent from the central flower, and as its aroma
-                fills the air, the field bursts into life, following the sun's path once more.
+                Deep within the earth's core, a mechanical factory looms before you, ready to propel you into the uncharted
+                oceans beneath the planet's surface. As you wait to be equipped for this daring expedition, the air hums with
+                anticipation, and the subterranean world beckons with its mysteries. Rare herbs infused with the earth's energy,
+                will power your dive suit and grant you the ability to explore the mesmerizing depths of the hidden oceans.
             </Text>
         ),
         requirements: {
@@ -97,12 +99,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Winds of Grain',
+        name: "Traveler's Compass",
         description: (
             <Text layerStyle="questDescription">
-                Embark on a journey to the Windmill Farm, a realm of mechanized wheat harvesting. Unravel the ancient
-                machineries' secrets to operate them. Retrieve the golden Wheat Harvest, and as the windmills whirl, a bountiful
-                wheat harvest blesses the fields.
+                Dive into the Abyssal Archipelago, where the ocean's depths conceal treacherous currents and tempestuous winds
+                challenge underwater travelers. Unearth the Oceanic Compass, a mystical artifact that bestows mastery over the
+                underwater currents, empowering divers to navigate the ocean's depths with precision.
             </Text>
         ),
         requirements: {
@@ -122,12 +124,14 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Everlasting Bloom',
+        name: 'Glasswrought Discovery',
         description: (
             <Text layerStyle="questDescription">
-                Seek the Altar of Bloom nestled among the mountains, where couples once wed. Perform a sacred ritual and
-                retrieve the Ring of Bloom, an eternal symbol of summer's maturity. As you return it to the altar, the land
-                flourishes with vibrant flora, celebrating the essence of summer's growth.
+                In the depths of the ocean, you stumble upon a mysterious glass globe adorned with intricate mechanical
+                components. The secrets it holds could prove crucial for your underwater journey. With precision and finesse,
+                operate the enigmatic device to unlock its inner workings. As the gears click into place, the globe reveals a
+                hidden compartment, containing a luminous Orb of the Corals, an artifact that harnesses the ocean's elemental
+                energies.
             </Text>
         ),
         requirements: {
@@ -149,12 +153,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Enigmatic Glyphs',
+        name: 'Submerged Communique',
         description: (
             <Text layerStyle="questDescription">
-                Explore the Zabedia Temple, surrounded by agricole wonders. Decode the ancient runes etched in stone and
-                retrieve the Sun Bowl. As the bowl's magic activates, the temple is infused with summer's essence, and the land
-                flourishes with abundant crops.
+                Now your mission is to establish a vital communication link with the surface base, enhancing collaboration with
+                fellow travelers. Utilizing the artifacts gathered before, transmit crucial messages encoded in ethereal
+                frequencies to the base above. In return, receive vital navigational guidance and updates, ensuring the success
+                of your exploration into uncharted waters.
             </Text>
         ),
         requirements: {
@@ -174,12 +179,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Temporal Convergence',
+        name: "Sundsten's Beacon",
         description: (
             <Text layerStyle="questDescription">
-                Enter the Chrono Maze, a labyrinth where time intertwines. Overcome challenges and retrieve the Hourglass of
-                Summer. As you turn the sands, the maze transforms into a magical Chronospace, where you can borrow extra
-                daylight hours to savor the splendors of summer.
+                Dive into the abyss of the Abyssal Trench, seeking the Lost Lantern of Sundsten. Restore the ancient artifact to
+                its rightful place, unleashing a radiant beacon that empowers travelers with navigation prowess and grants safe
+                passage through treacherous waters.
             </Text>
         ),
         requirements: {
@@ -199,12 +204,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Emberheart's Embrace",
+        name: 'Spectral Enigma',
         description: (
             <Text layerStyle="questDescription">
-                Venture into the frozen Alaiy Forest, perpetually shrouded in darkness. Unearth the secret of igniting eternal
-                flames and retrieve the Everburn Ember. As warmth spreads, the forest blooms, and its creatures awaken, turning
-                the once-frigid forest into a sanctuary of life.
+                Unearth the lost ghost city, an enigmatic ruins submerged in the ocean's depths. As you venture through the
+                submerged platforms, you discover unusual constructions, unlike any you've seen before. Inspect the holographic
+                archives scattered amidst the ruins, revealing echoes of a forgotten civilization and locations of lost
+                treasures left behind.
             </Text>
         ),
         requirements: {
@@ -224,12 +230,14 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Sands of Memory',
+        name: 'Subaquatic Nexus',
         description: (
             <Text layerStyle="questDescription">
-                Brave the depths of Tam Ocean to retrieve the Sand of Summers Past. Embrace its nostalgic magic, transporting
-                you to cherished memories of summer days gone by. As the sand's light touches Menhir's shores, the city is
-                filled with a sense of joy and nostalgia, honoring the spirit of summertime.
+                Stumble upon an underwater mine concealed within a hidden cave, its construction suspended gracefully by bridges
+                connecting to the rocks. The mine harnesses the energy of rare minerals and precious gems found abundantly in
+                the ocean's depths. Activate the mine's energy conduits, funneling the collected power upwards through the
+                cave's central shaft to the surface base, providing valuable resources to support your ongoing journey beneath
+                the waves.
             </Text>
         ),
         requirements: {
@@ -251,12 +259,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Starlight Prophecy',
+        name: 'Surface Respite',
         description: (
             <Text layerStyle="questDescription">
-                Ascend the celestial observatory to decipher the Summer Constellation. Retrieve the Guiding Star Crystal, an
-                ethereal gem reflecting summer's secrets. As its light illuminates the night sky, the stars reveal insights into
-                the realm's destiny.
+                Return to the launchpad base for a well-deserved rest from your underwater odyssey. Amidst fellow travelers,
+                exchange vital data and captivating tales of your submerged journey. Recharge your energy and connect with the
+                community to share discoveries from the ocean's depths.
             </Text>
         ),
         requirements: {
@@ -278,12 +286,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Radiant Riddles',
+        name: 'Moonlit Prophecies',
         description: (
             <Text layerStyle="questDescription">
-                Enter the Garden of Oracle Blossoms, where enchanted flowers offer enigmatic wisdom. Solve the puzzles of the
-                Blooming Enigma to retrieve the Oracle Petals. As their mystical essence spreads, Menhir's inhabitants gain
-                newfound clarity and purpose.
+                Sleeping for some hours, you visit in your dreams the Moonlit Oracle, perched atop the Lunar Cliff. Interpret
+                the moonlit runes to retrieve the Tidecaller's Scroll. As the tides respond to the prophecy, Menhir experiences
+                a surge of prosperity, with flourishing fishing and bountiful marine life.
             </Text>
         ),
         requirements: {
@@ -305,12 +313,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Solstice Serenade',
+        name: 'Deep Sea Enigma',
         description: (
             <Text layerStyle="questDescription">
-                Venture to the ancient Solstice Standing Stones, a sacred place of divine revelation. Harmonize the stones to
-                reveal the Sun Song Scroll. As the scroll is played, celestial melodies resonate, guiding Menhir towards its
-                destined summer prosperity.
+                In another dream you plummet into the Deep Sea Chasm, an abyss shrouded in mystery. Decipher the ancient symbols
+                etched on the Abyssal Tablet to retrieve the Leviathan's Eye, an artifact that grants visions of the ocean's
+                secrets, guiding sailors through turbulent waters.
             </Text>
         ),
         requirements: {
@@ -332,12 +340,14 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Eclipsed Visions',
+        name: "Ocean's Embrace",
         description: (
             <Text layerStyle="questDescription">
-                Seek the ethereal Eclipse Nexus, where light and shadow dance. Retrieve the Solar Lens, a crystalline tool for
-                seeing beyond veiled truths. As you peer through its magical lens, mysteries of the cosmos and Menhir's future
-                unfold.
+                In one of your visions, you venture to the Fathomless Fjord, where the water conceals a legendary artifact.
+                Retrieve the Ocean's Embrace, a mystical artifact that empowers those touched by the sea, enhancing their
+                maritime abilities and fostering a bond with marine creatures. Wake up and use these precious informations. As
+                the launchpad prepares to send you back into the aquatic realm, the knowledge shared at the surface base becomes
+                your strength, fueling your spirit for the next dive.
             </Text>
         ),
         requirements: {
@@ -361,12 +371,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Luminous Elixir',
+        name: 'Azure Alchemy',
         description: (
             <Text layerStyle="questDescription">
-                Brave the luminous Albedo Abyss, where daylight eludes. Retrieve the Elixir of Eternal Glow. As it touches the
-                land, night transforms into day, filling Menhir with radiant light, enhancing growth, and invoking eternal
-                summertime splendor.
+                Ascend to the Azure Observatory, where sea and sky meet. Harness the power of the Azure Elixir, crafted from
+                rare oceanic elements. As the elixir transmutes, it imbues Menhir's waters with healing properties, fostering a
+                sanctuary for marine creatures and restoring the balance of ocean life.
             </Text>
         ),
         requirements: {
@@ -391,12 +401,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Celestial Tincture',
+        name: 'Nautical Nebula',
         description: (
             <Text layerStyle="questDescription">
-                Ascend to the Cosmic Apex, where celestial energies converge. Extract the Celestial Tincture, a potent essence
-                of astral harmony. As the tincture is infused into the city's fountains, Menhir resonates with cosmic
-                equilibrium, bringing prosperity and balance throughout the realm.
+                Traverse the Nebulous Tides, where the celestial and aquatic realms converge. Alchemize the Stardust Pearl, a
+                luminescent gem that illuminates the depths and guides travelers during starless nights, protecting them from
+                treacherous currents.
             </Text>
         ),
         requirements: {
@@ -429,20 +439,20 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Flames of Solstice',
+        name: 'City of the Heroes',
         description: (
             <Text layerStyle="questDescription">
-                As the first rays of dawn grace Menhir, embark on a perilous journey through the scorching Desert Dunes. Amid
-                shifting sands, retrieve the Flames of Solstice, a blazing relic with the power to harness the sun's eternal
-                radiance. Master the elemental trials, withstand the blazing heat, and harness the Flames' energy to ignite a
-                celestial beacon that illuminates Menhir throughout eternity.
+                Empowered by the gathered energies and wisdom of your underwater odyssey, you now embark on the ultimate quest -
+                to plunge deeper into the ocean's heart. As you venture into the mysterious underwater city, a marvel of
+                suspended constructions and vibrant marine flora welcomes you. Traverse the intricate pathways that lead to the
+                city's central chamber, where untold secrets of another realm lie dormant, waiting to be unlocked.
             </Text>
         ),
         requirements: {
-            energy: Math.round(1.1 * 16 * BASE_COST),
-            herbs: Math.round(1.1 * 32 * BASE_COST),
-            gems: Math.round(1.1 * 16 * BASE_COST),
-            essence: Math.round(1.1 * 12 * BASE_COST),
+            energy: Math.round(1.2 * 16 * BASE_COST),
+            herbs: Math.round(1.2 * 32 * BASE_COST),
+            gems: Math.round(1.2 * 16 * BASE_COST),
+            essence: Math.round(1.2 * 12 * BASE_COST),
         },
         duration: 8 * BASE_DURATION,
         rewards: [
@@ -459,21 +469,20 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Celestial Rebirth',
+        name: 'The Enchanted Lagoon',
         description: (
             <Text layerStyle="questDescription">
-                Prepare for the ultimate trial at the Celestial Peak, the realm's highest summit, where summer's energy
-                converges. Scale treacherous cliffs, traverse celestial paths, and face formidable challenges to reach the
-                mystical Astral Altar. Invoke the Starfire Sigil, an ancient artifact that channels the celestial energies of
-                the cosmos into the realm, bestowing Menhir with eternal summer and ushering in a new era of prosperity and
-                growth.
+                Descend into the ocean's depths to uncover the hidden realm of the Enchanted Lagoon. Upon accomplishing the
+                task, the Enchanted Lagoon comes alive with a luminous glow, and a harmonious connection forms between the realm
+                and the ocean. The Lagoon's magic extends to Menhir, enriching the realm with newfound enchantments, fostering
+                an everlasting bond between these two extraordinary worlds.
             </Text>
         ),
         requirements: {
-            energy: Math.round(1.1 * 2 * 16 * BASE_COST),
-            herbs: Math.round(1.1 * 2 * 32 * BASE_COST),
-            gems: Math.round(1.1 * 2 * 16 * BASE_COST),
-            essence: Math.round(1.1 * 2 * 12 * BASE_COST),
+            energy: Math.round(1.2 * 2 * 16 * BASE_COST),
+            herbs: Math.round(1.2 * 2 * 32 * BASE_COST),
+            gems: Math.round(1.2 * 2 * 16 * BASE_COST),
+            essence: Math.round(1.2 * 2 * 12 * BASE_COST),
         },
         duration: 16 * BASE_DURATION,
         rewards: [

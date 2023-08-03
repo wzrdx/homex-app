@@ -29,6 +29,7 @@ import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
+import SponsorLogo from '../assets/images/bherologo.svg';
 
 const ROUTE_WIDTH = 98;
 
@@ -338,29 +339,29 @@ function Header({ displayToast }) {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        {/* <Text fontSize="15px">Trial sponsored by</Text>
+                        <Text fontSize="15px">Trial sponsored by</Text>
 
-                        <Image ml={2} mt="2px" src={getEXOLogo()} width="54px" />
+                        <Image ml={2} src={SponsorLogo} width="76px" filter="brightness(0) invert(1)" />
 
                         <Box ml={3}>
                             <Separator type="vertical" width="1px" height="26px" />
                         </Box>
 
-                        <Link href="https://exo.game/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://mvx.bhero.com/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsGlobe cursor="pointer" />
                         </Link>
 
-                        <Link href="https://exo.game/whitepaper" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        {/* <Link href="" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <IoDocumentTextOutline fontSize="18px" cursor="pointer" />
-                        </Link>
+                        </Link> */}
 
-                        <Link href="https://twitter.com/ExoMultiversX" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://twitter.com/BHeroLaunchpad" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsTwitter cursor="pointer" />
                         </Link>
 
-                        <Link href="https://discord.com/invite/m3gmUhGq3E" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://discord.com/invite/bhnetwork" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" />
-                        </Link> */}
+                        </Link>
                     </Flex>
                 </Flex>
             </Flex>

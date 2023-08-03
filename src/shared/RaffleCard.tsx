@@ -15,7 +15,8 @@ import { Timer } from './Timer';
 import { format, isAfter } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { getRaffleSubmittedTickets } from '../blockchain/api/getRaffleSubmittedTickets';
-import { RAFFLES } from '../services/rewards';
+import { RAFFLES, RewardType } from '../services/rewards';
+import { getBackgroundStyle } from '../services/helpers';
 
 const RAFFLE_CAP = 5;
 
@@ -106,6 +107,73 @@ function RaffleCard({
         }
     };
 
+    const getContent = (): JSX.Element => {
+        const raffle = RAFFLES[id - 1];
+        let element = <></>;
+
+        switch (raffle.type) {
+            case RewardType.SingleImage:
+                return <Image src={raffle.imageSrc} height="100%" userSelect="none" />;
+
+            case RewardType.Prizes:
+                return (
+                    <>
+                        {_.map(RAFFLES[id - 1].prizes, (prize, index) => (
+                            <Flex
+                                key={index}
+                                backgroundColor={prize.backgroundColor}
+                                justifyContent="center"
+                                alignItems="center"
+                                userSelect="none"
+                                height="100%"
+                            >
+                                <Flex justifyContent="center" alignItems="center">
+                                    <Flex justifyContent="center" alignItems="center">
+                                        <Image src={prize.imageSrc} height={prize.height} alt="Prize" />
+                                    </Flex>
+
+                                    <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
+                                        {prize.text}
+                                    </Text>
+                                </Flex>
+                            </Flex>
+                        ))}
+                    </>
+                );
+
+            case RewardType.NFT:
+                return (
+                    <Flex position="relative" style={getBackgroundStyle(raffle.url)} height="100%">
+                        <Flex position="absolute" right={0} bottom={0}>
+                            <Flex
+                                alignItems="center"
+                                background="linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.65) 30%)"
+                                pr={1.5}
+                                pl={6}
+                                py="2px"
+                            >
+                                <Text
+                                    pt="3px"
+                                    ml={1}
+                                    mr={0.5}
+                                    color="whitesmoke"
+                                    fontSize="12.5px"
+                                    letterSpacing="0.25px"
+                                    fontWeight={500}
+                                    textTransform="uppercase"
+                                >
+                                    {`${raffle.name} • ${raffle.rank}`}
+                                </Text>
+                            </Flex>
+                        </Flex>
+                    </Flex>
+                );
+
+            default:
+                return element;
+        }
+    };
+
     return (
         <Flex
             flexDir="column"
@@ -120,30 +188,7 @@ function RaffleCard({
             _hover={{ border: '2px solid #fdefce40' }}
         >
             <Flex flexDir="column" width="100%" height="260px">
-                {RAFFLES[id - 1].isSingleImage ? (
-                    <Image src={RAFFLES[id - 1].imageSrc} height="100%" userSelect="none" />
-                ) : (
-                    _.map(RAFFLES[id - 1].prizes, (prize, index) => (
-                        <Flex
-                            key={index}
-                            backgroundColor={prize.backgroundColor}
-                            justifyContent="center"
-                            alignItems="center"
-                            userSelect="none"
-                            height="100%"
-                        >
-                            <Flex justifyContent="center" alignItems="center">
-                                <Flex justifyContent="center" alignItems="center">
-                                    <Image src={prize.imageSrc} height={prize.height} alt="Prize" />
-                                </Flex>
-
-                                <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
-                                    {prize.text}
-                                </Text>
-                            </Flex>
-                        </Flex>
-                    ))
-                )}
+                {getContent()}
             </Flex>
 
             <Flex flexDir="column" pb={2.5} width="100%">
