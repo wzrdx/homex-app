@@ -224,6 +224,57 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         );
                     }
 
+                    // Battle
+                    if (operation.type === 'nft' && operation.collection === 'SUBJECTX-2c184d') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Subject X`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'WHALES-f14e05') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Dreamy Whales`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'DRIFTERS-efd96c') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Drifters`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'DRG-875e1a') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} Dragons Arena`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'nft' && operation.collection === 'SRB-61daf7') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} SuperRareBear`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
                     if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
                         prize = (
                             <Flex alignItems="center">
