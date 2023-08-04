@@ -225,6 +225,16 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                     }
 
                     // Battle
+                    if (operation.type === 'nft' && operation.collection === 'COW-cd463d') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} CowCow`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
                     if (operation.type === 'nft' && operation.collection === 'SUBJECTX-2c184d') {
                         prize = (
                             <Flex alignItems="center">
