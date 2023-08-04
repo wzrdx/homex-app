@@ -285,6 +285,16 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         );
                     }
 
+                    if (operation.type === 'nft' && operation.collection === 'GNOGONS-d6b12a') {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                    {`${operation.value} GNOGONS`}
+                                </Text>
+                            </Flex>
+                        );
+                    }
+
                     if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
                         prize = (
                             <Flex alignItems="center">
