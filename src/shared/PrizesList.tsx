@@ -23,6 +23,8 @@ import {
     ELDERS_COLLECTION_ID,
     ENERGY_TOKEN_ID,
     ESSENCE_TOKEN_ID,
+    GEMS_TOKEN_ID,
+    HERBS_TOKEN_ID,
     TICKETS_TOKEN_ID,
     TOKEN_DENOMINATION,
     TRAVELERS_COLLECTION_ID,
@@ -57,8 +59,8 @@ const COLUMNS = [
     {
         name: 'Prize',
         style: {
-            width: '230px',
-            minWidth: '230px',
+            width: '376px',
+            minWidth: '376px',
         },
         align: 'right',
     },
@@ -138,6 +140,8 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
         if (result.data) {
             const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
 
+            console.log(operations);
+
             const winners = await Promise.all(
                 _.map(operations, async (operation) => {
                     const username = await getUsername(operation.receiver);
@@ -151,26 +155,34 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         );
                     }
 
-                    if (operation.type === 'nft' && operation.collection === ELDERS_COLLECTION_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
-                                <Text fontWeight={500} color="redClrs">
-                                    {operation.name}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === TRAVELERS_COLLECTION_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
-                                <Text fontWeight={500} color="primary">
-                                    {operation.name}
-                                </Text>
-                            </Flex>
-                        );
+                    if (operation.type === 'nft' && operation.esdtType === 'NonFungibleESDT') {
+                        if (operation.collection === ELDERS_COLLECTION_ID) {
+                            prize = (
+                                <Flex alignItems="center">
+                                    <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
+                                    <Text fontWeight={500} color="redClrs">
+                                        {operation.name}
+                                    </Text>
+                                </Flex>
+                            );
+                        } else if (operation.collection === TRAVELERS_COLLECTION_ID) {
+                            prize = (
+                                <Flex alignItems="center">
+                                    <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
+                                    <Text fontWeight={500} color="primary">
+                                        {operation.name}
+                                    </Text>
+                                </Flex>
+                            );
+                        } else {
+                            prize = (
+                                <Flex alignItems="center">
+                                    <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                        {`${operation.name}`}
+                                    </Text>
+                                </Flex>
+                            );
+                        }
                     }
 
                     if (operation.type === 'nft' && operation.ticker === TICKETS_TOKEN_ID) {
@@ -188,120 +200,8 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         prize = (
                             <Flex alignItems="center">
                                 <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} EXO Ticket`}
+                                    {`${operation.value} ${operation.name}`}
                                 </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'SUPERVIC-f07785') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Super Victor`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'GIANTS-93cadd') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Giants Village`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'NERD-794a0d') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Rekt Nerds`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    // Battle
-                    if (operation.type === 'nft' && operation.collection === 'COW-cd463d') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} CowCow`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'SUBJECTX-2c184d') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Subject X`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'WHALES-f14e05') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Dreamy Whales`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'DRIFTERS-efd96c') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Drifters`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'DRG-875e1a') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} Dragons Arena`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'SRB-61daf7') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} SuperRareBear`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'nft' && operation.collection === 'GNOGONS-d6b12a') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} GNOGONS`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
-
-                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
-                                    {operation.value / TOKEN_DENOMINATION}
-                                </Text>
-                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                             </Flex>
                         );
                     }
@@ -313,6 +213,39 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                                     {operation.value / TOKEN_DENOMINATION}
                                 </Text>
                                 <Image height="24px" src={RESOURCE_ELEMENTS.energy.icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === HERBS_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.herbs.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.herbs.icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === GEMS_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.gems.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.gems.icon} />
+                            </Flex>
+                        );
+                    }
+
+                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
+                        prize = (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
+                                    {operation.value / TOKEN_DENOMINATION}
+                                </Text>
+                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                             </Flex>
                         );
                     }
@@ -351,7 +284,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                     </Alert>
                 </Flex>
             ) : (
-                <Flex minW="600px">
+                <Flex minW="672px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         <Flex alignItems="flex-start" justifyContent="space-between">
                             <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
@@ -408,7 +341,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                                         {winner.username}
                                     </Text>
 
-                                    <Flex justifyContent="flex-end" style={COLUMNS[2].style}>
+                                    <Flex justifyContent="flex-end" alignItems="center" style={COLUMNS[2].style}>
                                         {_.map(winner.prizes, (prize, prizeIndex) => (
                                             <Box ml={3} key={prizeIndex}>
                                                 {prize}
