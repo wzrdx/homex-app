@@ -126,8 +126,6 @@ function Leaderboard() {
                 .value()
         );
 
-        console.log(parsed);
-
         setParticipants(parsed);
     };
 
