@@ -59,8 +59,8 @@ const COLUMNS = [
     {
         name: 'Prize',
         style: {
-            width: '376px',
-            minWidth: '376px',
+            width: '482px',
+            minWidth: '482px',
         },
         align: 'right',
     },
@@ -130,6 +130,8 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
             };
         });
 
+        console.log(winners);
+
         setWinners(winners as Winner[]);
         setLoading(false);
     };
@@ -139,8 +141,6 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
 
         if (result.data) {
             const operations = _.filter(result.data.operations, (operation) => operation.action === 'transfer');
-
-            console.log(operations);
 
             const winners = await Promise.all(
                 _.map(operations, async (operation) => {
@@ -284,7 +284,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                     </Alert>
                 </Flex>
             ) : (
-                <Flex minW="672px">
+                <Flex minW="742px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         <Flex alignItems="flex-start" justifyContent="space-between">
                             <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
