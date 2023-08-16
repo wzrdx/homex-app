@@ -5,10 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { isAfter, isBefore } from 'date-fns';
 import { routeNames } from '../../services/routes';
-import { useRewardsContext, RewardsContextType, Competition, RewardType } from '../../services/rewards';
-// import { getTx } from '../../services/helpers';
-// import axios from 'axios';
-// import { API_URL } from '../../blockchain/config';
+import { useRewardsContext, RewardsContextType, Competition, RAFFLES } from '../../services/rewards';
 
 function Raffles() {
     const location = useLocation();
@@ -30,35 +27,6 @@ function Raffles() {
         const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
         setCompetitions(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
         setLoading(false);
-
-        // TODO: Remove
-        // const bh = await getTx('bc1f446852520ec5aa4fde3b66998f4dae89a0b1906b879b18d52a98bcf681dd');
-        // const ids = _.map(bh?.data?.operations, (operation) => operation.identifier);
-
-        // const array: any[] = [];
-
-        // _.forEach(ids, async (id) => {
-        //     const result = await axios.get(`nfts/${id}`, {
-        //         baseURL: API_URL,
-        //         params: {
-        //             fields: 'nonce,name,url,metadata',
-        //         },
-        //     });
-
-        //     array.push({
-        //         type: 'RewardType.NFT',
-        //         id: 'getId()',
-        //         winners: 1,
-        //         name: result.data.name,
-        //         nonce: result.data.nonce,
-        //         url: result.data.url,
-        //         rank: _.find(result.data.metadata.attributes, (attr) => attr.trait_type === 'Rank')?.value,
-        //     });
-        // });
-
-        // setTimeout(() => {
-        //     console.log(JSON.stringify(_.orderBy(array, ['rank', 'name'], ['asc', 'asc'])));
-        // }, 3000);
     };
 
     <Alert status="warning">

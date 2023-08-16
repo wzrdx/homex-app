@@ -1,10 +1,7 @@
-// import Layout from '../assets/backgrounds/1.jpg';
 import Layout from '../assets/backgrounds/bh_bg.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
-// import Frame_3 from '../assets/frame_3.png';
-// TODO: Remove after Trial 6
 import FrameQuare from '../assets/frame_square_bh.png';
 import Vision from '../assets/images/vision.jpg';
 import FrameGlow from '../assets/videos/glow.webm';
