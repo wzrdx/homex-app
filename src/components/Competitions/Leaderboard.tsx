@@ -245,7 +245,7 @@ function Leaderboard() {
                                 </Text>
 
                                 <Flex minWidth={COLUMNS[2].width}>
-                                    <Text minWidth="24px">{participant.ticketsCount}</Text>
+                                    <Text minWidth="28px">{participant.ticketsCount}</Text>
                                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                                 </Flex>
 
