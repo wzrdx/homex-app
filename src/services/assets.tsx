@@ -1,8 +1,8 @@
-import Layout from '../assets/backgrounds/bh_bg.jpg';
+import Background from '../assets/backgrounds/cpa_bg.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
-import FrameQuare from '../assets/frame_square_bh.png';
+import Frame from '../assets/frame.png';
 import Vision from '../assets/images/vision.jpg';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
@@ -20,10 +20,10 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
-export const getLayoutBackground = () => Layout;
+export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
 
-export const getFrame = () => FrameQuare;
+export const getFrame = () => Frame;
 export const getVisionImage = () => Vision;
 export const getFullTicket = () => Ticket;
 export const getTicketSFT = () => TicketSFT;

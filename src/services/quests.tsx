@@ -47,13 +47,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Desert Mirage',
+        name: 'Sands of Tranquility',
         description: (
             <Text layerStyle="questDescription">
-                Amidst the scorching desert, hidden beneath a mirage's veil, lies the enigmatic base launchpad of underground
-                exploration. Embark on a journey to decipher ancient clues scattered across the arid dunes. Upon uncovering the
-                hidden base, descend to the subterranean realm, where the true essence of the desert is unveiled, and a realm of
-                untold wonders awaits discovery.
+                In the desert's heart lies a hidden oasis, guarded by ancient guardians. Collect the petals of the Tranquil
+                Lotus, a rare flower with calming properties. Brew a potion to soothe the guardians' spirits, allowing safe
+                passage to the heart of the dunes, where an ancient treasure awaits.
             </Text>
         ),
         requirements: {
@@ -73,13 +72,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Oceanic Depths',
+        name: 'Pyramid Garden',
         description: (
             <Text layerStyle="questDescription">
-                Deep within the earth's core, a mechanical factory looms before you, ready to propel you into the uncharted
-                oceans beneath the planet's surface. As you wait to be equipped for this daring expedition, the air hums with
-                anticipation, and the subterranean world beckons with its mysteries. Rare herbs infused with the earth's energy,
-                will power your dive suit and grant you the ability to explore the mesmerizing depths of the hidden oceans.
+                Amidst the dunes, discover a hidden garden filled with luminous flora. Retrieve the Celestial Blossom, said to
+                hold the wisdom of the desert goddesses. Blend its essence with rare herbs to create a potion that unveils
+                secrets long obscured by time.{' '}
             </Text>
         ),
         requirements: {
@@ -99,12 +97,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: "Traveler's Compass",
+        name: 'Whispering Winds',
         description: (
             <Text layerStyle="questDescription">
-                Dive into the Abyssal Archipelago, where the ocean's depths conceal treacherous currents and tempestuous winds
-                challenge underwater travelers. Unearth the Oceanic Compass, a mystical artifact that bestows mastery over the
-                underwater currents, empowering divers to navigate the ocean's depths with precision.
+                Inscribe forgotten symbols of the desert on magical Windstones scattered across the dunes. The stones resonate
+                with the ancient humanoid figures' wisdom, granting access to their realm. Harness their knowledge to brew an
+                elixir that grants clarity in Divination.
             </Text>
         ),
         requirements: {
@@ -124,14 +122,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Glasswrought Discovery',
+        name: 'Mirage Mirage',
         description: (
             <Text layerStyle="questDescription">
-                In the depths of the ocean, you stumble upon a mysterious glass globe adorned with intricate mechanical
-                components. The secrets it holds could prove crucial for your underwater journey. With precision and finesse,
-                operate the enigmatic device to unlock its inner workings. As the gears click into place, the globe reveals a
-                hidden compartment, containing a luminous Orb of the Corals, an artifact that harnesses the ocean's elemental
-                energies.
+                Navigate through shifting dunes to the heart of a mirage that houses the Mirage Mirage, a unique plant that only
+                manifests in illusions. Infuse its essence into potions that allow travelers to glimpse into the realm of
+                elusive treasures hidden beneath the sands.
             </Text>
         ),
         requirements: {
@@ -153,13 +149,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Submerged Communique',
+        name: "Goddess' Tears",
         description: (
             <Text layerStyle="questDescription">
-                Now your mission is to establish a vital communication link with the surface base, enhancing collaboration with
-                fellow travelers. Utilizing the artifacts gathered before, transmit crucial messages encoded in ethereal
-                frequencies to the base above. In return, receive vital navigational guidance and updates, ensuring the success
-                of your exploration into uncharted waters.
+                In the ancient temple, retrieve crystal tears, remnants of desert goddesses' blessings. Craft them into
+                Tearstone Gems, which resonate with the goddesses' guidance. Use them to enhance jewelry, creating exquisite
+                pieces that channel their power.
             </Text>
         ),
         requirements: {
@@ -179,12 +174,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Sundsten's Beacon",
+        name: 'Golden Secrets',
         description: (
             <Text layerStyle="questDescription">
-                Dive into the abyss of the Abyssal Trench, seeking the Lost Lantern of Sundsten. Restore the ancient artifact to
-                its rightful place, unleashing a radiant beacon that empowers travelers with navigation prowess and grants safe
-                passage through treacherous waters.
+                Delve into forgotten pyramids, discovering golden gems with enigmatic symbols. Polish these Sunstone Crystals,
+                and combine them with rare metals to craft radiant amulets that amplify Divination abilities.
             </Text>
         ),
         requirements: {
@@ -204,13 +198,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Spectral Enigma',
+        name: 'Ancient Reflections',
         description: (
             <Text layerStyle="questDescription">
-                Unearth the lost ghost city, an enigmatic ruins submerged in the ocean's depths. As you venture through the
-                submerged platforms, you discover unusual constructions, unlike any you've seen before. Inspect the holographic
-                archives scattered amidst the ruins, revealing echoes of a forgotten civilization and locations of lost
-                treasures left behind.
+                Amidst desert ruins, locate the Enigmatic Mirror, a legendary artifact said to reflect the inner truths of
+                ancient humanoid figures. Cut and shape the mirror's reflections into gemstones, crafting Luminous Facets that
+                grant clarity and insight.
             </Text>
         ),
         requirements: {
@@ -230,14 +223,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Subaquatic Nexus',
+        name: 'Sands of Time',
         description: (
             <Text layerStyle="questDescription">
-                Stumble upon an underwater mine concealed within a hidden cave, its construction suspended gracefully by bridges
-                connecting to the rocks. The mine harnesses the energy of rare minerals and precious gems found abundantly in
-                the ocean's depths. Activate the mine's energy conduits, funneling the collected power upwards through the
-                cave's central shaft to the surface base, providing valuable resources to support your ongoing journey beneath
-                the waves.
+                Gather Sands of Eternity from the desert's deepest dunes, where time's essence lingers. Combine these sands with
+                rare gems to forge Timebound Lockets that slow time for wearers, allowing them to perceive hidden truths and
+                seize fleeting opportunities.
             </Text>
         ),
         requirements: {
@@ -259,12 +250,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Surface Respite',
+        name: "Oracle's Call",
         description: (
             <Text layerStyle="questDescription">
-                Return to the launchpad base for a well-deserved rest from your underwater odyssey. Amidst fellow travelers,
-                exchange vital data and captivating tales of your submerged journey. Recharge your energy and connect with the
-                community to share discoveries from the ocean's depths.
+                Seek the Pyramid Oracle, a mystical entity in the shape of an ancient humanoid figure. Answer riddles it poses
+                using insights from your Divination skills. Uncover the Lost Glyphs, translating them into powerful enchantments
+                to aid your journey.
             </Text>
         ),
         requirements: {
@@ -286,12 +277,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Moonlit Prophecies',
+        name: 'Dune Whispers',
         description: (
             <Text layerStyle="questDescription">
-                Sleeping for some hours, you visit in your dreams the Moonlit Oracle, perched atop the Lunar Cliff. Interpret
-                the moonlit runes to retrieve the Tidecaller's Scroll. As the tides respond to the prophecy, Menhir experiences
-                a surge of prosperity, with flourishing fishing and bountiful marine life.
+                Connect with the desert's hidden energy nodes to unveil ancient messages etched by humanoid figures into crystal
+                tablets. Decode their wisdom to learn the secrets of divining the future. Craft Crystal Oracle Stones to amplify
+                your Divination prowess.
             </Text>
         ),
         requirements: {
@@ -313,12 +304,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Deep Sea Enigma',
+        name: 'Veil of Illusions',
         description: (
             <Text layerStyle="questDescription">
-                In another dream you plummet into the Deep Sea Chasm, an abyss shrouded in mystery. Decipher the ancient symbols
-                etched on the Abyssal Tablet to retrieve the Leviathan's Eye, an artifact that grants visions of the ocean's
-                secrets, guiding sailors through turbulent waters.
+                Traverse through an illusory desert realm crafted by the goddesses. Consult the Mirage Oracle, a sentient mirage
+                that imparts cryptic visions. Decipher these visions to reveal hidden paths and gather Mystic Sand, a vital
+                ingredient in crafting enchanted scrying mirrors.
             </Text>
         ),
         requirements: {
@@ -340,14 +331,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Ocean's Embrace",
+        name: 'Eternal Sands',
         description: (
             <Text layerStyle="questDescription">
-                In one of your visions, you venture to the Fathomless Fjord, where the water conceals a legendary artifact.
-                Retrieve the Ocean's Embrace, a mystical artifact that empowers those touched by the sea, enhancing their
-                maritime abilities and fostering a bond with marine creatures. Wake up and use these precious informations. As
-                the launchpad prepares to send you back into the aquatic realm, the knowledge shared at the surface base becomes
-                your strength, fueling your spirit for the next dive.
+                Retrieve the Eternal Hourglass, a relic hidden within a pyramid. As you turn it, visions of ancient humanoid
+                figures intertwining with pyramids' tales emerge. By crafting Ascendant Hourglasses with its sand, enhance your
+                Divination skills to access realms beyond time's grasp.
             </Text>
         ),
         requirements: {
@@ -371,12 +360,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Azure Alchemy',
+        name: 'Pyramid Brews',
         description: (
             <Text layerStyle="questDescription">
-                Ascend to the Azure Observatory, where sea and sky meet. Harness the power of the Azure Elixir, crafted from
-                rare oceanic elements. As the elixir transmutes, it imbues Menhir's waters with healing properties, fostering a
-                sanctuary for marine creatures and restoring the balance of ocean life.
+                Journey into ancient pyramids to retrieve enigmatic crystals. Infuse them into the Enigmatic Elixir, granting
+                the drinker brief visions of humanoid ancient figures. As their insights unfold, craft Pyramid Phials that allow
+                the imbiber to perceive hidden truths.
             </Text>
         ),
         requirements: {
@@ -401,12 +390,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Nautical Nebula',
+        name: "Serpent's Alchemy",
         description: (
             <Text layerStyle="questDescription">
-                Traverse the Nebulous Tides, where the celestial and aquatic realms converge. Alchemize the Stardust Pearl, a
-                luminescent gem that illuminates the depths and guides travelers during starless nights, protecting them from
-                treacherous currents.
+                Unearth ancient serpent symbols etched into golden tablets deep within pyramids. Combine these symbols with
+                serpent scales to craft the Serpent's Elixir. This elixir grants wearers heightened perception, unlocking the
+                ability to communicate with serpent deities and glean hidden wisdom.
             </Text>
         ),
         requirements: {
@@ -439,13 +428,14 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'City of the Heroes',
+        name: 'Quantum Convergence',
         description: (
             <Text layerStyle="questDescription">
-                Empowered by the gathered energies and wisdom of your underwater odyssey, you now embark on the ultimate quest -
-                to plunge deeper into the ocean's heart. As you venture into the mysterious underwater city, a marvel of
-                suspended constructions and vibrant marine flora welcomes you. Traverse the intricate pathways that lead to the
-                city's central chamber, where untold secrets of another realm lie dormant, waiting to be unlocked.
+                Plunge into the buried archives of an ultra-modern pyramid, illuminated by holographic glyphs. Uncover the
+                Quantum Codex, a crystalline data matrix infused with quantum information. By synthesizing its energy with
+                advanced alloys, forge the Cosmic Resonator. This device manipulates quantum frequencies, enabling communication
+                between futuristic travelers and Menhir's enlightened essence. As you activate the resonator, a new era dawns,
+                connecting the boundless potentials of future exploration with Menhir's infinite knowledge.{' '}
             </Text>
         ),
         requirements: {
@@ -469,13 +459,13 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'The Enchanted Lagoon',
+        name: 'Sands of Eternity',
         description: (
             <Text layerStyle="questDescription">
-                Descend into the ocean's depths to uncover the hidden realm of the Enchanted Lagoon. Upon accomplishing the
-                task, the Enchanted Lagoon comes alive with a luminous glow, and a harmonious connection forms between the realm
-                and the ocean. The Lagoon's magic extends to Menhir, enriching the realm with newfound enchantments, fostering
-                an everlasting bond between these two extraordinary worlds.
+                Unveil the secrets of the humanoid figures, decode the language of the pyramids, and commune with the goddesses
+                who shaped the desert's fate. With newfound wisdom, step into the ever-shifting sands once more, infused with
+                the Sands of Ascendance. As your journey unfolds, you weave the threads of time and knowledge, bridging ancient
+                echoes with the destiny of Menhir's realm.
             </Text>
         ),
         requirements: {
