@@ -13,6 +13,8 @@ export enum TransactionType {
     Unstake,
     ClaimEnergy,
     ClaimReward,
+    ClaimUnbondedNFTs,
+    Restake,
 }
 
 export enum TxResolution {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { StakingInfo, useGetStakingInfo } from '../blockchain/hooks/useGetStakingInfo';
-import { NFT, NFTType } from '../blockchain/types';
+import { NFT } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces } from './authentication';
 import { pairwise } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -56,7 +56,7 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    type: NFTType.Traveler,
+                    tokenId: TRAVELERS_COLLECTION_ID,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
@@ -83,7 +83,7 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    type: NFTType.Elder,
+                    tokenId: ELDERS_COLLECTION_ID,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();

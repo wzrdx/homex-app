@@ -24,7 +24,7 @@ import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFT, NFTType } from '../../blockchain/types';
+import { NFT } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
@@ -32,6 +32,7 @@ import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpe
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import Yield from '../../shared/Yield';
+import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
 
 function Unstake() {
     const { height } = useStaking();
@@ -53,7 +54,7 @@ function Unstake() {
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
             nonce: number;
-            type: NFTType;
+            tokenId: string;
         }>
     >([]);
 
@@ -77,17 +78,19 @@ function Unstake() {
             return;
         }
 
-        const availableTokens = _.filter(stakingInfo.tokens, (token) => !token.timestamp);
+        const stakedTravelers: Stake[] = _.filter(
+            stakingInfo.tokens,
+            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
+        );
+
+        const stakedElders: Stake[] = _.filter(
+            stakingInfo.tokens,
+            (token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp
+        );
 
         const filteredNonces = {
-            travelers: _(availableTokens)
-                .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID)
-                .map((token) => token.nonce)
-                .value(),
-            elders: _(availableTokens)
-                .filter((token) => token.tokenId === ELDERS_COLLECTION_ID)
-                .map((token) => token.nonce)
-                .value(),
+            travelers: _.map(stakedTravelers, (token) => token.nonce),
+            elders: _.map(stakedElders, (token) => token.nonce),
         };
 
         setTravelers(undefined);
@@ -124,7 +127,8 @@ function Unstake() {
             .flatten()
             .map((nft) => ({
                 ...nft,
-                type: NFTType.Traveler,
+                timestamp: _.find(stakedTravelers, (token) => token.nonce === nft.nonce)?.timestamp as Date,
+                tokenId: TRAVELERS_COLLECTION_ID,
             }))
             .orderBy('nonce', 'asc')
             .value();
@@ -157,7 +161,8 @@ function Unstake() {
             .flatten()
             .map((nft) => ({
                 ...nft,
-                type: NFTType.Elder,
+                timestamp: _.find(stakedElders, (token) => token.nonce === nft.nonce)?.timestamp as Date,
+                tokenId: ELDERS_COLLECTION_ID,
             }))
             .orderBy('nonce', 'asc')
             .value();
@@ -199,7 +204,7 @@ function Unstake() {
                 .unstake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
+                .withGasLimit(9250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -289,7 +294,7 @@ function Unstake() {
             _([...elders, ...travelers])
                 .map((token) => ({
                     nonce: token.nonce,
-                    type: token.type as NFTType,
+                    tokenId: token.tokenId,
                 }))
                 .value()
         );
@@ -414,7 +419,7 @@ function Unstake() {
                                                 if (
                                                     _.findIndex(
                                                         tokens,
-                                                        (t) => t.nonce === token.nonce && t.type === token.type
+                                                        (t) => t.nonce === token.nonce && t.tokenId === token.tokenId
                                                     ) === -1
                                                 ) {
                                                     if (_.size(tokens) === 25) {
@@ -425,13 +430,13 @@ function Unstake() {
                                                         ...tokens,
                                                         {
                                                             nonce: token.nonce,
-                                                            type: token.type as NFTType,
+                                                            tokenId: token.tokenId,
                                                         },
                                                     ];
                                                 } else {
                                                     return _.filter(
                                                         tokens,
-                                                        (t) => !(t.nonce === token.nonce && t.type === token.type)
+                                                        (t) => !(t.nonce === token.nonce && t.tokenId === token.tokenId)
                                                     );
                                                 }
                                             });
@@ -441,14 +446,12 @@ function Unstake() {
                                             isSelected={
                                                 _.findIndex(
                                                     selectedTokens,
-                                                    (t) => t.nonce === token.nonce && t.type === token.type
+                                                    (t) => t.nonce === token.nonce && t.tokenId === token.tokenId
                                                 ) > -1
                                             }
-                                            name={token.name}
-                                            url={token.url}
-                                            type={token?.type}
+                                            token={token}
                                             rarity={
-                                                token?.type === NFTType.Traveler &&
+                                                token?.tokenId === TRAVELERS_COLLECTION_ID &&
                                                 _.find(rarities, (rarity) => rarity.nonce === token.nonce)
                                             }
                                         />

@@ -28,13 +28,9 @@ export interface NFT {
     name: string;
     nonce: number;
     url: string;
-    type?: NFTType;
+    tokenId: string;
     rank?: number;
-}
-
-export enum NFTType {
-    Traveler = 'Traveler',
-    Elder = 'Elder',
+    timestamp?: Date;
 }
 
 export enum RarityClass {
