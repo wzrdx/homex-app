@@ -120,6 +120,11 @@ function App() {
                         displayEnergyGain(tx?.hash);
                         break;
 
+                    case TransactionType.ClaimUnbondedNFTs:
+                        displayToast('Unstaking succesful', `Successfully claimed ${tx.data} NFTs`, 'green.500');
+                        displayEnergyGain(tx?.hash);
+                        break;
+
                     case TransactionType.ClaimEnergy:
                         displayEnergyGain(tx?.hash);
                         break;

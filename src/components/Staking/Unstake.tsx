@@ -180,10 +180,8 @@ function Unstake() {
 
         const user = new Address(address);
 
-        const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
-
         const args = _(stakingInfo.tokens)
-            .filter((token) => _.includes(selectedNonces, token.nonce))
+            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
             .map((token) => ({
                 token_id: new TokenIdentifierValue(token.tokenId),
                 nonce: new U16Value(token.nonce),

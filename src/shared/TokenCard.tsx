@@ -78,7 +78,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                     ></Flex>
                 )}
 
-                {!hasFinishedUnbonding(token) && (
+                {!!token.timestamp && !hasFinishedUnbonding(token) && (
                     <Flex
                         justifyContent="center"
                         alignItems="center"

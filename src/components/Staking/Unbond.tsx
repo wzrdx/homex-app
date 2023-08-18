@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
@@ -33,6 +33,7 @@ import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import Yield from '../../shared/Yield';
 import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { getUnixTime } from 'date-fns';
 
 function Unbond() {
     const { height } = useStaking();
@@ -180,15 +181,13 @@ function Unbond() {
 
         const user = new Address(address);
 
-        const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
-
         const args = _(stakingInfo.tokens)
-            .filter((token) => _.includes(selectedNonces, token.nonce))
+            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
             .map((token) => ({
                 token_id: new TokenIdentifierValue(token.tokenId),
                 nonce: new U16Value(token.nonce),
                 amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), null),
+                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
             }))
             .value();
 
@@ -201,7 +200,7 @@ function Unbond() {
 
         try {
             const tx = smartContract.methods
-                .unstake([args])
+                .restake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
                 .withGasLimit(6250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
@@ -248,15 +247,13 @@ function Unbond() {
 
         const user = new Address(address);
 
-        const selectedNonces = _.map(selectedTokens, (token) => token.nonce);
-
         const args = _(stakingInfo.tokens)
-            .filter((token) => _.includes(selectedNonces, token.nonce))
+            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
             .map((token) => ({
                 token_id: new TokenIdentifierValue(token.tokenId),
                 nonce: new U16Value(token.nonce),
                 amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), null),
+                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
             }))
             .value();
 
@@ -264,7 +261,7 @@ function Unbond() {
 
         try {
             const tx = smartContract.methods
-                .claim()
+                .claim([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
                 .withGasLimit(8000000 + 200000 * args.length + 200000 * stakedNFTsCount)
@@ -288,6 +285,7 @@ function Unbond() {
                     sessionId,
                     type: TransactionType.ClaimUnbondedNFTs,
                     resolution: TxResolution.UpdateStakingInfo,
+                    data: _.size(args),
                 },
             ]);
 
@@ -321,8 +319,6 @@ function Unbond() {
             .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
             .map((token) => hasFinishedUnbonding(token))
             .value();
-
-        console.log(unbondingStates);
 
         return unbondingStates.every((token) => !!token);
     };
