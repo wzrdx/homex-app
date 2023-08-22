@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.69.0-nightly",
-            "commitHash": "31f858d9a511f24fedb8ed997b28304fec809630",
-            "commitDate": "2023-02-28",
+            "version": "1.72.0-nightly",
+            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
+            "commitDate": "2023-06-22",
             "channel": "Nightly",
-            "short": "rustc 1.69.0-nightly (31f858d9a 2023-02-28)"
+            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -442,7 +442,9 @@
         {
             "name": "joinRaffle",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "raffle_id",
@@ -454,7 +456,9 @@
         {
             "name": "joinBattle",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "battle_id",
@@ -610,7 +614,9 @@
         {
             "name": "startQuest",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "id",
@@ -622,7 +628,9 @@
         {
             "name": "startQuests",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "ids",
@@ -658,7 +666,9 @@
         {
             "name": "stake",
             "mutability": "mutable",
-            "payableInTokens": ["*"],
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [],
             "outputs": []
         },
@@ -675,6 +685,17 @@
         },
         {
             "name": "claim",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "restake",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -785,21 +806,6 @@
             "outputs": [
                 {
                     "type": "List<Address>"
-                }
-            ]
-        },
-        {
-            "name": "getStakeOfUser",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user_address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },

@@ -165,7 +165,7 @@ function Unbond() {
             .orderBy('nonce', 'asc')
             .value();
 
-        console.log(travelers);
+        // console.log(travelers);
 
         setTravelers(travelers);
         setElders(elders);
@@ -202,7 +202,7 @@ function Unbond() {
                 .restake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(6250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
+                .withGasLimit(8000000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -221,7 +221,7 @@ function Unbond() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Unstake,
+                    type: TransactionType.Restake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
                     data: _.size(args),
                 },
