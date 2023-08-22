@@ -111,17 +111,30 @@ function App() {
                         break;
 
                     case TransactionType.Stake:
-                        displayToast('Staking succesful', `Successfully staked ${tx.data} NFTs`, 'green.500', 'stake');
+                        displayToast(
+                            'Staking succesful',
+                            `Successfully staked ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
+                            'green.500',
+                            'stake'
+                        );
                         displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.Unstake:
-                        displayToast('Unstaking succesful', `Successfully unstaked ${tx.data} NFTs`, 'green.500');
+                        displayToast(
+                            'Unstaking succesful',
+                            `Successfully unstaked ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
+                            'green.500'
+                        );
                         displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.ClaimUnbondedNFTs:
-                        displayToast('Unstaking succesful', `Successfully claimed ${tx.data} NFTs`, 'green.500');
+                        displayToast(
+                            'Unstaking succesful',
+                            `Successfully claimed ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
+                            'green.500'
+                        );
                         displayEnergyGain(tx?.hash);
                         break;
 

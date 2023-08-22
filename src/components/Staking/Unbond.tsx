@@ -31,7 +31,6 @@ import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
-import Yield from '../../shared/Yield';
 import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
 import { getUnixTime } from 'date-fns';
 

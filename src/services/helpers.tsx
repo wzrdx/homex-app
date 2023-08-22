@@ -151,7 +151,7 @@ export const getTotalQuestsRewards = (quests: Quest[]) => {
 export const getUnbondingDuration = (tokenId: string): number => {
     switch (tokenId) {
         case TRAVELERS_COLLECTION_ID:
-            return 900000;
+            return 120;
 
         case ELDERS_COLLECTION_ID:
             return 120;

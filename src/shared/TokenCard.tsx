@@ -5,10 +5,14 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
 import { ELDERS_COLLECTION_ID } from '../blockchain/config';
 import { Rarity } from '../blockchain/api/getRarityClasses';
-import { addSeconds, isAfter, isBefore } from 'date-fns';
+import { addSeconds } from 'date-fns';
 import { Timer } from './Timer';
+import { useState } from 'react';
 
 function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: NFT; rarity?: Rarity | false }) {
+    // Used to force a re-render
+    const [_mockState, setState] = useState<boolean>();
+
     const getColor = () => {
         switch (token.tokenId) {
             case ELDERS_COLLECTION_ID:
@@ -92,6 +96,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                     >
                         <Timer
                             timestamp={addSeconds(token.timestamp as Date, getUnbondingDuration(token.tokenId))}
+                            callback={() => setState(true)}
                             displayClock={false}
                             customStyle={{ fontSize: '21px', fontWeight: 500, userSelect: 'none' }}
                             isActive

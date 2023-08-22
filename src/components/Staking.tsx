@@ -62,10 +62,10 @@ function Staking() {
                     <Stats
                         stakedNFTsCount={stakedNFTsCount}
                         travelersCount={_(stakingInfo?.tokens)
-                            .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID)
+                            .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp)
                             .size()}
                         eldersCount={_(stakingInfo?.tokens)
-                            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID)
+                            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
                             .size()}
                     />
                 </Flex>
