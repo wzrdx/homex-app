@@ -1,19 +1,5 @@
 import _ from 'lodash';
-import {
-    Box,
-    Flex,
-    Text,
-    Spinner,
-    AlertIcon,
-    Alert,
-    useDisclosure,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalOverlay,
-    ModalHeader,
-} from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, AlertIcon, Alert } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';

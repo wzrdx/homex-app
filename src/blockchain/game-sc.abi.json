@@ -111,6 +111,38 @@
             "outputs": []
         },
         {
+            "name": "getStakedTravelerNonces",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakedElderNonces",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getStakedNFTs",
             "mutability": "readonly",
             "inputs": [
@@ -128,6 +160,17 @@
         },
         {
             "name": "getStakedAddresses",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakedWallets",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -657,8 +700,14 @@
             "outputs": []
         },
         {
-            "name": "migrateTokens",
+            "name": "migrate",
             "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "migrateTokens",
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
@@ -806,6 +855,21 @@
             "outputs": [
                 {
                     "type": "List<Address>"
+                }
+            ]
+        },
+        {
+            "name": "getMigrationSize",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },

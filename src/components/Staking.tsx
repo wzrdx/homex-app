@@ -1,15 +1,21 @@
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useLayout } from './Layout';
-import _ from 'lodash';
+import _, { truncate } from 'lodash';
 import { StoreContextType, useStoreContext } from '../services/store';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
-import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
-import { TransactionType } from '../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { getMigrationSizeQuery } from '../blockchain/api/getMigrationSize';
+import { Address } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { smartContract } from '../blockchain/smartContract';
 
 type StakingContext = {
     height: number;
@@ -32,18 +38,23 @@ function Staking() {
     const { stakedNFTsCount, getStakedNFTsCount } = useGetStakedNFTsCount();
 
     // NFT Migration
+    const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
+    const { address } = useGetAccountInfo();
+
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [isMigrationRequired, setMigrationRequired] = useState<boolean>();
     const [isButtonLoading, setButtonLoading] = useState<boolean>();
+
+    const [isMigrationRequired, setMigrationRequired] = useState<boolean>();
+    const [migrationSize, setMigrationSize] = useState<number>(0);
 
     // Init
     useEffect(() => {
-        checkMigration();
         setRoute(routes.find((route) => route.path === routeNames.staking));
     }, []);
 
     useEffect(() => {
         getStakedNFTsCount();
+        checkMigration();
     }, [stakingInfo]);
 
     useEffect(() => {
@@ -55,10 +66,63 @@ function Staking() {
     }, [(ref?.current as any)?.clientHeight]);
 
     const checkMigration = async () => {
-        // TODO: Check
-        await new Promise((r) => setTimeout(r, 1000));
-        setMigrationRequired(true);
+        setLoading(true);
+
+        const migrationSize: number = await getMigrationSizeQuery();
+
+        setMigrationSize(migrationSize);
+        setMigrationRequired(migrationSize > 0);
+
         setLoading(false);
+    };
+
+    const migrateTokens = async () => {
+        if (!stakingInfo) {
+            return;
+        }
+
+        if (isButtonLoading) {
+            return;
+        }
+
+        setButtonLoading(true);
+
+        const user = new Address(address);
+
+        try {
+            const tx = smartContract.methods
+                .migrateTokens()
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(8000000 + 1125000 * migrationSize)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.Migration,
+                    resolution: TxResolution.UpdateStakingInfo,
+                    data: migrationSize,
+                },
+            ]);
+
+            setButtonLoading(false);
+        } catch (err) {
+            console.error('Error occured while sending tx', err);
+        }
     };
 
     return (
@@ -68,35 +132,51 @@ function Staking() {
             ) : (
                 <>
                     {isMigrationRequired ? (
-                        <Flex flexDir="column" justifyContent="center" alignItems="center" maxW="754px">
-                            <Text layerStyle="header1" mb={8} textAlign="center">
+                        <Flex
+                            flexDir="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            maxW="636px"
+                            backgroundColor="#1d1d1f"
+                            borderRadius="3px"
+                            px={7}
+                            py={9}
+                        >
+                            <Text layerStyle="header1Alt" mb={5} textAlign="center">
                                 Migration required
                             </Text>
 
-                            <Text mb={6} textAlign="center">
-                                In order to use the updated{' '}
+                            <Text textAlign="center" fontSize="17px">
+                                Exciting news – we have introduced the{' '}
                                 <Text as="span" fontWeight={600}>
                                     unbonding system
-                                </Text>{' '}
-                                you must first migrate your NFTs.
+                                </Text>
+                                .
                             </Text>
 
-                            <Text mb={6} textAlign="center">
-                                Don't worry! We are not transferring them anywhere, we are simply moving your NFTs inside the
-                                same smart contract, but to a different data structure.
+                            <Text mb={6} textAlign="center" fontSize="17px">
+                                To get started, all you need to do is migrate your NFTs.
                             </Text>
 
-                            <Text mb={8} textAlign="center">
-                                Once the migration transaction is completed, you will regain access to all previous
-                                functionality.
+                            <Text textAlign="center" fontSize="17px">
+                                Don't worry! There won't be any transfers involved.
+                            </Text>
+
+                            <Text mb={6} textAlign="center" fontSize="17px">
+                                We are merely reorganizing your NFTs within the same smart contract.
+                            </Text>
+
+                            <Text mb={8} textAlign="center" fontSize="17px">
+                                Once the migration transaction is successfully concluded, you will regain full access to all the
+                                previous functionalities.
                             </Text>
 
                             <ActionButton
-                                // disabled={!stakingInfo}
-                                // isLoading={isButtonLoading || isTxPending(TransactionType.Migration)}
+                                disabled={!stakingInfo}
+                                isLoading={isButtonLoading || isTxPending(TransactionType.Migration)}
                                 colorScheme="blue"
-                                customStyle={{ width: '120px' }}
-                                onClick={() => console.log('Migrate')}
+                                customStyle={{ width: '140px' }}
+                                onClick={migrateTokens}
                             >
                                 <Text>Migrate</Text>
                             </ActionButton>
