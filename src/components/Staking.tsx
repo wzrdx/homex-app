@@ -139,7 +139,7 @@ function Staking() {
                             maxW="636px"
                             backgroundColor="#1d1d1f"
                             borderRadius="3px"
-                            px={7}
+                            px={8}
                             py={9}
                         >
                             <Text layerStyle="header1Alt" mb={5} textAlign="center">
@@ -148,7 +148,7 @@ function Staking() {
 
                             <Text textAlign="center" fontSize="17px">
                                 Exciting news – we have introduced the{' '}
-                                <Text as="span" fontWeight={600}>
+                                <Text as="span" fontWeight={600} color="brightBlue">
                                     unbonding system
                                 </Text>
                                 .
@@ -163,7 +163,11 @@ function Staking() {
                             </Text>
 
                             <Text mb={6} textAlign="center" fontSize="17px">
-                                We are merely reorganizing your NFTs within the same smart contract.
+                                We are merely{' '}
+                                <Text as="span" fontWeight={600} color="brightBlue">
+                                    reorganizing
+                                </Text>{' '}
+                                your NFTs within the same smart contract.
                             </Text>
 
                             <Text mb={8} textAlign="center" fontSize="17px">

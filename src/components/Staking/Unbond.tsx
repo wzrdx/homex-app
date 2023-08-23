@@ -151,7 +151,7 @@ function Unbond() {
             .orderBy('nonce', 'asc')
             .value();
 
-        console.log(_.map(travelers, (traveler) => ({ ...traveler, unix: getUnixTime(traveler.timestamp) })));
+        // console.log(_.map(travelers, (traveler) => ({ ...traveler, unix: getUnixTime(traveler.timestamp) })));
 
         setTravelers(travelers);
         setElders(elders);

@@ -337,7 +337,12 @@ function Unstake() {
                             {stakingInfo?.isStaked && (
                                 <Flex ml={4} alignItems="center">
                                     <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                                    <Text color="almostWhite">Select some NFTs in order to unstake</Text>
+                                    <Text color="almostWhite">
+                                        The unbonding time is{' '}
+                                        <Text as="span" fontWeight={600}>
+                                            7 days
+                                        </Text>
+                                    </Text>
                                 </Flex>
                             )}
                         </Flex>
