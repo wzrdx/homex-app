@@ -202,7 +202,7 @@ function Unstake() {
                 .unstake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(10000000 + 1000000 * stakedNFTsCount + 1500000 * _.size(args))
+                .withGasLimit(16000000 + 300000 * stakedNFTsCount + 1800000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -233,7 +233,7 @@ function Unstake() {
         }
     };
 
-    const claim = async () => {
+    const claimStakingRewards = async () => {
         if (!stakingInfo || !elders || !travelers) {
             return;
         }
@@ -370,7 +370,7 @@ function Unstake() {
                                         isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
                                         colorScheme="blue"
                                         customStyle={{ width: '144px' }}
-                                        onClick={claim}
+                                        onClick={claimStakingRewards}
                                     >
                                         <Text>Claim Energy</Text>
                                     </ActionButton>

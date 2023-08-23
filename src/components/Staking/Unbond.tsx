@@ -188,7 +188,7 @@ function Unbond() {
                 .restake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
+                .withGasLimit(10000000 + 250000 * stakedNFTsCount + 1500000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -220,7 +220,7 @@ function Unbond() {
     };
 
     const claim = async () => {
-        if (!stakingInfo || !elders || !travelers) {
+        if (_.isEmpty(selectedTokens) || !stakingInfo || !elders || !travelers) {
             return;
         }
 
@@ -249,7 +249,7 @@ function Unbond() {
                 .claim([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(10000000 + 500000 * args.length + 750000 * stakedNFTsCount)
+                .withGasLimit(5000000 + 250000 * stakedNFTsCount + 1000000 * args.length)
                 .buildTransaction();
 
             await refreshAccount();
@@ -363,7 +363,7 @@ function Unbond() {
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
                                     <AlertIcon />
-                                    You have no staked NFTs to display
+                                    You have no unstaked NFTs to display
                                 </Alert>
                             </Flex>
                         </Flex>
