@@ -111,6 +111,10 @@ function RaffleCard({
         const raffle = RAFFLES[id - 1];
         let element = <></>;
 
+        if (!raffle) {
+            return element;
+        }
+
         switch (raffle.type) {
             case RewardType.SingleImage:
                 return <Image src={raffle.imageSrc} height="100%" userSelect="none" />;
