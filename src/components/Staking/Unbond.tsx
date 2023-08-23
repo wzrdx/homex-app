@@ -151,7 +151,7 @@ function Unbond() {
             .orderBy('nonce', 'asc')
             .value();
 
-        // console.log(travelers);
+        console.log(_.map(travelers, (traveler) => ({ ...traveler, unix: getUnixTime(traveler.timestamp) })));
 
         setTravelers(travelers);
         setElders(elders);
@@ -249,7 +249,7 @@ function Unbond() {
                 .claim([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 200000 * args.length + 200000 * stakedNFTsCount)
+                .withGasLimit(10000000 + 500000 * args.length + 750000 * stakedNFTsCount)
                 .buildTransaction();
 
             await refreshAccount();

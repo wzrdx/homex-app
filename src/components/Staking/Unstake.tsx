@@ -202,7 +202,7 @@ function Unstake() {
                 .unstake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(9250000 + 250000 * stakedNFTsCount + 800000 * _.size(args))
+                .withGasLimit(10000000 + 1000000 * stakedNFTsCount + 1500000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
