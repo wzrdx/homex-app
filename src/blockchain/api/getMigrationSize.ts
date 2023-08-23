@@ -23,7 +23,7 @@ export const getMigrationSizeQuery = async () => {
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
         const value: number = firstValue?.valueOf()?.toNumber();
 
-        return 999;
+        return value;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
         return 0;
