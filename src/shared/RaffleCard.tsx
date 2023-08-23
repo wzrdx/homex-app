@@ -166,7 +166,7 @@ function RaffleCard({
                                     fontWeight={500}
                                     textTransform="uppercase"
                                 >
-                                    {`${raffle.name} • ${raffle.rank}`}
+                                    {`${raffle.name}${raffle.rank ? ` • ${raffle.rank}` : ''}`}
                                 </Text>
                             </Flex>
                         </Flex>

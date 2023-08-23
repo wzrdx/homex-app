@@ -31,7 +31,8 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner from '../../assets/images/bhero.png';
+import Banner_1 from '../../assets/images/banner_1.jpg';
+import Banner_2 from '../../assets/images/banner_2.jpg';
 import { AiOutlineEye } from 'react-icons/ai';
 
 const COLUMNS = [
@@ -208,7 +209,7 @@ function Leaderboard() {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} />
 
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
@@ -254,7 +255,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} />
                 </Flex>
             )}
 

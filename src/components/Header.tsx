@@ -29,7 +29,7 @@ import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
-import SponsorLogo from '../assets/images/bherologo.svg';
+import SponsorLogo from '../assets/images/cpa.png';
 
 const ROUTE_WIDTH = 98;
 
@@ -341,13 +341,13 @@ function Header({ displayToast }) {
                     <Flex alignItems="center" pointerEvents="all">
                         <Text fontSize="15px">Trial sponsored by</Text>
 
-                        <Image ml={2} src={SponsorLogo} width="76px" filter="brightness(0) invert(1)" />
+                        <Image ml={2} src={SponsorLogo} width="32px" />
 
                         <Box ml={3}>
                             <Separator type="vertical" width="1px" height="26px" />
                         </Box>
 
-                        <Link href="https://mvx.bhero.com/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://artcpaclub.com/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsGlobe cursor="pointer" />
                         </Link>
 
@@ -355,11 +355,11 @@ function Header({ displayToast }) {
                             <IoDocumentTextOutline fontSize="18px" cursor="pointer" />
                         </Link> */}
 
-                        <Link href="https://twitter.com/BHeroLaunchpad" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://twitter.com/_Official_CPA" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsTwitter cursor="pointer" />
                         </Link>
 
-                        <Link href="https://discord.com/invite/bhnetwork" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://discord.com/invite/g4jpmuRjMj" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" />
                         </Link>
                     </Flex>
