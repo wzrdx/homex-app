@@ -339,27 +339,23 @@ function Header({ displayToast }) {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        <Text fontSize="15px">Trial sponsored by</Text>
+                        <Text fontSize="15px">Intermission sponsored by Josephine</Text>
 
-                        <Image ml={2} src={SponsorLogo} width="32px" />
+                        {/* <Image ml={2} src={SponsorLogo} width="32px" /> */}
 
                         <Box ml={3}>
                             <Separator type="vertical" width="1px" height="26px" />
                         </Box>
 
-                        <Link href="https://artcpaclub.com/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://josephineworld.xyz/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsGlobe cursor="pointer" />
                         </Link>
 
-                        {/* <Link href="" isExternal ml={3} _hover={{ opacity: 0.85 }}>
-                            <IoDocumentTextOutline fontSize="18px" cursor="pointer" />
-                        </Link> */}
-
-                        <Link href="https://twitter.com/_Official_CPA" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://twitter.com/JosephinePencil" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsTwitter cursor="pointer" />
                         </Link>
 
-                        <Link href="https://discord.com/invite/g4jpmuRjMj" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://discord.com/invite/aXJh22eZkd" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" />
                         </Link>
                     </Flex>

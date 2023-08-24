@@ -18,7 +18,7 @@ import {
     AlertIcon,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ArrowForwardIcon, WarningIcon } from '@chakra-ui/icons';
+import { WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
 import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -31,8 +31,8 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner_1 from '../../assets/images/banner_1.jpg';
-import Banner_2 from '../../assets/images/banner_2.jpg';
+import Banner_1 from '../../assets/images/josephine_1.png';
+import Banner_2 from '../../assets/images/josephine_2.png';
 import { AiOutlineEye } from 'react-icons/ai';
 
 const COLUMNS = [
