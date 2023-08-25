@@ -40,6 +40,8 @@ const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
+const ESSENCE_HANDICAP = 1;
+
 const getId = () => ++ID;
 
 export const QUESTS: any[] = [
@@ -268,7 +270,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 1 * BASE_REWARD,
+                value: 1 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
         ],
         layers: [],
@@ -295,7 +297,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 3 * BASE_REWARD,
+                value: 3 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
         ],
         layers: [],
@@ -322,7 +324,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 6 * BASE_REWARD,
+                value: 6 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
         ],
         layers: [],
@@ -349,7 +351,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 12 * BASE_REWARD,
+                value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
         ],
         layers: [],
@@ -416,7 +418,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'essence',
                 name: 'Nimbus Orb',
-                value: 12 * BASE_REWARD,
+                value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
         ],
         layers: [],
