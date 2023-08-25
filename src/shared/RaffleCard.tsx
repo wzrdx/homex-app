@@ -136,7 +136,13 @@ function RaffleCard({
                                         <Image src={prize.imageSrc} height={prize.height} alt="Prize" />
                                     </Flex>
 
-                                    <Text ml={2.5} textTransform="uppercase" color={prize.textColor} fontWeight={600}>
+                                    <Text
+                                        ml={2.5}
+                                        textTransform="uppercase"
+                                        color={prize.textColor}
+                                        fontWeight={600}
+                                        fontSize="17px"
+                                    >
                                         {prize.text}
                                     </Text>
                                 </Flex>
