@@ -49,12 +49,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Sands of Tranquility',
+        name: 'Depths of Menhir ',
         description: (
             <Text layerStyle="questDescription">
-                In the desert's heart lies a hidden oasis, guarded by ancient guardians. Collect the petals of the Tranquil
-                Lotus, a rare flower with calming properties. Brew a potion to soothe the guardians' spirits, allowing safe
-                passage to the heart of the dunes, where an ancient treasure awaits.
+                Embark on a daring odyssey into the veiled waters of Menhir's hidden ocean. Your mission: to recover a sacred
+                leaf with boundless power. Plunge into the depths, navigate the unknown, and grasp the leaf to shape destiny.
+                Will you rise with the leaf and become the harbinger of change?
             </Text>
         ),
         requirements: {
@@ -74,12 +74,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Pyramid Garden',
+        name: 'Abyssal Resurgence',
         description: (
             <Text layerStyle="questDescription">
-                Amidst the dunes, discover a hidden garden filled with luminous flora. Retrieve the Celestial Blossom, said to
-                hold the wisdom of the desert goddesses. Blend its essence with rare herbs to create a potion that unveils
-                secrets long obscured by time.{' '}
+                Venture anew into Menhir's oceanic abyss, now for a fabled herb. Delve deeper, battling the unknown, to retrieve
+                the herb possessing rejuvenating might. Amidst perilous depths, secure the herb and wield its vitality. Conquer
+                the abyss and emerge with the herb to rewrite fate's tapestry!
             </Text>
         ),
         requirements: {
@@ -99,12 +99,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Whispering Winds',
+        name: 'Blossoms of Serenity',
         description: (
             <Text layerStyle="questDescription">
-                Inscribe forgotten symbols of the desert on magical Windstones scattered across the dunes. The stones resonate
-                with the ancient humanoid figures' wisdom, granting access to their realm. Harness their knowledge to brew an
-                elixir that grants clarity in Divination.
+                Unearth a revelation: a sacred chest in the ocean's heart, adorned with lost sea-flowers. Embark on a journey
+                deeper, facing mysteries untold, to gather these blossoms of serene power. Amidst uncharted currents, secure the
+                petals, embracing their tranquil essence. Venture back, a harbinger of newfound calm.
             </Text>
         ),
         requirements: {
@@ -124,12 +124,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Mirage Mirage',
+        name: 'Echoes of Leviathans',
         description: (
             <Text layerStyle="questDescription">
-                Navigate through shifting dunes to the heart of a mirage that houses the Mirage Mirage, a unique plant that only
-                manifests in illusions. Infuse its essence into potions that allow travelers to glimpse into the realm of
-                elusive treasures hidden beneath the sands.
+                Consume the petals, gift from the chest, and awaken visions of ancient whales. These majestic behemoths hold
+                secrets that guide your journey. Embrace their spectral guidance, journey onwards through veiled currents, and
+                unravel the tapestry of destiny. With each whisper from the past, forge a path toward the unknown future.
             </Text>
         ),
         requirements: {
@@ -151,12 +151,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Goddess' Tears",
+        name: 'Stellar Convergence',
         description: (
             <Text layerStyle="questDescription">
-                In the ancient temple, retrieve crystal tears, remnants of desert goddesses' blessings. Craft them into
-                Tearstone Gems, which resonate with the goddesses' guidance. Use them to enhance jewelry, creating exquisite
-                pieces that channel their power.
+                Guided by sacred whale echoes, unearth the concealed starfish jewel. Embark on a voyage through hushed tides,
+                following their spectral light, to retrieve this hidden artifact of cosmic essence. Amidst veiled depths, secure
+                the jewel, connecting with its boundless energy. With starlit wisdom, continue your odyssey, a bearer of the
+                universe's secrets.
             </Text>
         ),
         requirements: {
@@ -176,11 +177,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Golden Secrets',
+        name: "Jewels' Resonance",
         description: (
             <Text layerStyle="questDescription">
-                Delve into forgotten pyramids, discovering golden gems with enigmatic symbols. Polish these Sunstone Crystals,
-                and combine them with rare metals to craft radiant amulets that amplify Divination abilities.
+                Empowered by the starfish jewel's resonance, seek its sister: the blossom of the depths jewel. Embark on a
+                harmonious journey through the ocean's heart, guided by their ethereal connection, to retrieve this gem of
+                submerged splendor. Amidst secret currents, secure the jewel, uniting its aquatic power. With gems ablaze,
+                continue your voyage, a harmonizer of elemental treasures.
             </Text>
         ),
         requirements: {
@@ -200,12 +203,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Ancient Reflections',
+        name: 'Vortex of Ascendance',
         description: (
             <Text layerStyle="questDescription">
-                Amidst desert ruins, locate the Enigmatic Mirror, a legendary artifact said to reflect the inner truths of
-                ancient humanoid figures. Cut and shape the mirror's reflections into gemstones, crafting Luminous Facets that
-                grant clarity and insight.
+                With both sister jewels embraced, converge them in a watery vortex, deep within the ocean's abyss. Venture into
+                this magical fusion, guided by their harmonious union, to breach the veils of existence. Amidst swirling
+                energies, merge the jewels, transcending to the next plane. With newfound dimensions at hand, journey onwards,
+                an interdimensional voyager.
             </Text>
         ),
         requirements: {
@@ -225,12 +229,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Sands of Time',
+        name: 'Ethereal Nexus',
         description: (
             <Text layerStyle="questDescription">
-                Gather Sands of Eternity from the desert's deepest dunes, where time's essence lingers. Combine these sands with
-                rare gems to forge Timebound Lockets that slow time for wearers, allowing them to perceive hidden truths and
-                seize fleeting opportunities.
+                Having traversed to the next plane, shrouded within Menhir's depths, heed the whispers of the guiding whales.
+                Embark on a course aligned with your dream's echo from the Monolith, weaving through this ethereal expanse.
+                Amidst cosmic currents, follow the whales' lead, advancing along the path predestined. With astral resonance,
+                forge ahead, a pilgrim of the hidden realms.
             </Text>
         ),
         requirements: {
@@ -252,12 +257,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Oracle's Call",
+        name: "Kayron's Embrace",
         description: (
             <Text layerStyle="questDescription">
-                Seek the Pyramid Oracle, a mystical entity in the shape of an ancient humanoid figure. Answer riddles it poses
-                using insights from your Divination skills. Uncover the Lost Glyphs, translating them into powerful enchantments
-                to aid your journey.
+                Navigating this arcane plane, you encounter Kayron - the mighty transporter of travelers. A colossal whale,
+                revered as a guardian, awaits to ferry you on your ongoing quest. Amidst luminescent horizons, step onto
+                Kayron's back, embarking upon this new chapter. With the guardian's strength, journey onward, a companion of the
+                ethereal currents.
             </Text>
         ),
         requirements: {
@@ -279,12 +285,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Dune Whispers',
+        name: "Memory's Mirage",
         description: (
             <Text layerStyle="questDescription">
-                Connect with the desert's hidden energy nodes to unveil ancient messages etched by humanoid figures into crystal
-                tablets. Decode their wisdom to learn the secrets of divining the future. Craft Crystal Oracle Stones to amplify
-                your Divination prowess.
+                Guided by the mighty Kayron, you arrive at an enigmatic surface, veiled within the Monolith's memory. Submerged
+                in a meditative trance, reality intertwines with boundless cosmos. Within this seamless fusion, explore the
+                depths of consciousness and traverse the realm where memory and possibility converge. Amidst the tapestry of
+                existence, continue your exploration, a seeker of infinite horizons.
             </Text>
         ),
         requirements: {
@@ -306,12 +313,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Veil of Illusions',
+        name: 'Abyssal Odyssey',
         description: (
             <Text layerStyle="questDescription">
-                Traverse through an illusory desert realm crafted by the goddesses. Consult the Mirage Oracle, a sentient mirage
-                that imparts cryptic visions. Decipher these visions to reveal hidden paths and gather Mystic Sand, a vital
-                ingredient in crafting enchanted scrying mirrors.
+                Once more, descend into the Ocean's abyss with Kayron as your guide, journeying to a distinct realm of Menhir.
+                Bound together by destiny's thread, embark on an abyssal odyssey, accompanied by the guardian's steady presence.
+                Amidst the shifting currents, explore a new expanse, where mysteries unfold beneath the depths. With Kayron's
+                guidance, delve deeper into the unknown, a voyager of uncharted realms.
             </Text>
         ),
         requirements: {
@@ -333,12 +341,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Eternal Sands',
+        name: 'Echoes of Ages',
         description: (
             <Text layerStyle="questDescription">
-                Retrieve the Eternal Hourglass, a relic hidden within a pyramid. As you turn it, visions of ancient humanoid
-                figures intertwining with pyramids' tales emerge. By crafting Ascendant Hourglasses with its sand, enhance your
-                Divination skills to access realms beyond time's grasp.
+                Having fulfilled its purpose, Kayron leads you to the Sunken City. Step into its ruins, where time's currents
+                have left their mark. Navigate through history's whispers as you search for the sacred artefact - the soul
+                divider. Amidst forgotten chambers, explore the relics of eras past, guided by the echoes of ages. With
+                determination as your guide, venture deeper, an archaeologist of lost legends.
             </Text>
         ),
         requirements: {
@@ -362,12 +371,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Pyramid Brews',
+        name: 'Soulbound Nexus',
         description: (
             <Text layerStyle="questDescription">
-                Journey into ancient pyramids to retrieve enigmatic crystals. Infuse them into the Enigmatic Elixir, granting
-                the drinker brief visions of humanoid ancient figures. As their insights unfold, craft Pyramid Phials that allow
-                the imbiber to perceive hidden truths.
+                To unlock the final steps, heed the Monolith's vision. Harvest the souls of wandering whales within the soul
+                divider. Embrace the ethereal connection, embarking on a solemn task. Amidst the cosmic weave, gather echoes of
+                departed guardians, their essence bound to the quest's crescendo. With reverence and purpose, continue forward,
+                a seeker of profound truths.
             </Text>
         ),
         requirements: {
@@ -392,12 +402,13 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: "Serpent's Alchemy",
+        name: 'The Harvest',
         description: (
             <Text layerStyle="questDescription">
-                Unearth ancient serpent symbols etched into golden tablets deep within pyramids. Combine these symbols with
-                serpent scales to craft the Serpent's Elixir. This elixir grants wearers heightened perception, unlocking the
-                ability to communicate with serpent deities and glean hidden wisdom.
+                Initiating the Ritual of Harvest, merge the lost souls of wandering whales. Consume the essence birthed from
+                this fusion, transcending both astral and physical realms. As the cosmic dance unfolds, transport to the fabled
+                destination of the lost artefacts. Amidst the interplay of energies, bridge the gap between worlds, a conduit of
+                boundless convergence. With unity as your guide, journey to the culmination, a bridge between dimensions.
             </Text>
         ),
         requirements: {
@@ -430,14 +441,14 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Quantum Convergence',
+        name: 'Echoes of Destiny',
         description: (
             <Text layerStyle="questDescription">
-                Plunge into the buried archives of an ultra-modern pyramid, illuminated by holographic glyphs. Uncover the
-                Quantum Codex, a crystalline data matrix infused with quantum information. By synthesizing its energy with
-                advanced alloys, forge the Cosmic Resonator. This device manipulates quantum frequencies, enabling communication
-                between futuristic travelers and Menhir's enlightened essence. As you activate the resonator, a new era dawns,
-                connecting the boundless potentials of future exploration with Menhir's infinite knowledge.{' '}
+                Emerging from the completed Ritual of Harvest, find yourself within Menhir's desert, surrounded by the ruins of
+                Algermuth - the lost city of saints. Amidst these forsaken remnants, bear witness to the spectral dance of free
+                whale souls above the first artefact - the Heart of Tork'ugth, a legendary calamity obscured by time's shroud.
+                With purpose coursing through your veins, reach out and retrieve the artefact, intertwining fate's threads with
+                your own. Amidst visions and reality united, seize the relic's power, a catalyst for ancient legacies.{' '}
             </Text>
         ),
         requirements: {
@@ -461,13 +472,14 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Sands of Eternity',
+        name: 'Praised be Salabathur',
         description: (
             <Text layerStyle="questDescription">
-                Unveil the secrets of the humanoid figures, decode the language of the pyramids, and commune with the goddesses
-                who shaped the desert's fate. With newfound wisdom, step into the ever-shifting sands once more, infused with
-                the Sands of Ascendance. As your journey unfolds, you weave the threads of time and knowledge, bridging ancient
-                echoes with the destiny of Menhir's realm.
+                At your journey's culmination, stand before the ultimate artefact: the prized carving of Salabathur - the
+                majestic God of the Abyss, weaver of skies and seas. Reach out and retrieve this sacred masterpiece, a
+                culmination of life's intricate dance. With destiny's tapestry unfurled, embark on the final leg, bearing the
+                carving to the Monolith, heart of Menhir's capital. Amidst echoes of creation and separation, fulfill your role
+                as an architect of ancient harmony.
             </Text>
         ),
         requirements: {
