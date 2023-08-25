@@ -51,7 +51,7 @@ export const getTicketsPrize = (amount: number) => ({
 });
 
 const getEssencePrize = (amount: number) => ({
-    backgroundColor: '#3a182d',
+    backgroundColor: '#3f1931',
     imageSrc: RESOURCE_ELEMENTS.essence.icon,
     height: { md: '30px', lg: '38px' },
     textColor: 'resources.essence',
@@ -474,6 +474,37 @@ export const RAFFLES: any[] = [
         type: RewardType.Prizes,
         id: getId(),
         prizes: [getCPAPrize(200000)],
+        winners: 1,
+    },
+    // Trial 8 - Starts with ID 58
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whale #1',
+        nonce: 1,
+        url: 'https://media.elrond.com/nfts/asset/QmTeciY8tKbJgRjS8NX668oGZmx1TW1Le4NzGK4HTpbNa2/1.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whale #2',
+        nonce: 2,
+        url: 'https://media.elrond.com/nfts/asset/QmTeciY8tKbJgRjS8NX668oGZmx1TW1Le4NzGK4HTpbNa2/2.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whales Boop Pass',
+        nonce: 3,
+        url: 'https://media.elrond.com/nfts/asset/QmcqP13As6xAhwapqP5pbpS1heCCqd3jftdN3bPZQBeN2C/1.png',
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEssencePrize(1000)],
         winners: 1,
     },
 ];

@@ -29,7 +29,7 @@ import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
-import SponsorLogo from '../assets/images/cpa.png';
+import SponsorLogo from '../assets/images/dw_logo.svg';
 
 const ROUTE_WIDTH = 98;
 
@@ -339,23 +339,23 @@ function Header({ displayToast }) {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        <Text fontSize="15px">Intermission sponsored by Josephine</Text>
+                        <Text fontSize="15px">Trial sponsored by Dreamy Whales</Text>
 
-                        {/* <Image ml={2} src={SponsorLogo} width="32px" /> */}
+                        <Image ml={1} mb="2px" src={SponsorLogo} width="58px" />
 
-                        <Box ml={3}>
+                        <Box ml={1.5}>
                             <Separator type="vertical" width="1px" height="26px" />
                         </Box>
 
-                        <Link href="https://josephineworld.xyz/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://dreamywhales.io/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsGlobe cursor="pointer" />
                         </Link>
 
-                        <Link href="https://twitter.com/JosephinePencil" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://twitter.com/thedreamywhales" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsTwitter cursor="pointer" />
                         </Link>
 
-                        <Link href="https://discord.com/invite/aXJh22eZkd" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://discord.com/invite/dreamywhales" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" />
                         </Link>
                     </Flex>
