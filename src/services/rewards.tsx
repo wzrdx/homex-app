@@ -490,7 +490,7 @@ export const RAFFLES: any[] = [
         id: getId(),
         winners: 1,
         name: 'Dreamy Whale #5166',
-        nonce: 1,
+        nonce: 5888,
         url: 'https://media.elrond.com/nfts/asset/QmTeciY8tKbJgRjS8NX668oGZmx1TW1Le4NzGK4HTpbNa2/5166.png',
     },
     {
@@ -498,7 +498,7 @@ export const RAFFLES: any[] = [
         id: getId(),
         winners: 1,
         name: 'Dreamy Whales Boop Pass',
-        nonce: 3,
+        nonce: 98,
         url: 'https://media.elrond.com/nfts/asset/QmcqP13As6xAhwapqP5pbpS1heCCqd3jftdN3bPZQBeN2C/1.png',
     },
     {
