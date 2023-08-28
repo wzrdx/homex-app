@@ -10,6 +10,7 @@ import Raffles from '../components/Competitions/Raffles';
 import Battles from '../components/Competitions/Battles';
 import Entry from '../components/Competitions/Entry';
 import Rewards from '../components/Rewards';
+import Unbond from '../components/Staking/Unbond';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -19,8 +20,9 @@ export const routeNames = {
     quests: 'quests',
     raffles: 'raffles',
     battles: 'battles',
-    stake: 'available',
+    stake: 'unstaked',
     unstake: 'staked',
+    unbond: 'unbonded',
     current: 'current',
     past: 'past',
     entry: 'entry',
@@ -50,6 +52,10 @@ export const routes = [
             {
                 path: routeNames.unstake,
                 component: Unstake,
+            },
+            {
+                path: routeNames.unbond,
+                component: Unbond,
             },
         ],
         defaultChildRoute: routeNames.stake,

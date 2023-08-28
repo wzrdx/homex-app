@@ -1,8 +1,16 @@
 import axios from 'axios';
-import { API_URL, EXPLORER_URL, GATEWAY_URL, TRAVELERS_PADDING } from '../blockchain/config';
-import { RarityClass } from '../blockchain/types';
+import {
+    API_URL,
+    ELDERS_COLLECTION_ID,
+    EXPLORER_URL,
+    GATEWAY_URL,
+    TRAVELERS_COLLECTION_ID,
+    TRAVELERS_PADDING,
+} from '../blockchain/config';
+import { NFT, RarityClass } from '../blockchain/types';
 import { Quest } from '../types';
 import _ from 'lodash';
+import { addSeconds, isAfter, isBefore } from 'date-fns';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -139,3 +147,19 @@ export const getTotalQuestsRewards = (quests: Quest[]) => {
 
     return rewards;
 };
+
+export const getUnbondingDuration = (tokenId: string): number => {
+    switch (tokenId) {
+        case TRAVELERS_COLLECTION_ID:
+            return 604800;
+
+        case ELDERS_COLLECTION_ID:
+            return 604800;
+
+        default:
+            return 604800;
+    }
+};
+
+export const hasFinishedUnbonding = (token: NFT): boolean =>
+    !!token.timestamp && isAfter(new Date(), addSeconds(token.timestamp, getUnbondingDuration(token.tokenId)));
