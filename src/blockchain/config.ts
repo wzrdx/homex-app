@@ -38,9 +38,8 @@ export const HERBS_TOKEN_ID = getEnvValue('HERBS-ae1564', 'HERBS-1c45fb');
 export const GEMS_TOKEN_ID = getEnvValue('GEMS-48158d', 'GEMS-5fbf7d');
 export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-011f1c', 'ESSENCE-67531c');
 
-export const TRAVELER_YIELD_PER_HOUR: number = 3;
-export const ELDER_YIELD_PER_HOUR: number = 3;
 export const REWARDS_QUERYING_INTERVAL = 15000;
+export const isStakingDisabled = true;
 
 export const TEAM = [
     'erd1za7d0lzgnee39p9sytre0mss76tnht70fem0pcv0zn4undcfukrqqkzcpl',
