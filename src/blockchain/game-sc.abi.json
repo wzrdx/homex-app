@@ -834,6 +834,21 @@
             ]
         },
         {
+            "name": "isWalletStaked",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "claimReward",
             "mutability": "mutable",
             "inputs": [],

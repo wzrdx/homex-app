@@ -21,6 +21,7 @@ import { getBackgroundStyle } from '../services/helpers';
 import { useStoreContext, StoreContextType } from '../services/store';
 import { StakingInfo } from '../blockchain/hooks/useGetStakingInfo';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
+import { isWalletStakedQuery } from '../blockchain/api/isWalletStaked';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
@@ -55,9 +56,11 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
-            const stakingInfo: StakingInfo | undefined = await getStakingInfo();
+            const isStaked: boolean = await isWalletStakedQuery();
 
-            if (TEAM.includes(address) || stakingInfo?.isStaked) {
+            console.log('isStaked', isStaked);
+
+            if (isStaked || TEAM.includes(address)) {
                 console.warn('Bypassing authentication');
             } else {
                 const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
