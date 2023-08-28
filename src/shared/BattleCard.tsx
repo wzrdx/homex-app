@@ -31,7 +31,7 @@ function BattleCard({ id, timestamp, tickets }: { id: number; timestamp: Date; t
                 >
                     <Flex flexDir="column" justifyContent="center" alignItems="center">
                         <Text textTransform="uppercase" color="ticketBright" fontWeight={600} fontSize="18px">
-                            {BATTLES[id - 1].amount} EGLD
+                            {BATTLES[id - 1]?.amount} EGLD
                         </Text>
 
                         <Text
@@ -66,7 +66,7 @@ function BattleCard({ id, timestamp, tickets }: { id: number; timestamp: Date; t
                     <Flex alignItems="center" justifyContent="space-between" userSelect="none">
                         <Text layerStyle="header3">Winners</Text>
                         <Text fontWeight={500} letterSpacing="0.25px">
-                            {BATTLES[id - 1].winners}
+                            {BATTLES[id - 1]?.winners}
                         </Text>
                     </Flex>
                 </Flex>

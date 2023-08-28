@@ -26,7 +26,7 @@ import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
 import { useSection } from '../Section';
-import { isAfter } from 'date-fns';
+import { addDays, format, isAfter } from 'date-fns';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
@@ -81,6 +81,8 @@ function Leaderboard() {
     }, [battle]);
 
     const init = async () => {
+        console.log(addDays(new Date(), 40));
+
         if (!battle) {
             return;
         }
@@ -184,11 +186,7 @@ function Leaderboard() {
                         </Box>
 
                         <Flex mx={2} justifyContent="center" alignItems="center">
-                            <Text mr={2}>Ends in:</Text>
-
-                            <Flex minWidth="158px">
-                                <Timer timestamp={battle.timestamp} isActive isDescending displayDays />
-                            </Flex>
+                            <Text mr={2}>{`Ends on ${format(battle.timestamp, 'PPpp')}`}</Text>
                         </Flex>
                     </>
                 )}
