@@ -18,7 +18,7 @@ import {
     AlertIcon,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ArrowForwardIcon, WarningIcon } from '@chakra-ui/icons';
+import { WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
 import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -31,8 +31,7 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner_1 from '../../assets/images/banner_1.jpg';
-import Banner_2 from '../../assets/images/banner_2.jpg';
+import Banner from '../../assets/images/banner_dw.png';
 import { AiOutlineEye } from 'react-icons/ai';
 
 const COLUMNS = [
@@ -209,7 +208,7 @@ function Leaderboard() {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
 
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
@@ -255,7 +254,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
                 </Flex>
             )}
 

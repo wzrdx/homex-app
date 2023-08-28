@@ -144,6 +144,8 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
 
             const winners = await Promise.all(
                 _.map(operations, async (operation) => {
+                    console.log(operation);
+
                     const username = await getUsername(operation.receiver);
                     let prize: JSX.Element = <Flex />;
 
@@ -155,6 +157,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         );
                     }
 
+                    // NFTs
                     if (operation.type === 'nft' && operation.esdtType === 'NonFungibleESDT') {
                         if (operation.collection === ELDERS_COLLECTION_ID) {
                             prize = (
@@ -185,69 +188,90 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                         }
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === TICKETS_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1} fontWeight={500} color="brightWheat" minWidth="20px" textAlign="center">
-                                    {operation.value}
-                                </Text>
-                                <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
-                            </Flex>
-                        );
+                    // SFTs
+                    if (operation.type === 'nft' && operation.esdtType === 'SemiFungibleESDT') {
+                        if (operation.ticker === TICKETS_TOKEN_ID) {
+                            prize = (
+                                <Flex alignItems="center">
+                                    <Text mr={1} fontWeight={500} color="brightWheat" minWidth="20px" textAlign="center">
+                                        {operation.value}
+                                    </Text>
+                                    <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
+                                </Flex>
+                            );
+                        } else {
+                            prize = (
+                                <Flex alignItems="center">
+                                    <Text fontWeight={500} color="whitesmoke" minWidth="20px">
+                                        {`${operation.value} ${operation.name}`}
+                                    </Text>
+                                </Flex>
+                            );
+                        }
                     }
 
-                    if (operation.type === 'nft' && operation.ticker === 'TICKET-a8ad2e') {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text fontWeight={500} color="whitesmoke" minWidth="20px">
-                                    {`${operation.value} ${operation.name}`}
-                                </Text>
-                            </Flex>
-                        );
-                    }
+                    // Tokens
+                    if (operation.type === 'esdt' && operation.esdtType === 'FungibleESDT') {
+                        switch (operation.identifier) {
+                            case ENERGY_TOKEN_ID:
+                                prize = (
+                                    <Flex alignItems="center">
+                                        <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.energy.color} minWidth="20px">
+                                            {operation.value / TOKEN_DENOMINATION}
+                                        </Text>
+                                        <Image height="24px" src={RESOURCE_ELEMENTS.energy.icon} />
+                                    </Flex>
+                                );
+                                break;
 
-                    if (operation.type === 'esdt' && operation.identifier === ENERGY_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.energy.color} minWidth="20px">
-                                    {operation.value / TOKEN_DENOMINATION}
-                                </Text>
-                                <Image height="24px" src={RESOURCE_ELEMENTS.energy.icon} />
-                            </Flex>
-                        );
-                    }
+                            case HERBS_TOKEN_ID:
+                                prize = (
+                                    <Flex alignItems="center">
+                                        <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.herbs.color} minWidth="20px">
+                                            {operation.value / TOKEN_DENOMINATION}
+                                        </Text>
+                                        <Image height="24px" src={RESOURCE_ELEMENTS.herbs.icon} />
+                                    </Flex>
+                                );
+                                break;
 
-                    if (operation.type === 'esdt' && operation.identifier === HERBS_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.herbs.color} minWidth="20px">
-                                    {operation.value / TOKEN_DENOMINATION}
-                                </Text>
-                                <Image height="24px" src={RESOURCE_ELEMENTS.herbs.icon} />
-                            </Flex>
-                        );
-                    }
+                            case GEMS_TOKEN_ID:
+                                prize = (
+                                    <Flex alignItems="center">
+                                        <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.gems.color} minWidth="20px">
+                                            {operation.value / TOKEN_DENOMINATION}
+                                        </Text>
+                                        <Image height="24px" src={RESOURCE_ELEMENTS.gems.icon} />
+                                    </Flex>
+                                );
+                                break;
 
-                    if (operation.type === 'esdt' && operation.identifier === GEMS_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.gems.color} minWidth="20px">
-                                    {operation.value / TOKEN_DENOMINATION}
-                                </Text>
-                                <Image height="24px" src={RESOURCE_ELEMENTS.gems.icon} />
-                            </Flex>
-                        );
-                    }
+                            case ESSENCE_TOKEN_ID:
+                                prize = (
+                                    <Flex alignItems="center">
+                                        <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
+                                            {operation.value / TOKEN_DENOMINATION}
+                                        </Text>
+                                        <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
+                                    </Flex>
+                                );
+                                break;
 
-                    if (operation.type === 'esdt' && operation.identifier === ESSENCE_TOKEN_ID) {
-                        prize = (
-                            <Flex alignItems="center">
-                                <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
-                                    {operation.value / TOKEN_DENOMINATION}
-                                </Text>
-                                <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
-                            </Flex>
-                        );
+                            default:
+                                prize = (
+                                    <Flex alignItems="center">
+                                        <Text fontWeight={500} color="whitesmoke">
+                                            {`${operation.value / Math.pow(10, operation.decimals)}`}
+                                        </Text>
+
+                                        <Image mx={1.5} height="24px" src={operation.svgUrl} />
+
+                                        <Text fontWeight={500} color="whitesmoke">
+                                            {`${operation.name}`}
+                                        </Text>
+                                    </Flex>
+                                );
+                        }
                     }
 
                     return {

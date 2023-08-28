@@ -49,7 +49,7 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Depths of Menhir ',
+        name: 'Depths of Menhir',
         description: (
             <Text layerStyle="questDescription">
                 Embark on a daring odyssey into the veiled waters of Menhir's hidden ocean. Your mission: to recover a sacred
