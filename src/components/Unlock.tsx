@@ -61,8 +61,6 @@ const Unlock = () => {
 
             const isStaked: boolean = await isWalletStakedQuery();
 
-            console.log('isStaked', isStaked);
-
             if (isStaked || TEAM.includes(address)) {
                 console.warn('Bypassing authentication');
             } else {
