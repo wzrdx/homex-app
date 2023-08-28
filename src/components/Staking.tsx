@@ -136,7 +136,7 @@ function Staking() {
                             flexDir="column"
                             justifyContent="center"
                             alignItems="center"
-                            maxW="636px"
+                            maxW="646px"
                             backgroundColor="#1d1d1f"
                             borderRadius="3px"
                             px={8}
