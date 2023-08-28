@@ -94,7 +94,7 @@ function Staking() {
                 .migrateTokens()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(12000000 + 1050000 * migrationSize)
+                .withGasLimit(12000000 + 1100000 * migrationSize)
                 .buildTransaction();
 
             await refreshAccount();
