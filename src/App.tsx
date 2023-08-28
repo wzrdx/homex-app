@@ -143,6 +143,7 @@ function App() {
                             `Successfully restaked ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
                             'green.500'
                         );
+                        displayEnergyGain(tx?.hash);
                         break;
 
                     case TransactionType.Migration:
@@ -334,6 +335,7 @@ function App() {
     const displayEnergyGain = async (txHash: string | undefined) => {
         if (txHash) {
             const result = await getTx(txHash);
+
             if (result.data) {
                 const operation = find(
                     result.data.operations,
