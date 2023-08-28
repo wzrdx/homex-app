@@ -56,6 +56,9 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
+            // Staking Info is required by child components
+            await getStakingInfo();
+
             const isStaked: boolean = await isWalletStakedQuery();
 
             console.log('isStaked', isStaked);
