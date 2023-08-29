@@ -65,6 +65,8 @@ function LoadingScreen({ setIsLoaded }) {
                     backgroundColor="dark"
                     style={isReady ? { transform: `translateX(${getTranslateDistance()}px)`, opacity: 0.25 } : {}}
                 ></Box>
+
+                <Text fontSize="30px">Loading Screen</Text>
             </>
         </Flex>
     );
