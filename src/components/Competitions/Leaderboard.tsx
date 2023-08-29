@@ -134,7 +134,7 @@ function Leaderboard() {
     return (
         <Flex height={`calc(100% - ${height}px)`} flexDir="column" alignItems="center">
             <Flex mb={6} justifyContent="center" alignItems="center">
-                <Flex
+                {/* <Flex
                     mr={2}
                     alignItems="center"
                     padding="7px 16px"
@@ -149,7 +149,11 @@ function Leaderboard() {
                     <Text ml={2} color="white">
                         Prize Pool
                     </Text>
-                </Flex>
+                </Flex> */}
+
+                <Text as="span" fontWeight={500} mx={1.5}>
+                    10 Winners
+                </Text>
 
                 <Box mx={1.5} opacity="0.9">
                     <Separator type="vertical" width="1px" height="34px" />

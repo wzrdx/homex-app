@@ -513,6 +513,11 @@ export const BATTLES: any[] = [
     {
         id: getId(),
         amount: 60,
+        winners: 30,
+    },
+    {
+        id: getId(),
+        amount: 0,
         winners: 10,
     },
 ];
