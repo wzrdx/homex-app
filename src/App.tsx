@@ -49,8 +49,6 @@ function App() {
     // Init
     useEffect(() => {
         window.localStorage['chakra-ui-color-mode'] = 'dark';
-
-        console.log(navigator.userAgent);
     }, []);
 
     useEffect(() => {
@@ -360,58 +358,53 @@ function App() {
     };
 
     return (
-        <Flex justifyContent="center" alignItems="center" flexDir="column" backgroundColor="black" minH="400px">
-            <Text fontSize="xl" color="white">{`${navigator.userAgent}`}</Text>
-            <Text fontSize="xxl" color="white">{`${isMobile()}`}</Text>
-        </Flex>
+        <ChakraBaseProvider theme={theme}>
+            <TransactionsToastList successfulToastLifetime={5000} transactionToastClassName="Tx-Toast" />
+            <NotificationModal />
+            <SignTransactionsModals className="Sign-Tx-Modal" />
 
-        // <ChakraBaseProvider theme={theme}>
-        //     <TransactionsToastList successfulToastLifetime={5000} transactionToastClassName="Tx-Toast" />
-        //     <NotificationModal />
-        //     <SignTransactionsModals className="Sign-Tx-Modal" />
+            <AuthenticationProvider>
+                <Routes>
+                    {/* Authentication */}
+                    <Route path={routeNames.unlock} element={<Unlock />} />
 
-        //     <AuthenticationProvider>
-        //         <Routes>
-        //             {/* Authentication */}
-        //             <Route path={routeNames.unlock} element={<Unlock />} />
+                    {/* Main routing */}
+                    <Route
+                        path={routeNames.main}
+                        element={
+                            <ProtectedRoute>
+                                <Layout />
+                            </ProtectedRoute>
+                        }
+                    >
+                        <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
-        //             {/* Main routing */}
-        //             <Route
-        //                 path={routeNames.main}
-        //                 element={
-        //                     <ProtectedRoute>
-        //                         <Layout />
-        //                     </ProtectedRoute>
-        //                 }
-        //             >
-        //                 <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
+                        {routes.map((route, index) => (
+                            <Route path={route.path} key={'route-key-' + index} element={<route.component />}>
+                                {route.children && (
+                                    <Route
+                                        path={'/' + route.path}
+                                        element={<Navigate to={route.defaultChildRoute as string} replace />}
+                                    />
+                                )}
 
-        //                 {routes.map((route, index) => (
-        //                     <Route path={route.path} key={'route-key-' + index} element={<route.component />}>
-        //                         {route.children && (
-        //                             <Route
-        //                                 path={'/' + route.path}
-        //                                 element={<Navigate to={route.defaultChildRoute as string} replace />}
-        //                             />
-        //                         )}
+                                {route.children?.map((childRoute, index) => (
+                                    <Route
+                                        path={childRoute.path}
+                                        key={'child-route-key-' + index}
+                                        element={<childRoute.component />}
+                                    />
+                                ))}
+                            </Route>
+                        ))}
 
-        //                         {route.children?.map((childRoute, index) => (
-        //                             <Route
-        //                                 path={childRoute.path}
-        //                                 key={'child-route-key-' + index}
-        //                                 element={<childRoute.component />}
-        //                             />
-        //                         ))}
-        //                     </Route>
-        //                 ))}
+                        <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
+                    </Route>
 
-        //                 <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
-        //             </Route>
-
-        //             <Route path="*" element={<Navigate to={routeNames.main} replace />} />
-        //         </Routes>
-        //     </AuthenticationProvider>
-        // </ChakraBaseProvider>
+                    <Route path="*" element={<Navigate to={routeNames.main} replace />} />
+                </Routes>
+            </AuthenticationProvider>
+        </ChakraBaseProvider>
     );
 }
 
