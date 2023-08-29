@@ -46,11 +46,13 @@ function MultipleQuests() {
     const isQuestDefault = (quest: Quest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
 
     const [selectedQuestIds, setSelectedQuestIds] = useState<string[]>([]);
+
     const areAllQuestsSelected =
         _.size(selectedQuestIds) ===
         _(QUESTS)
             .filter((quest) => isQuestDefault(quest))
             .size();
+
     const isIndeterminate = _.size(selectedQuestIds) > 0 && !areAllQuestsSelected;
 
     // Init

@@ -1,93 +1,51 @@
-import { useEffect, useState } from 'react';
-import {
-    Alert,
-    AlertIcon,
-    Box,
-    Flex,
-    Image,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-    useDisclosure,
-} from '@chakra-ui/react';
-import _, { find, findIndex, map } from 'lodash';
-import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
-import { AiOutlineEye } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Checkbox, CheckboxGroup, Flex, Modal, ModalOverlay, Text } from '@chakra-ui/react';
+import _, { find, findIndex } from 'lodash';
+import { QUESTS, QuestsContextType, useQuestsContext } from '../services/quests';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
-import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
-import Requirement from '../shared/Requirement';
-import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { Address } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { Timer } from '../shared/Timer';
-import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
+import { differenceInHours, isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
-import Reward from '../shared/Reward';
-import { getFrame, getFrameGlow, getSpinningTicket, getVisionImage } from '../services/assets';
-import { VideoLayer } from '../shared/VideoLayer';
 import { useLayout } from './Layout';
-import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
-import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
+import { getTotalQuestsRewards } from '../services/helpers';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
-
-const LARGE_FRAME_SIZE = 426;
-const MEDIUM_FRAME_SIZE = 350;
 
 const GRACE_PERIOD_INTERVAL = 24;
 
 function Quests() {
     const { displayToast, closeToast } = useLayout();
-    const navigate = useNavigate();
-
-    const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
 
     const { address } = useGetAccountInfo();
 
-    const { isQuestTxPending, isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
+    const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
-    const {
-        quest: currentQuest,
-        setQuest,
-        ongoingQuests,
-        getOngoingQuests,
-        isQuestsModalOpen,
-        onQuestsModalOpen,
-        onQuestsModalClose,
-    } = useQuestsContext() as QuestsContextType;
-    const { resources, isTicketModalOpen, onTicketModalClose } = useResourcesContext() as ResourcesContextType;
+    const { ongoingQuests, getOngoingQuests, isQuestsModalOpen, onQuestsModalOpen, onQuestsModalClose } =
+        useQuestsContext() as QuestsContextType;
 
-    const [isStartButtonLoading, setStartButtonLoading] = useState(false);
-    const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
     const [isCompleteAllButtonLoading, setCompleteAllLoading] = useState(false);
 
     const [trialTimestamp, setTrialTimestamp] = useState<Date>();
 
-    const isQuestDefault = (quest: Quest = currentQuest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
-    const isQuestOngoing = () =>
-        findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
-    const isQuestComplete = () =>
-        findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
+    const [selectedQuestIds, setSelectedQuestIds] = useState<string[]>([]);
 
-    const canBeCompleted = (): boolean => {
-        if (!trialTimestamp) {
-            return false;
-        }
+    const isQuestDefault = (quest: Quest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
 
-        return isBefore(addMinutes(new Date(), currentQuest.duration), trialTimestamp);
-    };
+    const areAllQuestsSelected =
+        _.size(selectedQuestIds) ===
+        _(QUESTS)
+            .filter((quest) => isQuestDefault(quest))
+            .size();
+
+    const isIndeterminate = _.size(selectedQuestIds) > 0 && !areAllQuestsSelected;
 
     // Init
     useEffect(() => {
@@ -111,7 +69,7 @@ function Quests() {
                 `Trial ends in ${duration}`,
                 'Claim your quest rewards before the end or they will be lost',
                 'orangered',
-                7000,
+                5000,
                 'top-right',
                 {
                     margin: '2rem',
@@ -127,108 +85,6 @@ function Quests() {
     const init = async () => {
         getOngoingQuests();
         setTrialTimestamp(await getTrialTimestamp());
-    };
-
-    const startQuest = async () => {
-        setStartButtonLoading(true);
-
-        const user = new Address(address);
-        const requiredResources: string[] = Object.keys(currentQuest.requirements);
-
-        try {
-            const tx = smartContract.methods
-                .startQuest([currentQuest.id])
-                .withMultiESDTNFTTransfer(
-                    requiredResources.map((resource) =>
-                        TokenTransfer.fungibleFromAmount(
-                            RESOURCE_ELEMENTS[resource].tokenId,
-                            currentQuest.requirements[resource],
-                            6
-                        )
-                    )
-                )
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + requiredResources.length * 500000)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setStartButtonLoading(false);
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.StartQuest,
-                    questId: currentQuest.id,
-                    resolution: TxResolution.UpdateQuestsAndResources,
-                    data: {
-                        resources: Object.keys(currentQuest.requirements),
-                    },
-                },
-            ]);
-        } catch (err) {
-            console.error('Error occured during startQuest', err);
-        }
-    };
-
-    const completeQuest = async () => {
-        setFinishButtonLoading(true);
-
-        const user = new Address(address);
-
-        const rewardsCount: number = currentQuest.rewards.length;
-        const isMission: boolean = currentQuest.type === 'final';
-        const gasLimit: number = 6000000 + rewardsCount * 750000 + (isMission ? 2500000 : 0);
-
-        try {
-            const tx = smartContract.methods
-                .completeQuest([currentQuest.id])
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(gasLimit)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setFinishButtonLoading(false);
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.CompleteQuest,
-                    questId: currentQuest.id,
-                    resolution: TxResolution.UpdateQuestsAndResources,
-                    data: {
-                        resources: map(currentQuest.rewards, (reward) => reward.resource),
-                    },
-                },
-            ]);
-        } catch (err) {
-            console.error('Error occured during completeQuest', err);
-        }
     };
 
     const completeAllQuests = async () => {
@@ -308,10 +164,8 @@ function Quests() {
         }
     };
 
-    const onQuestClick = (id: number | undefined) => {
+    const onQuestClick = () => {
         playSound('select_quest');
-        setQuest(getQuest(id));
-        navigate('/quests');
     };
 
     const getQuestCards = (type: string) => (
@@ -319,21 +173,28 @@ function Quests() {
             {_(QUESTS)
                 .filter((quest) => quest.type === type)
                 .map((quest) => (
-                    <QuestCard
+                    <Checkbox
+                        className="Detailed-Quest-Checkbox"
                         key={quest.id}
-                        quest={quest}
-                        isActive={quest.id === currentQuest.id}
-                        callback={onQuestClick}
-                        timestamp={find(ongoingQuests, (ongoingQuest) => ongoingQuest.id === quest.id)?.timestamp}
-                    />
+                        value={quest.id.toString()}
+                        mb={3}
+                        transition="all 0.05s ease-in"
+                    >
+                        <QuestCard
+                            key={quest.id}
+                            quest={quest}
+                            callback={onQuestClick}
+                            timestamp={find(ongoingQuests, (ongoingQuest) => ongoingQuest.id === quest.id)?.timestamp}
+                        />
+                    </Checkbox>
                 ))
                 .value()}
         </Flex>
     );
 
-    const getQuestDuration = (duration: number) => {
-        return `${timeDisplay(Math.floor(duration / 60))}:${timeDisplay(duration % 60)}:00`;
-    };
+    const onCheckboxGroupChange = useCallback((array: string[]) => {
+        setSelectedQuestIds(array);
+    }, []);
 
     return (
         <Flex>
@@ -341,33 +202,49 @@ function Quests() {
             <Flex flex={5} justifyContent="center">
                 <Flex flexDir="column" width="100%">
                     <Flex mb={6} justifyContent="space-between">
-                        <ActionButton colorScheme="blue" customStyle={{ width: '198px' }} onClick={onQuestsModalOpen}>
-                            <Text>Start multiple quests</Text>
+                        <ActionButton
+                            colorScheme="blue"
+                            disabled={_.isEmpty(selectedQuestIds)}
+                            customStyle={{ width: '148px' }}
+                        >
+                            <Text>Start quests</Text>
                         </ActionButton>
 
                         <ActionButton
                             colorScheme="green"
                             isLoading={isCompleteAllButtonLoading || isTxPending(TransactionType.CompleteAllQuests)}
+                            customStyle={{ width: '180px' }}
                             onClick={completeAllQuests}
                         >
                             <Text>Claim all rewards</Text>
                         </ActionButton>
                     </Flex>
 
-                    <Text layerStyle="header1">Herbalism</Text>
-                    {getQuestCards('herbalism')}
+                    {/* <ActionButton colorScheme="red" onClick={onQuestsModalOpen}>
+                        <Text>Multiple</Text>
+                    </ActionButton> */}
 
-                    <Text layerStyle="header1">Jewelcrafting</Text>
-                    {getQuestCards('jewelcrafting')}
+                    <CheckboxGroup
+                        value={selectedQuestIds}
+                        onChange={onCheckboxGroupChange}
+                        colorScheme="blue"
+                        defaultValue={[]}
+                    >
+                        <Text layerStyle="header1">Herbalism</Text>
+                        {getQuestCards('herbalism')}
 
-                    <Text layerStyle="header1">Divination</Text>
-                    {getQuestCards('divination')}
+                        <Text layerStyle="header1">Jewelcrafting</Text>
+                        {getQuestCards('jewelcrafting')}
 
-                    <Text layerStyle="header1">Alchemy</Text>
-                    {getQuestCards('alchemy')}
+                        <Text layerStyle="header1">Divination</Text>
+                        {getQuestCards('divination')}
 
-                    <Text layerStyle="header1">Missions</Text>
-                    {getQuestCards('final')}
+                        <Text layerStyle="header1">Alchemy</Text>
+                        {getQuestCards('alchemy')}
+
+                        <Text layerStyle="header1">Missions</Text>
+                        {getQuestCards('final')}
+                    </CheckboxGroup>
                 </Flex>
             </Flex>
 
@@ -454,43 +331,6 @@ function Quests() {
                     )}
                 </Flex>
             </Flex> */}
-
-            {/* Ticket */}
-            {/* <Modal size="md" onClose={onTicketModalClose} isOpen={isTicketModalOpen} isCentered>
-                <ModalOverlay />
-                <ModalContent backgroundColor="darkBlue">
-                    <ModalHeader>Congratulations!</ModalHeader>
-                    <ModalCloseButton
-                        zIndex={1}
-                        color="white"
-                        _focusVisible={{ outline: 0 }}
-                        _hover={{ background: 'blackAlpha.300' }}
-                        borderRadius="3px"
-                    />
-                    <ModalBody minHeight="500px">
-                        <Flex flexDir="column" justifyContent="center" alignItems="center" py={2}>
-                            <Box width="300px" mt={-16} mb={-12}>
-                                <video autoPlay={true} muted={true} loop={false} onClick={(e) => (e.target as any).play()}>
-                                    <source src={getSpinningTicket()} type="video/webm" />
-                                </video>
-                            </Box>
-
-                            <Text mt={1.5} fontSize="lg">
-                                You have earned 1 ticket!
-                            </Text>
-                        </Flex>
-                    </ModalBody>
-                </ModalContent>
-            </Modal> */}
-
-            {/* Vision */}
-            {/* <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
-                    <ModalBody padding={0} style={getBackgroundStyle(getVisionImage())}></ModalBody>
-                </ModalContent>
-            </Modal> */}
 
             {/* Multiple quests */}
             <Modal size="xl" onClose={onQuestsModalClose} isOpen={isQuestsModalOpen} isCentered>

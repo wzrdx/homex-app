@@ -1,5 +1,5 @@
 import { Flex, Box, Text, Image } from '@chakra-ui/react';
-import { getBackgroundStyle } from '../services/helpers';
+import { getBackgroundStyle, timeDisplay } from '../services/helpers';
 import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
@@ -9,15 +9,15 @@ import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 
 const REFRESH_TIME = 10000;
+const IMAGE_SIZE = '22px';
 
 export const QuestCard: FunctionComponent<
     PropsWithChildren<{
         quest: Quest;
-        isActive: boolean;
         callback: (arg0: number) => void;
         timestamp?: Date;
     }>
-> = ({ quest, isActive, callback, timestamp }) => {
+> = ({ quest, callback, timestamp }) => {
     const [widths, setWidths] = useState<[string, string]>(['0%', '100%']);
 
     // On timestamp change
@@ -51,69 +51,85 @@ export const QuestCard: FunctionComponent<
 
     const isQuestOngoing = (): boolean => !!timestamp && differenceInSeconds(timestamp, new Date()) > 0;
 
-    const getRewardsBlock = (): JSX.Element => {
-        if (isQuestOngoing()) {
-            return <TimeIcon boxSize="28px" color="almostWhite" />;
-        }
+    const getRequirements = (): JSX.Element => {
+        return (
+            <>
+                {map(Object.keys(quest.requirements), (requirement, index) => (
+                    <Flex key={index} alignItems="center" mx={2.5}>
+                        <Image height={IMAGE_SIZE} src={RESOURCE_ELEMENTS[requirement].icon} />
+                        <Text ml={1.5}>{quest.requirements[requirement]}</Text>
+                    </Flex>
+                ))}
+            </>
+        );
+    };
 
-        if (size(quest.rewards) == 1) {
-            return (
-                <Image width="28px" src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon} />
-            );
-        } else if (size(quest.rewards) == 2) {
-            return (
-                <Flex flexDir="column" justifyContent="space-between" height="100%" pr="4px">
-                    {map(quest.rewards, (reward, index) => (
-                        <Image key={index} width="24px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
-                    ))}
-                </Flex>
-            );
-        } else {
-            return (
-                <Flex flexDir="column" justifyContent="space-between" height="100%" pr="12px">
-                    {map(quest.rewards, (reward, index) => (
-                        <Image key={index} width="16px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
-                    ))}
-                </Flex>
-            );
-        }
+    const getRewards = (): JSX.Element => {
+        return (
+            <Flex>
+                {map(quest.rewards, (reward, index) => (
+                    <Flex key={index} alignItems="center" mx={2.5}>
+                        <Image key={index} height={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                        <Text ml={1.5}>{reward.value}</Text>
+                    </Flex>
+                ))}
+            </Flex>
+        );
+    };
+
+    const getQuestDuration = (duration: number) => {
+        return `${timeDisplay(Math.floor(duration / 60))}:${timeDisplay(duration % 60)}`;
     };
 
     return (
-        <Flex justifyContent="space-between" alignItems="center" _notLast={{ marginBottom: 4 }}>
-            <Flex mr={8} height="100%" alignItems="center">
-                {getRewardsBlock()}
-            </Flex>
-
+        <Flex ml={2} flexDir="column" borderRadius="2px">
             <Flex
                 onClick={() => callback(quest.id)}
                 style={getBackgroundStyle(getQuestImage(quest.id))}
                 flex={1}
                 position="relative"
                 borderRadius="2px"
-                boxShadow={isActive ? '0 0 8px 1px rgb(255 170 20 / 70%)' : '1px 1px 2px rgb(0 0 0 / 40%)'}
                 px={4}
-                py={4}
+                py="2.65rem"
                 justifyContent="center"
                 cursor="pointer"
-                outline={isActive ? '2.5px solid #d29835ab' : widths[0] === '100%' ? '2.5px solid #128712bd' : 'none'}
+                outline={widths[0] === '100%' ? '2.5px solid #128712bd' : 'none'}
             >
                 <Box position="relative" zIndex={1} pointerEvents="none">
-                    <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000">
+                    <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000" fontSize="17px">
                         {quest.name}
                     </Text>
 
                     {/* Blurred rectangle */}
                     <Box
                         position="absolute"
-                        top="7px"
+                        top="4px"
                         right={-1}
                         bottom={'2px'}
                         left={-1}
                         background="black"
-                        filter="blur(5px)"
-                        opacity="0.2"
+                        filter="blur(4px)"
+                        opacity="0.3"
                     ></Box>
+                </Box>
+
+                {/* Top bar */}
+                <Box position="absolute" top={0} right={0} left={0} zIndex={2} backgroundColor="#333333d1">
+                    <Flex alignItems="center" justifyContent="center" py={1}>
+                        {getRequirements()}
+                    </Flex>
+                </Box>
+
+                {/* Bottom bar */}
+                <Box position="absolute" bottom={0} right={0} left={0} zIndex={2} backgroundColor="#333333d1">
+                    <Flex alignItems="center" justifyContent="center" py={1}>
+                        {getRewards()}
+
+                        <Flex position="absolute" alignItems="center" top={0} left={2} bottom={0}>
+                            <TimeIcon mr={1.5} mb="1px" fontSize="16px" />
+                            <Text color="#ebeef4">{getQuestDuration(quest.duration)}</Text>
+                        </Flex>
+                    </Flex>
                 </Box>
 
                 {/* Overlay */}

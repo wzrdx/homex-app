@@ -88,8 +88,7 @@ function Layout() {
                     <Header />
                 </Box>
 
-                {/* height="calc(100% - 160px)" */}
-                <Box py={8} px={3}>
+                <Box py={8} px={4}>
                     <Outlet context={{ displayToast, closeToast, routes, routeNames }} />
                 </Box>
             </Flex>
