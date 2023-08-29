@@ -1,10 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
 import { getLayoutBackground, getFrame, getVisionImage, getTicketSFT } from '../services/assets';
 import { getQuestImage } from '../services/quests';
-import { isAfter } from 'date-fns';
 
 function LoadingScreen({ setIsLoaded }) {
     const [isReady, setIsReady] = useState(false);
@@ -33,12 +32,6 @@ function LoadingScreen({ setIsLoaded }) {
             setIsLoaded(true);
         }, 500);
     };
-
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            setIsLoaded(true);
-        }
-    }, []);
 
     return (
         <Flex position="fixed" top={0} right={0} bottom={0} left={0} zIndex={5} pointerEvents="none" userSelect="none">

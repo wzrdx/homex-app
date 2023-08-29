@@ -336,11 +336,11 @@ function Quests() {
     };
 
     return (
-        <Flex height="100%">
+        <Flex>
             {/* Quest list */}
-            <Flex flex={5} justifyContent="center" overflowY="auto">
-                <Flex flexDir="column" width="100%" pl="2px">
-                    <Flex mb={6} justifyContent="space-between" mr={8}>
+            <Flex flex={5} justifyContent="center">
+                <Flex flexDir="column" width="100%">
+                    <Flex mb={6} justifyContent="space-between">
                         <ActionButton colorScheme="blue" customStyle={{ width: '198px' }} onClick={onQuestsModalOpen}>
                             <Text>Start multiple quests</Text>
                         </ActionButton>
@@ -371,114 +371,8 @@ function Quests() {
                 </Flex>
             </Flex>
 
-            {/* Quest requirements */}
-            <Flex flex={7} justifyContent="center">
-                <Flex pt={1} flexDir="column" justifyContent="center" alignItems="center">
-                    <Flex justifyContent="center" alignItems="center" position="relative">
-                        <Image
-                            src={getFrame()}
-                            alt="Frame"
-                            zIndex={4}
-                            width={[null, MEDIUM_FRAME_SIZE, MEDIUM_FRAME_SIZE, LARGE_FRAME_SIZE]}
-                            userSelect="none"
-                            pointerEvents="none"
-                        />
-
-                        <Flex layerStyle="absoluteCentered">
-                            <Image
-                                src={getQuestImage(currentQuest.id)}
-                                alt="Quest-Image"
-                                transform="scale(0.8)"
-                                zIndex={2}
-                                userSelect="none"
-                                pointerEvents="none"
-                            />
-                        </Flex>
-                    </Flex>
-                    <Flex mt={{ md: 5, lg: 8 }} mb={{ md: 4, lg: 7 }}>
-                        {Object.keys(currentQuest.requirements).map((resource) => (
-                            <Flex key={resource} width="102px" justifyContent="center">
-                                <Requirement
-                                    elements={getResourceElements(resource)}
-                                    valueRequired={currentQuest.requirements[resource]}
-                                    value={resources[resource]}
-                                />
-                            </Flex>
-                        ))}
-                    </Flex>
-                    <Box mb={2}>
-                        {/* Normal - The quest hasn't started */}
-                        {isQuestDefault() && canBeCompleted() && (
-                            <ActionButton
-                                isLoading={
-                                    isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
-                                }
-                                disabled={isGamePaused || !meetsRequirements(resources, currentQuest.id) || !canBeCompleted()}
-                                onClick={startQuest}
-                            >
-                                <Text>Start</Text>
-                            </ActionButton>
-                        )}
-
-                        {/* Ongoing - A quest is ongoing but is not completed */}
-                        {isQuestOngoing() && (
-                            <ActionButton disabled>
-                                <Text>Ongoing</Text>
-                            </ActionButton>
-                        )}
-
-                        {/* Complete - A quest is completed and its rewards must be claimed */}
-                        {isQuestComplete() && (
-                            <ActionButton
-                                isLoading={
-                                    isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
-                                }
-                                colorScheme="green"
-                                onClick={completeQuest}
-                            >
-                                <Text>Claim Rewards</Text>
-                            </ActionButton>
-                        )}
-
-                        {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
-                            <Alert status="error">
-                                <AlertIcon />
-                                Quest duration exceeds end of Trial
-                            </Alert>
-                        )}
-                    </Box>
-
-                    <Box>
-                        {isQuestDefault() && (
-                            <Flex alignItems="center">
-                                <TimeIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={1.5}>{getQuestDuration(currentQuest.duration)}</Text>
-                            </Flex>
-                        )}
-
-                        {isQuestOngoing() && (
-                            <Timer
-                                isActive={true}
-                                timestamp={find(ongoingQuests, (quest) => quest.id === currentQuest.id)?.timestamp as Date}
-                                callback={() => {
-                                    getOngoingQuests();
-                                }}
-                                isDescending
-                            />
-                        )}
-
-                        {isQuestComplete() && (
-                            <Flex alignItems="center">
-                                <CheckIcon boxSize={4} color="whitesmoke" />
-                                <Text ml={2}>Finished</Text>
-                            </Flex>
-                        )}
-                    </Box>
-                </Flex>
-            </Flex>
-
             {/* Quest details */}
-            <Flex flex={5} justifyContent="center">
+            {/* <Flex flex={5} justifyContent="center">
                 <Flex flexDir="column">
                     <Flex justifyContent="space-between" alignItems="flex-end">
                         <Text fontSize="20px" lineHeight="22px" fontWeight={600} letterSpacing="0.5px" color="header.gold">
@@ -559,10 +453,10 @@ function Quests() {
                         </>
                     )}
                 </Flex>
-            </Flex>
+            </Flex> */}
 
             {/* Ticket */}
-            <Modal size="md" onClose={onTicketModalClose} isOpen={isTicketModalOpen} isCentered>
+            {/* <Modal size="md" onClose={onTicketModalClose} isOpen={isTicketModalOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent backgroundColor="darkBlue">
                     <ModalHeader>Congratulations!</ModalHeader>
@@ -587,16 +481,16 @@ function Quests() {
                         </Flex>
                     </ModalBody>
                 </ModalContent>
-            </Modal>
+            </Modal> */}
 
             {/* Vision */}
-            <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>
+            {/* <Modal size="full" onClose={onVisionClose} isOpen={isVisionOpen}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
                     <ModalBody padding={0} style={getBackgroundStyle(getVisionImage())}></ModalBody>
                 </ModalContent>
-            </Modal>
+            </Modal> */}
 
             {/* Multiple quests */}
             <Modal size="xl" onClose={onQuestsModalClose} isOpen={isQuestsModalOpen} isCentered>

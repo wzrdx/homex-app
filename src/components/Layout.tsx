@@ -83,36 +83,13 @@ function Layout() {
         <>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" height="100vh" flexDir="column">
-                <Flex
-                    pointerEvents="none"
-                    position="absolute"
-                    justifyContent="center"
-                    alignItems="center"
-                    top={0}
-                    right={0}
-                    bottom={0}
-                    left={0}
-                    zIndex={9999}
-                >
-                    <Text textShadow="1px 1px 2px black" fontSize="20px">{`isMobile: ${isMobile()}`}</Text>
-                    <Text textShadow="1px 1px 2px black">{`${navigator.userAgent}`}</Text>
-                    <Text textShadow="1px 1px 2px black">{`${navigator.userAgent
-                        .match(/iPhone|iPad|iPod/i)
-                        ?.toString()}`}</Text>
-                </Flex>
-
-                <Box height={{ md: '18%', lg: '14%' }}>
-                    <Header displayToast={displayToast} />
+            <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" flexDir="column">
+                <Box>
+                    <Header />
                 </Box>
 
-                <Box
-                    height={{ md: '82%', lg: '86%' }}
-                    layerStyle="layout"
-                    margin="0 auto"
-                    pt={{ md: 3, lg: 8, xl: 16, '2xl': 20 }}
-                    pb={{ md: 6, lg: 8, xl: 16, '2xl': 20 }}
-                >
+                {/* height="calc(100% - 160px)" */}
+                <Box py={8} px={3}>
                     <Outlet context={{ displayToast, closeToast, routes, routeNames }} />
                 </Box>
             </Flex>

@@ -94,7 +94,6 @@ export const QuestCard: FunctionComponent<
                 boxShadow={isActive ? '0 0 8px 1px rgb(255 170 20 / 70%)' : '1px 1px 2px rgb(0 0 0 / 40%)'}
                 px={4}
                 py={4}
-                mr={8}
                 justifyContent="center"
                 cursor="pointer"
                 outline={isActive ? '2.5px solid #d29835ab' : widths[0] === '100%' ? '2.5px solid #128712bd' : 'none'}
