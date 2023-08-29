@@ -96,6 +96,10 @@ function Layout() {
                     zIndex={9999}
                 >
                     <Text textShadow="1px 1px 2px black" fontSize="20px">{`isMobile: ${isMobile()}`}</Text>
+                    <Text textShadow="1px 1px 2px black">{`${navigator.userAgent}`}</Text>
+                    <Text textShadow="1px 1px 2px black">{`${navigator.userAgent
+                        .match(/iPhone|iPad|iPod/i)
+                        ?.toString()}`}</Text>
                 </Flex>
 
                 <Box height={{ md: '18%', lg: '14%' }}>
