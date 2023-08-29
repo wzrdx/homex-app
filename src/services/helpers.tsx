@@ -9,7 +9,7 @@ import {
 } from '../blockchain/config';
 import { NFT, RarityClass } from '../blockchain/types';
 import { Quest } from '../types';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
@@ -167,21 +167,21 @@ export const hasFinishedUnbonding = (token: NFT): boolean =>
 export const isMobile = (): boolean => {
     const agents = {
         Android: function () {
-            return navigator.userAgent.match(/Android/i);
+            return !isEmpty(navigator.userAgent.match(/Android/i));
         },
         BlackBerry: function () {
-            return navigator.userAgent.match(/BlackBerry/i);
+            return !isEmpty(navigator.userAgent.match(/BlackBerry/i));
         },
         iOS: function () {
-            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            return !isEmpty(navigator.userAgent.match(/iPhone|iPad|iPod/i));
         },
         Opera: function () {
-            return navigator.userAgent.match(/Opera Mini/i);
+            return !isEmpty(navigator.userAgent.match(/Opera Mini/i));
         },
         Windows: function () {
-            return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+            return !isEmpty(navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i));
         },
     };
 
-    return !!agents.Android() || !!agents.BlackBerry() || !!agents.iOS() || !!agents.Opera() || !!agents.Windows();
+    return agents.Android() || agents.BlackBerry() || agents.iOS() || agents.Opera() || agents.Windows();
 };
