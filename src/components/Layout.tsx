@@ -1,7 +1,7 @@
 import { Box, Flex, StyleProps, Text, ToastId, ToastPosition, useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
-import { getBackgroundStyle } from '../services/helpers';
+import { getBackgroundStyle, isMobile } from '../services/helpers';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
@@ -30,7 +30,8 @@ export function useLayout() {
 }
 
 function Layout() {
-    const [isLoaded, setIsLoaded] = useState(false);
+    // Mobile bypasses Loading Screen
+    const [isLoaded, setIsLoaded] = useState(isMobile());
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { getGameState } = useTransactionsContext() as TransactionsContextType;
 
