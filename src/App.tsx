@@ -1,5 +1,5 @@
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { ChakraBaseProvider, useToast, Text, Flex } from '@chakra-ui/react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
 import { AuthenticationProvider } from './services/authentication';
 import { TransactionsToastList, NotificationModal, SignTransactionsModals } from '@multiversx/sdk-dapp/UI';
@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty, isNaN, size } from 'lodash';
+import { map, head, includes, find, cloneDeep, remove, forEach, isEmpty, size } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,
@@ -25,7 +25,7 @@ import { Quest } from './types';
 import { CustomToast } from './shared/CustomToast';
 import { useStoreContext, StoreContextType } from './services/store';
 import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
-import { getTx, isMobile } from './services/helpers';
+import { getTx } from './services/helpers';
 import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 import { useRewardsContext, RewardsContextType } from './services/rewards';
 
@@ -172,7 +172,6 @@ function App() {
                             [{ resource: 'tickets', value: tx.data.ticketsAmount }],
                             'ticket'
                         );
-
                         break;
 
                     default:
@@ -377,8 +376,7 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
-                        {/* TODO: routeNames.quests */}
-                        <Route path="/" element={<Navigate to={routeNames.staking} replace />} />
+                        <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
 
                         {routes.map((route, index) => (
                             <Route path={route.path} key={'route-key-' + index} element={<route.component />}>
@@ -399,8 +397,7 @@ function App() {
                             </Route>
                         ))}
 
-                        {/* TODO: routeNames.quests */}
-                        <Route path="*" element={<Navigate to={routeNames.staking} replace />} />
+                        <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
                     </Route>
 
                     <Route path="*" element={<Navigate to={routeNames.main} replace />} />
