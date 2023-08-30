@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Flex, Text, Image } from '@chakra-ui/react';
+import { Flex, Text, Image, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { COLLECTION_SIZE, REWARDS_QUERYING_INTERVAL } from '../../blockchain/config';
@@ -77,30 +77,30 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         `${getDays()}${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`;
 
     return (
-        <Flex justifyContent="center" height="100%">
-            <Flex flexDir="column">
-                {/* Local */}
-                <Text mb={3} layerStyle="header1">
-                    Your NFTs
-                </Text>
+        <Flex flexDir="column">
+            {/* Local */}
+            <Text mb={3} layerStyle="header1">
+                Your NFTs
+            </Text>
 
+            <Box display="grid" gridAutoColumns="1fr 1fr" gridTemplateColumns="1fr 1fr" rowGap={4} columnGap={4}>
                 <StatsEntry label="Travelers staked" value={travelersCount} />
                 <StatsEntry label="Elders staked" value={eldersCount} />
                 <StatsEntry label="Staking rewards" color="energyBright" value={localStakingInfo?.rewards.toString() as string}>
                     <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.energy.icon} alt="Energy" />
                 </StatsEntry>
                 {stakingInfo?.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
+            </Box>
 
-                {/* Global */}
-                <Text mt={5} mb={3} layerStyle="header1">
-                    Global Stats
-                </Text>
+            {/* Global */}
+            <Text mt={5} mb={3} layerStyle="header1">
+                Global Stats
+            </Text>
 
-                <StatsEntry
-                    label="Total NFTs staked"
-                    value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
-                />
-            </Flex>
+            <StatsEntry
+                label="Total NFTs staked"
+                value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
+            />
         </Flex>
     );
 }

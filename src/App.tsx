@@ -377,7 +377,8 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
-                        <Route path="/" element={<Navigate to={routeNames.quests} replace />} />
+                        {/* TODO: routeNames.quests */}
+                        <Route path="/" element={<Navigate to={routeNames.staking} replace />} />
 
                         {routes.map((route, index) => (
                             <Route path={route.path} key={'route-key-' + index} element={<route.component />}>
@@ -398,7 +399,8 @@ function App() {
                             </Route>
                         ))}
 
-                        <Route path="*" element={<Navigate to={routeNames.quests} replace />} />
+                        {/* TODO: routeNames.quests */}
+                        <Route path="*" element={<Navigate to={routeNames.staking} replace />} />
                     </Route>
 
                     <Route path="*" element={<Navigate to={routeNames.main} replace />} />

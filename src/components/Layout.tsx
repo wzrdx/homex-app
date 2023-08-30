@@ -83,7 +83,7 @@ function Layout() {
         <>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex backgroundColor="#111" position="relative" flexDir="column">
+            <Flex backgroundColor="#111" position="relative" flexDir="column" minHeight="100vh">
                 <Box>
                     <Header />
                 </Box>

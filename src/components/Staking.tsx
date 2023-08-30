@@ -7,7 +7,7 @@ import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, isStakingDisabled } from '../blockchain/config';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { getMigrationSizeQuery } from '../blockchain/api/getMigrationSize';
@@ -43,6 +43,7 @@ function Staking() {
 
     const [isLoading, setLoading] = useState<boolean>(true);
     const [isButtonLoading, setButtonLoading] = useState<boolean>();
+    const [isClaimButtonLoading, setClaimButtonLoading] = useState(false);
 
     const [isMigrationRequired, setMigrationRequired] = useState<boolean>();
     const [migrationSize, setMigrationSize] = useState<number>(0);
@@ -71,6 +72,7 @@ function Staking() {
         const migrationSize: number = await getMigrationSizeQuery();
 
         setMigrationSize(migrationSize);
+
         setMigrationRequired(migrationSize > 0);
 
         setLoading(false);
@@ -125,8 +127,60 @@ function Staking() {
         }
     };
 
+    const claimStakingRewards = async () => {
+        if (!stakingInfo) {
+            return;
+        }
+
+        if (isClaimButtonLoading) {
+            return;
+        }
+
+        setClaimButtonLoading(true);
+
+        const user = new Address(address);
+
+        const stakedNFTsCount = _(stakingInfo.tokens)
+            .filter((token) => !token.timestamp)
+            .size();
+
+        try {
+            const tx = smartContract.methods
+                .claimStakingRewards()
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(10000000 + 250000 * stakedNFTsCount)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.ClaimEnergy,
+                    resolution: TxResolution.UpdateStakingInfo,
+                },
+            ]);
+
+            setClaimButtonLoading(false);
+        } catch (err) {
+            console.error('Error occured while sending tx', err);
+        }
+    };
+
     return (
-        <Flex height="100%" flexDir="column" alignItems="center">
+        <Flex height="100%" flexDir="column">
             {isLoading ? (
                 <Spinner />
             ) : (
@@ -139,8 +193,8 @@ function Staking() {
                             maxW="646px"
                             backgroundColor="#1d1d1f"
                             borderRadius="3px"
-                            px={8}
-                            py={9}
+                            px={4}
+                            py={7}
                         >
                             <Text layerStyle="header1Alt" mb={5} textAlign="center">
                                 Migration required
@@ -187,33 +241,32 @@ function Staking() {
                         </Flex>
                     ) : (
                         <>
-                            <Flex ref={ref} className="Second-Header-Menu" alignItems="center" pb={{ md: 4, lg: 8 }}>
-                                {_.map(route?.children, (route, index) => (
-                                    <Box key={index}>
-                                        <NavLink to={route.path}>
-                                            <Tab text={route.path} />
-                                        </NavLink>
-                                    </Box>
-                                ))}
-                            </Flex>
+                            <Box mb={6}>
+                                <ActionButton
+                                    disabled={
+                                        isStakingDisabled ||
+                                        !stakingInfo ||
+                                        isTxPending(TransactionType.Stake) ||
+                                        isTxPending(TransactionType.Unstake)
+                                    }
+                                    isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
+                                    colorScheme="blue"
+                                    customStyle={{ width: '144px' }}
+                                    onClick={claimStakingRewards}
+                                >
+                                    <Text>Claim Energy</Text>
+                                </ActionButton>
+                            </Box>
 
-                            <Flex layerStyle="layout" height="100%">
-                                <Flex flex={1}>
-                                    <Stats
-                                        stakedNFTsCount={stakedNFTsCount}
-                                        travelersCount={_(stakingInfo?.tokens)
-                                            .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp)
-                                            .size()}
-                                        eldersCount={_(stakingInfo?.tokens)
-                                            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
-                                            .size()}
-                                    />
-                                </Flex>
-
-                                <Flex flex={4}>
-                                    <Outlet context={{ height, displayToast }} />
-                                </Flex>
-                            </Flex>
+                            <Stats
+                                stakedNFTsCount={stakedNFTsCount}
+                                travelersCount={_(stakingInfo?.tokens)
+                                    .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp)
+                                    .size()}
+                                eldersCount={_(stakingInfo?.tokens)
+                                    .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+                                    .size()}
+                            />
                         </>
                     )}
                 </>

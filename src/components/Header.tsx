@@ -20,7 +20,7 @@ import {
     MenuDivider,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { routes as serviceRoutes } from '../services/routes';
+import { routeNames, routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
@@ -84,8 +84,12 @@ function Header({}) {
                     <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon fontSize="38px" />} variant="ghost" />
                     <MenuList>
                         <MenuGroup title="Menu">
-                            <MenuItem>Staking</MenuItem>
-                            <MenuItem>Quests</MenuItem>
+                            <MenuItem>
+                                <NavLink to={routeNames.staking}>Staking</NavLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <NavLink to={routeNames.quests}>Quests</NavLink>
+                            </MenuItem>
                         </MenuGroup>
 
                         <MenuDivider />
