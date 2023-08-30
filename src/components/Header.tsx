@@ -1,42 +1,11 @@
-import {
-    Box,
-    Button,
-    Flex,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalOverlay,
-    Text,
-    Image,
-    useDisclosure,
-    Link,
-    IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    MenuGroup,
-    MenuDivider,
-} from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { routeNames, routes as serviceRoutes } from '../services/routes';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import { findIndex } from 'lodash';
-import { BsExclamation, BsTwitter, BsGlobe, BsDiscord } from 'react-icons/bs';
-import { AiOutlineSetting } from 'react-icons/ai';
-import { IoVolumeHighOutline, IoVolumeMuteOutline, IoDocumentTextOutline } from 'react-icons/io5';
-import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
-import Wallet from '../shared/Wallet';
+import { Box, Flex, Image, IconButton, Menu, MenuButton, MenuItem, MenuList, MenuGroup, MenuDivider } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { routeNames } from '../services/routes';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
-import Gameplay from './Gameplay';
 import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
-import Separator from '../shared/Separator';
-import Settings from './Settings';
-import SponsorLogo from '../assets/images/dw_logo.svg';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getShortAddress } from '../services/helpers';
@@ -46,23 +15,13 @@ import { logout } from '@multiversx/sdk-dapp/utils';
 function Header({}) {
     const { resources } = useResourcesContext() as ResourcesContextType;
 
-    const location = useLocation();
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
 
     const { address } = useGetAccountInfo();
     const navigate = useNavigate();
 
-    const [routes, setRoutes] = useState<Array<string>>([]);
-
     // Init
-    useEffect(() => {
-        setRoutes(
-            _(serviceRoutes)
-                .filter((route) => route.isMainRoute)
-                .map((route) => route.path)
-                .value()
-        );
-    }, []);
+    useEffect(() => {}, []);
 
     const disconnect = () => {
         setAuthentication(false);

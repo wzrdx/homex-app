@@ -1,10 +1,9 @@
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useLayout } from './Layout';
-import _, { truncate } from 'lodash';
+import _ from 'lodash';
 import { StoreContextType, useStoreContext } from '../services/store';
-import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
-import Tab from '../shared/Tab';
+import { useOutletContext } from 'react-router-dom';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, isStakingDisabled } from '../blockchain/config';
@@ -27,11 +26,6 @@ export function useStaking() {
 }
 
 function Staking() {
-    const { routes, routeNames, displayToast } = useLayout();
-
-    // The height of the menu
-    const [height, setHeight] = useState<number>(0);
-    const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
     const { stakingInfo } = useStoreContext() as StoreContextType;
@@ -49,9 +43,7 @@ function Staking() {
     const [migrationSize, setMigrationSize] = useState<number>(0);
 
     // Init
-    useEffect(() => {
-        setRoute(routes.find((route) => route.path === routeNames.staking));
-    }, []);
+    useEffect(() => {}, []);
 
     useEffect(() => {
         getStakedNFTsCount();
@@ -62,8 +54,6 @@ function Staking() {
         if (!ref?.current || !(ref?.current as any).clientHeight) {
             return;
         }
-
-        setHeight((ref?.current as any)?.clientHeight);
     }, [(ref?.current as any)?.clientHeight]);
 
     const checkMigration = async () => {
