@@ -305,6 +305,19 @@ function Quests() {
         </Flex>
     );
 
+    const onSelectAll = () => {
+        if (areAllQuestsSelected) {
+            setSelectedQuestIds([]);
+        } else {
+            setSelectedQuestIds(
+                _(QUESTS)
+                    .filter((quest) => isQuestDefault(quest))
+                    .map((quest) => quest.id.toString())
+                    .value()
+            );
+        }
+    };
+
     const onCheckboxGroupChange = useCallback((array: string[]) => {
         setSelectedQuestIds(array);
     }, []);
@@ -403,10 +416,6 @@ function Quests() {
 
                     {checkCompletionTime()}
 
-                    {/* <ActionButton colorScheme="red" onClick={onQuestsModalOpen}>
-                        <Text>Multiple</Text>
-                    </ActionButton> */}
-
                     <Box mt={4}>
                         <CheckboxGroup
                             value={selectedQuestIds}
@@ -414,7 +423,17 @@ function Quests() {
                             colorScheme="blue"
                             defaultValue={[]}
                         >
-                            <Text layerStyle="header1">Herbalism</Text>
+                            <Flex justifyContent="space-between" alignItems="center">
+                                <Text layerStyle="header1">Herbalism</Text>
+                                <Checkbox
+                                    isChecked={areAllQuestsSelected}
+                                    isIndeterminate={isIndeterminate}
+                                    onChange={() => onSelectAll()}
+                                >
+                                    Select all
+                                </Checkbox>
+                            </Flex>
+
                             {getQuestCards('herbalism')}
 
                             <Text layerStyle="header1">Jewelcrafting</Text>
@@ -432,96 +451,6 @@ function Quests() {
                     </Box>
                 </Flex>
             </Flex>
-
-            {/* Quest details */}
-            {/* <Flex flex={5} justifyContent="center">
-                <Flex flexDir="column">
-                    <Flex justifyContent="space-between" alignItems="flex-end">
-                        <Text fontSize="20px" lineHeight="22px" fontWeight={600} letterSpacing="0.5px" color="header.gold">
-                            {currentQuest.name}
-                        </Text>
-
-                        <Flex>
-                            {currentQuest.rewards.map((reward: { resource: string }, index: number) => (
-                                <Box ml={3} key={index}>
-                                    <Image height="28px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
-                                </Box>
-                            ))}
-                        </Flex>
-                    </Flex>
-
-                    <Box my={3.5}>
-                        <Separator type="horizontal" width="100%" height="1px" />
-                    </Box>
-
-                    <Box>{currentQuest.description}</Box>
-
-                    <Text
-                        fontSize="20px"
-                        lineHeight="22px"
-                        fontWeight={600}
-                        letterSpacing="0.5px"
-                        color="header.gold"
-                        mt={{ md: 5, lg: 10 }}
-                    >
-                        Quest rewards
-                    </Text>
-
-                    <Box
-                        mt={3.5}
-                        display="grid"
-                        gridAutoColumns="1fr 1fr"
-                        gridTemplateColumns="1fr 1fr "
-                        rowGap={4}
-                        columnGap={4}
-                    >
-                        {map(currentQuest.rewards, (reward, index) => {
-                            const { name, color, icon, image } = getResourceElements(reward.resource);
-                            return (
-                                <Box key={index}>
-                                    <Reward image={image} name={name} value={reward.value} icon={icon} />
-                                </Box>
-                            );
-                        })}
-                    </Box>
-
-                    {currentQuest.type === 'final' && (
-                        <>
-                            <Text
-                                fontSize="20px"
-                                lineHeight="22px"
-                                fontWeight={600}
-                                letterSpacing="0.5px"
-                                color="header.gold"
-                                mt={10}
-                            >
-                                Story
-                            </Text>
-
-                            <Flex mt={3.5}>
-                                <ActionButton
-                                    colorScheme="lore"
-                                    onClick={() => {
-                                        playSound('mystery');
-                                        onVisionOpen();
-                                    }}
-                                >
-                                    <Flex alignItems="center">
-                                        <AiOutlineEye fontSize="18px" />
-                                        <Text ml="1">Vision</Text>
-                                    </Flex>
-                                </ActionButton>
-                            </Flex>
-                        </>
-                    )}
-                </Flex>
-            </Flex> */}
-
-            {/* Multiple quests */}
-            <Modal size="xl" onClose={onQuestsModalClose} isOpen={isQuestsModalOpen} isCentered>
-                <ModalOverlay />
-                <MultipleQuests />
-            </Modal>
         </Flex>
     );
 }
