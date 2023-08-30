@@ -3,18 +3,19 @@ import { getBackgroundStyle, timeDisplay } from '../services/helpers';
 import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds, isBefore } from 'date-fns';
 import { first, map, size } from 'lodash';
 import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
+import { Timer } from './Timer';
 
-const REFRESH_TIME = 10000;
+const REFRESH_TIME = process.env.NODE_ENV === 'development' ? 1000 : 10000;
 const IMAGE_SIZE = '22px';
 
 export const QuestCard: FunctionComponent<
     PropsWithChildren<{
         quest: Quest;
-        callback: (arg0: number) => void;
+        callback?: (arg0: number) => void;
         timestamp?: Date;
     }>
 > = ({ quest, callback, timestamp }) => {
@@ -82,21 +83,23 @@ export const QuestCard: FunctionComponent<
     };
 
     return (
-        <Flex ml={2} flexDir="column" borderRadius="2px">
+        <Flex flexDir="column" borderRadius="2px">
             <Flex
-                onClick={() => callback(quest.id)}
+                onClick={() => {
+                    if (callback) callback(quest.id);
+                }}
                 style={getBackgroundStyle(getQuestImage(quest.id))}
                 flex={1}
                 position="relative"
                 borderRadius="2px"
                 px={4}
-                py="2.65rem"
-                justifyContent="center"
+                py="2.6rem"
+                justifyContent="space-between"
                 cursor="pointer"
                 outline={widths[0] === '100%' ? '2.5px solid #128712bd' : 'none'}
             >
-                <Box position="relative" zIndex={1} pointerEvents="none">
-                    <Text zIndex={1} position="relative" textShadow="1px 1px 2px #000" fontSize="17px">
+                <Box zIndex={4} position="relative">
+                    <Text zIndex={3} position="relative" textShadow="1px 1px 2px #000" fontSize="17px">
                         {quest.name}
                     </Text>
 
@@ -113,6 +116,22 @@ export const QuestCard: FunctionComponent<
                     ></Box>
                 </Box>
 
+                {((!!timestamp && isBefore(new Date(), timestamp)) || !timestamp) && (
+                    <Flex alignItems="center" zIndex={2} backgroundColor="#333333d1" px={2} py={0.5} borderRadius="2px">
+                        {isQuestOngoing() ? (
+                            <Timer isActive={true} displayClock={false} timestamp={timestamp as Date} isDescending />
+                        ) : (
+                            <Flex alignItems="center">
+                                <Text mr={1.5} textShadow="0 0 4px black">
+                                    {getQuestDuration(quest.duration)}
+                                </Text>
+
+                                <TimeIcon mb="1px" boxSize={4} color="whitesmoke" textShadow="0 0 4px black" />
+                            </Flex>
+                        )}
+                    </Flex>
+                )}
+
                 {/* Top bar */}
                 <Box position="absolute" top={0} right={0} left={0} zIndex={2} backgroundColor="#333333d1">
                     <Flex alignItems="center" justifyContent="center" py={1}>
@@ -124,11 +143,6 @@ export const QuestCard: FunctionComponent<
                 <Box position="absolute" bottom={0} right={0} left={0} zIndex={2} backgroundColor="#333333d1">
                     <Flex alignItems="center" justifyContent="center" py={1}>
                         {getRewards()}
-
-                        <Flex position="absolute" alignItems="center" top={0} left={2} bottom={0}>
-                            <TimeIcon mr={1.5} mb="1px" fontSize="16px" />
-                            <Text color="#ebeef4">{getQuestDuration(quest.duration)}</Text>
-                        </Flex>
                     </Flex>
                 </Box>
 
