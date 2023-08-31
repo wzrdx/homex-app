@@ -61,16 +61,16 @@ function Layout() {
             marginRight: '2rem',
         }
     ) => {
-        toastIdRef.current = toast({
-            position,
-            containerStyle,
-            duration,
-            render: () => (
-                <CustomToast type={type} title={title} color={color}>
-                    {description && <Text mt={2}>{description}</Text>}
-                </CustomToast>
-            ),
-        });
+        // toastIdRef.current = toast({
+        //     position,
+        //     containerStyle,
+        //     duration,
+        //     render: () => (
+        //         <CustomToast type={type} title={title} color={color}>
+        //             {description && <Text mt={2}>{description}</Text>}
+        //         </CustomToast>
+        //     ),
+        // });
     };
 
     const closeToast = () => {
@@ -83,7 +83,7 @@ function Layout() {
         <>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex backgroundColor="#111" position="relative" flexDir="column" minHeight="100vh">
+            <Flex backgroundColor="#151a1b" position="relative" flexDir="column" minHeight="100vh">
                 <Box>
                     <Header />
                 </Box>

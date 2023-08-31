@@ -289,46 +289,46 @@ function App() {
     ) => {
         playSound(sound);
 
-        toast({
-            position: 'top-right',
-            containerStyle: {
-                marginTop: '1rem',
-                marginRight: '2rem',
-            },
-            duration: 8000,
-            render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
-        });
+        // toast({
+        //     position: 'top-right',
+        //     containerStyle: {
+        //         marginTop: '1rem',
+        //         marginRight: '2rem',
+        //     },
+        //     duration: 8000,
+        //     render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
+        // });
     };
 
     const displayToast = (title: string, text: string, color = 'redClrs', sound = 'navigate') => {
         playSound(sound);
 
-        toast({
-            position: 'top-right',
-            containerStyle: {
-                marginTop: '1rem',
-                marginRight: '2rem',
-            },
-            duration: 8000,
-            render: () => (
-                <CustomToast type="success" title={title} color={color}>
-                    {text && <Text mt={2}>{text}</Text>}
-                </CustomToast>
-            ),
-        });
+        // toast({
+        //     position: 'top-right',
+        //     containerStyle: {
+        //         marginTop: '1rem',
+        //         marginRight: '2rem',
+        //     },
+        //     duration: 8000,
+        //     render: () => (
+        //         <CustomToast type="success" title={title} color={color}>
+        //             {text && <Text mt={2}>{text}</Text>}
+        //         </CustomToast>
+        //     ),
+        // });
     };
 
     const displayPauseToast = () => {
-        toast({
-            position: 'bottom-left',
-            containerStyle: {
-                margin: '3rem',
-            },
-            duration: 1000000,
-            render: () => (
-                <CustomToast type={'time'} title={'The game is temporarily paused'} color={'whitesmoke'}></CustomToast>
-            ),
-        });
+        // toast({
+        //     position: 'bottom-left',
+        //     containerStyle: {
+        //         margin: '3rem',
+        //     },
+        //     duration: 1000000,
+        //     render: () => (
+        //         <CustomToast type={'time'} title={'The game is temporarily paused'} color={'whitesmoke'}></CustomToast>
+        //     ),
+        // });
     };
 
     const displayEnergyGain = async (txHash: string | undefined) => {
