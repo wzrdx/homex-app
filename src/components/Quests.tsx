@@ -190,7 +190,7 @@ function Quests() {
 
         const rewardsCount: number = currentQuest.rewards.length;
         const isMission: boolean = currentQuest.type === 'final';
-        const gasLimit: number = 6000000 + rewardsCount * 750000 + (isMission ? 2500000 : 0);
+        const gasLimit: number = 7000000 + rewardsCount * 750000 + (isMission ? 2500000 : 0);
 
         try {
             const tx = smartContract.methods
@@ -262,7 +262,7 @@ function Quests() {
         }));
 
         const gasLimit: number =
-            10000000 +
+            12000000 +
             300000 * otherOngoingQuestsCount +
             (rewardedResources.includes('tickets') ? 1500000 : 0) +
             250000 * _.size(rewardedResources) +

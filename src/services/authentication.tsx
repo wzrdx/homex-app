@@ -27,7 +27,7 @@ export const getWalletNonces = (address: string, collection: string, from = 0): 
         },
     });
 
-export const getStakedNFTs = (collection: string, identifiers: string): Promise<{ data: Array<NFT> }> =>
+export const getContractNFTs = (collection: string, identifiers: string): Promise<{ data: Array<NFT> }> =>
     axios.get(`accounts/${contractAddress}/nfts`, {
         baseURL: API_URL,
         params: {

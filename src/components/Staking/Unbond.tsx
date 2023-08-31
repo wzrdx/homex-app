@@ -1,23 +1,9 @@
 import _ from 'lodash';
-import {
-    Box,
-    Flex,
-    Text,
-    Spinner,
-    AlertIcon,
-    Alert,
-    useDisclosure,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalOverlay,
-    ModalHeader,
-} from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, AlertIcon, Alert } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import {
@@ -34,22 +20,20 @@ import { NFT } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
-import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
+import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
-import Yield from '../../shared/Yield';
 import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { getUnixTime } from 'date-fns';
 
-function Unstake() {
+function Unbond() {
     const { height } = useStaking();
     const { address } = useGetAccountInfo();
-
-    const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
 
     const { stakingInfo } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
-    const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
+    const [isRestakeButtonLoading, setRestakeButtonLoading] = useState(false);
     const [isClaimButtonLoading, setClaimButtonLoading] = useState(false);
 
     const [travelers, setTravelers] = useState<NFT[]>();
@@ -84,19 +68,19 @@ function Unstake() {
             return;
         }
 
-        const stakedTravelers: Stake[] = _.filter(
+        const unbondedTravelers: Stake[] = _.filter(
             stakingInfo.tokens,
-            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
+            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !!token.timestamp
         );
 
-        const stakedElders: Stake[] = _.filter(
+        const unbondedElders: Stake[] = _.filter(
             stakingInfo.tokens,
-            (token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp
+            (token) => token.tokenId === ELDERS_COLLECTION_ID && !!token.timestamp
         );
 
         const filteredNonces = {
-            travelers: _.map(stakedTravelers, (token) => token.nonce),
-            elders: _.map(stakedElders, (token) => token.nonce),
+            travelers: _.map(unbondedTravelers, (token) => token.nonce),
+            elders: _.map(unbondedElders, (token) => token.nonce),
         };
 
         setTravelers(undefined);
@@ -133,7 +117,7 @@ function Unstake() {
             .flatten()
             .map((nft) => ({
                 ...nft,
-                timestamp: _.find(stakedTravelers, (token) => token.nonce === nft.nonce)?.timestamp as Date,
+                timestamp: _.find(unbondedTravelers, (token) => token.nonce === nft.nonce)?.timestamp as Date,
                 tokenId: TRAVELERS_COLLECTION_ID,
             }))
             .orderBy('nonce', 'asc')
@@ -167,22 +151,24 @@ function Unstake() {
             .flatten()
             .map((nft) => ({
                 ...nft,
-                timestamp: _.find(stakedElders, (token) => token.nonce === nft.nonce)?.timestamp as Date,
+                timestamp: _.find(unbondedElders, (token) => token.nonce === nft.nonce)?.timestamp as Date,
                 tokenId: ELDERS_COLLECTION_ID,
             }))
             .orderBy('nonce', 'asc')
             .value();
 
+        // console.log(_.map(travelers, (traveler) => ({ ...traveler, unix: getUnixTime(traveler.timestamp) })));
+
         setTravelers(travelers);
         setElders(elders);
     };
 
-    const unstake = async () => {
+    const restake = async () => {
         if (!stakingInfo || !elders || !travelers) {
             return;
         }
 
-        setUnstakeButtonLoading(true);
+        setRestakeButtonLoading(true);
 
         const user = new Address(address);
 
@@ -192,23 +178,23 @@ function Unstake() {
                 token_id: new TokenIdentifierValue(token.tokenId),
                 nonce: new U16Value(token.nonce),
                 amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), null),
+                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
             }))
             .value();
 
         const stakedNFTsCount = _.size([...elders, ...travelers]);
 
         if (_.isEmpty(args)) {
-            setUnstakeButtonLoading(false);
+            setRestakeButtonLoading(false);
             return;
         }
 
         try {
             const tx = smartContract.methods
-                .unstake([args])
+                .restake([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(16000000 + 300000 * stakedNFTsCount + 1800000 * _.size(args))
+                .withGasLimit(16000000 + 300000 * stakedNFTsCount + 1600000 * _.size(args))
                 .buildTransaction();
 
             await refreshAccount();
@@ -227,20 +213,20 @@ function Unstake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Unstake,
+                    type: TransactionType.Restake,
                     resolution: TxResolution.UpdateStakingAndNFTs,
                     data: _.size(args),
                 },
             ]);
 
-            setUnstakeButtonLoading(false);
+            setRestakeButtonLoading(false);
         } catch (err) {
             console.error('Error occured ', err);
         }
     };
 
-    const claimStakingRewards = async () => {
-        if (!stakingInfo || !elders || !travelers) {
+    const claim = async () => {
+        if (_.isEmpty(selectedTokens) || !stakingInfo || !elders || !travelers) {
             return;
         }
 
@@ -252,14 +238,24 @@ function Unstake() {
 
         const user = new Address(address);
 
+        const args = _(stakingInfo.tokens)
+            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
+            .map((token) => ({
+                token_id: new TokenIdentifierValue(token.tokenId),
+                nonce: new U16Value(token.nonce),
+                amount: new U16Value(token.amount),
+                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
+            }))
+            .value();
+
         const stakedNFTsCount = _.size([...elders, ...travelers]);
 
         try {
             const tx = smartContract.methods
-                .claimStakingRewards()
+                .claim([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(10000000 + 250000 * stakedNFTsCount)
+                .withGasLimit(5000000 + 250000 * stakedNFTsCount + 1000000 * args.length)
                 .buildTransaction();
 
             await refreshAccount();
@@ -278,8 +274,9 @@ function Unstake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.ClaimEnergy,
+                    type: TransactionType.ClaimUnbondedNFTs,
                     resolution: TxResolution.UpdateStakingInfo,
+                    data: _.size(args),
                 },
             ]);
 
@@ -304,6 +301,19 @@ function Unstake() {
         );
     };
 
+    const areSelectedNFTsClaimable = (): boolean => {
+        if (!elders || !travelers) {
+            return false;
+        }
+
+        const unbondingStates = _([...elders, ...travelers])
+            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
+            .map((token) => hasFinishedUnbonding(token))
+            .value();
+
+        return unbondingStates.every((token) => !!token);
+    };
+
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             {elders && travelers ? (
@@ -314,15 +324,15 @@ function Unstake() {
                                 disabled={
                                     isStakingDisabled ||
                                     !stakingInfo ||
-                                    isTxPending(TransactionType.ClaimEnergy) ||
-                                    isTxPending(TransactionType.Stake)
+                                    isTxPending(TransactionType.Restake) ||
+                                    !areSelectedNFTsClaimable()
                                 }
-                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
+                                isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                                 colorScheme="blue"
                                 customStyle={{ width: '120px' }}
-                                onClick={unstake}
+                                onClick={claim}
                             >
-                                <Text>Unstake</Text>
+                                <Text>Claim</Text>
                             </ActionButton>
 
                             <Box ml={4}>
@@ -332,9 +342,8 @@ function Unstake() {
                                     onClick={selectAll}
                                     disabled={
                                         !stakingInfo ||
-                                        isTxPending(TransactionType.ClaimEnergy) ||
-                                        isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake)
+                                        isTxPending(TransactionType.ClaimUnbondedNFTs) ||
+                                        isTxPending(TransactionType.Restake)
                                     }
                                 >
                                     <Text>Select all</Text>
@@ -344,52 +353,20 @@ function Unstake() {
                             {stakingInfo?.isStaked && (
                                 <Flex ml={4} alignItems="center">
                                     <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                                    <Text color="almostWhite">
-                                        The unbonding time is{' '}
-                                        <Text as="span" fontWeight={600}>
-                                            7 days
-                                        </Text>
-                                    </Text>
+                                    <Text color="almostWhite">Select some NFTs in order to claim or restake them</Text>
                                 </Flex>
                             )}
                         </Flex>
 
-                        {stakingInfo?.isStaked && (
-                            <Flex>
-                                <ActionButton
-                                    colorScheme="default"
-                                    onClick={onYieldOpen}
-                                    disabled={
-                                        _.isEmpty(rarities) ||
-                                        isTxPending(TransactionType.ClaimEnergy) ||
-                                        isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake)
-                                    }
-                                >
-                                    <Flex alignItems="center">
-                                        <InfoOutlineIcon />
-                                        <Text ml={1.5}>View Yield</Text>
-                                    </Flex>
-                                </ActionButton>
-
-                                <Box ml={4}>
-                                    <ActionButton
-                                        disabled={
-                                            isStakingDisabled ||
-                                            !stakingInfo ||
-                                            isTxPending(TransactionType.Stake) ||
-                                            isTxPending(TransactionType.Unstake)
-                                        }
-                                        isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
-                                        colorScheme="blue"
-                                        customStyle={{ width: '144px' }}
-                                        onClick={claimStakingRewards}
-                                    >
-                                        <Text>Claim Energy</Text>
-                                    </ActionButton>
-                                </Box>
-                            </Flex>
-                        )}
+                        <ActionButton
+                            disabled={isStakingDisabled || !stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
+                            isLoading={isRestakeButtonLoading || isTxPending(TransactionType.Restake)}
+                            colorScheme="red"
+                            customStyle={{ width: '120px' }}
+                            onClick={restake}
+                        >
+                            <Text>Restake</Text>
+                        </ActionButton>
                     </Flex>
 
                     {_.isEmpty(travelers) && _.isEmpty(elders) ? (
@@ -397,7 +374,7 @@ function Unstake() {
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
                                     <AlertIcon />
-                                    You have no staked NFTs to display
+                                    You have no unstaked NFTs to display
                                 </Alert>
                             </Flex>
                         </Flex>
@@ -422,7 +399,7 @@ function Unstake() {
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isRestakeButtonLoading || isTxPending(TransactionType.Stake)) {
                                                 return;
                                             }
 
@@ -477,23 +454,8 @@ function Unstake() {
                     <Spinner size="md" />
                 </Flex>
             )}
-
-            {/* Yield */}
-            <Modal onClose={onYieldClose} isOpen={isYieldOpen} isCentered>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Energy per hour</ModalHeader>
-                    <ModalCloseButton _focusVisible={{ outline: 0 }} />
-
-                    <ModalBody>
-                        <Flex pb={3} mt={-1}>
-                            {travelers && elders && <Yield travelers={travelers} elders={elders} rarities={rarities} />}
-                        </Flex>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
         </Flex>
     );
 }
 
-export default Unstake;
+export default Unbond;

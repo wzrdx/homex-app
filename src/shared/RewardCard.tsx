@@ -66,7 +66,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 .claimReward()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(7000000 + 750000 * ticketsAmount)
+                .withGasLimit(14000000 + 750000 * ticketsAmount)
                 .buildTransaction();
 
             await refreshAccount();

@@ -1,11 +1,27 @@
 import { Image, Flex, Text, Box } from '@chakra-ui/react';
-import { NFTType, RarityClass } from '../blockchain/types';
+import { NFT, RarityClass } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { getRarityClassInfo } from '../services/helpers';
+import { getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
+import { ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { Rarity } from '../blockchain/api/getRarityClasses';
+import { addSeconds } from 'date-fns';
+import { Timer } from './Timer';
+import { useState } from 'react';
 
-function TokenCard({ isSelected, name, url, type, rarity }) {
-    const getColor = () => (type === NFTType.Traveler ? 'whitesmoke' : 'redClrs');
+function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: NFT; rarity?: Rarity | false }) {
+    // Used to force a re-render
+    const [_mockState, setState] = useState<boolean>();
+
+    const getColor = () => {
+        switch (token.tokenId) {
+            case ELDERS_COLLECTION_ID:
+                return 'redClrs';
+
+            default:
+                return 'whitesmoke';
+        }
+    };
 
     const getRarityLabel = (rarityClass: RarityClass) => {
         let { label, color } = getRarityClassInfo(rarityClass);
@@ -47,6 +63,7 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
                         left={0}
                         backgroundColor="#0000008f"
                         p={6}
+                        zIndex={2}
                     >
                         <Image className="Selected-NFT" src={getSmallLogo()} alt="Logo" userSelect="none" />
                     </Flex>
@@ -65,17 +82,41 @@ function TokenCard({ isSelected, name, url, type, rarity }) {
                     ></Flex>
                 )}
 
+                {!!token.timestamp && !hasFinishedUnbonding(token) && (
+                    <Flex
+                        justifyContent="center"
+                        alignItems="center"
+                        position="absolute"
+                        top={0}
+                        right={0}
+                        bottom={0}
+                        left={0}
+                        backgroundColor="#0000008f"
+                        p={1}
+                    >
+                        <Timer
+                            timestamp={addSeconds(token.timestamp as Date, getUnbondingDuration(token.tokenId))}
+                            callback={() => setState(true)}
+                            displayClock={false}
+                            customStyle={{ fontSize: '21px', fontWeight: 500, userSelect: 'none' }}
+                            isActive
+                            isDescending
+                            displayDays
+                        />
+                    </Flex>
+                )}
+
                 {rarity && (
                     <Flex position="absolute" right={0} bottom={0}>
                         {getRarityLabel(rarity.rarityClass)}
                     </Flex>
                 )}
 
-                <LazyLoadImage src={url} alt="NFT" loading="lazy" effect="opacity" />
+                <LazyLoadImage src={token.url} alt="NFT" loading="lazy" effect="opacity" />
             </Flex>
 
             <Text mt={1.5} fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>
-                {name}
+                {token.name}
             </Text>
         </Flex>
     );

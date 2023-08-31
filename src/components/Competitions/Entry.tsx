@@ -13,6 +13,7 @@ import { CHAIN_ID, TICKETS_TOKEN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Competition, useRewardsContext, RewardsContextType } from '../../services/rewards';
+import { isAfter } from 'date-fns';
 
 function Entry() {
     const [amount, setAmount] = useState(0);
@@ -139,7 +140,7 @@ function Entry() {
 
                 <Box mt={1.5}>
                     <ActionButton
-                        disabled={isGamePaused || !resources.tickets}
+                        disabled={isGamePaused || !resources.tickets || isAfter(new Date(), battle?.timestamp as Date)}
                         isLoading={isButtonLoading || isTxPending(TransactionType.JoinBattle)}
                         colorScheme="default"
                         onClick={joinBattle}

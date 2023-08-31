@@ -18,7 +18,7 @@ import {
     AlertIcon,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ArrowForwardIcon, WarningIcon } from '@chakra-ui/icons';
+import { WarningIcon } from '@chakra-ui/icons';
 import { BattleParticipant } from '../../blockchain/types';
 import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
@@ -26,12 +26,12 @@ import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
 import { Timer } from '../../shared/Timer';
 import { useSection } from '../Section';
-import { isAfter } from 'date-fns';
+import { addDays, format, isAfter } from 'date-fns';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner from '../../assets/images/bhero.png';
+import Banner from '../../assets/images/banner_dw.png';
 import { AiOutlineEye } from 'react-icons/ai';
 
 const COLUMNS = [
@@ -81,6 +81,8 @@ function Leaderboard() {
     }, [battle]);
 
     const init = async () => {
+        console.log(addDays(new Date(), 40));
+
         if (!battle) {
             return;
         }
@@ -132,7 +134,7 @@ function Leaderboard() {
     return (
         <Flex height={`calc(100% - ${height}px)`} flexDir="column" alignItems="center">
             <Flex mb={6} justifyContent="center" alignItems="center">
-                <Flex
+                {/* <Flex
                     mr={2}
                     alignItems="center"
                     padding="7px 16px"
@@ -147,7 +149,11 @@ function Leaderboard() {
                     <Text ml={2} color="white">
                         Prize Pool
                     </Text>
-                </Flex>
+                </Flex> */}
+
+                <Text as="span" fontWeight={500} mx={1.5}>
+                    10 Winners
+                </Text>
 
                 <Box mx={1.5} opacity="0.9">
                     <Separator type="vertical" width="1px" height="34px" />
@@ -184,11 +190,7 @@ function Leaderboard() {
                         </Box>
 
                         <Flex mx={2} justifyContent="center" alignItems="center">
-                            <Text mr={2}>Ends in:</Text>
-
-                            <Flex minWidth="158px">
-                                <Timer timestamp={battle.timestamp} isActive isDescending displayDays />
-                            </Flex>
+                            <Text mr={2}>{`Ends on ${format(battle.timestamp, 'PPpp')}`}</Text>
                         </Flex>
                     </>
                 )}
@@ -245,7 +247,7 @@ function Leaderboard() {
                                 </Text>
 
                                 <Flex minWidth={COLUMNS[2].width}>
-                                    <Text minWidth="24px">{participant.ticketsCount}</Text>
+                                    <Text minWidth="28px">{participant.ticketsCount}</Text>
                                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                                 </Flex>
 

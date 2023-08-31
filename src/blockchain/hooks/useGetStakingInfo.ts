@@ -4,19 +4,24 @@ import { useState } from 'react';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
-import BigNumber from 'bignumber.js';
-import { map } from 'lodash';
+import { map, size } from 'lodash';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getStakingInfo';
 
+export interface Stake {
+    tokenId: string;
+    nonce: number;
+    amount: number;
+    timestamp: Date | null;
+}
+
 export interface StakingInfo {
     isStaked: boolean;
     rewards: number;
     timestamp: Date;
-    travelerNonces: number[];
-    elderNonces: number[];
+    tokens: Stake[];
 }
 
 export const useGetStakingInfo = () => {
@@ -34,21 +39,22 @@ export const useGetStakingInfo = () => {
             const queryResponse = await proxy.queryContract(query);
             const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
 
-            const { firstValue: amount } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-            const value: {
-                rewards: BigNumber;
-                timestamp: BigNumber;
-                traveler_nonces: Array<BigNumber>;
-                elder_nonces: Array<BigNumber>;
-            } = amount?.valueOf();
+            const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
+            const value = firstValue?.valueOf();
 
             const info = {
-                isStaked: value.traveler_nonces.length + value.elder_nonces.length > 0,
+                isStaked: size(value.tokens) > 0,
                 rewards: value.rewards.toNumber() / 1000000,
                 timestamp: new Date(value.timestamp.toNumber() * 1000),
-                travelerNonces: map(value.traveler_nonces, (nonce) => nonce.toNumber()),
-                elderNonces: map(value.elder_nonces, (nonce) => nonce.toNumber()),
+                tokens: map(value.tokens, (token) => ({
+                    tokenId: token.token_id,
+                    nonce: token.nonce.toNumber(),
+                    amount: token.amount.toNumber(),
+                    timestamp: !token?.timestamp ? null : new Date(token?.timestamp?.toNumber() * 1000),
+                })),
             };
+
+            // console.log(FUNCTION_NAME, info);
 
             setStakingInfo(info);
 

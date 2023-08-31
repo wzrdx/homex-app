@@ -16,6 +16,9 @@ import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { getElderRewards } from '../blockchain/api/getElderRewards';
+import CPANFT from '../assets/images/cpa_nft.png';
+import CPAChest from '../assets/images/cpa_chest.jpg';
+import CPALogo from '../assets/images/cpa.png';
 
 export enum RewardType {
     Prizes,
@@ -48,7 +51,7 @@ export const getTicketsPrize = (amount: number) => ({
 });
 
 const getEssencePrize = (amount: number) => ({
-    backgroundColor: '#3a182d',
+    backgroundColor: '#3f1931',
     imageSrc: RESOURCE_ELEMENTS.essence.icon,
     height: { md: '30px', lg: '38px' },
     textColor: 'resources.essence',
@@ -61,6 +64,14 @@ const getEnergyPrize = (amount: number) => ({
     height: { md: '30px', lg: '38px' },
     textColor: 'resources.energy',
     text: `${amount} ENERGY`,
+});
+
+const getCPAPrize = (amount: number = 0) => ({
+    backgroundColor: '#2b2d31',
+    imageSrc: CPALogo,
+    height: { md: '30px', lg: '42px' },
+    textColor: 'whitesmoke',
+    text: `${amount} CPA Token`,
 });
 
 let ID = 0;
@@ -300,12 +311,213 @@ export const RAFFLES: any[] = [
         url: 'https://media.elrond.com/nfts/asset/QmdWMd2tKWeN4Jdj4Xzgsuc3VLxQwEJycLLp8YKxr55kwj/741.png',
         rank: 'Private',
     },
+    // Trial 7 - Starts with ID 31
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.SingleImage,
+        id: getId(),
+        imageSrc: CPAChest,
+        winners: 1,
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'ArtCPAclub_Founder #1141',
+        nonce: 380,
+        url: CPANFT,
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'ArtCPAclub_Founder #2147',
+        nonce: 382,
+        url: CPANFT,
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'ArtCPAclub_Founder #3213',
+        nonce: 404,
+        url: CPANFT,
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'ArtCPAclub_Founder #3919',
+        nonce: 306,
+        url: CPANFT,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getCPAPrize(200000)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getCPAPrize(200000)],
+        winners: 1,
+    },
+    // Trial 8 - Starts with ID 58
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whale #3765',
+        nonce: 5889,
+        url: 'https://media.elrond.com/nfts/asset/QmTeciY8tKbJgRjS8NX668oGZmx1TW1Le4NzGK4HTpbNa2/3765.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whale #5166',
+        nonce: 5888,
+        url: 'https://media.elrond.com/nfts/asset/QmTeciY8tKbJgRjS8NX668oGZmx1TW1Le4NzGK4HTpbNa2/5166.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Dreamy Whales Boop Pass',
+        nonce: 98,
+        url: 'https://media.elrond.com/nfts/asset/QmcqP13As6xAhwapqP5pbpS1heCCqd3jftdN3bPZQBeN2C/1.png',
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEssencePrize(1000)],
+        winners: 1,
+    },
 ];
 
 export const BATTLES: any[] = [
     {
         id: getId(),
         amount: 60,
+        winners: 30,
+    },
+    {
+        id: getId(),
+        amount: 0,
         winners: 10,
     },
 ];

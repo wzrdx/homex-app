@@ -23,6 +23,26 @@
     },
     "endpoints": [
         {
+            "name": "withdraw",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                },
+                {
+                    "name": "identifier",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "claimAllEnergy",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -89,6 +109,28 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "getStakedAddresses",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakedWallets",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "getRarityClass",
@@ -337,22 +379,6 @@
             "outputs": []
         },
         {
-            "name": "setRaffleVectorSize",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "size",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "copyOperatingVector",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -372,10 +398,6 @@
                 {
                     "name": "raffle_id",
                     "type": "u32"
-                },
-                {
-                    "name": "phase",
-                    "type": "u32"
                 }
             ],
             "outputs": []
@@ -387,6 +409,34 @@
             "inputs": [
                 {
                     "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "airdropBattlePrizes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "battle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "winners",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearBattle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "battle_id",
                     "type": "u32"
                 }
             ],
@@ -602,6 +652,19 @@
             "outputs": []
         },
         {
+            "name": "migrateWallets",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "migrateTokens",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -613,12 +676,30 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "traveler_nonces",
-                    "type": "List<u64>"
-                },
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [
                 {
-                    "name": "elder_nonces",
-                    "type": "List<u64>"
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "restake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
                 }
             ],
             "outputs": []
@@ -699,7 +780,17 @@
             ]
         },
         {
-            "name": "getStakedUsersLength",
+            "name": "getStakedAddressesLength",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getStakedWalletsLength",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -728,17 +819,32 @@
             ]
         },
         {
-            "name": "getStakeOfUser",
+            "name": "getMigrationSize",
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "user_address",
+                    "name": "user",
                     "type": "Address"
                 }
             ],
             "outputs": [
                 {
                     "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "isWalletStaked",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
                 }
             ]
         },
@@ -878,6 +984,27 @@
                 }
             ]
         },
+        "Stake": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u16"
+                },
+                {
+                    "name": "amount",
+                    "type": "u16"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "Option<u64>"
+                }
+            ]
+        },
         "StakingInfo": {
             "type": "struct",
             "fields": [
@@ -890,12 +1017,8 @@
                     "type": "u64"
                 },
                 {
-                    "name": "traveler_nonces",
-                    "type": "List<u64>"
-                },
-                {
-                    "name": "elder_nonces",
-                    "type": "List<u64>"
+                    "name": "tokens",
+                    "type": "List<Stake>"
                 }
             ]
         }
