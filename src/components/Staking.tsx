@@ -1,6 +1,5 @@
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { useLayout } from './Layout';
 import _ from 'lodash';
 import { StoreContextType, useStoreContext } from '../services/store';
 import { useOutletContext } from 'react-router-dom';
@@ -18,7 +17,6 @@ import { smartContract } from '../blockchain/smartContract';
 
 type StakingContext = {
     height: number;
-    displayToast: (type: string, title: string, description: string, color: string) => void;
 };
 
 export function useStaking() {

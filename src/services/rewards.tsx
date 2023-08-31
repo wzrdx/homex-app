@@ -15,7 +15,6 @@ import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
-import { getElderRewards } from '../blockchain/api/getElderRewards';
 import CPANFT from '../assets/images/cpa_nft.png';
 import CPAChest from '../assets/images/cpa_chest.jpg';
 import CPALogo from '../assets/images/cpa.png';
@@ -528,8 +527,6 @@ export interface RewardsContextType {
     getRaffles: () => Promise<any>;
     battles: Competition[] | undefined;
     getBattles: () => Promise<any>;
-    ticketsAmount: number | undefined;
-    getTicketsAmount: () => Promise<void>;
 }
 
 export interface Competition {
@@ -545,7 +542,6 @@ export const useRewardsContext = () => useContext(RewardsContext);
 export const RewardsProvider = ({ children }) => {
     const [raffles, setRaffles] = useState<Competition[]>();
     const [battles, setBattles] = useState<Competition[]>();
-    const [ticketsAmount, setTicketsAmount] = useState<number>();
 
     const getRaffles = async () => {
         setRaffles(await getCompetition(RAFFLES_FUNCTION_NAME));
@@ -582,13 +578,5 @@ export const RewardsProvider = ({ children }) => {
         }
     };
 
-    const getTicketsAmount = async () => {
-        setTicketsAmount(await getElderRewards());
-    };
-
-    return (
-        <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles, ticketsAmount, getTicketsAmount }}>
-            {children}
-        </RewardsContext.Provider>
-    );
+    return <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles }}>{children}</RewardsContext.Provider>;
 };

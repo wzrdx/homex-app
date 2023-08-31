@@ -17,15 +17,13 @@ import { CHAIN_ID } from '../blockchain/config';
 import { getTotalQuestsRewards } from '../services/helpers';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
-import MultipleQuests from './MultipleQuests';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 
 const GRACE_PERIOD_INTERVAL = 24;
 
 function Quests() {
-    const { displayToast, closeToast } = useLayout();
+    const { closeToast } = useLayout();
 
     const { address } = useGetAccountInfo();
 
@@ -54,36 +52,6 @@ function Quests() {
     useEffect(() => {
         init();
     }, []);
-
-    // Trial timestamp handling
-    useEffect(() => {
-        if (
-            trialTimestamp &&
-            differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL &&
-            !isGamePaused &&
-            isBefore(new Date(), trialTimestamp)
-        ) {
-            const difference = differenceInHours(trialTimestamp, new Date());
-            const duration =
-                difference > 1 ? `about ${difference} hours` : difference === 1 ? `about one hour` : 'less than an hour';
-
-            displayToast(
-                'time',
-                `Trial ends in ${duration}`,
-                'Claim your quest rewards or they will be lost',
-                'orangered',
-                5000,
-                'top-right',
-                {
-                    margin: '2rem',
-                }
-            );
-        }
-
-        return () => {
-            closeToast();
-        };
-    }, [trialTimestamp]);
 
     const init = async () => {
         getOngoingQuests();
@@ -161,7 +129,6 @@ function Quests() {
             .size();
 
         if (_.isEmpty(completedQuestsIds)) {
-            displayToast('error', `Unable to claim rewards`, 'No quests can be completed yet', 'orangered');
             setCompleteAllLoading(false);
             return;
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Howl } from 'howler';
 import { createContext, useContext, useReducer, useState } from 'react';
 import { isEmpty } from 'lodash';
-import { MUSIC_KEY, SOUNDS_KEY } from '../components/Settings';
+import { MUSIC_KEY, SOUNDS_KEY } from '../blockchain/config';
 
 const OST = new Howl({
     src: ['/ost.mp3'],

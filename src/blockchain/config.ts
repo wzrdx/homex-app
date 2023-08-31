@@ -1,5 +1,8 @@
 import { isEmpty } from 'lodash';
-import { API_KEY } from '../components/Settings';
+
+export const API_KEY = 'api';
+export const SOUNDS_KEY = 'sounds';
+export const MUSIC_KEY = 'music';
 
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
