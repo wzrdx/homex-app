@@ -345,7 +345,7 @@ function Unstake() {
                                 <Flex ml={4} alignItems="center">
                                     <InfoOutlineIcon mr={1.5} color="almostWhite" />
                                     <Text color="almostWhite">
-                                        The unbonding time is{' '}
+                                        The unbonding duration is{' '}
                                         <Text as="span" fontWeight={600}>
                                             7 days
                                         </Text>
