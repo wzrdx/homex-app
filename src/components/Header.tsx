@@ -39,16 +39,17 @@ function Header({}) {
                     <Resource imageSrc={RESOURCE_ELEMENTS['tickets'].icon} value={resources.tickets} height="46px" />
                 </Box>
 
-                <Menu>
+                <Menu autoSelect={false}>
                     <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon fontSize="38px" />} variant="ghost" />
                     <MenuList>
                         <MenuGroup title="Menu">
-                            <MenuItem>
-                                <NavLink to={routeNames.staking}>Staking</NavLink>
-                            </MenuItem>
-                            <MenuItem>
-                                <NavLink to={routeNames.quests}>Quests</NavLink>
-                            </MenuItem>
+                            <NavLink to={routeNames.staking}>
+                                <MenuItem>Staking</MenuItem>
+                            </NavLink>
+
+                            <NavLink to={routeNames.quests}>
+                                <MenuItem>Quests</MenuItem>
+                            </NavLink>
                         </MenuGroup>
 
                         <MenuDivider />
