@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { isAfter, isBefore } from 'date-fns';
 import { routeNames } from '../../services/routes';
-import { useRewardsContext, RewardsContextType, Competition, RAFFLES } from '../../services/rewards';
+import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 
 function Raffles() {
     const location = useLocation();
@@ -28,11 +28,6 @@ function Raffles() {
         setCompetitions(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
         setLoading(false);
     };
-
-    <Alert status="warning">
-        <AlertIcon />
-        There are no raffles to display
-    </Alert>;
 
     return (
         <>
