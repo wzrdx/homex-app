@@ -29,16 +29,18 @@ function Battles() {
             {isLoading ? (
                 <Spinner />
             ) : (
-                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto">
+                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto" layerStyle="layout">
                     {_.isEmpty(competitions) ? (
                         <Flex justifyContent="center">
-                            <Alert status="warning">
-                                <AlertIcon />
-                                There are no raffles to display
-                            </Alert>
+                            <Flex>
+                                <Alert status="warning">
+                                    <AlertIcon />
+                                    There are no battles to display
+                                </Alert>
+                            </Flex>
                         </Flex>
                     ) : (
-                        <Box layerStyle="layout" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
+                        <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
                             {_.map(competitions, (battle, index) => (
                                 <Box key={index}>
                                     <BattleCard id={battle.id} timestamp={battle.timestamp} tickets={battle.tickets} />
