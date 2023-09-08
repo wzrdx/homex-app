@@ -24,15 +24,14 @@ import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
-import { Timer } from '../../shared/Timer';
 import { useSection } from '../Section';
 import { addDays, format, isAfter } from 'date-fns';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner from '../../assets/images/banner_dw.png';
-import { AiOutlineEye } from 'react-icons/ai';
+import Banner_1 from '../../assets/images/1.png';
+import Banner_2 from '../../assets/images/2.png';
 
 const COLUMNS = [
     {
@@ -210,7 +209,7 @@ function Leaderboard() {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} />
 
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
@@ -256,7 +255,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} />
                 </Flex>
             )}
 
