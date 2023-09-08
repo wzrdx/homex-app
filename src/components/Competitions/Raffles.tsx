@@ -25,7 +25,12 @@ function Raffles() {
     const init = async (pathname: string) => {
         setLoading(true);
         const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
-        setCompetitions(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
+        setCompetitions(
+            _(raffles)
+                .filter((raffle) => predicate(new Date(), raffle.timestamp))
+                .orderBy('id', 'desc')
+                .value()
+        );
         setLoading(false);
     };
 
