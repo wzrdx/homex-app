@@ -49,12 +49,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Depths of Menhir',
+        name: 'Taming the Steamstorm',
         description: (
             <Text layerStyle="questDescription">
-                Embark on a daring odyssey into the veiled waters of Menhir's hidden ocean. Your mission: to recover a sacred
-                leaf with boundless power. Plunge into the depths, navigate the unknown, and grasp the leaf to shape destiny.
-                Will you rise with the leaf and become the harbinger of change?
+                Conquer the relentless steamstorms that plague Menhir's skies with your steampunk ingenuity. Harness the power
+                of steam-driven contraptions to restore balance to the atmosphere and protect the fragile ecosystem below.
             </Text>
         ),
         requirements: {
@@ -74,12 +73,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Abyssal Resurgence',
+        name: 'Igniting the Steam Guardians',
         description: (
             <Text layerStyle="questDescription">
-                Venture anew into Menhir's oceanic abyss, now for a fabled herb. Delve deeper, battling the unknown, to retrieve
-                the herb possessing rejuvenating might. Amidst perilous depths, secure the herb and wield its vitality. Conquer
-                the abyss and emerge with the herb to rewrite fate's tapestry!
+                Begin your steampunk journey by awakening the mechanical guardians of Menhir's desert. Seek out the dormant
+                steam-powered sentinels scattered across the arid expanse and power them up to aid in the quest to cleanse and
+                preserve Menhir's ecological environment.
             </Text>
         ),
         requirements: {
@@ -99,12 +98,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Blossoms of Serenity',
+        name: 'Mechanical Sanctuaries',
         description: (
             <Text layerStyle="questDescription">
-                Unearth a revelation: a sacred chest in the ocean's heart, adorned with lost sea-flowers. Embark on a journey
-                deeper, facing mysteries untold, to gather these blossoms of serene power. Amidst uncharted currents, secure the
-                petals, embracing their tranquil essence. Venture back, a harbinger of newfound calm.
+                Create protected habitats for Menhir's native mechanical mammals. Combat disassembly attempts and provide
+                sanctuaries for endangered mechanical species.
             </Text>
         ),
         requirements: {
@@ -124,12 +122,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Echoes of Leviathans',
+        name: 'Steamfire Control',
         description: (
             <Text layerStyle="questDescription">
-                Consume the petals, gift from the chest, and awaken visions of ancient whales. These majestic behemoths hold
-                secrets that guide your journey. Embrace their spectral guidance, journey onwards through veiled currents, and
-                unravel the tapestry of destiny. With each whisper from the past, forge a path toward the unknown future.
+                Safeguard Menhir's steam-powered infrastructure from catastrophic steamfires by implementing advanced fire
+                suppression systems and training local steam engineers. Prevent the destruction of vital mechanical ecosystems.
             </Text>
         ),
         requirements: {
@@ -151,13 +148,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Stellar Convergence',
+        name: 'Steam Oasis Engineering',
         description: (
             <Text layerStyle="questDescription">
-                Guided by sacred whale echoes, unearth the concealed starfish jewel. Embark on a voyage through hushed tides,
-                following their spectral light, to retrieve this hidden artifact of cosmic essence. Amidst veiled depths, secure
-                the jewel, connecting with its boundless energy. With starlit wisdom, continue your odyssey, a bearer of the
-                universe's secrets.
+                Rehydrate the desert's parched lands with steampunk irrigation systems. Use your knowledge of intricate steam
+                machinery to rejuvenate arid soil and revive the mechanical flora of the wastelands.
             </Text>
         ),
         requirements: {
@@ -177,13 +172,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Jewels' Resonance",
+        name: 'The Whirring Winds',
         description: (
             <Text layerStyle="questDescription">
-                Empowered by the starfish jewel's resonance, seek its sister: the blossom of the depths jewel. Embark on a
-                harmonious journey through the ocean's heart, guided by their ethereal connection, to retrieve this gem of
-                submerged splendor. Amidst secret currents, secure the jewel, uniting its aquatic power. With gems ablaze,
-                continue your voyage, a harmonizer of elemental treasures.
+                Listen to the whispers of the wind and understand its grievances through steampunk technology. Travel to the
+                wind-swept plateaus and use mechanical marvels to appease the elemental spirits and restore calm to the
+                tempestuous gusts.
             </Text>
         ),
         requirements: {
@@ -203,13 +197,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Vortex of Ascendance',
+        name: 'Guardians of the Steam Dunes',
         description: (
             <Text layerStyle="questDescription">
-                With both sister jewels embraced, converge them in a watery vortex, deep within the ocean's abyss. Venture into
-                this magical fusion, guided by their harmonious union, to breach the veils of existence. Amidst swirling
-                energies, merge the jewels, transcending to the next plane. With newfound dimensions at hand, journey onwards,
-                an interdimensional voyager.
+                Traverse the rolling sand dunes of Menhir's desert and safeguard the intricate mechanical ecosystems buried
+                beneath. Protect the delicate gears and springs of the underground machinery and maintain the harmony of this
+                arid mechanical world.
             </Text>
         ),
         requirements: {
@@ -229,13 +222,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Ethereal Nexus',
+        name: 'Cogspring Cultivation',
         description: (
             <Text layerStyle="questDescription">
-                Having traversed to the next plane, shrouded within Menhir's depths, heed the whispers of the guiding whales.
-                Embark on a course aligned with your dream's echo from the Monolith, weaving through this ethereal expanse.
-                Amidst cosmic currents, follow the whales' lead, advancing along the path predestined. With astral resonance,
-                forge ahead, a pilgrim of the hidden realms.
+                Seek out rare and endangered mechanical plants and gather their gears and bolts. Use your steampunk expertise to
+                cultivate them in Menhir's fertile soil and revive species on the brink of mechanical extinction.
             </Text>
         ),
         requirements: {
@@ -257,13 +248,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Kayron's Embrace",
+        name: 'The Council of Cogs and Gears',
         description: (
             <Text layerStyle="questDescription">
-                Navigating this arcane plane, you encounter Kayron - the mighty transporter of travelers. A colossal whale,
-                revered as a guardian, awaits to ferry you on your ongoing quest. Amidst luminescent horizons, step onto
-                Kayron's back, embarking upon this new chapter. With the guardian's strength, journey onward, a companion of the
-                ethereal currents.
+                Convene with the wise elders of Menhir's mechanic tribes to forge alliances in the name of ecological
+                preservation. Unite the people and their ingenious inventions to work towards a common goal.
             </Text>
         ),
         requirements: {
@@ -285,13 +274,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Memory's Mirage",
+        name: 'The Harmony of the Mechanized Bees',
         description: (
             <Text layerStyle="questDescription">
-                Guided by the mighty Kayron, you arrive at an enigmatic surface, veiled within the Monolith's memory. Submerged
-                in a meditative trance, reality intertwines with boundless cosmos. Within this seamless fusion, explore the
-                depths of consciousness and traverse the realm where memory and possibility converge. Amidst the tapestry of
-                existence, continue your exploration, a seeker of infinite horizons.
+                Restore the populations of pollinator drones by creating sanctuaries for mechanical bees and butterflies.
+                Reestablish the crucial web of life they support with your steampunk gadgetry.
             </Text>
         ),
         requirements: {
@@ -313,13 +300,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Abyssal Odyssey',
+        name: 'Sentinels of the Sky',
         description: (
             <Text layerStyle="questDescription">
-                Once more, descend into the Ocean's abyss with Kayron as your guide, journeying to a distinct realm of Menhir.
-                Bound together by destiny's thread, embark on an abyssal odyssey, accompanied by the guardian's steady presence.
-                Amidst the shifting currents, explore a new expanse, where mysteries unfold beneath the depths. With Kayron's
-                guidance, delve deeper into the unknown, a voyager of uncharted realms.
+                Ascend to the highest gear-powered peaks and call upon the mechanical avian guardians to oversee the health of
+                Menhir's skies. Protect nesting sites and monitor the well-being of aerial mechanical creatures.
             </Text>
         ),
         requirements: {
@@ -341,13 +326,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Echoes of Ages',
+        name: 'Rebuilding the Brasswood Forest',
         description: (
             <Text layerStyle="questDescription">
-                Having fulfilled its purpose, Kayron leads you to the Sunken City. Step into its ruins, where time's currents
-                have left their mark. Navigate through history's whispers as you search for the sacred artefact - the soul
-                divider. Amidst forgotten chambers, explore the relics of eras past, guided by the echoes of ages. With
-                determination as your guide, venture deeper, an archaeologist of lost legends.
+                Venture into the heart of Menhir's desert, where the Brasswood Forest has fallen into disrepair. Rid the area of
+                rusted and malfunctioning machinery, and employ your steampunk craftsmanship to restore the natural balance.
             </Text>
         ),
         requirements: {
@@ -371,13 +354,12 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Soulbound Nexus',
+        name: 'Purifying the Cogspring Oasis',
         description: (
             <Text layerStyle="questDescription">
-                To unlock the final steps, heed the Monolith's vision. Harvest the souls of wandering whales within the soul
-                divider. Embrace the ethereal connection, embarking on a solemn task. Amidst the cosmic weave, gather echoes of
-                departed guardians, their essence bound to the quest's crescendo. With reverence and purpose, continue forward,
-                a seeker of profound truths.
+                Dive into the heart of Menhir's desert, to the Cogspring Oasis, and cleanse the polluted steam-powered water
+                sources. Investigate and rectify the sources of contamination and use innovative steam technologies to ensure
+                the survival of the mechanical life.
             </Text>
         ),
         requirements: {
@@ -402,13 +384,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'The Harvest',
+        name: 'Guardians of the Gearspring River',
         description: (
             <Text layerStyle="questDescription">
-                Initiating the Ritual of Harvest, merge the lost souls of wandering whales. Consume the essence birthed from
-                this fusion, transcending both astral and physical realms. As the cosmic dance unfolds, transport to the fabled
-                destination of the lost artefacts. Amidst the interplay of energies, bridge the gap between worlds, a conduit of
-                boundless convergence. With unity as your guide, journey to the culmination, a bridge between dimensions.
+                Strengthen Menhir's river guardians, steam-powered automatons, to protect against steam pollution and
+                over-extraction. Promote sustainable mechanical fishing practices and clean the riverbanks.
             </Text>
         ),
         requirements: {
@@ -441,14 +421,11 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Echoes of Destiny',
+        name: 'The Sandglass Keepers',
         description: (
             <Text layerStyle="questDescription">
-                Emerging from the completed Ritual of Harvest, find yourself within Menhir's desert, surrounded by the ruins of
-                Algermuth - the lost city of saints. Amidst these forsaken remnants, bear witness to the spectral dance of free
-                whale souls above the first artefact - the Heart of Tork'ugth, a legendary calamity obscured by time's shroud.
-                With purpose coursing through your veins, reach out and retrieve the artefact, intertwining fate's threads with
-                your own. Amidst visions and reality united, seize the relic's power, a catalyst for ancient legacies.{' '}
+                Navigate the intricate mechanisms of Menhir's desert dunes and become a guardian of the vast mechanical desert.
+                Combat the corrosion of sand and mechanical wear, and preserve the delicate desert machinery ecosystems.
             </Text>
         ),
         requirements: {
@@ -472,14 +449,12 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Praised be Salabathur',
+        name: 'Return to the Brass Monolith',
         description: (
             <Text layerStyle="questDescription">
-                At your journey's culmination, stand before the ultimate artefact: the prized carving of Salabathur - the
-                majestic God of the Abyss, weaver of skies and seas. Reach out and retrieve this sacred masterpiece, a
-                culmination of life's intricate dance. With destiny's tapestry unfurled, embark on the final leg, bearing the
-                carving to the Monolith, heart of Menhir's capital. Amidst echoes of creation and separation, fulfill your role
-                as an architect of ancient harmony.
+                Return to the Brass Monolith in Menhir's capital, having cleansed and preserved the land's mechanical ecological
+                environment. Present the sacred carving of Salabathur, a masterpiece of steam-powered artistry, as a symbol of
+                your commitment to a harmonious and sustainable Menhir.
             </Text>
         ),
         requirements: {
