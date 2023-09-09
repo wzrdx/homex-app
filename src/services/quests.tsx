@@ -274,7 +274,7 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Harmony of the Mechanized Bees',
+        name: 'The Mechanized Bees',
         description: (
             <Text layerStyle="questDescription">
                 Restore the populations of pollinator drones by creating sanctuaries for mechanical bees and butterflies.
