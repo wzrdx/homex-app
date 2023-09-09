@@ -274,7 +274,7 @@ function MultipleQuests() {
     };
 
     return (
-        <ModalContent maxW="660px">
+        <ModalContent maxW="720px">
             <ModalHeader>Start multiple quests</ModalHeader>
 
             <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
