@@ -99,12 +99,12 @@ export const QuestCard: FunctionComponent<
                 outline={widths[0] === '100%' ? '2.5px solid #128712bd' : 'none'}
             >
                 <Box zIndex={4} position="relative">
-                    <Text zIndex={3} position="relative" textShadow="1px 1px 2px #000" fontSize="17px">
+                    <Text zIndex={3} position="relative" textShadow="1px 1px 2px #000" fontSize="17px" mr={4}>
                         {quest.name}
                     </Text>
 
                     {/* Blurred rectangle */}
-                    <Box
+                    {/* <Box
                         position="absolute"
                         top="4px"
                         right={-1}
@@ -113,7 +113,7 @@ export const QuestCard: FunctionComponent<
                         background="black"
                         filter="blur(4px)"
                         opacity="0.3"
-                    ></Box>
+                    ></Box> */}
                 </Box>
 
                 {((!!timestamp && isBefore(new Date(), timestamp)) || !timestamp) && (
