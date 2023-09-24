@@ -29,7 +29,7 @@ import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
-import SponsorLogo from '../assets/images/eco.png';
+import SponsorLogo from '../assets/images/j_logo.png';
 
 const ROUTE_WIDTH = 98;
 
@@ -339,23 +339,23 @@ function Header({ displayToast }) {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        <Text fontSize="15px">Trial sponsored by EcoBottle</Text>
+                        <Text fontSize="15px">Trial sponsored by</Text>
 
-                        <Image ml={2} mr={1} mb="2px" src={SponsorLogo} width="30px" />
+                        <Image ml={2} mr={1} mt="2px" src={SponsorLogo} width="92px" />
 
                         <Box ml={1.5}>
                             <Separator type="vertical" width="1px" height="30px" />
                         </Box>
 
-                        <Link href="https://ecobottle.io/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://play.jcorpbattleofgods.com/" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsGlobe cursor="pointer" fontSize="17px" />
                         </Link>
 
-                        <Link href="https://twitter.com/ecobottlero" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://twitter.com/JCorpBattle" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsTwitter cursor="pointer" fontSize="17px" />
                         </Link>
 
-                        <Link href="https://discord.gg/fRzKt5f9pA" isExternal ml={3} _hover={{ opacity: 0.85 }}>
+                        <Link href="https://discord.com/invite/QtFE7qZDbQ" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" fontSize="17px" />
                         </Link>
                     </Flex>

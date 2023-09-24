@@ -30,8 +30,8 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner_1 from '../../assets/images/1.png';
-import Banner_2 from '../../assets/images/2.png';
+import Banner_1 from '../../assets/images/banner_l.jpg';
+import Banner_2 from '../../assets/images/banner_r.jpg';
 
 const COLUMNS = [
     {

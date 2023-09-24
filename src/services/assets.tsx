@@ -3,7 +3,7 @@ import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 import Frame from '../assets/frame.png';
-import Vision from '../assets/images/vision.jpg';
+import Vision from '../assets/images/vision.png';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
 import Logo from '../assets/logo_small.png';
