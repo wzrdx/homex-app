@@ -49,11 +49,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Taming the Steamstorm',
+        name: 'Relic of the Divine Clash',
         description: (
             <Text layerStyle="questDescription">
-                Conquer the relentless steamstorms that plague Menhir's skies with your steampunk ingenuity. Harness the power
-                of steam-driven contraptions to restore balance to the atmosphere and protect the fragile ecosystem below.
+                Unearth the first relic from the ancient desert battlefield, a testament to the gods' forgotten war on Menhir.{' '}
             </Text>
         ),
         requirements: {
@@ -73,12 +72,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Igniting the Steam Guardians',
+        name: 'Echoes of Forgotten Gods',
         description: (
             <Text layerStyle="questDescription">
-                Begin your steampunk journey by awakening the mechanical guardians of Menhir's desert. Seek out the dormant
-                steam-powered sentinels scattered across the arid expanse and power them up to aid in the quest to cleanse and
-                preserve Menhir's ecological environment.
+                Seek the whispers of ancient deities in the windswept dunes, learning of the celestial battles that once raged
+                here.
             </Text>
         ),
         requirements: {
@@ -98,11 +96,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Mechanical Sanctuaries',
+        name: 'Sanctums of the Fallen',
         description: (
             <Text layerStyle="questDescription">
-                Create protected habitats for Menhir's native mechanical mammals. Combat disassembly attempts and provide
-                sanctuaries for endangered mechanical species.
+                Explore the remnants of divine sanctums scattered across Menhir's desert, where gods once waged war for
+                dominion.
             </Text>
         ),
         requirements: {
@@ -122,11 +120,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Steamfire Control',
+        name: 'The Battle-Scarred Monuments',
         description: (
             <Text layerStyle="questDescription">
-                Safeguard Menhir's steam-powered infrastructure from catastrophic steamfires by implementing advanced fire
-                suppression systems and training local steam engineers. Prevent the destruction of vital mechanical ecosystems.
+                Investigate the battle-scarred monuments that dot the desert landscape, each telling a tale of godly strife.
             </Text>
         ),
         requirements: {
@@ -148,11 +145,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Steam Oasis Engineering',
+        name: 'The Lost Armory of Deities',
         description: (
             <Text layerStyle="questDescription">
-                Rehydrate the desert's parched lands with steampunk irrigation systems. Use your knowledge of intricate steam
-                machinery to rejuvenate arid soil and revive the mechanical flora of the wastelands.
+                Discover the long-forgotten armory where divine weapons were forged for the ancient conflict.
             </Text>
         ),
         requirements: {
@@ -172,12 +168,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Whirring Winds',
+        name: "The Oracle's Enigma",
         description: (
             <Text layerStyle="questDescription">
-                Listen to the whispers of the wind and understand its grievances through steampunk technology. Travel to the
-                wind-swept plateaus and use mechanical marvels to appease the elemental spirits and restore calm to the
-                tempestuous gusts.
+                Seek the wisdom of the enigmatic desert oracle, who holds secrets about the gods' war and Menhir's fate.
             </Text>
         ),
         requirements: {
@@ -197,12 +191,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Guardians of the Steam Dunes',
+        name: 'The Elemental Sages',
         description: (
             <Text layerStyle="questDescription">
-                Traverse the rolling sand dunes of Menhir's desert and safeguard the intricate mechanical ecosystems buried
-                beneath. Protect the delicate gears and springs of the underground machinery and maintain the harmony of this
-                arid mechanical world.
+                Consult the elemental sages hidden within the desert, each holding knowledge of the elements' role in the gods'
+                battle.
             </Text>
         ),
         requirements: {
@@ -222,11 +215,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Cogspring Cultivation',
+        name: 'The Veil of Time',
         description: (
             <Text layerStyle="questDescription">
-                Seek out rare and endangered mechanical plants and gather their gears and bolts. Use your steampunk expertise to
-                cultivate them in Menhir's fertile soil and revive species on the brink of mechanical extinction.
+                Unravel the mysteries of time's shroud that conceals ancient battlegrounds and reveals glimpses of the gods'
+                war.
             </Text>
         ),
         requirements: {
@@ -248,11 +241,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Council of Cogs and Gears',
+        name: 'The Godly Artefacts',
         description: (
             <Text layerStyle="questDescription">
-                Convene with the wise elders of Menhir's mechanic tribes to forge alliances in the name of ecological
-                preservation. Unite the people and their ingenious inventions to work towards a common goal.
+                Search for divine artefacts lost in the sands, relics of the gods' conflict that hold immense power.
             </Text>
         ),
         requirements: {
@@ -274,11 +266,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Mechanized Bees',
+        name: 'The Guardians of Eternity',
         description: (
             <Text layerStyle="questDescription">
-                Restore the populations of pollinator drones by creating sanctuaries for mechanical bees and butterflies.
-                Reestablish the crucial web of life they support with your steampunk gadgetry.
+                Evoke the guardians of eternity to protect the ancient battlefield from those who seek to exploit its history.
             </Text>
         ),
         requirements: {
@@ -300,11 +291,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Sentinels of the Sky',
+        name: 'The Sandswept Anomalies',
         description: (
             <Text layerStyle="questDescription">
-                Ascend to the highest gear-powered peaks and call upon the mechanical avian guardians to oversee the health of
-                Menhir's skies. Protect nesting sites and monitor the well-being of aerial mechanical creatures.
+                Investigate the unusual anomalies that plague Menhir's desert, remnants of the gods' chaotic battles.
             </Text>
         ),
         requirements: {
@@ -326,11 +316,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Rebuilding the Brasswood Forest',
+        name: 'The Oasis of Forgotten Prayers',
         description: (
             <Text layerStyle="questDescription">
-                Venture into the heart of Menhir's desert, where the Brasswood Forest has fallen into disrepair. Rid the area of
-                rusted and malfunctioning machinery, and employ your steampunk craftsmanship to restore the natural balance.
+                Discover the sacred oasis where gods once sought respite and the prayers of the faithful still echo.{' '}
             </Text>
         ),
         requirements: {
@@ -354,12 +343,11 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Purifying the Cogspring Oasis',
+        name: 'The Mysterious Nomads',
         description: (
             <Text layerStyle="questDescription">
-                Dive into the heart of Menhir's desert, to the Cogspring Oasis, and cleanse the polluted steam-powered water
-                sources. Investigate and rectify the sources of contamination and use innovative steam technologies to ensure
-                the survival of the mechanical life.
+                Seek guidance from the enigmatic nomads of the desert, who hold knowledge of the gods' war and the path to
+                redemption.
             </Text>
         ),
         requirements: {
@@ -384,11 +372,10 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Guardians of the Gearspring River',
+        name: 'The Lost Hymns of War',
         description: (
             <Text layerStyle="questDescription">
-                Strengthen Menhir's river guardians, steam-powered automatons, to protect against steam pollution and
-                over-extraction. Promote sustainable mechanical fishing practices and clean the riverbanks.
+                Recover the lost hymns of war, ancient songs that recount the epic clashes between gods on Menhir.
             </Text>
         ),
         requirements: {
@@ -421,11 +408,10 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'The Sandglass Keepers',
+        name: 'The Celestial Sundial',
         description: (
             <Text layerStyle="questDescription">
-                Navigate the intricate mechanisms of Menhir's desert dunes and become a guardian of the vast mechanical desert.
-                Combat the corrosion of sand and mechanical wear, and preserve the delicate desert machinery ecosystems.
+                Activate the celestial sundial hidden in the desert to unlock the secrets of the gods' timeline.
             </Text>
         ),
         requirements: {
@@ -449,12 +435,11 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Return to the Brass Monolith',
+        name: 'The Reconciliation Ritual',
         description: (
             <Text layerStyle="questDescription">
-                Return to the Brass Monolith in Menhir's capital, having cleansed and preserved the land's mechanical ecological
-                environment. Present the sacred carving of Salabathur, a masterpiece of steam-powered artistry, as a symbol of
-                your commitment to a harmonious and sustainable Menhir.
+                Conclude your quest by performing a sacred ritual to honor the fallen gods and bring peace to the ancient desert
+                battlegrounds of Menhir.
             </Text>
         ),
         requirements: {
