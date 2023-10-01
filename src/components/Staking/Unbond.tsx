@@ -255,7 +255,7 @@ function Unbond() {
                 .claim([args])
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(5000000 + 250000 * stakedNFTsCount + 1000000 * args.length)
+                .withGasLimit(8000000 + 500000 * stakedNFTsCount + 1000000 * args.length)
                 .buildTransaction();
 
             await refreshAccount();
