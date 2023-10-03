@@ -661,6 +661,23 @@ export const RAFFLES: any[] = [
         nonce: 3333,
         url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/454.png',
     },
+    // Trial 11 - Starts with ID 82
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'DragonsArena #2281',
+        nonce: 5850,
+        url: 'https://ipfs.io/ipfs/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/2281.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'DragonsArena #1214',
+        nonce: 5871,
+        url: 'https://ipfs.io/ipfs/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/1214.png',
+    },
 ];
 
 export const BATTLES: any[] = [
