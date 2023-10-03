@@ -56,7 +56,7 @@ const COLUMNS = [
     },
 ];
 
-const isSponsored = true;
+const isSponsored = false;
 
 function Leaderboard() {
     const { height } = useSection();
