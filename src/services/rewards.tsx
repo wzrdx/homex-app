@@ -668,7 +668,7 @@ export const RAFFLES: any[] = [
         winners: 1,
         name: 'DragonsArena #2281',
         nonce: 5850,
-        url: 'https://ipfs.io/ipfs/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/2281.png',
+        url: 'https://media.elrond.com/nfts/asset/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/2281.png',
     },
     {
         type: RewardType.NFT,
@@ -676,7 +676,7 @@ export const RAFFLES: any[] = [
         winners: 1,
         name: 'DragonsArena #1214',
         nonce: 5871,
-        url: 'https://ipfs.io/ipfs/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/1214.png',
+        url: 'https://media.elrond.com/nfts/asset/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/1214.png',
     },
     {
         type: RewardType.NFT,
