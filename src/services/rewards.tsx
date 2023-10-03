@@ -678,6 +678,30 @@ export const RAFFLES: any[] = [
         nonce: 5871,
         url: 'https://ipfs.io/ipfs/QmYYsQBWWto5NDVGbu26YY5nTRXEmuUmU72CBW747PxYqz/1214.png',
     },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #3133',
+        nonce: 993,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/3133.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #920',
+        nonce: 2294,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/920.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #232',
+        nonce: 84,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/232.png',
+    },
 ];
 
 export const BATTLES: any[] = [
