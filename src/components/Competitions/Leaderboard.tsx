@@ -30,8 +30,8 @@ import { useRewardsContext, RewardsContextType, Competition } from '../../servic
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner_1 from '../../assets/images/banner_l.jpg';
-import Banner_2 from '../../assets/images/banner_r.jpg';
+// import Banner_1 from '../../assets/images/banner_l.jpg';
+// import Banner_2 from '../../assets/images/banner_r.jpg';
 
 const COLUMNS = [
     {
@@ -209,7 +209,7 @@ function Leaderboard() {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} />
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} /> */}
 
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
@@ -255,7 +255,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} />
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} /> */}
                 </Flex>
             )}
 

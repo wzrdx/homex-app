@@ -338,7 +338,7 @@ function Header({ displayToast }) {
                         )}
                     </Flex>
 
-                    <Flex alignItems="center" pointerEvents="all">
+                    {/* <Flex alignItems="center" pointerEvents="all">
                         <Text fontSize="15px">Trial sponsored by</Text>
 
                         <Image ml={2} mr={1} mt="2px" src={SponsorLogo} width="92px" />
@@ -358,7 +358,7 @@ function Header({ displayToast }) {
                         <Link href="https://discord.com/invite/QtFE7qZDbQ" isExternal ml={3} _hover={{ opacity: 0.85 }}>
                             <BsDiscord cursor="pointer" fontSize="17px" />
                         </Link>
-                    </Flex>
+                    </Flex> */}
                 </Flex>
             </Flex>
 
