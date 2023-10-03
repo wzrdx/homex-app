@@ -44,17 +44,98 @@ const ESSENCE_HANDICAP = 1;
 
 const getId = () => ++ID;
 
+const LORE: {
+    title: string;
+    description: string;
+}[] = [
+    {
+        title: 'The Abandoned Base',
+        description:
+            'Begin your journey by stumbling upon an abandoned base deep within the Forest of Menhir, filled with mysteries and signs of past travelers.',
+    },
+    {
+        title: 'The Enigmatic Map',
+        description:
+            'Discover an old, tattered map in the abandoned base, hinting at the location of a hidden dungeon. Uncover the secrets it holds.',
+    },
+    {
+        title: 'Trail of Whispers',
+        description:
+            'Follow the cryptic clues on the map, leading you through the dense forest. Along the way, you receive mysterious buffs that enhance your skills.',
+    },
+    {
+        title: 'Guardian of the Ancient Grove',
+        description:
+            'Encounter the guardian of the ancient grove, a mystical creature who challenges you to prove your worthiness to continue your quest.',
+    },
+    {
+        title: 'The Whispering Trees',
+        description:
+            'Navigate through the Whispering Trees, where the forest seems to come alive. Gain new abilities from the ancient spirits that inhabit this mystical place.',
+    },
+    {
+        title: 'The Sylvan Blessing',
+        description:
+            'Receive the Sylvan Blessing, a powerful enchantment bestowed upon you by the spirits of the forest, enhancing your senses and agility.',
+    },
+    {
+        title: 'The Hidden Pond',
+        description:
+            'Stumble upon a hidden pond deep within the forest. Its magical waters grant you the ability to breathe underwater and swim freely.',
+    },
+    {
+        title: 'The Ethereal Bridge',
+        description:
+            'Cross the Ethereal Bridge, a mystical structure that defies gravity, granting you the power to levitate for a limited time.',
+    },
+    {
+        title: "The Guardian's Riddle",
+        description:
+            'Encounter a guardian who presents you with a riddle. Solve it to gain access to the next stage of your journey.',
+    },
+    {
+        title: "The Whisperer's Call",
+        description:
+            "Heed the Whisperer's Call, a haunting melody that leads you through a labyrinthine part of the forest, where time flows differently.",
+    },
+    {
+        title: 'The Eclipsed Grove',
+        description:
+            'Enter the Eclipsed Grove, a place where day and night are in constant flux. Harness the power of both sun and moon.',
+    },
+    {
+        title: 'The Celestial Observatory',
+        description:
+            'Ascend the Celestial Observatory, where ancient astronomers once studied the stars. Here, you unlock the ability to see hidden constellations.',
+    },
+    {
+        title: 'The Spirit of the Forest',
+        description:
+            'Commune with the Spirit of the Forest, an ethereal being who imparts the ancient language of the forest, allowing you to communicate with its denizens.',
+    },
+    {
+        title: 'The Luminescent Path',
+        description: 'Walk the Luminescent Path, a trail of glowing flora that guides you to the heart of the forest.',
+    },
+    {
+        title: "The Mythical Beast's Lair",
+        description:
+            'Finally, reach the lair of the Mythical Beast, a formidable creature guarding the dungeon entrance. You must summon all your newfound abilities to face this formidable foe.',
+    },
+    {
+        title: "The Beast's Challenge",
+        description:
+            "Confront the Mythical Beast and engage in an epic battle. Use the buffs and knowledge you've gained throughout your journey to overcome this legendary adversary and claim the treasures hidden within the dungeon.",
+    },
+];
+
 export const QUESTS: any[] = [
     // Herbalism
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Relic of the Divine Clash',
-        description: (
-            <Text layerStyle="questDescription">
-                Unearth the first relic from the ancient desert battlefield, a testament to the gods' forgotten war on Menhir.{' '}
-            </Text>
-        ),
+        name: LORE[0].title,
+        description: <Text layerStyle="questDescription">{LORE[0].description}</Text>,
         requirements: {
             energy: 1 * BASE_COST,
         },
@@ -72,13 +153,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Echoes of Forgotten Gods',
-        description: (
-            <Text layerStyle="questDescription">
-                Seek the whispers of ancient deities in the windswept dunes, learning of the celestial battles that once raged
-                here.
-            </Text>
-        ),
+        name: LORE[1].title,
+        description: <Text layerStyle="questDescription">{LORE[1].description}</Text>,
         requirements: {
             energy: 6 * BASE_COST,
         },
@@ -96,13 +172,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Sanctums of the Fallen',
-        description: (
-            <Text layerStyle="questDescription">
-                Explore the remnants of divine sanctums scattered across Menhir's desert, where gods once waged war for
-                dominion.
-            </Text>
-        ),
+        name: LORE[2].title,
+        description: <Text layerStyle="questDescription">{LORE[2].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
         },
@@ -120,12 +191,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'The Battle-Scarred Monuments',
-        description: (
-            <Text layerStyle="questDescription">
-                Investigate the battle-scarred monuments that dot the desert landscape, each telling a tale of godly strife.
-            </Text>
-        ),
+        name: LORE[3].title,
+        description: <Text layerStyle="questDescription">{LORE[3].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
         },
@@ -145,12 +212,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Lost Armory of Deities',
-        description: (
-            <Text layerStyle="questDescription">
-                Discover the long-forgotten armory where divine weapons were forged for the ancient conflict.
-            </Text>
-        ),
+        name: LORE[4].title,
+        description: <Text layerStyle="questDescription">{LORE[4].description}</Text>,
         requirements: {
             energy: 1 * BASE_COST,
         },
@@ -168,12 +231,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "The Oracle's Enigma",
-        description: (
-            <Text layerStyle="questDescription">
-                Seek the wisdom of the enigmatic desert oracle, who holds secrets about the gods' war and Menhir's fate.
-            </Text>
-        ),
+        name: LORE[5].title,
+        description: <Text layerStyle="questDescription">{LORE[5].description}</Text>,
         requirements: {
             energy: 6 * BASE_COST,
         },
@@ -191,13 +250,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Elemental Sages',
-        description: (
-            <Text layerStyle="questDescription">
-                Consult the elemental sages hidden within the desert, each holding knowledge of the elements' role in the gods'
-                battle.
-            </Text>
-        ),
+        name: LORE[6].title,
+        description: <Text layerStyle="questDescription">{LORE[6].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
         },
@@ -215,13 +269,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'The Veil of Time',
-        description: (
-            <Text layerStyle="questDescription">
-                Unravel the mysteries of time's shroud that conceals ancient battlegrounds and reveals glimpses of the gods'
-                war.
-            </Text>
-        ),
+        name: LORE[7].title,
+        description: <Text layerStyle="questDescription">{LORE[7].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
         },
@@ -241,12 +290,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Godly Artefacts',
-        description: (
-            <Text layerStyle="questDescription">
-                Search for divine artefacts lost in the sands, relics of the gods' conflict that hold immense power.
-            </Text>
-        ),
+        name: LORE[8].title,
+        description: <Text layerStyle="questDescription">{LORE[8].description}</Text>,
         requirements: {
             energy: 4 * BASE_COST,
             herbs: 4 * BASE_COST,
@@ -266,12 +311,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Guardians of Eternity',
-        description: (
-            <Text layerStyle="questDescription">
-                Evoke the guardians of eternity to protect the ancient battlefield from those who seek to exploit its history.
-            </Text>
-        ),
+        name: LORE[9].title,
+        description: <Text layerStyle="questDescription">{LORE[9].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
             herbs: 12 * BASE_COST,
@@ -291,12 +332,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Sandswept Anomalies',
-        description: (
-            <Text layerStyle="questDescription">
-                Investigate the unusual anomalies that plague Menhir's desert, remnants of the gods' chaotic battles.
-            </Text>
-        ),
+        name: LORE[10].title,
+        description: <Text layerStyle="questDescription">{LORE[10].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
             herbs: 24 * BASE_COST,
@@ -316,12 +353,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'The Oasis of Forgotten Prayers',
-        description: (
-            <Text layerStyle="questDescription">
-                Discover the sacred oasis where gods once sought respite and the prayers of the faithful still echo.{' '}
-            </Text>
-        ),
+        name: LORE[11].title,
+        description: <Text layerStyle="questDescription">{LORE[11].description}</Text>,
         requirements: {
             energy: 48 * BASE_COST,
             herbs: 48 * BASE_COST,
@@ -343,13 +376,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'The Mysterious Nomads',
-        description: (
-            <Text layerStyle="questDescription">
-                Seek guidance from the enigmatic nomads of the desert, who hold knowledge of the gods' war and the path to
-                redemption.
-            </Text>
-        ),
+        name: LORE[12].title,
+        description: <Text layerStyle="questDescription">{LORE[12].description}</Text>,
         requirements: {
             energy: 96 * BASE_COST,
         },
@@ -372,12 +400,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'The Lost Hymns of War',
-        description: (
-            <Text layerStyle="questDescription">
-                Recover the lost hymns of war, ancient songs that recount the epic clashes between gods on Menhir.
-            </Text>
-        ),
+        name: LORE[13].title,
+        description: <Text layerStyle="questDescription">{LORE[13].description}</Text>,
         requirements: {
             energy: 3 * 96 * BASE_COST,
         },
@@ -408,12 +432,8 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'The Celestial Sundial',
-        description: (
-            <Text layerStyle="questDescription">
-                Activate the celestial sundial hidden in the desert to unlock the secrets of the gods' timeline.
-            </Text>
-        ),
+        name: LORE[14].title,
+        description: <Text layerStyle="questDescription">{LORE[14].description}</Text>,
         requirements: {
             energy: Math.round(1.2 * 16 * BASE_COST),
             herbs: Math.round(1.2 * 32 * BASE_COST),
@@ -435,13 +455,8 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'The Reconciliation Ritual',
-        description: (
-            <Text layerStyle="questDescription">
-                Conclude your quest by performing a sacred ritual to honor the fallen gods and bring peace to the ancient desert
-                battlegrounds of Menhir.
-            </Text>
-        ),
+        name: LORE[15].title,
+        description: <Text layerStyle="questDescription">{LORE[15].description}</Text>,
         requirements: {
             energy: Math.round(1.2 * 2 * 16 * BASE_COST),
             herbs: Math.round(1.2 * 2 * 32 * BASE_COST),
