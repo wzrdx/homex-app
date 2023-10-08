@@ -51,16 +51,13 @@ const COLUMNS = [
     },
     {
         name: 'Player',
-        style: {
-            width: '100%',
-        },
+        style: {},
         align: 'left',
     },
     {
         name: 'Prize',
         style: {
-            width: '482px',
-            minWidth: '482px',
+            flex: 1,
         },
         align: 'right',
     },
@@ -308,7 +305,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                     </Alert>
                 </Flex>
             ) : (
-                <Flex minW="742px">
+                <Flex minW="782px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         <Flex alignItems="flex-start" justifyContent="space-between">
                             <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>

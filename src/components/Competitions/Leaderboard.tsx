@@ -151,7 +151,7 @@ function Leaderboard() {
                 </Flex> */}
 
                 <Text as="span" fontWeight={500} mx={1.5}>
-                    10 Winners
+                    15 Winners
                 </Text>
 
                 <Box mx={1.5} opacity="0.9">
