@@ -66,7 +66,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 .claimReward()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(14000000 + 750000 * ticketsAmount)
+                .withGasLimit(26000000 + 1000000 * ticketsAmount)
                 .buildTransaction();
 
             await refreshAccount();
@@ -105,7 +105,6 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
             flexDir="column"
             alignItems="center"
             border="2px solid #fdefce26"
-            width="322.5px"
             borderRadius="2px"
             overflow="hidden"
             backgroundColor="#12121287"
@@ -137,7 +136,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 <Text layerStyle="header2">Elder Ticket Rewards</Text>
             </Flex>
 
-            <Flex pb={2.5} width="100%" alignItems="center" justifyContent="center">
+            <Flex px={12} pb={2.5} width="100%" alignItems="center" justifyContent="center">
                 <Text textTransform="uppercase" fontSize="15px" fontWeight={500} userSelect="none">
                     {`Expires in ${
                         (duration.days as number) > 0 || (duration.months as number) > 0

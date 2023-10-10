@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { isAfter, isBefore } from 'date-fns';
 import { routeNames } from '../../services/routes';
-import { useRewardsContext, RewardsContextType, Competition, RAFFLES } from '../../services/rewards';
+import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 
 function Raffles() {
     const location = useLocation();
@@ -25,30 +25,32 @@ function Raffles() {
     const init = async (pathname: string) => {
         setLoading(true);
         const predicate = pathname.includes(routeNames.past) ? isAfter : isBefore;
-        setCompetitions(_.filter(raffles, (raffle) => predicate(new Date(), raffle.timestamp)));
+        setCompetitions(
+            _(raffles)
+                .filter((raffle) => predicate(new Date(), raffle.timestamp))
+                .orderBy('id', 'desc')
+                .value()
+        );
         setLoading(false);
     };
-
-    <Alert status="warning">
-        <AlertIcon />
-        There are no raffles to display
-    </Alert>;
 
     return (
         <>
             {isLoading ? (
                 <Spinner />
             ) : (
-                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto">
+                <Flex flexDir="column" pr={_.size(competitions) > 4 ? 4 : 0} overflowY="auto" layerStyle="layout">
                     {_.isEmpty(competitions) ? (
                         <Flex justifyContent="center">
-                            <Alert status="warning">
-                                <AlertIcon />
-                                There are no raffles to display
-                            </Alert>
+                            <Flex>
+                                <Alert status="warning">
+                                    <AlertIcon />
+                                    There are no raffles to display
+                                </Alert>
+                            </Flex>
                         </Flex>
                     ) : (
-                        <Box layerStyle="layout" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
+                        <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
                             {_.map(competitions, (raffle, index) => (
                                 <Box key={index}>
                                     <RaffleCard

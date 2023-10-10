@@ -189,7 +189,6 @@ function RaffleCard({
             flexDir="column"
             alignItems="center"
             border="2px solid #fdefce26"
-            width="322.5px"
             borderRadius="2px"
             overflow="hidden"
             backgroundColor="#12121287"
@@ -197,7 +196,7 @@ function RaffleCard({
             transition="all 0.1s ease-in"
             _hover={{ border: '2px solid #fdefce40' }}
         >
-            <Flex flexDir="column" width="100%" height="260px">
+            <Flex flexDir="column" width="100%" height="300px">
                 {getContent()}
             </Flex>
 

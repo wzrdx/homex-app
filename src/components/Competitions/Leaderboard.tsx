@@ -24,15 +24,14 @@ import { getFullTicket } from '../../services/assets';
 import { pairwise, getUsername } from '../../services/helpers';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import Separator from '../../shared/Separator';
-import { Timer } from '../../shared/Timer';
 import { useSection } from '../Section';
 import { addDays, format, isAfter } from 'date-fns';
 import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 import { getBattleSubmittedTickets } from '../../blockchain/api/getBattleSubmittedTickets';
 import { getBattleParticipants } from '../../blockchain/api/getBattleParticipants';
 import { getBattleParticipantsCount } from '../../blockchain/api/getBattleParticipantsCount';
-import Banner from '../../assets/images/banner_dw.png';
-import { AiOutlineEye } from 'react-icons/ai';
+// import Banner_1 from '../../assets/images/banner_l.jpg';
+// import Banner_2 from '../../assets/images/banner_r.jpg';
 
 const COLUMNS = [
     {
@@ -57,7 +56,7 @@ const COLUMNS = [
     },
 ];
 
-const isSponsored = true;
+const isSponsored = false;
 
 function Leaderboard() {
     const { height } = useSection();
@@ -152,7 +151,7 @@ function Leaderboard() {
                 </Flex> */}
 
                 <Text as="span" fontWeight={500} mx={1.5}>
-                    10 Winners
+                    15 Winners
                 </Text>
 
                 <Box mx={1.5} opacity="0.9">
@@ -210,7 +209,7 @@ function Leaderboard() {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={Banner_1} /> */}
 
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden" mr={_.size(participants) > 12 ? 8 : 0}>
                         {!participants?.length ? (
@@ -247,7 +246,9 @@ function Leaderboard() {
                                 </Text>
 
                                 <Flex minWidth={COLUMNS[2].width}>
-                                    <Text minWidth="28px">{participant.ticketsCount}</Text>
+                                    <Text minWidth="30px" textAlign="right" mr={2}>
+                                        {participant.ticketsCount}
+                                    </Text>
                                     <Image height="28px" src={RESOURCE_ELEMENTS['tickets'].icon} />
                                 </Flex>
 
@@ -256,7 +257,7 @@ function Leaderboard() {
                         ))}
                     </Flex>
 
-                    <Image height={{ md: '430px', lg: '560px' }} src={Banner} />
+                    {/* <Image height={{ md: '430px', lg: '560px' }} src={Banner_2} /> */}
                 </Flex>
             )}
 

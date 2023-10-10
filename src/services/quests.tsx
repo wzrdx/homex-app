@@ -44,19 +44,98 @@ const ESSENCE_HANDICAP = 1;
 
 const getId = () => ++ID;
 
+const LORE: {
+    title: string;
+    description: string;
+}[] = [
+    {
+        title: 'The Abandoned Base',
+        description:
+            'Begin your journey by stumbling upon an abandoned base deep within the Forest of Menhir, filled with mysteries and signs of past travelers.',
+    },
+    {
+        title: 'The Enigmatic Map',
+        description:
+            'Discover an old, tattered map in the abandoned base, hinting at the location of a hidden dungeon. Uncover the secrets it holds.',
+    },
+    {
+        title: 'Trail of Whispers',
+        description:
+            'Follow the cryptic clues on the map, leading you through the dense forest. Along the way, you receive mysterious buffs that enhance your skills.',
+    },
+    {
+        title: 'Guardian of the Ancient Grove',
+        description:
+            'Encounter the guardian of the ancient grove, a mystical creature who challenges you to prove your worthiness to continue your quest.',
+    },
+    {
+        title: 'The Whispering Trees',
+        description:
+            'Navigate through the Whispering Trees, where the forest seems to come alive. Gain new abilities from the ancient spirits that inhabit this mystical place.',
+    },
+    {
+        title: 'The Sylvan Blessing',
+        description:
+            'Receive the Sylvan Blessing, a powerful enchantment bestowed upon you by the spirits of the forest, enhancing your senses and agility.',
+    },
+    {
+        title: 'The Hidden Pond',
+        description:
+            'Stumble upon a hidden pond deep within the forest. Its magical waters grant you the ability to breathe underwater and swim freely.',
+    },
+    {
+        title: 'The Ethereal Bridge',
+        description:
+            'Cross the Ethereal Bridge, a mystical structure that defies gravity, granting you the power to levitate for a limited time.',
+    },
+    {
+        title: "The Guardian's Riddle",
+        description:
+            'Encounter a guardian who presents you with a riddle. Solve it to gain access to the next stage of your journey.',
+    },
+    {
+        title: "The Whisperer's Call",
+        description:
+            "Heed the Whisperer's Call, a haunting melody that leads you through a labyrinthine part of the forest, where time flows differently.",
+    },
+    {
+        title: 'The Eclipsed Grove',
+        description:
+            'Enter the Eclipsed Grove, a place where day and night are in constant flux. Harness the power of both sun and moon.',
+    },
+    {
+        title: 'The Celestial Observatory',
+        description:
+            'Ascend the Celestial Observatory, where ancient astronomers once studied the stars. Here, you unlock the ability to see hidden constellations.',
+    },
+    {
+        title: 'The Spirit of the Forest',
+        description:
+            'Commune with the Spirit of the Forest, an ethereal being who imparts the ancient language of the forest, allowing you to communicate with its denizens.',
+    },
+    {
+        title: 'The Luminescent Path',
+        description: 'Walk the Luminescent Path, a trail of glowing flora that guides you to the heart of the forest.',
+    },
+    {
+        title: "The Mythical Beast's Lair",
+        description:
+            'Finally, reach the lair of the Mythical Beast, a formidable creature guarding the dungeon entrance. You must summon all your newfound abilities to face this formidable foe.',
+    },
+    {
+        title: "The Beast's Challenge",
+        description:
+            "Confront the Mythical Beast and engage in an epic battle. Use the buffs and knowledge you've gained throughout your journey to overcome this legendary adversary and claim the treasures hidden within the dungeon.",
+    },
+];
+
 export const QUESTS: any[] = [
     // Herbalism
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Depths of Menhir',
-        description: (
-            <Text layerStyle="questDescription">
-                Embark on a daring odyssey into the veiled waters of Menhir's hidden ocean. Your mission: to recover a sacred
-                leaf with boundless power. Plunge into the depths, navigate the unknown, and grasp the leaf to shape destiny.
-                Will you rise with the leaf and become the harbinger of change?
-            </Text>
-        ),
+        name: LORE[0].title,
+        description: <Text layerStyle="questDescription">{LORE[0].description}</Text>,
         requirements: {
             energy: 1 * BASE_COST,
         },
@@ -74,14 +153,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Abyssal Resurgence',
-        description: (
-            <Text layerStyle="questDescription">
-                Venture anew into Menhir's oceanic abyss, now for a fabled herb. Delve deeper, battling the unknown, to retrieve
-                the herb possessing rejuvenating might. Amidst perilous depths, secure the herb and wield its vitality. Conquer
-                the abyss and emerge with the herb to rewrite fate's tapestry!
-            </Text>
-        ),
+        name: LORE[1].title,
+        description: <Text layerStyle="questDescription">{LORE[1].description}</Text>,
         requirements: {
             energy: 6 * BASE_COST,
         },
@@ -99,14 +172,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Blossoms of Serenity',
-        description: (
-            <Text layerStyle="questDescription">
-                Unearth a revelation: a sacred chest in the ocean's heart, adorned with lost sea-flowers. Embark on a journey
-                deeper, facing mysteries untold, to gather these blossoms of serene power. Amidst uncharted currents, secure the
-                petals, embracing their tranquil essence. Venture back, a harbinger of newfound calm.
-            </Text>
-        ),
+        name: LORE[2].title,
+        description: <Text layerStyle="questDescription">{LORE[2].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
         },
@@ -124,14 +191,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'herbalism',
-        name: 'Echoes of Leviathans',
-        description: (
-            <Text layerStyle="questDescription">
-                Consume the petals, gift from the chest, and awaken visions of ancient whales. These majestic behemoths hold
-                secrets that guide your journey. Embrace their spectral guidance, journey onwards through veiled currents, and
-                unravel the tapestry of destiny. With each whisper from the past, forge a path toward the unknown future.
-            </Text>
-        ),
+        name: LORE[3].title,
+        description: <Text layerStyle="questDescription">{LORE[3].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
         },
@@ -151,15 +212,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Stellar Convergence',
-        description: (
-            <Text layerStyle="questDescription">
-                Guided by sacred whale echoes, unearth the concealed starfish jewel. Embark on a voyage through hushed tides,
-                following their spectral light, to retrieve this hidden artifact of cosmic essence. Amidst veiled depths, secure
-                the jewel, connecting with its boundless energy. With starlit wisdom, continue your odyssey, a bearer of the
-                universe's secrets.
-            </Text>
-        ),
+        name: LORE[4].title,
+        description: <Text layerStyle="questDescription">{LORE[4].description}</Text>,
         requirements: {
             energy: 1 * BASE_COST,
         },
@@ -177,15 +231,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: "Jewels' Resonance",
-        description: (
-            <Text layerStyle="questDescription">
-                Empowered by the starfish jewel's resonance, seek its sister: the blossom of the depths jewel. Embark on a
-                harmonious journey through the ocean's heart, guided by their ethereal connection, to retrieve this gem of
-                submerged splendor. Amidst secret currents, secure the jewel, uniting its aquatic power. With gems ablaze,
-                continue your voyage, a harmonizer of elemental treasures.
-            </Text>
-        ),
+        name: LORE[5].title,
+        description: <Text layerStyle="questDescription">{LORE[5].description}</Text>,
         requirements: {
             energy: 6 * BASE_COST,
         },
@@ -203,15 +250,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Vortex of Ascendance',
-        description: (
-            <Text layerStyle="questDescription">
-                With both sister jewels embraced, converge them in a watery vortex, deep within the ocean's abyss. Venture into
-                this magical fusion, guided by their harmonious union, to breach the veils of existence. Amidst swirling
-                energies, merge the jewels, transcending to the next plane. With newfound dimensions at hand, journey onwards,
-                an interdimensional voyager.
-            </Text>
-        ),
+        name: LORE[6].title,
+        description: <Text layerStyle="questDescription">{LORE[6].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
         },
@@ -229,15 +269,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'jewelcrafting',
-        name: 'Ethereal Nexus',
-        description: (
-            <Text layerStyle="questDescription">
-                Having traversed to the next plane, shrouded within Menhir's depths, heed the whispers of the guiding whales.
-                Embark on a course aligned with your dream's echo from the Monolith, weaving through this ethereal expanse.
-                Amidst cosmic currents, follow the whales' lead, advancing along the path predestined. With astral resonance,
-                forge ahead, a pilgrim of the hidden realms.
-            </Text>
-        ),
+        name: LORE[7].title,
+        description: <Text layerStyle="questDescription">{LORE[7].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
         },
@@ -257,15 +290,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Kayron's Embrace",
-        description: (
-            <Text layerStyle="questDescription">
-                Navigating this arcane plane, you encounter Kayron - the mighty transporter of travelers. A colossal whale,
-                revered as a guardian, awaits to ferry you on your ongoing quest. Amidst luminescent horizons, step onto
-                Kayron's back, embarking upon this new chapter. With the guardian's strength, journey onward, a companion of the
-                ethereal currents.
-            </Text>
-        ),
+        name: LORE[8].title,
+        description: <Text layerStyle="questDescription">{LORE[8].description}</Text>,
         requirements: {
             energy: 4 * BASE_COST,
             herbs: 4 * BASE_COST,
@@ -285,15 +311,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: "Memory's Mirage",
-        description: (
-            <Text layerStyle="questDescription">
-                Guided by the mighty Kayron, you arrive at an enigmatic surface, veiled within the Monolith's memory. Submerged
-                in a meditative trance, reality intertwines with boundless cosmos. Within this seamless fusion, explore the
-                depths of consciousness and traverse the realm where memory and possibility converge. Amidst the tapestry of
-                existence, continue your exploration, a seeker of infinite horizons.
-            </Text>
-        ),
+        name: LORE[9].title,
+        description: <Text layerStyle="questDescription">{LORE[9].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
             herbs: 12 * BASE_COST,
@@ -313,15 +332,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Abyssal Odyssey',
-        description: (
-            <Text layerStyle="questDescription">
-                Once more, descend into the Ocean's abyss with Kayron as your guide, journeying to a distinct realm of Menhir.
-                Bound together by destiny's thread, embark on an abyssal odyssey, accompanied by the guardian's steady presence.
-                Amidst the shifting currents, explore a new expanse, where mysteries unfold beneath the depths. With Kayron's
-                guidance, delve deeper into the unknown, a voyager of uncharted realms.
-            </Text>
-        ),
+        name: LORE[10].title,
+        description: <Text layerStyle="questDescription">{LORE[10].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
             herbs: 24 * BASE_COST,
@@ -341,15 +353,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'divination',
-        name: 'Echoes of Ages',
-        description: (
-            <Text layerStyle="questDescription">
-                Having fulfilled its purpose, Kayron leads you to the Sunken City. Step into its ruins, where time's currents
-                have left their mark. Navigate through history's whispers as you search for the sacred artefact - the soul
-                divider. Amidst forgotten chambers, explore the relics of eras past, guided by the echoes of ages. With
-                determination as your guide, venture deeper, an archaeologist of lost legends.
-            </Text>
-        ),
+        name: LORE[11].title,
+        description: <Text layerStyle="questDescription">{LORE[11].description}</Text>,
         requirements: {
             energy: 48 * BASE_COST,
             herbs: 48 * BASE_COST,
@@ -371,15 +376,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'Soulbound Nexus',
-        description: (
-            <Text layerStyle="questDescription">
-                To unlock the final steps, heed the Monolith's vision. Harvest the souls of wandering whales within the soul
-                divider. Embrace the ethereal connection, embarking on a solemn task. Amidst the cosmic weave, gather echoes of
-                departed guardians, their essence bound to the quest's crescendo. With reverence and purpose, continue forward,
-                a seeker of profound truths.
-            </Text>
-        ),
+        name: LORE[12].title,
+        description: <Text layerStyle="questDescription">{LORE[12].description}</Text>,
         requirements: {
             energy: 96 * BASE_COST,
         },
@@ -402,15 +400,8 @@ export const QUESTS: any[] = [
     {
         id: getId(),
         type: 'alchemy',
-        name: 'The Harvest',
-        description: (
-            <Text layerStyle="questDescription">
-                Initiating the Ritual of Harvest, merge the lost souls of wandering whales. Consume the essence birthed from
-                this fusion, transcending both astral and physical realms. As the cosmic dance unfolds, transport to the fabled
-                destination of the lost artefacts. Amidst the interplay of energies, bridge the gap between worlds, a conduit of
-                boundless convergence. With unity as your guide, journey to the culmination, a bridge between dimensions.
-            </Text>
-        ),
+        name: LORE[13].title,
+        description: <Text layerStyle="questDescription">{LORE[13].description}</Text>,
         requirements: {
             energy: 3 * 96 * BASE_COST,
         },
@@ -441,16 +432,8 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Echoes of Destiny',
-        description: (
-            <Text layerStyle="questDescription">
-                Emerging from the completed Ritual of Harvest, find yourself within Menhir's desert, surrounded by the ruins of
-                Algermuth - the lost city of saints. Amidst these forsaken remnants, bear witness to the spectral dance of free
-                whale souls above the first artefact - the Heart of Tork'ugth, a legendary calamity obscured by time's shroud.
-                With purpose coursing through your veins, reach out and retrieve the artefact, intertwining fate's threads with
-                your own. Amidst visions and reality united, seize the relic's power, a catalyst for ancient legacies.{' '}
-            </Text>
-        ),
+        name: LORE[14].title,
+        description: <Text layerStyle="questDescription">{LORE[14].description}</Text>,
         requirements: {
             energy: Math.round(1.2 * 16 * BASE_COST),
             herbs: Math.round(1.2 * 32 * BASE_COST),
@@ -472,16 +455,8 @@ export const QUESTS: any[] = [
         id: getId(),
         type: 'final',
         isFinal: true,
-        name: 'Praised be Salabathur',
-        description: (
-            <Text layerStyle="questDescription">
-                At your journey's culmination, stand before the ultimate artefact: the prized carving of Salabathur - the
-                majestic God of the Abyss, weaver of skies and seas. Reach out and retrieve this sacred masterpiece, a
-                culmination of life's intricate dance. With destiny's tapestry unfurled, embark on the final leg, bearing the
-                carving to the Monolith, heart of Menhir's capital. Amidst echoes of creation and separation, fulfill your role
-                as an architect of ancient harmony.
-            </Text>
-        ),
+        name: LORE[15].title,
+        description: <Text layerStyle="questDescription">{LORE[15].description}</Text>,
         requirements: {
             energy: Math.round(1.2 * 2 * 16 * BASE_COST),
             herbs: Math.round(1.2 * 2 * 32 * BASE_COST),
