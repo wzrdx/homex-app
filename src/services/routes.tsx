@@ -11,6 +11,7 @@ import Battles from '../components/Competitions/Battles';
 import Entry from '../components/Competitions/Entry';
 import Rewards from '../components/Rewards';
 import Unbond from '../components/Staking/Unbond';
+import Shop from '../components/Shop';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -28,6 +29,7 @@ export const routeNames = {
     entry: 'entry',
     leaderboard: 'leaderboard',
     rewards: 'rewards',
+    shop: 'shop',
 };
 
 export const routes = [
@@ -124,6 +126,13 @@ export const routes = [
     {
         path: routeNames.rewards,
         component: Rewards,
+        authenticatedRoute: true,
+        isMainRoute: true,
+    },
+    // Shop
+    {
+        path: routeNames.shop,
+        component: Shop,
         authenticatedRoute: true,
         isMainRoute: true,
     },

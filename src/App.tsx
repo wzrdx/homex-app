@@ -172,7 +172,10 @@ function App() {
                             [{ resource: 'tickets', value: tx.data.ticketsAmount }],
                             'ticket'
                         );
+                        break;
 
+                    case TransactionType.MintArtDrop:
+                        displayToast('Mint successful', 'Successfully minted art drop', 'green.500');
                         break;
 
                     default:
@@ -215,6 +218,10 @@ function App() {
         switch (tx.resolution) {
             case TxResolution.UpdateEnergy:
                 getEnergy();
+                break;
+
+            case TxResolution.UpdateTickets:
+                getTickets();
                 break;
 
             case TxResolution.UpdateTicketsAndRewards:

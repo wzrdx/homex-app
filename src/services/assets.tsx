@@ -20,6 +20,8 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
+import Aurora from '../assets/images/Aurora_small.jpg';
+
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
 
@@ -44,3 +46,5 @@ export const getRaffleGiants = () => RaffleGiants;
 export const getRaffleHomeX = () => RaffleHomeX;
 export const getRaffleRektNerds = () => RaffleRektNerds;
 export const getRaffleSuperVictor = () => RaffleSuperVictor;
+
+export const getArtDrop = () => Aurora;

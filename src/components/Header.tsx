@@ -31,7 +31,7 @@ import Separator from '../shared/Separator';
 import Settings from './Settings';
 import SponsorLogo from '../assets/images/j_logo.png';
 
-const ROUTE_WIDTH = 98;
+const ROUTE_WIDTH = 92;
 
 function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
