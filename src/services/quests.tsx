@@ -49,83 +49,84 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: 'The Abandoned Base',
+        title: "The Forgotten Crystal's Whispers",
         description:
-            'Begin your journey by stumbling upon an abandoned base deep within the Forest of Menhir, filled with mysteries and signs of past travelers.',
+            "Begin your journey as you descend into the shadowed depths of the Undercity of Menhir, guided by the ethereal whispers of the forgotten crystal's longing.",
     },
     {
-        title: 'The Enigmatic Map',
+        title: 'The Descent into Darkness',
         description:
-            'Discover an old, tattered map in the abandoned base, hinting at the location of a hidden dungeon. Uncover the secrets it holds.',
+            "Embark on a treacherous descent into the depths of the undercity. Encounter ancient guardians and decipher cryptic messages that draw you closer to the map's truth.",
     },
     {
-        title: 'Trail of Whispers',
+        title: 'The Map’s Reveletion',
         description:
-            'Follow the cryptic clues on the map, leading you through the dense forest. Along the way, you receive mysterious buffs that enhance your skills.',
+            'Discover the ancient map hidden within the dark underbelly of Menhir, revealing the location of the forgotten crystal buried deep in the desert. Decode its enigmatic symbols to set your course.',
     },
     {
-        title: 'Guardian of the Ancient Grove',
+        title: 'The Awakening',
         description:
-            'Encounter the guardian of the ancient grove, a mystical creature who challenges you to prove your worthiness to continue your quest.',
+            'Grasp the Crystal into your hand and chant the ancient song of awakening. Be mindful of your feelings while the Crystal takes shape. Serenity is key, apathy is death.',
     },
     {
-        title: 'The Whispering Trees',
+        title: 'The Elemental Trials',
         description:
-            'Navigate through the Whispering Trees, where the forest seems to come alive. Gain new abilities from the ancient spirits that inhabit this mystical place.',
+            'Begin the trials of Elements in order to infuse the crystal with energy. The first trial is that of the Red Obelisk. You use this ancient mystical structure to gather a strange energy and infuse it with the crystal.',
     },
     {
-        title: 'The Sylvan Blessing',
+        title: 'The Green Obelisk trial',
         description:
-            'Receive the Sylvan Blessing, a powerful enchantment bestowed upon you by the spirits of the forest, enhancing your senses and agility.',
+            'You find your way to the Green Obelisk, deep within the deserts of Menhir and begin the challenge. Be wary as many Travelers before you found their ending and are now nothing more than sand and bone.',
     },
     {
-        title: 'The Hidden Pond',
+        title: 'The Night Ritual',
         description:
-            'Stumble upon a hidden pond deep within the forest. Its magical waters grant you the ability to breathe underwater and swim freely.',
+            'After overcoming the trial of the Green Obelisk, using the crystal’s power you begin the Night Ritual and use the obelisk to summon and contain the mystical energy that dwells within this hidden part of the desert. You then infuse and charge the crystal with the energy and proceed to the next quest.',
     },
     {
-        title: 'The Ethereal Bridge',
+        title: 'The Ritual of Stone',
         description:
-            'Cross the Ethereal Bridge, a mystical structure that defies gravity, granting you the power to levitate for a limited time.',
+            'You reach the final Obelisk of your trial and begin the challenge. In order to bend this structure to the will of the crystal, you must first decipher and chant its ancient symbols heavily written on its surface.',
     },
     {
-        title: "The Guardian's Riddle",
+        title: 'Heart of the Giant',
         description:
-            'Encounter a guardian who presents you with a riddle. Solve it to gain access to the next stage of your journey.',
+            'You successfully overcome the last Elemental Challenge and witness the Stone Obelisk as it changes its shape into a radiating blue crystal structure. Your own crystal heavily resonates with its power and starts absorbing the energy.',
     },
     {
-        title: "The Whisperer's Call",
+        title: 'Relic of Manthulu',
         description:
-            "Heed the Whisperer's Call, a haunting melody that leads you through a labyrinthine part of the forest, where time flows differently.",
+            'After absorbing the Elemental Energies of Menhir, the crystal breaks down into a sacred artefact. You equip it and feel its power surging through you.',
     },
     {
-        title: 'The Eclipsed Grove',
+        title: 'The Druid',
         description:
-            'Enter the Eclipsed Grove, a place where day and night are in constant flux. Harness the power of both sun and moon.',
+            'Continue your journey through the desert. You meet a mysterious druid who offers her assistance in decoding the map and revealing its secrets.',
     },
     {
-        title: 'The Celestial Observatory',
+        title: 'The Vision of Truth',
         description:
-            'Ascend the Celestial Observatory, where ancient astronomers once studied the stars. Here, you unlock the ability to see hidden constellations.',
+            'With the druids guidance, you enter a meditative state where, together with the power of the artefact, you see a glimpse of the Netherworld and decipher its symbols. You must reach the remains of the Old One, a long-forgotten Titan that once gave life to Menhir, and recover an artefact.',
     },
     {
-        title: 'The Spirit of the Forest',
+        title: 'The Old One',
         description:
-            'Commune with the Spirit of the Forest, an ethereal being who imparts the ancient language of the forest, allowing you to communicate with its denizens.',
+            'After a tiresome journey, you finally reach your destination. You take a few moments to comprehend the remains of the Old One. You feel beseeched by its radiating power, still lingering long after its unfortunate demise.',
     },
     {
-        title: 'The Luminescent Path',
-        description: 'Walk the Luminescent Path, a trail of glowing flora that guides you to the heart of the forest.',
+        title: 'The Staff of the Old',
+        description:
+            'You search the surroundings thoroughly using your artefact as an indicator. As you get closer to what you seek the crystals start radiating. You find and recover the Staff of the Old.',
     },
     {
-        title: "The Mythical Beast's Lair",
+        title: 'The Potion of Blessing',
         description:
-            'Finally, reach the lair of the Mythical Beast, a formidable creature guarding the dungeon entrance. You must summon all your newfound abilities to face this formidable foe.',
+            'Finally, using the 2 artefacts recovered, you draw an alchemical circle and start chanting in the tongue of the dead. From within the circle a potion arises. You drink it and are now blessed by the Star of the Dawn.',
     },
     {
-        title: "The Beast's Challenge",
+        title: 'The Gate of Har’akkar',
         description:
-            "Confront the Mythical Beast and engage in an epic battle. Use the buffs and knowledge you've gained throughout your journey to overcome this legendary adversary and claim the treasures hidden within the dungeon.",
+            'Using the blessing of the Star, you finally continue your journey and pass through the gate of Har’akkar. As you pass through, memories of Menhir and how it once was start appearing. You return to the capital and present them to the Monolith.',
     },
 ];
 
