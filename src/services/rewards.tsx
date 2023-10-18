@@ -702,6 +702,47 @@ export const RAFFLES: any[] = [
         nonce: 84,
         url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/232.png',
     },
+    // Trial 12 - Starts with ID 87
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #2192',
+        nonce: 618,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/2192.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #2360',
+        nonce: 615,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/2360.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #1362',
+        nonce: 2537,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/1362.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #891',
+        nonce: 2338,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/891.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'Home X Traveler #2898',
+        nonce: 614,
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/2898.png',
+    },
 ];
 
 export const BATTLES: any[] = [
