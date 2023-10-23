@@ -75,12 +75,12 @@ function Shop() {
 
     return (
         <Flex justifyContent="center" height="100%">
-            <Stack spacing={4} alignItems="center" userSelect="none">
+            <Stack spacing={{ md: 3, lg: 4 }} alignItems="center" userSelect="none">
                 <Text layerStyle="header1Alt">Aurora</Text>
 
                 <Stack direction="row" spacing={4} alignItems="center">
-                    <Image width="318px" src={getArtDrop()} />
-                    <Text width="342px" textAlign="justify">
+                    <Image width={{ md: '234px', lg: '318px' }} src={getArtDrop()} />
+                    <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '24px' }} textAlign="justify">
                         In the frost-laden world of Almur, the legend of Aurora unfolds. Clad in armor reminiscent of ancient
                         Frostpriests, Aurora is an enigmatic warrior who harnesses the power of ice and mountains. Born in the
                         rocky region of Almur, Aurora possesses unique abilities bestowed during the celestial Frostfall event.
@@ -115,7 +115,7 @@ function Shop() {
                     </Text>
                 </Flex>
 
-                <Box my={{ md: 3, lg: 4 }} display="flex" alignItems="center">
+                <Box display="flex" alignItems="center">
                     <Box
                         px="1"
                         cursor="pointer"
@@ -151,7 +151,7 @@ function Shop() {
                     </Box>
                 </Box>
 
-                <Box mt={1.5}>
+                <Box>
                     <ActionButton
                         disabled={!resources.tickets}
                         isLoading={isButtonLoading || isTxPending(TransactionType.MintArtDrop)}
