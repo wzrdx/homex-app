@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getArtDrop } from '../services/assets';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { useResourcesContext, ResourcesContextType } from '../services/resources';
+import { useResourcesContext, ResourcesContextType, RESOURCE_ELEMENTS } from '../services/resources';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { Address, TokenTransfer, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
@@ -12,11 +12,13 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import Separator from '../shared/Separator';
 
 const AURORA_PRICE = 2;
+const AURORA_XP = 100;
 
 function Shop() {
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(1);
     const [isButtonLoading, setButtonLoading] = useState(false);
 
     const { resources } = useResourcesContext() as ResourcesContextType;
@@ -73,7 +75,7 @@ function Shop() {
 
     return (
         <Flex justifyContent="center" height="100%">
-            <Stack spacing={4} alignItems="center">
+            <Stack spacing={4} alignItems="center" userSelect="none">
                 <Text layerStyle="header1Alt">Aurora</Text>
 
                 <Stack direction="row" spacing={4} alignItems="center">
@@ -90,7 +92,28 @@ function Shop() {
                     </Text>
                 </Stack>
 
-                <Text>Price: 2 Tickets, XP + 100</Text>
+                <Flex justifyContent="center" alignItems="center" userSelect="none">
+                    <Text>Amount Due:</Text>
+                    <Text mx={2} fontWeight={500}>
+                        {amount * AURORA_PRICE}
+                    </Text>
+                    <Image width="24px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
+
+                    <Box mx={4}>
+                        <Separator type="vertical" width="1px" height="36px" />
+                    </Box>
+
+                    <Text fontWeight={800} mr={2}>
+                        XP
+                    </Text>
+
+                    <Text as="span" mr={1}>
+                        +
+                    </Text>
+                    <Text as="span" fontWeight={600}>
+                        {amount * AURORA_XP}
+                    </Text>
+                </Flex>
 
                 <Box my={{ md: 3, lg: 4 }} display="flex" alignItems="center">
                     <Box
