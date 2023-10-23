@@ -33,7 +33,7 @@ function Reward({ image, name, value, icon }) {
 
                 <Flex alignItems="center">
                     <Text fontSize="18px" mr={2}>
-                        <Text as="span" mr={1}>
+                        <Text as="span" mr={0.5}>
                             +
                         </Text>
                         <Text as="span" fontWeight={600}>

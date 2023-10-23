@@ -97,7 +97,7 @@ function Shop() {
                     <Text mx={2} fontWeight={500}>
                         {amount * AURORA_PRICE}
                     </Text>
-                    <Image width="24px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
+                    <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
 
                     <Box mx={4}>
                         <Separator type="vertical" width="1px" height="36px" />
@@ -107,7 +107,7 @@ function Shop() {
                         XP
                     </Text>
 
-                    <Text as="span" mr={1}>
+                    <Text as="span" mr={0.5}>
                         +
                     </Text>
                     <Text as="span" fontWeight={600}>

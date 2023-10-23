@@ -21,6 +21,7 @@ import { BsExclamation, BsTwitter, BsGlobe, BsDiscord } from 'react-icons/bs';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { IoVolumeHighOutline, IoVolumeMuteOutline, IoDocumentTextOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
+import { PiUserCircleThin } from 'react-icons/pi';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
@@ -31,7 +32,7 @@ import Separator from '../shared/Separator';
 import Settings from './Settings';
 import SponsorLogo from '../assets/images/j_logo.png';
 
-const ROUTE_WIDTH = 98;
+const ROUTE_WIDTH = 100;
 
 function Header({ displayToast }) {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -126,14 +127,16 @@ function Header({ displayToast }) {
                         ))}
 
                         <Box position="absolute" left={0} bottom={0} right={0}>
-                            <Box
-                                transform={`translateX(${getCssPxValue(offset)})`}
-                                backgroundColor="white"
-                                boxShadow="0 0 1px 0px white"
-                                height="2px"
-                                width={getCssPxValue(ROUTE_WIDTH)}
-                                transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.5)"
-                            ></Box>
+                            {offset >= 0 && (
+                                <Box
+                                    transform={`translateX(${getCssPxValue(offset)})`}
+                                    backgroundColor="white"
+                                    boxShadow="0 0 1px 0px white"
+                                    height="2px"
+                                    width={getCssPxValue(ROUTE_WIDTH)}
+                                    transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.5)"
+                                ></Box>
+                            )}
                         </Box>
                     </Flex>
                 </Flex>
@@ -214,9 +217,17 @@ function Header({ displayToast }) {
                             </Text>
                         </Flex>
 
-                        <Box ml={6} mr="-2px">
-                            <Image width="68px" opacity={0.9} src={getSmallLogo()} />
-                        </Box>
+                        <NavLink to="/xp">
+                            <Box
+                                ml={4}
+                                mr="-2px"
+                                cursor="pointer"
+                                transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
+                                _hover={{ opacity: 0.85 }}
+                            >
+                                <PiUserCircleThin fontSize="48px" />
+                            </Box>
+                        </NavLink>
                     </Flex>
                 </Flex>
 
