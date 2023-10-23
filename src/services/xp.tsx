@@ -108,7 +108,7 @@ const LEVELS = [
     { level: 99, xp: 13034431 },
 ];
 
-export const getLevel = (xp: number): { level: number; percentage: number } => {
+export const getLevel = (xp: number): { level: number; percentage: number; nextLevelXp: number; xpLeft: number } => {
     const levelInfo = find(LEVELS, (level) => xp < level.xp) as LevelInfo;
     const level: number = Math.max(1, levelInfo.level - 1);
 
@@ -122,5 +122,7 @@ export const getLevel = (xp: number): { level: number; percentage: number } => {
     return {
         level,
         percentage,
+        nextLevelXp: levelInfo.xp,
+        xpLeft,
     };
 };
