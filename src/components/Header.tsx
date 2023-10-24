@@ -31,6 +31,7 @@ import _ from 'lodash';
 import Separator from '../shared/Separator';
 import Settings from './Settings';
 import SponsorLogo from '../assets/images/j_logo.png';
+import Profile from '../assets/profile.png';
 
 const ROUTE_WIDTH = 100;
 
@@ -225,7 +226,8 @@ function Header({ displayToast }) {
                                 transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                 _hover={{ opacity: 0.85 }}
                             >
-                                <PiUserCircleThin fontSize="48px" />
+                                {/* <PiUserCircleThin fontSize="48px" /> */}
+                                <Image src={Profile} width="48px" borderRadius="50%" />
                             </Box>
                         </NavLink>
                     </Flex>

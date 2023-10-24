@@ -14,7 +14,7 @@ function Wallet({ callback }: { callback?: () => void }) {
     const navigate = useNavigate();
 
     return (
-        <Flex alignItems="center" backgroundColor="#1f1f1f" borderRadius="9999px" padding="9px 16px">
+        <Flex alignItems="center" backgroundColor="#1f1f1f" borderRadius="9999px" padding="8px 16px">
             <Box mr="0.6rem">
                 <IoWalletOutline color="whitesmoke" fontSize="18px" />
             </Box>

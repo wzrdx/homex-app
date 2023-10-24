@@ -117,8 +117,6 @@ export const getLevel = (xp: number): { level: number; percentage: number; nextL
 
     const percentage = round((100 * xpLeft) / xpRequired, 1);
 
-    console.log(xpLeft, xpRequired, percentage);
-
     return {
         level,
         percentage,

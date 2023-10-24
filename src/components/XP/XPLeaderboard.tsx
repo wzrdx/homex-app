@@ -1,23 +1,19 @@
-import {
-    Box,
-    Button,
-    Flex,
-    Image,
-    Link,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    Switch,
-    Text,
-} from '@chakra-ui/react';
-import { useState } from 'react';
+import { Flex, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { getXpLeaderboard } from '../../blockchain/api/getXpLeaderboard';
 
 function XPLeaderboard() {
     const [api, setApi] = useState<boolean>();
 
-    const save = () => {};
+    // Init
+    useEffect(() => {
+        init();
+    }, []);
+
+    const init = async () => {
+        const array = await getXpLeaderboard();
+        console.log(array);
+    };
 
     return (
         <Flex>

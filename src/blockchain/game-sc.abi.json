@@ -388,6 +388,21 @@
             ]
         },
         {
+            "name": "getPlayerXp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
             "name": "changeBattleTimestamp",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -965,6 +980,16 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "getXpLeaderboard",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<PlayerXp>"
+                }
+            ]
         }
     ],
     "events": [],
@@ -1039,6 +1064,19 @@
                 },
                 {
                     "name": "tickets_count",
+                    "type": "u32"
+                }
+            ]
+        },
+        "PlayerXp": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "xp",
                     "type": "u32"
                 }
             ]

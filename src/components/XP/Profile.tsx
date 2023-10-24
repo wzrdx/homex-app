@@ -1,19 +1,4 @@
-import {
-    Box,
-    Button,
-    Flex,
-    Image,
-    Link,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    Spinner,
-    Stack,
-    Switch,
-    Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { getUsername } from '../../services/helpers';
