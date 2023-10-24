@@ -4,8 +4,8 @@ import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { differenceInSeconds, isBefore } from 'date-fns';
-import { first, map, size } from 'lodash';
-import { Quest, QuestReward } from '../types';
+import { map } from 'lodash';
+import { Quest } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 import { Timer } from './Timer';
 
