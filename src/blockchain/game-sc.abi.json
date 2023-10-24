@@ -47,7 +47,14 @@
             "outputs": []
         },
         {
-            "name": "withdraw",
+            "name": "withdrawEgld",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "withdrawNFTs",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
@@ -716,6 +723,13 @@
             "outputs": []
         },
         {
+            "name": "cleanMigratedWallets",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "migrateWallets",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -776,6 +790,16 @@
         },
         {
             "name": "getStakedAddressesCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCleanupAddressesCount",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -982,9 +1006,35 @@
             "outputs": []
         },
         {
-            "name": "getXpLeaderboard",
+            "name": "airdropXp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getXpLeaderboardSize",
             "mutability": "readonly",
             "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getXpLeaderboard",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
             "outputs": [
                 {
                     "type": "List<PlayerXp>"

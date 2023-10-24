@@ -1,4 +1,4 @@
-import { find } from 'lodash';
+import { find, last } from 'lodash';
 import { round } from './helpers';
 
 interface LevelInfo {
@@ -124,7 +124,7 @@ const COLORS = [
 export const getLevel = (
     xp: number
 ): { level: number; percentage: number; nextLevelXp: number; xpLeft: number; color: string } => {
-    const levelInfo = find(LEVELS, (level) => xp < level.xp) as LevelInfo;
+    const levelInfo = (find(LEVELS, (level) => xp < level.xp) as LevelInfo) || last(LEVELS);
     const level: number = Math.max(1, levelInfo.level - 1);
 
     const xpRequired = levelInfo.xp - LEVELS[level - 1].xp;

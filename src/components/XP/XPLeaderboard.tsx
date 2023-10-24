@@ -1,10 +1,13 @@
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getXpLeaderboard } from '../../blockchain/api/getXpLeaderboard';
-import { map } from 'lodash';
-import { getUsername } from '../../services/helpers';
+import { getUsername, pairwise } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
+import { getXpLeaderboardSize } from '../../blockchain/api/getXpLeaderboardSize';
+import _ from 'lodash';
+
+const CHUNK_SIZE = 25;
 
 const COLUMNS = [
     {
@@ -43,14 +46,48 @@ function XPLeaderboard() {
     }, []);
 
     const init = async () => {
-        const array = await getXpLeaderboard();
+        const leaderboardSize = await getXpLeaderboardSize();
+        const chunks = new Array(Math.floor(leaderboardSize / CHUNK_SIZE))
+            .fill(CHUNK_SIZE)
+            .concat(leaderboardSize % CHUNK_SIZE);
 
-        setPlayers(
-            await Promise.all(
-                map(array, async (player) => {
+        const apiCalls: Array<
+            Promise<
+                {
+                    address: string;
+                    xp: number;
+                }[]
+            >
+        > = [];
+
+        pairwise(
+            _(chunks)
+                .filter(_.identity)
+                .map((chunk, index) => {
+                    return index * CHUNK_SIZE + chunk;
+                })
+                .unshift(0)
+                .value(),
+            (current: number, next: number) => {
+                apiCalls.push(getXpLeaderboard(current, next));
+            }
+        );
+
+        const result = await Promise.all(apiCalls);
+        parse(_.flatten(result));
+    };
+
+    const parse = async (
+        players: {
+            address: string;
+            xp: number;
+        }[]
+    ) => {
+        const sorted = _.orderBy(players, 'xp', 'desc');
+        const array = await Promise.all(
+            _(sorted)
+                .map(async (player) => {
                     const { level, color } = getLevel(player.xp);
-
-                    console.log(color);
 
                     return {
                         name: await getUsername(player.address),
@@ -59,8 +96,11 @@ function XPLeaderboard() {
                         color,
                     };
                 })
-            )
+                .value()
         );
+
+        console.log(array);
+        setPlayers(array);
     };
 
     return (
@@ -71,14 +111,14 @@ function XPLeaderboard() {
                 <Flex layerStyle="layout" justifyContent="center" overflowY="auto" overflowX="hidden">
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden">
                         <Flex mb={1}>
-                            {map(COLUMNS, (column: any, index: number) => (
+                            {_.map(COLUMNS, (column: any, index: number) => (
                                 <Text key={index} layerStyle="header2" minWidth={column.width}>
                                     {column.name}
                                 </Text>
                             ))}
                         </Flex>
 
-                        {map(players, (player, index: number) => (
+                        {_.map(players, (player, index: number) => (
                             <Flex mt={2} alignItems="center" key={index}>
                                 <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
 
@@ -90,7 +130,7 @@ function XPLeaderboard() {
                                     <Text>{player.xp}</Text>
                                 </Flex>
 
-                                <Text width={COLUMNS[3].width} color={player.color}>
+                                <Text width={COLUMNS[3].width} color={player.color} fontWeight={500}>
                                     {player.level}
                                 </Text>
                             </Flex>
