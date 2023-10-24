@@ -70,7 +70,11 @@ export const QuestCard: FunctionComponent<
             <Flex>
                 {map(quest.rewards, (reward, index) => (
                     <Flex key={index} alignItems="center" mx={2.5}>
-                        <Image key={index} height={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                        {!RESOURCE_ELEMENTS[reward.resource].icon ? (
+                            <Text fontWeight={600}>XP</Text>
+                        ) : (
+                            <Image key={index} height={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                        )}
                         <Text ml={1.5}>{reward.value}</Text>
                     </Flex>
                 ))}
@@ -102,18 +106,6 @@ export const QuestCard: FunctionComponent<
                     <Text zIndex={3} position="relative" textShadow="1px 1px 2px #000" fontSize="17px" mr={4}>
                         {quest.name}
                     </Text>
-
-                    {/* Blurred rectangle */}
-                    {/* <Box
-                        position="absolute"
-                        top="4px"
-                        right={-1}
-                        bottom={'2px'}
-                        left={-1}
-                        background="black"
-                        filter="blur(4px)"
-                        opacity="0.3"
-                    ></Box> */}
                 </Box>
 
                 {((!!timestamp && isBefore(new Date(), timestamp)) || !timestamp) && (

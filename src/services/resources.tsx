@@ -70,6 +70,9 @@ export const RESOURCE_ELEMENTS: any = {
         icon: TicketsIcon,
         tokenId: TICKETS_TOKEN_ID,
     },
+    xp: {
+        name: 'Experience',
+    },
 };
 
 export const getResourceElements = (key: string) => RESOURCE_ELEMENTS[key];

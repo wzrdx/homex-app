@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Checkbox, CheckboxGroup, Flex, Modal, ModalOverlay, Text, Image, Box } from '@chakra-ui/react';
+import { Checkbox, CheckboxGroup, Flex, Text, Image, Box } from '@chakra-ui/react';
 import _, { find, findIndex, round } from 'lodash';
 import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../services/quests';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import QuestCard from '../shared/QuestCard';
 import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -10,7 +9,7 @@ import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-c
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { smartContract } from '../blockchain/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
+import { addMinutes, isAfter } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { useLayout } from './Layout';
 import { CHAIN_ID } from '../blockchain/config';
@@ -110,6 +109,7 @@ function Quests() {
                 },
             ]);
         } catch (err) {
+            setStartButtonLoading(false);
             console.error('Error occured during startQuests', err);
         }
     };
@@ -186,6 +186,7 @@ function Quests() {
                 },
             ]);
         } catch (err) {
+            setCompleteAllLoading(false);
             console.error('Error occured during completeAllQuests', err);
         }
     };
@@ -215,20 +216,27 @@ function Quests() {
                 {_.isEmpty(requirements) ? (
                     <></>
                 ) : (
-                    <Flex py={2.5} backgroundColor="#000000d9" borderRadius="2px">
-                        {_.map(Object.keys(requirements), (resource, index) => (
-                            <Flex key={index} alignItems="center" mx={4}>
-                                <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
-                                <Text
-                                    ml={1.5}
-                                    color={requirements[resource] > resources[resource] ? 'redClrs' : 'availableResource'}
-                                    as="span"
-                                >
-                                    {requirements[resource]}
-                                </Text>
-                            </Flex>
-                        ))}
-                    </Flex>
+                    <Box px={2.5} py={1.5} backgroundColor="#000000d9" borderRadius="2px">
+                        <Box display="grid" gridAutoColumns="1fr 1fr" gridTemplateColumns="1fr 1fr" rowGap={1} columnGap={3}>
+                            {_.map(Object.keys(requirements), (resource, index) => (
+                                <Flex key={index} alignItems="center">
+                                    <Image width="20px" mr={1.5} src={RESOURCE_ELEMENTS[resource].icon} />
+
+                                    <Text
+                                        color={requirements[resource] > resources[resource] ? 'redClrs' : 'availableResource'}
+                                    >
+                                        {resources[resource] >= 10000 ? '10k+' : round(resources[resource], 1)}
+                                    </Text>
+
+                                    <Text mx={1} mb={0.5}>
+                                        /
+                                    </Text>
+
+                                    <Text>{requirements[resource]}</Text>
+                                </Flex>
+                            ))}
+                        </Box>
+                    </Box>
                 )}
             </>
         );

@@ -20,11 +20,6 @@ import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
 import { Quest } from '../types';
 
-// import SmokeAndClouds from '../assets/quests/videos/1.webm';
-// import LightRays from '../assets/quests/videos/3-1.webm';
-// import DesertSmoke from '../assets/quests/videos/8-1.webm';
-// import Particles from '../assets/quests/videos/particles.webm';
-
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
@@ -40,6 +35,8 @@ const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
+const XP_MULTIPLIER = 10;
+
 const ESSENCE_HANDICAP = 1;
 
 const getId = () => ++ID;
@@ -49,85 +46,103 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: "The Forgotten Crystal's Whispers",
+        title: 'The Abandoned Base',
         description:
-            "Begin your journey as you descend into the shadowed depths of the Undercity of Menhir, guided by the ethereal whispers of the forgotten crystal's longing.",
+            'Begin your journey by stumbling upon an abandoned base deep within the Forest of Menhir, filled with mysteries and signs of past travelers.',
     },
     {
-        title: 'The Descent into Darkness',
+        title: 'The Enigmatic Map',
         description:
-            "Embark on a treacherous descent into the depths of the undercity. Encounter ancient guardians and decipher cryptic messages that draw you closer to the map's truth.",
+            'Discover an old, tattered map in the abandoned base, hinting at the location of a hidden dungeon. Uncover the secrets it holds.',
     },
     {
-        title: 'The Map’s Reveletion',
+        title: 'Trail of Whispers',
         description:
-            'Discover the ancient map hidden within the dark underbelly of Menhir, revealing the location of the forgotten crystal buried deep in the desert. Decode its enigmatic symbols to set your course.',
+            'Follow the cryptic clues on the map, leading you through the dense forest. Along the way, you receive mysterious buffs that enhance your skills.',
     },
     {
-        title: 'The Awakening',
+        title: 'Guardian of the Ancient Grove',
         description:
-            'Grasp the Crystal into your hand and chant the ancient song of awakening. Be mindful of your feelings while the Crystal takes shape. Serenity is key, apathy is death.',
+            'Encounter the guardian of the ancient grove, a mystical creature who challenges you to prove your worthiness to continue your quest.',
     },
     {
-        title: 'The Elemental Trials',
+        title: 'The Whispering Trees',
         description:
-            'Begin the trials of Elements in order to infuse the crystal with energy. The first trial is that of the Red Obelisk. You use this ancient mystical structure to gather a strange energy and infuse it with the crystal.',
+            'Navigate through the Whispering Trees, where the forest seems to come alive. Gain new abilities from the ancient spirits that inhabit this mystical place.',
     },
     {
-        title: 'The Green Obelisk trial',
+        title: 'The Sylvan Blessing',
         description:
-            'You find your way to the Green Obelisk, deep within the deserts of Menhir and begin the challenge. Be wary as many Travelers before you found their ending and are now nothing more than sand and bone.',
+            'Receive the Sylvan Blessing, a powerful enchantment bestowed upon you by the spirits of the forest, enhancing your senses and agility.',
     },
     {
-        title: 'The Night Ritual',
+        title: 'The Hidden Pond',
         description:
-            'After overcoming the trial of the Green Obelisk, using the crystal’s power you begin the Night Ritual and use the obelisk to summon and contain the mystical energy that dwells within this hidden part of the desert. You then infuse and charge the crystal with the energy and proceed to the next quest.',
+            'Stumble upon a hidden pond deep within the forest. Its magical waters grant you the ability to breathe underwater and swim freely.',
     },
     {
-        title: 'The Ritual of Stone',
+        title: 'The Ethereal Bridge',
         description:
-            'You reach the final Obelisk of your trial and begin the challenge. In order to bend this structure to the will of the crystal, you must first decipher and chant its ancient symbols heavily written on its surface.',
+            'Cross the Ethereal Bridge, a mystical structure that defies gravity, granting you the power to levitate for a limited time.',
     },
     {
-        title: 'Heart of the Giant',
+        title: "The Guardian's Riddle",
         description:
-            'You successfully overcome the last Elemental Challenge and witness the Stone Obelisk as it changes its shape into a radiating blue crystal structure. Your own crystal heavily resonates with its power and starts absorbing the energy.',
+            'Encounter a guardian who presents you with a riddle. Solve it to gain access to the next stage of your journey.',
     },
     {
-        title: 'Relic of Manthulu',
+        title: "The Whisperer's Call",
         description:
-            'After absorbing the Elemental Energies of Menhir, the crystal breaks down into a sacred artefact. You equip it and feel its power surging through you.',
+            "Heed the Whisperer's Call, a haunting melody that leads you through a labyrinthine part of the forest, where time flows differently.",
     },
     {
-        title: 'The Druid',
+        title: 'The Eclipsed Grove',
         description:
-            'Continue your journey through the desert. You meet a mysterious druid who offers her assistance in decoding the map and revealing its secrets.',
+            'Enter the Eclipsed Grove, a place where day and night are in constant flux. Harness the power of both sun and moon.',
     },
     {
-        title: 'The Vision of Truth',
+        title: 'The Celestial Observatory',
         description:
-            'With the druids guidance, you enter a meditative state where, together with the power of the artefact, you see a glimpse of the Netherworld and decipher its symbols. You must reach the remains of the Old One, a long-forgotten Titan that once gave life to Menhir, and recover an artefact.',
+            'Ascend the Celestial Observatory, where ancient astronomers once studied the stars. Here, you unlock the ability to see hidden constellations.',
     },
     {
-        title: 'The Old One',
+        title: 'The Spirit of the Forest',
         description:
-            'After a tiresome journey, you finally reach your destination. You take a few moments to comprehend the remains of the Old One. You feel beseeched by its radiating power, still lingering long after its unfortunate demise.',
+            'Commune with the Spirit of the Forest, an ethereal being who imparts the ancient language of the forest, allowing you to communicate with its denizens.',
     },
     {
-        title: 'The Staff of the Old',
-        description:
-            'You search the surroundings thoroughly using your artefact as an indicator. As you get closer to what you seek the crystals start radiating. You find and recover the Staff of the Old.',
+        title: 'The Luminescent Path',
+        description: 'Walk the Luminescent Path, a trail of glowing flora that guides you to the heart of the forest.',
     },
     {
-        title: 'The Potion of Blessing',
+        title: "The Mythical Beast's Lair",
         description:
-            'Finally, using the 2 artefacts recovered, you draw an alchemical circle and start chanting in the tongue of the dead. From within the circle a potion arises. You drink it and are now blessed by the Star of the Dawn.',
+            'Finally, reach the lair of the Mythical Beast, a formidable creature guarding the dungeon entrance. You must summon all your newfound abilities to face this formidable foe.',
     },
     {
-        title: 'The Gate of Har’akkar',
+        title: "The Beast's Challenge",
         description:
-            'Using the blessing of the Star, you finally continue your journey and pass through the gate of Har’akkar. As you pass through, memories of Menhir and how it once was start appearing. You return to the capital and present them to the Monolith.',
+            "Confront the Mythical Beast and engage in an epic battle. Use the buffs and knowledge you've gained throughout your journey to overcome this legendary adversary and claim the treasures hidden within the dungeon.",
     },
+];
+
+const XP = [
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    10 * XP_MULTIPLIER,
+    20 * XP_MULTIPLIER,
 ];
 
 export const QUESTS: any[] = [
@@ -146,6 +161,11 @@ export const QUESTS: any[] = [
                 resource: 'herbs',
                 name: 'Cereus',
                 value: 2 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[0],
             },
         ],
         layers: [],
@@ -166,6 +186,11 @@ export const QUESTS: any[] = [
                 name: 'Cereus',
                 value: 12 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[1],
+            },
         ],
         layers: [],
         image: Quest_2,
@@ -185,6 +210,11 @@ export const QUESTS: any[] = [
                 name: 'Cereus',
                 value: 24 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[2],
+            },
         ],
         layers: [],
         image: Quest_3,
@@ -203,6 +233,11 @@ export const QUESTS: any[] = [
                 resource: 'herbs',
                 name: 'Cereus',
                 value: 48 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[3],
             },
         ],
         layers: [],
@@ -225,6 +260,11 @@ export const QUESTS: any[] = [
                 name: 'Magnesite',
                 value: 1 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[4],
+            },
         ],
         layers: [],
         image: Quest_5,
@@ -243,6 +283,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 6 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[5],
             },
         ],
         layers: [],
@@ -263,6 +308,11 @@ export const QUESTS: any[] = [
                 name: 'Magnesite',
                 value: 12 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[6],
+            },
         ],
         layers: [],
         image: Quest_7,
@@ -281,6 +331,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 24 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[7],
             },
         ],
         layers: [],
@@ -305,6 +360,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 1 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[8],
+            },
         ],
         layers: [],
         image: Quest_9,
@@ -325,6 +385,11 @@ export const QUESTS: any[] = [
                 resource: 'essence',
                 name: 'Nimbus Orb',
                 value: 3 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[9],
             },
         ],
         layers: [],
@@ -347,6 +412,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 6 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[10],
+            },
         ],
         layers: [],
         image: Quest_11,
@@ -367,6 +437,11 @@ export const QUESTS: any[] = [
                 resource: 'essence',
                 name: 'Nimbus Orb',
                 value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[11],
             },
         ],
         layers: [],
@@ -393,6 +468,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 24 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[12],
             },
         ],
         layers: [],
@@ -423,6 +503,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[13],
+            },
         ],
         layers: [],
         image: Quest_14,
@@ -448,6 +533,11 @@ export const QUESTS: any[] = [
                 name: 'Tickets',
                 value: 1,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[14],
+            },
         ],
         layers: [],
         image: Quest_15,
@@ -470,6 +560,11 @@ export const QUESTS: any[] = [
                 resource: 'tickets',
                 name: 'Tickets',
                 value: 2,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[15],
             },
         ],
         layers: [],
