@@ -7,7 +7,8 @@ import { getLevel } from '../../services/xp';
 import { getXpLeaderboardSize } from '../../blockchain/api/getXpLeaderboardSize';
 import _ from 'lodash';
 
-const CHUNK_SIZE = 25;
+const CHUNK_SIZE = 50;
+const LEADERBOARD_SIZE = 100;
 
 const COLUMNS = [
     {
@@ -47,6 +48,7 @@ function XPLeaderboard() {
 
     const init = async () => {
         const leaderboardSize = await getXpLeaderboardSize();
+
         const chunks = new Array(Math.floor(leaderboardSize / CHUNK_SIZE))
             .fill(CHUNK_SIZE)
             .concat(leaderboardSize % CHUNK_SIZE);
@@ -83,7 +85,8 @@ function XPLeaderboard() {
             xp: number;
         }[]
     ) => {
-        const sorted = _.orderBy(players, 'xp', 'desc');
+        const sorted = _(players).orderBy('xp', 'desc').take(LEADERBOARD_SIZE).value();
+
         const array = await Promise.all(
             _(sorted)
                 .map(async (player) => {

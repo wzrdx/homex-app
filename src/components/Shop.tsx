@@ -6,7 +6,7 @@ import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useResourcesContext, ResourcesContextType, RESOURCE_ELEMENTS } from '../services/resources';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
-import { Address, TokenTransfer, U64Value } from '@multiversx/sdk-core/out';
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
@@ -15,7 +15,7 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import Separator from '../shared/Separator';
 
 const AURORA_PRICE = 2;
-const AURORA_XP = 100;
+const AURORA_XP = 750;
 
 function Shop() {
     const [amount, setAmount] = useState(1);
@@ -66,6 +66,10 @@ function Shop() {
                     sessionId,
                     type: TransactionType.MintArtDrop,
                     resolution: TxResolution.UpdateTickets,
+                    data: {
+                        amount,
+                        xp: AURORA_XP * amount,
+                    },
                 },
             ]);
         } catch (err) {
@@ -76,7 +80,7 @@ function Shop() {
     return (
         <Flex justifyContent="center" height="100%">
             <Stack spacing={{ md: 3, lg: 4 }} alignItems="center" userSelect="none">
-                <Text layerStyle="header1Alt">Aurora</Text>
+                <Text layerStyle="header1Alt">Aurora Art Drop</Text>
 
                 <Stack direction="row" spacing={4} alignItems="center">
                     <Image width={{ md: '234px', lg: '318px' }} src={getArtDrop()} />
@@ -94,7 +98,7 @@ function Shop() {
 
                 <Flex justifyContent="center" alignItems="center" userSelect="none">
                     <Text>Amount Due:</Text>
-                    <Text mx={2} fontWeight={500}>
+                    <Text mx={2} fontWeight={500} color="ticketGold">
                         {amount * AURORA_PRICE}
                     </Text>
                     <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />

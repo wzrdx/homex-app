@@ -131,6 +131,25 @@ const LORE: {
     },
 ];
 
+const XP = [
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    10 * XP_MULTIPLIER,
+    20 * XP_MULTIPLIER,
+];
+
 export const QUESTS: any[] = [
     // Herbalism
     {
@@ -151,7 +170,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[0],
             },
         ],
         layers: [],
@@ -175,7 +194,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[1],
             },
         ],
         layers: [],
@@ -199,7 +218,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[2],
             },
         ],
         layers: [],
@@ -223,7 +242,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[3],
             },
         ],
         layers: [],
@@ -249,7 +268,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[4],
             },
         ],
         layers: [],
@@ -273,7 +292,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[5],
             },
         ],
         layers: [],
@@ -297,7 +316,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[6],
             },
         ],
         layers: [],
@@ -321,7 +340,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1 * XP_MULTIPLIER,
+                value: XP[7],
             },
         ],
         layers: [],
@@ -349,7 +368,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1.5 * XP_MULTIPLIER,
+                value: XP[8],
             },
         ],
         layers: [],
@@ -375,7 +394,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1.5 * XP_MULTIPLIER,
+                value: XP[9],
             },
         ],
         layers: [],
@@ -401,7 +420,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1.5 * XP_MULTIPLIER,
+                value: XP[10],
             },
         ],
         layers: [],
@@ -427,7 +446,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 1.5 * XP_MULTIPLIER,
+                value: XP[11],
             },
         ],
         layers: [],
@@ -458,7 +477,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 2 * XP_MULTIPLIER,
+                value: XP[12],
             },
         ],
         layers: [],
@@ -492,7 +511,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 2 * XP_MULTIPLIER,
+                value: XP[13],
             },
         ],
         layers: [],
@@ -522,7 +541,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 4 * XP_MULTIPLIER,
+                value: XP[14],
             },
         ],
         layers: [],
@@ -550,7 +569,7 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: 8 * XP_MULTIPLIER,
+                value: XP[15],
             },
         ],
         layers: [],

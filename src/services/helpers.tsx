@@ -11,6 +11,7 @@ import { NFT, RarityClass } from '../blockchain/types';
 import { Quest } from '../types';
 import _ from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
+import { RESOURCE_ELEMENTS } from './resources';
 
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
@@ -131,7 +132,9 @@ export const getRarityClassInfo = (rarityClass: RarityClass): { label: string; c
 };
 
 export const getTotalQuestsRewards = (quests: Quest[]) => {
-    const rewards = { energy: 0, herbs: 0, gems: 0, essence: 0, tickets: 0 };
+    const rewards = {};
+
+    _.forEach(Object.keys(RESOURCE_ELEMENTS), (key) => (rewards[key] = 0));
 
     _.forEach(quests, (quest) => {
         _.forEach(quest.rewards, (reward) => {

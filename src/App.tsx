@@ -175,7 +175,14 @@ function App() {
                         break;
 
                     case TransactionType.MintArtDrop:
-                        displayToast('Mint successful', 'Successfully minted art drop', 'green.500');
+                        displayResourcesToast('Experience', [{ resource: 'xp', value: tx.data.xp }], 'ticket');
+                        displayToast(
+                            'Mint successful',
+                            `Successfully minted ${tx.data.amount > 1 ? tx.data.amount : 'one'} art piece${
+                                tx.data.amount > 1 ? 's' : ''
+                            }`,
+                            'green.500'
+                        );
                         break;
 
                     default:
@@ -281,8 +288,11 @@ function App() {
             case 'tickets':
                 return getTickets;
 
+            case 'xp':
+                return async () => {};
+
             default:
-                console.error('getResourceCall(): Unknown resource type');
+                console.error('getResourceCall(): Unknown resource type', resource);
                 return async () => {};
         }
     };
@@ -303,7 +313,7 @@ function App() {
                 marginTop: '1rem',
                 marginRight: '2rem',
             },
-            duration: 8000,
+            duration: 6000,
             render: () => <ResourcesToast title={title} rewards={gains}></ResourcesToast>,
         });
     };
@@ -317,7 +327,7 @@ function App() {
                 marginTop: '1rem',
                 marginRight: '2rem',
             },
-            duration: 8000,
+            duration: 6000,
             render: () => (
                 <CustomToast type="success" title={title} color={color}>
                     {text && <Text mt={2}>{text}</Text>}

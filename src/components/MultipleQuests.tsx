@@ -251,7 +251,13 @@ function MultipleQuests() {
                     <Flex minH="30px">
                         {_.map(Object.keys(rewards), (resource, index) => (
                             <Flex key={index} alignItems="center" mr={4}>
-                                <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
+                                {!RESOURCE_ELEMENTS[resource].icon ? (
+                                    <Text as="span" fontWeight={800}>
+                                        XP
+                                    </Text>
+                                ) : (
+                                    <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
+                                )}
                                 <Text ml={1.5}>{rewards[resource]}</Text>
                             </Flex>
                         ))}
@@ -274,7 +280,7 @@ function MultipleQuests() {
     };
 
     return (
-        <ModalContent maxW="720px">
+        <ModalContent maxW="780px">
             <ModalHeader>Start multiple quests</ModalHeader>
 
             <ModalCloseButton zIndex={1} color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />

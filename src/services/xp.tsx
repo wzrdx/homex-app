@@ -1,5 +1,4 @@
-import { find, last } from 'lodash';
-import { round } from './helpers';
+import { find, last, round } from 'lodash';
 
 interface LevelInfo {
     level: number;
@@ -130,7 +129,7 @@ export const getLevel = (
     const xpRequired = levelInfo.xp - LEVELS[level - 1].xp;
     const xpLeft = levelInfo.xp - xp;
 
-    const percentage = 100 - round((100 * xpLeft) / xpRequired, 1);
+    const percentage = Number.parseFloat((100 - (100 * xpLeft) / xpRequired).toFixed(1));
     const color = COLORS[Math.floor(level / 10)];
 
     return {
