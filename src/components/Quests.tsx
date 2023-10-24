@@ -217,7 +217,13 @@ function Quests() {
                     <></>
                 ) : (
                     <Box px={2.5} py={1.5} backgroundColor="#000000d9" borderRadius="2px">
-                        <Box display="grid" gridAutoColumns="1fr 1fr" gridTemplateColumns="1fr 1fr" rowGap={1} columnGap={3}>
+                        <Box
+                            display="grid"
+                            gridAutoColumns={Object.keys(requirements).length > 1 ? '1fr 1fr' : '1fr'}
+                            gridTemplateColumns={Object.keys(requirements).length > 1 ? '1fr 1fr' : '1fr'}
+                            rowGap={1}
+                            columnGap={3}
+                        >
                             {_.map(Object.keys(requirements), (resource, index) => (
                                 <Flex key={index} alignItems="center">
                                     <Image width="20px" mr={1.5} src={RESOURCE_ELEMENTS[resource].icon} />
