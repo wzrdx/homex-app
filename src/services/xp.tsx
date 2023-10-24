@@ -108,19 +108,36 @@ const LEVELS = [
     { level: 99, xp: 13034431 },
 ];
 
-export const getLevel = (xp: number): { level: number; percentage: number; nextLevelXp: number; xpLeft: number } => {
+const COLORS = [
+    '#d3d3d3', // Level 1 - Lightgrey
+    '#A0522D', // Level 2 - Sienna
+    '#66ccce', // Level 3 - Cyan
+    '#f5deb3', // Level 4 - Wheat
+    '#2E8B57', // Level 5 - SeaGreen
+    '#4169E1', // Level 6 - RoyalBlue
+    '#8A2BE2', // Level 7 - BlueViolet
+    '#FFD700', // Level 8 - Gold
+    '#ff8129', // Level 9 - Orange
+    '#FF4136', // Level 10 - Red
+];
+
+export const getLevel = (
+    xp: number
+): { level: number; percentage: number; nextLevelXp: number; xpLeft: number; color: string } => {
     const levelInfo = find(LEVELS, (level) => xp < level.xp) as LevelInfo;
     const level: number = Math.max(1, levelInfo.level - 1);
 
     const xpRequired = levelInfo.xp - LEVELS[level - 1].xp;
     const xpLeft = levelInfo.xp - xp;
 
-    const percentage = round((100 * xpLeft) / xpRequired, 1);
+    const percentage = 100 - round((100 * xpLeft) / xpRequired, 1);
+    const color = COLORS[Math.floor(level / 10)];
 
     return {
         level,
         percentage,
         nextLevelXp: levelInfo.xp,
         xpLeft,
+        color,
     };
 };

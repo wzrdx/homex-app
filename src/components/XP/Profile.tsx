@@ -3,13 +3,20 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { getUsername } from '../../services/helpers';
 import { getLevel } from '../../services/xp';
+import { getPlayerXp } from '../../blockchain/api/getPlayerXp';
 
 function Profile() {
     let { address } = useGetAccountInfo();
 
     const [username, setUsername] = useState<string>();
-    const [xp, setXp] = useState<number>(200);
-    const [levelInfo, setLevelInfo] = useState<{ level: number; percentage: number; nextLevelXp: number; xpLeft: number }>();
+    const [xp, setXp] = useState<number>();
+    const [levelInfo, setLevelInfo] = useState<{
+        level: number;
+        percentage: number;
+        nextLevelXp: number;
+        xpLeft: number;
+        color: string;
+    }>();
 
     // Init
     useEffect(() => {
@@ -18,6 +25,8 @@ function Profile() {
 
     const init = async () => {
         setUsername(await getUsername(address));
+        const xp = await getPlayerXp();
+        setXp(xp);
         setLevelInfo(getLevel(xp));
     };
 
@@ -34,7 +43,7 @@ function Profile() {
                             </Text>
                             <Text>
                                 Level{' '}
-                                <Text as="span" fontWeight={500} color="brightBlue">
+                                <Text as="span" fontWeight={500} color={levelInfo.color}>
                                     {levelInfo.level}
                                 </Text>
                             </Text>
