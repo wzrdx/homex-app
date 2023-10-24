@@ -32,7 +32,7 @@ function Reward({ image, name, value, icon }) {
                 </Text>
 
                 <Flex alignItems="center">
-                    <Text fontSize="18px" mr={2}>
+                    <Text fontSize="18px" mr={1.5}>
                         <Text as="span" mr={0.5}>
                             +
                         </Text>
@@ -41,7 +41,13 @@ function Reward({ image, name, value, icon }) {
                         </Text>
                     </Text>
 
-                    <Image width="28px" mr={2} src={icon} alt="Icon" />
+                    {!icon ? (
+                        <Text as="span" fontWeight={800} fontSize="18px">
+                            XP
+                        </Text>
+                    ) : (
+                        <Image width="28px" src={icon} alt="Icon" />
+                    )}
                 </Flex>
             </Flex>
         </Flex>

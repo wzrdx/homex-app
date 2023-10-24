@@ -13,6 +13,7 @@ import EssenceImage from '../assets/resources/images/essence.png';
 
 import TicketsIcon from '../assets/resources/icons/tickets.png';
 import TicketsImage from '../assets/resources/images/tickets.png';
+import XpImage from '../assets/resources/images/xp.png';
 
 import {
     API_URL,
@@ -69,6 +70,10 @@ export const RESOURCE_ELEMENTS: any = {
         image: TicketsImage,
         icon: TicketsIcon,
         tokenId: TICKETS_TOKEN_ID,
+    },
+    xp: {
+        name: 'Experience',
+        image: XpImage,
     },
 };
 
