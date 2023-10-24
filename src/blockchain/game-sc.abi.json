@@ -259,6 +259,17 @@
             ]
         },
         {
+            "name": "getQuestsXp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getOngoingQuests",
             "mutability": "readonly",
             "inputs": [
@@ -361,6 +372,16 @@
             "outputs": [
                 {
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getArtDropTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
                 }
             ]
         },
@@ -675,6 +696,13 @@
             "outputs": []
         },
         {
+            "name": "setQuestsXp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "clearOngoingQuests",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -958,10 +986,15 @@
             ]
         },
         {
-            "name": "debug",
+            "name": "setArtDropTimestamp",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
             "outputs": []
         },
         {
@@ -1003,13 +1036,6 @@
                     "type": "BigUint"
                 }
             ],
-            "outputs": []
-        },
-        {
-            "name": "airdropXp",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
             "outputs": []
         },
         {
