@@ -16,6 +16,7 @@ export enum TransactionType {
     ClaimUnbondedNFTs,
     Restake,
     Migration,
+    MintArtDrop,
 }
 
 export enum TxResolution {
@@ -26,6 +27,7 @@ export enum TxResolution {
     UpdateTicketsAndBattles = 'UpdateTicketsAndBattles',
     UpdateStakingInfo = 'UpdateStakingInfo',
     UpdateStakingAndNFTs = 'UpdateStakingAndNFTs',
+    UpdateTickets = 'UpdateTickets',
 }
 
 export interface Transaction {

@@ -40,6 +40,8 @@ const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
+const XP_MULTIPLIER = 10;
+
 const ESSENCE_HANDICAP = 1;
 
 const getId = () => ++ID;
@@ -130,6 +132,25 @@ const LORE: {
     },
 ];
 
+const XP = [
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    4 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    8 * XP_MULTIPLIER,
+    10 * XP_MULTIPLIER,
+    20 * XP_MULTIPLIER,
+];
+
 export const QUESTS: any[] = [
     // Herbalism
     {
@@ -146,6 +167,11 @@ export const QUESTS: any[] = [
                 resource: 'herbs',
                 name: 'Cereus',
                 value: 2 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[0],
             },
         ],
         layers: [],
@@ -166,6 +192,11 @@ export const QUESTS: any[] = [
                 name: 'Cereus',
                 value: 12 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[1],
+            },
         ],
         layers: [],
         image: Quest_2,
@@ -185,6 +216,11 @@ export const QUESTS: any[] = [
                 name: 'Cereus',
                 value: 24 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[2],
+            },
         ],
         layers: [],
         image: Quest_3,
@@ -203,6 +239,11 @@ export const QUESTS: any[] = [
                 resource: 'herbs',
                 name: 'Cereus',
                 value: 48 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[3],
             },
         ],
         layers: [],
@@ -225,6 +266,11 @@ export const QUESTS: any[] = [
                 name: 'Magnesite',
                 value: 1 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[4],
+            },
         ],
         layers: [],
         image: Quest_5,
@@ -243,6 +289,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 6 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[5],
             },
         ],
         layers: [],
@@ -263,6 +314,11 @@ export const QUESTS: any[] = [
                 name: 'Magnesite',
                 value: 12 * BASE_REWARD,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[6],
+            },
         ],
         layers: [],
         image: Quest_7,
@@ -281,6 +337,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 24 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[7],
             },
         ],
         layers: [],
@@ -305,6 +366,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 1 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[8],
+            },
         ],
         layers: [],
         image: Quest_9,
@@ -325,6 +391,11 @@ export const QUESTS: any[] = [
                 resource: 'essence',
                 name: 'Nimbus Orb',
                 value: 3 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[9],
             },
         ],
         layers: [],
@@ -347,6 +418,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 6 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[10],
+            },
         ],
         layers: [],
         image: Quest_11,
@@ -367,6 +443,11 @@ export const QUESTS: any[] = [
                 resource: 'essence',
                 name: 'Nimbus Orb',
                 value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[11],
             },
         ],
         layers: [],
@@ -393,6 +474,11 @@ export const QUESTS: any[] = [
                 resource: 'gems',
                 name: 'Magnesite',
                 value: 24 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[12],
             },
         ],
         layers: [],
@@ -423,6 +509,11 @@ export const QUESTS: any[] = [
                 name: 'Nimbus Orb',
                 value: 12 * (BASE_REWARD - ESSENCE_HANDICAP),
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[13],
+            },
         ],
         layers: [],
         image: Quest_14,
@@ -448,6 +539,11 @@ export const QUESTS: any[] = [
                 name: 'Tickets',
                 value: 1,
             },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[14],
+            },
         ],
         layers: [],
         image: Quest_15,
@@ -470,6 +566,11 @@ export const QUESTS: any[] = [
                 resource: 'tickets',
                 name: 'Tickets',
                 value: 2,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[15],
             },
         ],
         layers: [],

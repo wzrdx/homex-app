@@ -29,7 +29,13 @@ export const DetailedQuestCard = ({ quest }: Props) => {
             <Flex>
                 {map(quest.rewards, (reward, index) => (
                     <Flex key={index} alignItems="center" ml={2.5}>
-                        <Image key={index} width={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                        {!RESOURCE_ELEMENTS[reward.resource].icon ? (
+                            <Text as="span" fontWeight={600}>
+                                XP
+                            </Text>
+                        ) : (
+                            <Image key={index} width={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
+                        )}
                         <Text ml={1.5}>{reward.value}</Text>
                     </Flex>
                 ))}

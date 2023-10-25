@@ -29,12 +29,12 @@ function Section() {
         const currentRoute = location.pathname.split('/')[1];
         setRoute(routes.find((route) => route.path === currentRoute));
 
+        // Custom calls
         if (currentRoute === routeNames.raffles) {
             getRaffles();
         }
 
         if (currentRoute === routeNames.battles) {
-            console.log('[Section] getBattles');
             getBattles();
         }
     }, [location.pathname.split('/')[1]]);
