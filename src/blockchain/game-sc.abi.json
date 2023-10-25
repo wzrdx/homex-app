@@ -188,6 +188,16 @@
             ]
         },
         {
+            "name": "getArtCollectionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
             "name": "getTicketsId",
             "mutability": "readonly",
             "inputs": [],
@@ -244,6 +254,17 @@
             "outputs": [
                 {
                     "type": "variadic<Quest>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getQuestsXp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
                     "multi_result": true
                 }
             ]
@@ -355,6 +376,16 @@
             ]
         },
         {
+            "name": "getArtDropTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "getTrialTimestamp",
             "mutability": "readonly",
             "inputs": [],
@@ -381,6 +412,21 @@
             "outputs": [
                 {
                     "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getPlayerXp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -647,6 +693,13 @@
                     "type": "List<Quest>"
                 }
             ],
+            "outputs": []
+        },
+        {
+            "name": "setQuestsXp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
             "outputs": []
         },
         {
@@ -931,6 +984,88 @@
                     "type": "u32"
                 }
             ]
+        },
+        {
+            "name": "setArtDropTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "mint",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueSFTCollection",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createArtToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "royalties",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getXpLeaderboardSize",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getXpLeaderboard",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<PlayerXp>"
+                }
+            ]
         }
     ],
     "events": [],
@@ -1005,6 +1140,19 @@
                 },
                 {
                     "name": "tickets_count",
+                    "type": "u32"
+                }
+            ]
+        },
+        "PlayerXp": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "xp",
                     "type": "u32"
                 }
             ]
