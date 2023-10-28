@@ -84,7 +84,7 @@ function Layout() {
 
             <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" height="100vh" flexDir="column">
                 <Box height={{ md: '18%', lg: '14%' }}>
-                    <Header displayToast={displayToast} />
+                    <Header />
                 </Box>
 
                 <Box

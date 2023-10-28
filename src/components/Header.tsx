@@ -10,32 +10,31 @@ import {
     Text,
     Image,
     useDisclosure,
-    Link,
+    Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
-import { BsExclamation, BsTwitter, BsGlobe, BsDiscord } from 'react-icons/bs';
+import { BsExclamation } from 'react-icons/bs';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { IoVolumeHighOutline, IoVolumeMuteOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
-import { PiUserCircleThin } from 'react-icons/pi';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
-import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
-import Separator from '../shared/Separator';
 import Settings from './Settings';
-import SponsorLogo from '../assets/images/j_logo.png';
 import Profile from '../assets/profile.png';
+import { getNumberCall } from '../blockchain/generics/getNumberCall';
+import { format } from 'date-fns';
+import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 
 const ROUTE_WIDTH = 100;
 
-function Header({ displayToast }) {
+function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
     const { isOpen: isSettingsOpen, onOpen: onSettingsOpen, onClose: onSettingsClose } = useDisclosure();
 
@@ -47,8 +46,17 @@ function Header({ displayToast }) {
     const [routes, setRoutes] = useState<Array<string>>([]);
     const [offset, setOffset] = useState<number>(0);
 
+    const [trial, setTrial] = useState<{
+        count: number;
+        timestamp: Date;
+    }>();
+
     // Init
     useEffect(() => {
+        init();
+    }, []);
+
+    const init = async () => {
         setRoutes(
             _(serviceRoutes)
                 .filter((route) => route.isMainRoute)
@@ -59,7 +67,16 @@ function Header({ displayToast }) {
         if (isMusicOn) {
             setIsMusicOn(true);
         }
-    }, []);
+
+        // Trial
+        const count = await getNumberCall('getCurrentTrial');
+        const timestamp = await getTrialTimestamp();
+
+        setTrial({
+            count,
+            timestamp,
+        });
+    };
 
     useEffect(() => {
         const index = findIndex(routes, (route) => location.pathname.includes(route));
@@ -196,6 +213,22 @@ function Header({ displayToast }) {
                                 Gameplay
                             </Text>
                         </Flex>
+
+                        {!trial ? (
+                            <Spinner />
+                        ) : (
+                            <Flex ml={5} flexDir="column" alignItems="center" justifyContent="center">
+                                <Text textTransform="uppercase" fontSize="15px" letterSpacing="0.25px" fontWeight={500}>
+                                    Trial{' '}
+                                    <Text as="span" color="#f97316">
+                                        {trial?.count}
+                                    </Text>
+                                </Text>
+                                <Text fontSize="14px" lineHeight="15px">
+                                    {format(trial?.timestamp as Date, 'dd MMM, HH:mm')}
+                                </Text>
+                            </Flex>
+                        )}
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
