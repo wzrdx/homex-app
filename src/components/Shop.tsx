@@ -94,12 +94,13 @@ function Shop() {
                 <Spinner />
             ) : (
                 <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
-                    <Box>
+                    <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
                             Aurora Art Drop
                         </Text>
-                        <LargeTimer timestamp={timestamp} callback={() => init()} />
-                    </Box>
+                        <Text layerStyle="header3">MINT ENDED</Text>
+                        {/* <LargeTimer timestamp={timestamp} callback={() => init()} /> */}
+                    </Flex>
 
                     <Stack direction="row" spacing={4} alignItems="center">
                         <Image width={{ md: '234px', lg: '292px' }} src={getArtDrop()} />
