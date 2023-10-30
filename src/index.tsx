@@ -6,7 +6,6 @@ import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 import { apiTimeout, walletConnectV2ProjectId, API_URL } from './blockchain/config';
 import { TransactionsProvider } from './services/transactions';
-import { SoundsProvider } from './services/sounds';
 import { ResourcesProvider } from './services/resources';
 import { ColorModeScript } from '@chakra-ui/react';
 import { QuestsProvider } from './services/quests';
@@ -29,18 +28,16 @@ root.render(
             }}
         >
             <TransactionsProvider>
-                <SoundsProvider>
-                    <ResourcesProvider>
-                        <QuestsProvider>
-                            <StoreProvider>
-                                <RewardsProvider>
-                                    <ColorModeScript initialColorMode="dark" />
-                                    <App />
-                                </RewardsProvider>
-                            </StoreProvider>
-                        </QuestsProvider>
-                    </ResourcesProvider>
-                </SoundsProvider>
+                <ResourcesProvider>
+                    <QuestsProvider>
+                        <StoreProvider>
+                            <RewardsProvider>
+                                <ColorModeScript initialColorMode="dark" />
+                                <App />
+                            </RewardsProvider>
+                        </StoreProvider>
+                    </QuestsProvider>
+                </ResourcesProvider>
             </TransactionsProvider>
         </DappProvider>
     </BrowserRouter>
