@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import Quest_1 from '../assets/quests/1.jpg';
-import Quest_2 from '../assets/quests/2.jpg';
-import Quest_3 from '../assets/quests/3.jpg';
-import Quest_4 from '../assets/quests/4.jpg';
-import Quest_5 from '../assets/quests/5.jpg';
-import Quest_6 from '../assets/quests/6.jpg';
-import Quest_7 from '../assets/quests/7.jpg';
-import Quest_8 from '../assets/quests/8.jpg';
-import Quest_9 from '../assets/quests/9.jpg';
-import Quest_10 from '../assets/quests/10.jpg';
-import Quest_11 from '../assets/quests/11.jpg';
-import Quest_12 from '../assets/quests/12.jpg';
-import Quest_13 from '../assets/quests/13.jpg';
-import Quest_14 from '../assets/quests/14.jpg';
-import Quest_15 from '../assets/quests/15.jpg';
-import Quest_16 from '../assets/quests/16.jpg';
+import Quest_1 from '../assets/quests/1.png';
+import Quest_2 from '../assets/quests/2.png';
+import Quest_3 from '../assets/quests/3.png';
+import Quest_4 from '../assets/quests/4.png';
+import Quest_5 from '../assets/quests/5.png';
+import Quest_6 from '../assets/quests/6.png';
+import Quest_7 from '../assets/quests/7.png';
+import Quest_8 from '../assets/quests/8.png';
+import Quest_9 from '../assets/quests/9.png';
+import Quest_10 from '../assets/quests/10.png';
+import Quest_11 from '../assets/quests/11.png';
+import Quest_12 from '../assets/quests/12.png';
+import Quest_13 from '../assets/quests/13.png';
+import Quest_14 from '../assets/quests/14.png';
+import Quest_15 from '../assets/quests/15.png';
+import Quest_16 from '../assets/quests/16.png';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
@@ -51,84 +51,84 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: "The Forgotten Crystal's Whispers",
+        title: 'The Enigmatic Prophecy',
         description:
-            "Begin your journey as you descend into the shadowed depths of the Undercity of Menhir, guided by the ethereal whispers of the forgotten crystal's longing.",
+            "Embark on a mysterious journey as a traveler gifted with visions of Menhir's enigmatic future. Whispered tales speak of a resurgent city, but the details remain veiled in shadows.",
     },
     {
-        title: 'The Descent into Darkness',
+        title: 'The Seeds of Renewal',
         description:
-            "Embark on a treacherous descent into the depths of the undercity. Encounter ancient guardians and decipher cryptic messages that draw you closer to the map's truth.",
+            "Explore Menhir to unearth the cryptic symbols representing the city's hopeful resurgence. These symbols hint at a population reborn and the revival of life.",
     },
     {
-        title: 'The Map’s Reveletion',
+        title: 'The Shrouded Leap',
         description:
-            'Discover the ancient map hidden within the dark underbelly of Menhir, revealing the location of the forgotten crystal buried deep in the desert. Decode its enigmatic symbols to set your course.',
+            "Witness cryptic glimpses of technological leaps shrouded in the mists of the future, revealing vague innovations that will shape the city's destiny.",
     },
     {
-        title: 'The Awakening',
+        title: "The Inventor's Secrets",
         description:
-            'Grasp the Crystal into your hand and chant the ancient song of awakening. Be mindful of your feelings while the Crystal takes shape. Serenity is key, apathy is death.',
+            "Discover the elusive inventor's sanctum, a place where the minds of geniuses collaborate under the cloak of secrecy to propel the city toward a mysterious tomorrow.",
     },
     {
-        title: 'The Elemental Trials',
+        title: 'The Towers of Ascent',
         description:
-            'Begin the trials of Elements in order to infuse the crystal with energy. The first trial is that of the Red Obelisk. You use this ancient mystical structure to gather a strange energy and infuse it with the crystal.',
+            "Observe the enigmatic construction of towering pyramids and mysterious obelisks, changing the city's horizon with unknown significance.",
     },
     {
-        title: 'The Green Obelisk trial',
+        title: "The Visionary's Blueprint",
         description:
-            'You find your way to the Green Obelisk, deep within the deserts of Menhir and begin the challenge. Be wary as many Travelers before you found their ending and are now nothing more than sand and bone.',
+            "Seek the elusive architect with cryptic plans for the grand pyramids and obelisks, deciphering their role in the city's ambiguous future.",
     },
     {
-        title: 'The Night Ritual',
+        title: 'The Growing Enigma',
         description:
-            'After overcoming the trial of the Green Obelisk, using the crystal’s power you begin the Night Ritual and use the obelisk to summon and contain the mystical energy that dwells within this hidden part of the desert. You then infuse and charge the crystal with the energy and proceed to the next quest.',
+            "Traverse neighborhoods and districts where the city's enigmatic expansion is visible. The population surges, breathing fresh life into the enigma.",
     },
     {
-        title: 'The Ritual of Stone',
+        title: 'The Veiled Energy Source',
         description:
-            'You reach the final Obelisk of your trial and begin the challenge. In order to bend this structure to the will of the crystal, you must first decipher and chant its ancient symbols heavily written on its surface.',
+            "Delve into the enigmatic energy source that powers the city's technological metamorphosis, its true nature shrouded in mystery.",
     },
     {
-        title: 'Heart of the Giant',
+        title: 'The Resurgence of Culture',
         description:
-            'You successfully overcome the last Elemental Challenge and witness the Stone Obelisk as it changes its shape into a radiating blue crystal structure. Your own crystal heavily resonates with its power and starts absorbing the energy.',
+            "Uncover the revival of Menhir's culture, where the arts, music, and traditions experience a cryptic renaissance.",
     },
     {
-        title: 'Relic of Manthulu',
+        title: 'The Arcane Knowledge',
         description:
-            'After absorbing the Elemental Energies of Menhir, the crystal breaks down into a sacred artefact. You equip it and feel its power surging through you.',
+            "Meet the Custodians of Arcane Knowledge, the keepers of the city's obscure history, silently guiding its uncertain destiny.",
     },
     {
-        title: 'The Druid',
+        title: 'The Nexus of Exchange',
         description:
-            'Continue your journey through the desert. You meet a mysterious druid who offers her assistance in decoding the map and revealing its secrets.',
+            "Witness a web of obscure trade routes and shadowy markets fueling Menhir's concealed prosperity. Unravel the heart of the city's commerce.",
     },
     {
-        title: 'The Vision of Truth',
+        title: 'The Unity Ritual',
         description:
-            'With the druids guidance, you enter a meditative state where, together with the power of the artefact, you see a glimpse of the Netherworld and decipher its symbols. You must reach the remains of the Old One, a long-forgotten Titan that once gave life to Menhir, and recover an artefact.',
+            "Participate in the mysterious Unity Ritual, an enigmatic celebration that binds the city's inhabitants together, serving a cryptic purpose.",
     },
     {
-        title: 'The Old One',
+        title: "The Elders' Council",
         description:
-            'After a tiresome journey, you finally reach your destination. You take a few moments to comprehend the remains of the Old One. You feel beseeched by its radiating power, still lingering long after its unfortunate demise.',
+            "Encounter the enigmatic Council of Elders, the visionaries who navigate Menhir's nebulous path toward an ambiguous future.",
     },
     {
-        title: 'The Staff of the Old',
+        title: 'The Custodial Vigil',
         description:
-            'You search the surroundings thoroughly using your artefact as an indicator. As you get closer to what you seek the crystals start radiating. You find and recover the Staff of the Old.',
+            "Explore cryptic initiatives aimed at preserving the city's nebulous cultural heritage as Menhir advances into the unknown.",
     },
     {
-        title: 'The Potion of Blessing',
+        title: 'The Harmonious Conundrum',
         description:
-            'Finally, using the 2 artefacts recovered, you draw an alchemical circle and start chanting in the tongue of the dead. From within the circle a potion arises. You drink it and are now blessed by the Star of the Dawn.',
+            'Witness the shadowy efforts to maintain an enigmatic ecological equilibrium within a thriving city, where nature and progress dance in a cryptic duet.',
     },
     {
-        title: 'The Gate of Har’akkar',
+        title: "The Traveler's Legacy",
         description:
-            'Using the blessing of the Star, you finally continue your journey and pass through the gate of Har’akkar. As you pass through, memories of Menhir and how it once was start appearing. You return to the capital and present them to the Monolith.',
+            "Conclude your enigmatic journey as the gifted traveler, recognizing the enigma you leave behind as a silent witness to Menhir's future, a place of cryptic prosperity, cryptic growth, and boundless enigmas yet to be unraveled.",
     },
 ];
 
