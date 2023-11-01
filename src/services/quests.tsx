@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import Quest_1 from '../assets/quests/1.jpg';
-import Quest_2 from '../assets/quests/2.jpg';
-import Quest_3 from '../assets/quests/3.jpg';
-import Quest_4 from '../assets/quests/4.jpg';
-import Quest_5 from '../assets/quests/5.jpg';
-import Quest_6 from '../assets/quests/6.jpg';
-import Quest_7 from '../assets/quests/7.jpg';
-import Quest_8 from '../assets/quests/8.jpg';
-import Quest_9 from '../assets/quests/9.jpg';
-import Quest_10 from '../assets/quests/10.jpg';
-import Quest_11 from '../assets/quests/11.jpg';
-import Quest_12 from '../assets/quests/12.jpg';
-import Quest_13 from '../assets/quests/13.jpg';
-import Quest_14 from '../assets/quests/14.jpg';
-import Quest_15 from '../assets/quests/15.jpg';
-import Quest_16 from '../assets/quests/16.jpg';
+import Quest_1 from '../assets/quests/1.png';
+import Quest_2 from '../assets/quests/2.png';
+import Quest_3 from '../assets/quests/3.png';
+import Quest_4 from '../assets/quests/4.png';
+import Quest_5 from '../assets/quests/5.png';
+import Quest_6 from '../assets/quests/6.png';
+import Quest_7 from '../assets/quests/7.png';
+import Quest_8 from '../assets/quests/8.png';
+import Quest_9 from '../assets/quests/9.png';
+import Quest_10 from '../assets/quests/10.png';
+import Quest_11 from '../assets/quests/11.png';
+import Quest_12 from '../assets/quests/12.png';
+import Quest_13 from '../assets/quests/13.png';
+import Quest_14 from '../assets/quests/14.png';
+import Quest_15 from '../assets/quests/15.png';
+import Quest_16 from '../assets/quests/16.png';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
 import { Quest } from '../types';
+
+// import SmokeAndClouds from '../assets/quests/videos/1.webm';
+// import LightRays from '../assets/quests/videos/3-1.webm';
+// import DesertSmoke from '../assets/quests/videos/8-1.webm';
+// import Particles from '../assets/quests/videos/particles.webm';
 
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
@@ -46,83 +51,84 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: 'The Abandoned Base',
+        title: 'The Enigmatic Prophecy',
         description:
-            'Begin your journey by stumbling upon an abandoned base deep within the Forest of Menhir, filled with mysteries and signs of past travelers.',
+            "Embark on a mysterious journey as a traveler gifted with visions of Menhir's enigmatic future. Whispered tales speak of a resurgent city, but the details remain veiled in shadows.",
     },
     {
-        title: 'The Enigmatic Map',
+        title: 'The Seeds of Renewal',
         description:
-            'Discover an old, tattered map in the abandoned base, hinting at the location of a hidden dungeon. Uncover the secrets it holds.',
+            "Explore Menhir to unearth the cryptic symbols representing the city's hopeful resurgence. These symbols hint at a population reborn and the revival of life.",
     },
     {
-        title: 'Trail of Whispers',
+        title: 'The Shrouded Leap',
         description:
-            'Follow the cryptic clues on the map, leading you through the dense forest. Along the way, you receive mysterious buffs that enhance your skills.',
+            "Witness cryptic glimpses of technological leaps shrouded in the mists of the future, revealing vague innovations that will shape the city's destiny.",
     },
     {
-        title: 'Guardian of the Ancient Grove',
+        title: "The Inventor's Secrets",
         description:
-            'Encounter the guardian of the ancient grove, a mystical creature who challenges you to prove your worthiness to continue your quest.',
+            "Discover the elusive inventor's sanctum, a place where the minds of geniuses collaborate under the cloak of secrecy to propel the city toward a mysterious tomorrow.",
     },
     {
-        title: 'The Whispering Trees',
+        title: 'The Towers of Ascent',
         description:
-            'Navigate through the Whispering Trees, where the forest seems to come alive. Gain new abilities from the ancient spirits that inhabit this mystical place.',
+            "Observe the enigmatic construction of towering pyramids and mysterious obelisks, changing the city's horizon with unknown significance.",
     },
     {
-        title: 'The Sylvan Blessing',
+        title: "The Visionary's Blueprint",
         description:
-            'Receive the Sylvan Blessing, a powerful enchantment bestowed upon you by the spirits of the forest, enhancing your senses and agility.',
+            "Seek the elusive architect with cryptic plans for the grand pyramids and obelisks, deciphering their role in the city's ambiguous future.",
     },
     {
-        title: 'The Hidden Pond',
+        title: 'The Growing Enigma',
         description:
-            'Stumble upon a hidden pond deep within the forest. Its magical waters grant you the ability to breathe underwater and swim freely.',
+            "Traverse neighborhoods and districts where the city's enigmatic expansion is visible. The population surges, breathing fresh life into the enigma.",
     },
     {
-        title: 'The Ethereal Bridge',
+        title: 'The Veiled Energy Source',
         description:
-            'Cross the Ethereal Bridge, a mystical structure that defies gravity, granting you the power to levitate for a limited time.',
+            "Delve into the enigmatic energy source that powers the city's technological metamorphosis, its true nature shrouded in mystery.",
     },
     {
-        title: "The Guardian's Riddle",
+        title: 'The Resurgence of Culture',
         description:
-            'Encounter a guardian who presents you with a riddle. Solve it to gain access to the next stage of your journey.',
+            "Uncover the revival of Menhir's culture, where the arts, music, and traditions experience a cryptic renaissance.",
     },
     {
-        title: "The Whisperer's Call",
+        title: 'The Arcane Knowledge',
         description:
-            "Heed the Whisperer's Call, a haunting melody that leads you through a labyrinthine part of the forest, where time flows differently.",
+            "Meet the Custodians of Arcane Knowledge, the keepers of the city's obscure history, silently guiding its uncertain destiny.",
     },
     {
-        title: 'The Eclipsed Grove',
+        title: 'The Nexus of Exchange',
         description:
-            'Enter the Eclipsed Grove, a place where day and night are in constant flux. Harness the power of both sun and moon.',
+            "Witness a web of obscure trade routes and shadowy markets fueling Menhir's concealed prosperity. Unravel the heart of the city's commerce.",
     },
     {
-        title: 'The Celestial Observatory',
+        title: 'The Unity Ritual',
         description:
-            'Ascend the Celestial Observatory, where ancient astronomers once studied the stars. Here, you unlock the ability to see hidden constellations.',
+            "Participate in the mysterious Unity Ritual, an enigmatic celebration that binds the city's inhabitants together, serving a cryptic purpose.",
     },
     {
-        title: 'The Spirit of the Forest',
+        title: "The Elders' Council",
         description:
-            'Commune with the Spirit of the Forest, an ethereal being who imparts the ancient language of the forest, allowing you to communicate with its denizens.',
+            "Encounter the enigmatic Council of Elders, the visionaries who navigate Menhir's nebulous path toward an ambiguous future.",
     },
     {
-        title: 'The Luminescent Path',
-        description: 'Walk the Luminescent Path, a trail of glowing flora that guides you to the heart of the forest.',
+        title: 'The Custodial Vigil',
+        description:
+            "Explore cryptic initiatives aimed at preserving the city's nebulous cultural heritage as Menhir advances into the unknown.",
     },
     {
-        title: "The Mythical Beast's Lair",
+        title: 'The Harmonious Conundrum',
         description:
-            'Finally, reach the lair of the Mythical Beast, a formidable creature guarding the dungeon entrance. You must summon all your newfound abilities to face this formidable foe.',
+            'Witness the shadowy efforts to maintain an enigmatic ecological equilibrium within a thriving city, where nature and progress dance in a cryptic duet.',
     },
     {
-        title: "The Beast's Challenge",
+        title: "The Traveler's Legacy",
         description:
-            "Confront the Mythical Beast and engage in an epic battle. Use the buffs and knowledge you've gained throughout your journey to overcome this legendary adversary and claim the treasures hidden within the dungeon.",
+            "Conclude your enigmatic journey as the gifted traveler, recognizing the enigma you leave behind as a silent witness to Menhir's future, a place of cryptic prosperity, cryptic growth, and boundless enigmas yet to be unraveled.",
     },
 ];
 
