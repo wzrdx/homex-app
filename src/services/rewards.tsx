@@ -745,6 +745,18 @@ export const RAFFLES: any[] = [
     },
     // Trial 13 - Starts with ID 92
     {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.75)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.75)],
+        winners: 1,
+    },
+    {
         type: RewardType.NFT,
         id: getId(),
         winners: 1,
@@ -759,18 +771,6 @@ export const RAFFLES: any[] = [
         name: 'GenesisSpaceApe #9994',
         nonce: 3863,
         url: 'https://media.elrond.com/nfts/asset/bafybeicsa2ygmod3btvjtdvf6pofhp4vtjgfzgpmjhmgiryunrceccxmee/9994.png',
-    },
-    {
-        type: RewardType.Prizes,
-        id: getId(),
-        prizes: [getEGLDPrize(0.75)],
-        winners: 1,
-    },
-    {
-        type: RewardType.Prizes,
-        id: getId(),
-        prizes: [getEGLDPrize(0.75)],
-        winners: 1,
     },
 ];
 
