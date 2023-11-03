@@ -19,8 +19,9 @@ import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
 import { BsExclamation } from 'react-icons/bs';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { TimeIcon } from '@chakra-ui/icons';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
-import { TbMusic, TbMusicOff, TbBook } from 'react-icons/tb';
+import { TbMusic, TbMusicOff, TbBook, TbArrowBigUpLinesFilled } from 'react-icons/tb';
 import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
@@ -29,10 +30,12 @@ import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
 import { getNumberCall } from '../blockchain/generics/getNumberCall';
-import { format } from 'date-fns';
+import { differenceInSeconds, format, formatDistanceToNow } from 'date-fns';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import Separator from '../shared/Separator';
 
 const ROUTE_WIDTH = 100;
+const BONUS_XP_END = new Date('2023-11-06T09:00:00.000Z');
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -197,7 +200,7 @@ function Header() {
                         <Flex
                             ml={2.5}
                             alignItems="center"
-                            padding="7px 16px"
+                            padding="6px 13px"
                             borderRadius="9999px"
                             backgroundColor="#3c180d"
                             cursor="pointer"
@@ -237,7 +240,7 @@ function Header() {
                         <Flex
                             ml={2.5}
                             alignItems="center"
-                            padding="7px 16px"
+                            padding="6px 13px"
                             borderRadius="9999px"
                             backgroundColor="#3c180d"
                             cursor="pointer"
@@ -383,6 +386,32 @@ function Header() {
                             </Flex>
                         )}
                     </Flex>
+
+                    {differenceInSeconds(BONUS_XP_END, new Date()) > 0 && (
+                        <Flex alignItems="center" pointerEvents="all">
+                            <Box mb="2px">
+                                <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
+                            </Box>
+
+                            <Text ml={1} fontSize="15px" textTransform="uppercase" lineHeight="18px" letterSpacing="0.5px">
+                                <Text as="span" color="#5ff070" fontWeight={600}>
+                                    Double Xp
+                                </Text>{' '}
+                                <Text as="span" fontWeight={500}>
+                                    Weekend
+                                </Text>
+                            </Text>
+
+                            <Box mx={2.5}>
+                                <Separator type="vertical" width="1px" height="28px" />
+                            </Box>
+
+                            <TimeIcon boxSize={4} />
+                            <Text ml={1.5} fontSize="15px">
+                                {formatDistanceToNow(BONUS_XP_END)} left
+                            </Text>
+                        </Flex>
+                    )}
 
                     {/* <Flex alignItems="center" pointerEvents="all">
                         <Text fontSize="15px">Trial sponsored by</Text>

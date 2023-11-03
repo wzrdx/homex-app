@@ -40,7 +40,7 @@ const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
-const XP_MULTIPLIER = 10;
+const XP_MULTIPLIER = 20;
 
 const ESSENCE_HANDICAP = 1;
 
