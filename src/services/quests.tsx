@@ -20,11 +20,6 @@ import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
 import { Quest } from '../types';
 
-// import SmokeAndClouds from '../assets/quests/videos/1.webm';
-// import LightRays from '../assets/quests/videos/3-1.webm';
-// import DesertSmoke from '../assets/quests/videos/8-1.webm';
-// import Particles from '../assets/quests/videos/particles.webm';
-
 import { OngoingQuest } from '../blockchain/types';
 import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
@@ -40,7 +35,7 @@ const BASE_DURATION = 60; // minutes
 const BASE_COST = 15;
 const BASE_REWARD = 15;
 
-const XP_MULTIPLIER = 20;
+const XP_MULTIPLIER = 10;
 
 const ESSENCE_HANDICAP = 1;
 
