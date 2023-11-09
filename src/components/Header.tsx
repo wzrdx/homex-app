@@ -218,7 +218,7 @@ function Header() {
                         </Flex>
 
                         {!trial ? (
-                            <Spinner />
+                            <Spinner ml={5} />
                         ) : (
                             <Flex ml={5} flexDir="column" alignItems="center" justifyContent="center">
                                 <Text textTransform="uppercase" fontSize="15px" letterSpacing="0.25px" fontWeight={500}>
