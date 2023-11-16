@@ -51,84 +51,82 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: 'The Enigmatic Prophecy',
+        title: 'The Endless Dunes',
         description:
-            "Embark on a mysterious journey as a traveler gifted with visions of Menhir's enigmatic future. Whispered tales speak of a resurgent city, but the details remain veiled in shadows.",
+            'Begin your journey in the vast deserts of Menhir, where shifting sands conceal secrets yet to be unveiled.',
     },
     {
-        title: 'The Seeds of Renewal',
-        description:
-            "Explore Menhir to unearth the cryptic symbols representing the city's hopeful resurgence. These symbols hint at a population reborn and the revival of life.",
+        title: 'Mirage of Pathways',
+        description: "Encounter a perplexing maze buried beneath the desert's surface, an enigmatic gateway to the unknown.",
     },
     {
-        title: 'The Shrouded Leap',
-        description:
-            "Witness cryptic glimpses of technological leaps shrouded in the mists of the future, revealing vague innovations that will shape the city's destiny.",
+        title: 'Sandswept Cryptic Whispers',
+        description: 'Hear cryptic whispers carried by the desert winds, guiding you deeper into the labyrinthine mysteries.',
     },
     {
-        title: "The Inventor's Secrets",
+        title: 'Veiled Oasis of Decisions',
         description:
-            "Discover the elusive inventor's sanctum, a place where the minds of geniuses collaborate under the cloak of secrecy to propel the city toward a mysterious tomorrow.",
+            'Discover an oasis amidst the dunes, surrounded by an ancient maze that demands choices with obscured consequences.',
     },
     {
-        title: 'The Towers of Ascent',
+        title: 'The Whispering Sands',
         description:
-            "Observe the enigmatic construction of towering pyramids and mysterious obelisks, changing the city's horizon with unknown significance.",
+            'Traverse the Whispering Sands, where the very earth murmurs ancient riddles, hinting at the direction of your obscured destination.',
     },
     {
-        title: "The Visionary's Blueprint",
+        title: 'Shifting Pillars of Uncertainty',
         description:
-            "Seek the elusive architect with cryptic plans for the grand pyramids and obelisks, deciphering their role in the city's ambiguous future.",
+            'Confront pillars rising from the sands, forming a maze of uncertainty where every step is a veiled choice.',
     },
     {
-        title: 'The Growing Enigma',
+        title: 'Mirage of the Forgotten',
         description:
-            "Traverse neighborhoods and districts where the city's enigmatic expansion is visible. The population surges, breathing fresh life into the enigma.",
+            'Stumble upon a mirage that conceals a maze, a forgotten construct challenging you to decipher its veiled patterns.',
     },
     {
-        title: 'The Veiled Energy Source',
+        title: 'The Hourglass',
         description:
-            "Delve into the enigmatic energy source that powers the city's technological metamorphosis, its true nature shrouded in mystery.",
+            'Uncover an illusion within the mirage, a shifting distortion that conceals the true nature of the perplexing labyrinth.',
     },
     {
-        title: 'The Resurgence of Culture',
+        title: 'Labyrinthine Echoes',
         description:
-            "Uncover the revival of Menhir's culture, where the arts, music, and traditions experience a cryptic renaissance.",
+            "Listen to echoes within the labyrinth, ancient whispers that beckon you forward into the obscured heart of Menhir's deserts.",
     },
     {
-        title: 'The Arcane Knowledge',
+        title: "The Dunes' Deceptive Dance",
         description:
-            "Meet the Custodians of Arcane Knowledge, the keepers of the city's obscure history, silently guiding its uncertain destiny.",
+            'Witness the deceptive dance of the dunes, where the very landscape becomes a maze, twisting and turning in an enigmatic choreography.',
     },
     {
-        title: 'The Nexus of Exchange',
+        title: 'The Oasis of Fateful Crossroads',
         description:
-            "Witness a web of obscure trade routes and shadowy markets fueling Menhir's concealed prosperity. Unravel the heart of the city's commerce.",
+            'Reach a fateful crossroads within an oasis, where the ancient maze branches into shadowed paths, each holding veiled destinies.',
     },
     {
-        title: 'The Unity Ritual',
+        title: 'The Cryptic Compass',
         description:
-            "Participate in the mysterious Unity Ritual, an enigmatic celebration that binds the city's inhabitants together, serving a cryptic purpose.",
+            'Find a cryptic compass that points to hidden gateways within the labyrinth, each gate leading to an undisclosed realm.',
     },
     {
-        title: "The Elders' Council",
+        title: 'Mirage of a Hidden Citadel',
         description:
-            "Encounter the enigmatic Council of Elders, the visionaries who navigate Menhir's nebulous path toward an ambiguous future.",
+            'Discern a mirage concealing a hidden citadel within the maze, an ancient bastion guarding obscure knowledge.',
     },
     {
-        title: 'The Custodial Vigil',
+        title: 'Shrouded Guardians',
         description:
-            "Explore cryptic initiatives aimed at preserving the city's nebulous cultural heritage as Menhir advances into the unknown.",
+            "Encounter shrouded guardians of the maze, ethereal beings who test your resolve to navigate the labyrinth's veiled complexities.",
     },
     {
-        title: 'The Harmonious Conundrum',
+        title: 'The Whispered Endings',
         description:
-            'Witness the shadowy efforts to maintain an enigmatic ecological equilibrium within a thriving city, where nature and progress dance in a cryptic duet.',
+            'Hear whispered tales of endings as you approach the heart of the maze, where the sands hold secrets of cryptic conclusions.',
     },
     {
-        title: "The Traveler's Legacy",
+        title: "The Traveler's Veiled Legacy",
         description:
-            "Conclude your enigmatic journey as the gifted traveler, recognizing the enigma you leave behind as a silent witness to Menhir's future, a place of cryptic prosperity, cryptic growth, and boundless enigmas yet to be unraveled.",
+            'Conclude your journey as the traveler who conquered the deserts and deciphered the ancient mazes, leaving behind a legacy shrouded in the mysteries of Menhir.',
     },
 ];
 
