@@ -772,6 +772,43 @@ export const RAFFLES: any[] = [
         nonce: 3863,
         url: 'https://media.elrond.com/nfts/asset/bafybeicsa2ygmod3btvjtdvf6pofhp4vtjgfzgpmjhmgiryunrceccxmee/9994.png',
     },
+    // Trial 14 - Starts with ID 96
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.75)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.75)],
+        winners: 1,
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'High Street Wolf Society #738',
+        nonce: 738,
+        url: 'https://ipfs.io/ipfs/QmemHXkBYZwUFZ4fMEgaTupzPS4PALnTmB7HEHSZm5Kt5J/738.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'L1 Werewolf #3363',
+        nonce: 2434,
+        url: 'https://ipfs.io/ipfs/QmXGPKjSn2huDEanmxrWq8WqiWvBgmQjTHqDsu1Qj6smuw/3363.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        name: 'NFTIM #6691',
+        nonce: 3317,
+        url: 'https://ipfs.io/ipfs/bafybeigfsavl3figwpet6uy6bcllpahkmuabxioxahuxbvrdx36kqfcjt4/6691.png',
+    },
 ];
 
 export const BATTLES: any[] = [
