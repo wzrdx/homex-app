@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { API_KEY } from '../components/Settings';
 
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 
 export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq03qfld7ypk27r2k0wgux89573pw2htq8ukrqze9mpw',
@@ -27,9 +27,9 @@ export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = getEnvValue('https://devnet-explorer.multiversx.com', 'https://explorer.multiversx.com');
 
 export const COLLECTION_SIZE = getEnvValue(200, 3333);
-export const TRAVELERS_COLLECTION_ID = getEnvValue('PTESTERS-8fd15c', 'TRAVELER-51bdef');
+export const TRAVELERS_COLLECTION_ID = getEnvValue('TRAVELERS-659fa7', 'TRAVELER-51bdef');
 export const TRAVELERS_PADDING = getEnvValue(2, 4);
-export const ELDERS_COLLECTION_ID = getEnvValue('HOLYCOWS-90e467', 'HOMEXELDER-d43957');
+export const ELDERS_COLLECTION_ID = getEnvValue('ELDERS-dd9aab', 'HOMEXELDER-d43957');
 export const ELDERS_PADDING = 2;
 
 export const TICKETS_TOKEN_ID = getEnvValue('HOMETICKET-9112c2', 'HOMETICKET-257a32');
