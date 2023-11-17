@@ -22,7 +22,6 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { TimeIcon } from '@chakra-ui/icons';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbBook, TbArrowBigUpLinesFilled } from 'react-icons/tb';
-import Wallet from '../shared/Wallet';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
@@ -235,8 +234,6 @@ function Header() {
                     </Flex>
 
                     <Flex alignItems="center" pointerEvents="all">
-                        <Wallet />
-
                         <Flex
                             ml={2.5}
                             alignItems="center"

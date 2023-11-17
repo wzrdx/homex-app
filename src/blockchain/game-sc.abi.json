@@ -427,6 +427,21 @@
             ]
         },
         {
+            "name": "getPageLegendaryArt",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "LegendaryArtPage"
+                }
+            ]
+        },
+        {
             "name": "changeBattleTimestamp",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -1035,6 +1050,13 @@
             "outputs": []
         },
         {
+            "name": "achievement",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "getXpLeaderboardSize",
             "mutability": "readonly",
             "inputs": [],
@@ -1223,6 +1245,15 @@
                 },
                 {
                     "name": "tickets",
+                    "type": "u32"
+                }
+            ]
+        },
+        "LegendaryArtPage": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "aurora",
                     "type": "u32"
                 }
             ]

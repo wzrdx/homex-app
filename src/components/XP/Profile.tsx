@@ -1,12 +1,19 @@
 import { Box, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
-import { getUsername } from '../../services/helpers';
+import { getShortAddress, getUsername } from '../../services/helpers';
 import { getLevel } from '../../services/xp';
 import { getPlayerXp } from '../../blockchain/api/getPlayerXp';
+import { IoWalletOutline } from 'react-icons/io5';
+import { logout } from '@multiversx/sdk-dapp/utils';
+import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
     let { address } = useGetAccountInfo();
+
+    const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>();
     const [xp, setXp] = useState<number>();
@@ -41,6 +48,12 @@ function Profile() {
                             <Text fontSize="19px" mb="-2px" mt="-5px" fontWeight={500}>
                                 {username}
                             </Text>
+
+                            <Stack direction="row" spacing={1} alignItems="center">
+                                <IoWalletOutline color="whitesmoke" fontSize="14px" />
+                                <Text color="whitesmoke">{getShortAddress(address)}</Text>
+                            </Stack>
+
                             <Text>
                                 Level{' '}
                                 <Text as="span" fontWeight={500} color={levelInfo.color}>
@@ -52,6 +65,23 @@ function Profile() {
                                 <Text as="span" fontWeight={800}>
                                     XP
                                 </Text>
+                            </Text>
+
+                            <Text
+                                pt={2}
+                                color="redClrs"
+                                transition="all 0.05s ease-in"
+                                cursor="pointer"
+                                _hover={{ opacity: 0.75 }}
+                                onClick={() => {
+                                    setAuthentication(false);
+
+                                    logout(`/unlock`, (callbackUrl) => {
+                                        navigate(callbackUrl as string);
+                                    });
+                                }}
+                            >
+                                Disconnect
                             </Text>
                         </Stack>
 
