@@ -74,17 +74,13 @@
             "outputs": []
         },
         {
-            "name": "claimAllEnergy",
+            "name": "burnTickets",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
+                    "name": "amount",
+                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -1066,6 +1062,119 @@
                     "type": "List<PlayerXp>"
                 }
             ]
+        },
+        {
+            "name": "setCollectionIds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "travelers_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "elders_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueTicketsCollection",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "token_display_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createTicketsToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "royalties",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueEnergyToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "token_display_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueHerbsToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "token_display_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueGemsToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "token_display_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueEssenceToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": ["EGLD"],
+            "inputs": [
+                {
+                    "name": "token_display_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
         }
     ],
     "events": [],
