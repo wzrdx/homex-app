@@ -11,6 +11,8 @@ import {
     Image,
     useDisclosure,
     Spinner,
+    Stack,
+    ModalFooter,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { routes as serviceRoutes } from '../services/routes';
@@ -18,10 +20,9 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
 import { BsExclamation } from 'react-icons/bs';
-import { AiOutlineSetting } from 'react-icons/ai';
 import { TimeIcon } from '@chakra-ui/icons';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
-import { TbMusic, TbMusicOff, TbBook, TbArrowBigUpLinesFilled } from 'react-icons/tb';
+import { TbMusic, TbMusicOff, TbArrowBigUpLinesFilled } from 'react-icons/tb';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
 import Gameplay from './Gameplay';
@@ -32,6 +33,8 @@ import { getNumberCall } from '../blockchain/generics/getNumberCall';
 import { differenceInSeconds, format, formatDistanceToNow } from 'date-fns';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
+import { HeaderButton } from '../shared/HeaderButton';
+import Log from './Log';
 
 const ROUTE_WIDTH = 100;
 const BONUS_XP_END = new Date('2023-11-06T09:00:00.000Z');
@@ -39,6 +42,7 @@ const BONUS_XP_END = new Date('2023-11-06T09:00:00.000Z');
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
     const { isOpen: isSettingsOpen, onOpen: onSettingsOpen, onClose: onSettingsClose } = useDisclosure();
+    const { isOpen: isLogOpen, onOpen: onLogOpen, onClose: onLogClose } = useDisclosure();
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
@@ -196,31 +200,28 @@ function Header() {
                             </Box>
                         )}
 
-                        <Flex
-                            ml={2.5}
-                            alignItems="center"
-                            padding="6px 13px"
-                            borderRadius="9999px"
+                        <HeaderButton
+                            type="Gameplay"
+                            color="#f97316"
                             backgroundColor="#3c180d"
-                            cursor="pointer"
-                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#4d1e0e' }}
+                            text="Gameplay"
                             onClick={() => {
                                 playSound('mystery');
                                 onGameplayOpen();
                             }}
-                        >
-                            <TbBook fontSize="20px" color="rgb(249 115 22)" />
-                            <Text ml={2} color="white">
-                                Gameplay
-                            </Text>
-                        </Flex>
+                        />
 
                         {!trial ? (
                             <Spinner ml={5} />
                         ) : (
-                            <Flex ml={5} flexDir="column" alignItems="center" justifyContent="center">
-                                <Text textTransform="uppercase" fontSize="15px" letterSpacing="0.25px" fontWeight={500}>
+                            <Stack spacing={0.5} ml={5} alignItems="center" justifyContent="center">
+                                <Text
+                                    textTransform="uppercase"
+                                    fontSize="15px"
+                                    lineHeight="17px"
+                                    letterSpacing="0.25px"
+                                    fontWeight={500}
+                                >
                                     Trial{' '}
                                     <Text as="span" color="#f97316">
                                         {trial?.count}
@@ -229,41 +230,38 @@ function Header() {
                                 <Text fontSize="14px" lineHeight="15px">
                                     {format(trial?.timestamp as Date, 'dd MMM, HH:mm')}
                                 </Text>
-                            </Flex>
+                            </Stack>
                         )}
                     </Flex>
 
-                    <Flex alignItems="center" pointerEvents="all">
-                        <Flex
-                            ml={2.5}
-                            alignItems="center"
-                            padding="6px 13px"
-                            borderRadius="9999px"
+                    <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
+                        <HeaderButton
+                            type="Swords"
+                            color="#ff0050"
+                            backgroundColor="#540c1d"
+                            text="Traveler's Log"
+                            onClick={onLogOpen}
+                        />
+
+                        <HeaderButton
+                            type="Settings"
+                            color="#f97316"
                             backgroundColor="#3c180d"
-                            cursor="pointer"
-                            transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                            _hover={{ backgroundColor: '#4d1e0e' }}
-                            onClick={() => onSettingsOpen()}
-                        >
-                            <AiOutlineSetting fontSize="20px" color="rgb(249 115 22)" />
-                            <Text ml={2} color="white">
-                                Settings
-                            </Text>
-                        </Flex>
+                            text="Settings"
+                            onClick={onSettingsOpen}
+                        />
 
                         <NavLink to="/xp">
                             <Box
-                                ml={4}
                                 mr="-2px"
                                 cursor="pointer"
                                 transition="all 0.15s cubic-bezier(0.215, 0.610, 0.355, 1)"
                                 _hover={{ opacity: 0.85 }}
                             >
-                                {/* <PiUserCircleThin fontSize="48px" /> */}
                                 <Image src={Profile} width="48px" borderRadius="50%" />
                             </Box>
                         </NavLink>
-                    </Flex>
+                    </Stack>
                 </Flex>
 
                 <Box position="absolute" left={0} bottom={0} right={0}>
@@ -438,7 +436,13 @@ function Header() {
             <Modal size="full" onClose={onGameplayClose} isOpen={isGameplayOpen}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalCloseButton color="white" _focusVisible={{ outline: 0 }} borderRadius="3px" />
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ boxShadow: '0 0 transparent' }}
+                        borderRadius="3px"
+                    />
+
                     <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
                         <Gameplay />
 
@@ -448,6 +452,29 @@ function Header() {
                             </Button>
                         </Box>
                     </ModalBody>
+                </ModalContent>
+            </Modal>
+
+            {/* Traveler's Log */}
+            <Modal size="full" onClose={onLogClose} isOpen={isLogOpen}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ boxShadow: '0 0 transparent' }}
+                        borderRadius="3px"
+                    />
+
+                    <ModalBody backgroundColor="#665230" display="flex" justifyContent="center" alignItems="center">
+                        <Log />
+                    </ModalBody>
+
+                    <ModalFooter backgroundColor="#665230">
+                        <Button colorScheme="red" onClick={onLogClose}>
+                            Close
+                        </Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
 

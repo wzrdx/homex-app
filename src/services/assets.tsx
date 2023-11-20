@@ -22,6 +22,13 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import Aurora from '../assets/images/Aurora_small.jpg';
 
+import BadgeEnabled from '../assets/log/badge_enabled.png';
+import BadgeDisabled from '../assets/log/badge_disabled.png';
+
+// Achievements
+export const getBadgeEnabled = () => BadgeEnabled;
+export const getBadgeDisabled = () => BadgeDisabled;
+
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
 

@@ -53,7 +53,7 @@ function Layout() {
     }, []);
 
     const init = async () => {
-        // await getPageLegendaryArt();
+        await getPageLegendaryArt();
     };
 
     const displayToast = (
