@@ -20,7 +20,7 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
-import Aurora from '../assets/images/Aurora_small.jpg';
+import ArtDrop from '../assets/images/Verdant.jpg';
 
 import BadgeEnabled from '../assets/log/badge_enabled.png';
 import BadgeDisabled from '../assets/log/badge_disabled.png';
@@ -54,4 +54,4 @@ export const getRaffleHomeX = () => RaffleHomeX;
 export const getRaffleRektNerds = () => RaffleRektNerds;
 export const getRaffleSuperVictor = () => RaffleSuperVictor;
 
-export const getArtDrop = () => Aurora;
+export const getArtDrop = () => ArtDrop;

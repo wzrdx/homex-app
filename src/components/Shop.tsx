@@ -17,8 +17,8 @@ import { LargeTimer } from '../shared/LargeTimer';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import { isAfter } from 'date-fns';
 
-const AURORA_PRICE = 2;
-const AURORA_XP = 750;
+const PRICE = 3;
+const XP = 1500;
 
 function Shop() {
     const [timestamp, setTimestamp] = useState<Date>();
@@ -51,7 +51,7 @@ function Shop() {
         try {
             const tx = smartContract.methods
                 .mint([amount])
-                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount * AURORA_PRICE))
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount * PRICE))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
                 .withGasLimit(9000000 + 250000 * amount)
@@ -79,7 +79,7 @@ function Shop() {
                     resolution: TxResolution.UpdateTickets,
                     data: {
                         amount,
-                        xp: AURORA_XP * amount,
+                        xp: XP * amount,
                     },
                 },
             ]);
@@ -96,30 +96,34 @@ function Shop() {
                 <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
                     <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
-                            Aurora Art Drop
+                            Verdant Art Drop
                         </Text>
-                        <Text layerStyle="header3">MINT ENDED</Text>
-                        {/* <LargeTimer timestamp={timestamp} callback={() => init()} /> */}
+
+                        {isAfter(new Date(), timestamp) ? (
+                            <Text layerStyle="header2">MINT ENDED</Text>
+                        ) : (
+                            <LargeTimer timestamp={timestamp} callback={() => init()} />
+                        )}
                     </Flex>
 
                     <Stack direction="row" spacing={4} alignItems="center">
                         <Image width={{ md: '234px', lg: '292px' }} src={getArtDrop()} />
                         <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
-                            In the frost-laden world of Almur, the legend of Aurora unfolds. Clad in armor reminiscent of
-                            ancient Frostpriests, Aurora is an enigmatic warrior who harnesses the power of ice and mountains.
-                            Born in the rocky region of Almur, Aurora possesses unique abilities bestowed during the celestial
-                            Frostfall event. They stand as one of the chosen few among the five legendary characters. Gifted
-                            with Cryomancy, Aurora commands ice and frost, summoning blizzards and freezing foes. Their journey
-                            through treacherous landscapes and encounters with mythical creatures shape their destiny and impact
-                            the fate of Menhir. As a beacon of hope, Aurora's presence inspires both awe and fear as they
-                            navigate their path towards their cosmic purpose in the frigid realms of Sundsten.
+                            Deep within Menhir's heart, ancient trees formed a cathedral where Verdant faced disruption to the
+                            cherished balance. Sensing a disturbance, he met Luminara, a majestic deer spirit lamenting
+                            outsiders exploiting the land. Verdant, attuned to nature, sought understanding. The ghostly deer, a
+                            centuries-old guardian, expressed sorrow for felled trees and a delicate balance. Together, they
+                            transformed into sparkling lights, preserving Menhir's vitality. Luminara's haunting melody became a
+                            harmonious anthem, marking a newfound alliance. The tale echoed through ages, reminding of spirits
+                            and guardians uniting for Menhir's well-being. Passed down through generations, the story reinforced
+                            the importance of respecting nature and forming alliances for the greater good.
                         </Text>
                     </Stack>
 
                     <Flex justifyContent="center" alignItems="center" userSelect="none">
                         <Text>Amount Due:</Text>
                         <Text mx={2} fontWeight={500} color="ticketGold">
-                            {amount * AURORA_PRICE}
+                            {amount * PRICE}
                         </Text>
                         <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
 
@@ -135,7 +139,7 @@ function Shop() {
                             +
                         </Text>
                         <Text as="span" fontWeight={600}>
-                            {amount * AURORA_XP}
+                            {amount * XP}
                         </Text>
                     </Flex>
 
@@ -166,7 +170,7 @@ function Shop() {
                             transition="all 0.1s ease-in"
                             _hover={{ color: '#b8b8b8' }}
                             onClick={() => {
-                                if (amount < resources.tickets / AURORA_PRICE) {
+                                if (amount < resources.tickets / PRICE) {
                                     setAmount(amount + 1);
                                 }
                             }}
