@@ -116,7 +116,7 @@ function Shop() {
                             transformed into sparkling lights, preserving Menhir's vitality. Luminara's haunting melody became a
                             harmonious anthem, marking a newfound alliance. The tale echoed through ages, reminding of spirits
                             and guardians uniting for Menhir's well-being. Passed down through generations, the story reinforced
-                            the importance of respecting nature and forming alliances for the greater good.
+                            the importance of respecting nature and forming alliances.
                         </Text>
                     </Stack>
 
