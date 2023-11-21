@@ -6,9 +6,9 @@ import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getPageLegendaryArt';
+const FUNCTION_NAME = 'getPageCelestialsCustodian';
 
-export const getPageLegendaryArt = async () => {
+export const getPageCelestialsCustodian = async () => {
     try {
         const address = await getAddress();
 
@@ -25,6 +25,7 @@ export const getPageLegendaryArt = async () => {
 
         const obj = {
             aurora: value.aurora.toNumber(),
+            verdant: value.verdant.toNumber(),
         };
 
         console.log(obj);

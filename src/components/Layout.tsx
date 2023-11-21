@@ -9,7 +9,6 @@ import { getLayoutBackground } from '../services/assets';
 import { CustomToast } from '../shared/CustomToast';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
-import { getPageLegendaryArt } from '../blockchain/api/achievements/getPageLegendaryArt';
 
 type LayoutContext = {
     displayToast: (
@@ -47,14 +46,7 @@ function Layout() {
         getTickets();
 
         getGameState();
-
-        // TODO: Remove
-        init();
     }, []);
-
-    const init = async () => {
-        await getPageLegendaryArt();
-    };
 
     const displayToast = (
         type: string,

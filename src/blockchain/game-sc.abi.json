@@ -184,16 +184,6 @@
             ]
         },
         {
-            "name": "getArtCollectionId",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "TokenIdentifier"
-                }
-            ]
-        },
-        {
             "name": "getTicketsId",
             "mutability": "readonly",
             "inputs": [],
@@ -423,21 +413,6 @@
             "outputs": [
                 {
                     "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getPageLegendaryArt",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "LegendaryArtPage"
                 }
             ]
         },
@@ -828,16 +803,6 @@
             "outputs": []
         },
         {
-            "name": "getStakedAddressesCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
             "name": "getCleanupAddressesCount",
             "mutability": "readonly",
             "inputs": [],
@@ -1057,6 +1022,21 @@
             "outputs": []
         },
         {
+            "name": "getPageCelestialsCustodian",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "LegendaryArtPage"
+                }
+            ]
+        },
+        {
             "name": "getXpLeaderboardSize",
             "mutability": "readonly",
             "inputs": [],
@@ -1254,6 +1234,10 @@
             "fields": [
                 {
                     "name": "aurora",
+                    "type": "u32"
+                },
+                {
+                    "name": "verdant",
                     "type": "u32"
                 }
             ]

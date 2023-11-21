@@ -13,12 +13,22 @@ import {
     Switch,
     Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ShadowButton } from '../shared/ShadowButton';
 import { getBadgeDisabled, getBadgeEnabled } from '../services/assets';
+import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
 
 function Log() {
     const [isEnabled, setEnabled] = useState(false);
+
+    // Init
+    useEffect(() => {
+        init();
+    }, []);
+
+    const init = async () => {
+        await getPageCelestialsCustodian();
+    };
 
     return (
         <Stack alignItems="center">
@@ -26,7 +36,7 @@ function Log() {
                 Traveler's Log
             </Text>
 
-            <ShadowButton color="#8c1eff" borderColor="#333" onClick={() => setEnabled(!isEnabled)}>
+            <ShadowButton color="orangered" borderColor="#333" onClick={() => setEnabled(!isEnabled)}>
                 <Text textShadow="1px 1px 1px #333" color="white">
                     Legendary Characters
                 </Text>
