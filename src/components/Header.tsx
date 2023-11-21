@@ -15,7 +15,7 @@ import {
     ModalFooter,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { routes as serviceRoutes } from '../services/routes';
+import { routeNames, routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
@@ -30,11 +30,12 @@ import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
 import { getNumberCall } from '../blockchain/generics/getNumberCall';
-import { differenceInSeconds, format, formatDistanceToNow } from 'date-fns';
+import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date-fns';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Log';
+import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 
 const ROUTE_WIDTH = 100;
 const BONUS_XP_END = new Date('2023-11-06T09:00:00.000Z');
@@ -56,6 +57,8 @@ function Header() {
         count: number;
         timestamp: Date;
     }>();
+
+    const [isArtDropOngoing, setArtDropOngoing] = useState<boolean>(false);
 
     // Init
     useEffect(() => {
@@ -82,6 +85,10 @@ function Header() {
             count,
             timestamp,
         });
+
+        const artDropTimestamp = await getArtDropTimestamp();
+
+        setArtDropOngoing(isBefore(new Date(), artDropTimestamp));
     };
 
     useEffect(() => {
@@ -113,14 +120,19 @@ function Header() {
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
-                                    visibility="hidden"
+                                    visibility={isArtDropOngoing && route === routeNames.shop ? 'visible' : 'hidden'}
                                     borderWidth="2px"
                                     borderColor="wheat"
                                     transform="rotate(45deg)"
                                     boxShadow="0 0 3px wheat"
                                     backgroundColor="#2f2f2f"
                                 >
-                                    <Box color="wheat" transform="rotate(-45deg)" fontSize="20px" margin="-3px">
+                                    <Box
+                                        color="wheat"
+                                        transform="rotate(-45deg)"
+                                        fontSize={{ md: '18px', lg: '19px' }}
+                                        margin="-3px"
+                                    >
                                         <BsExclamation />
                                     </Box>
                                 </Box>
