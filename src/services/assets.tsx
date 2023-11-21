@@ -22,12 +22,26 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import ArtDrop from '../assets/images/Verdant.jpg';
 
-import BadgeEnabled from '../assets/log/badge_enabled.png';
-import BadgeDisabled from '../assets/log/badge_disabled.png';
+import Badge_1 from '../assets/log/1.png';
+import Badge_2 from '../assets/log/2.png';
+import Badge_3 from '../assets/log/3.png';
 
 // Achievements
-export const getBadgeEnabled = () => BadgeEnabled;
-export const getBadgeDisabled = () => BadgeDisabled;
+export const getBadge = (index: number) => {
+    switch (index) {
+        case 1:
+            return Badge_1;
+
+        case 2:
+            return Badge_2;
+
+        case 3:
+            return Badge_3;
+
+        default:
+            console.error('Unknown badge');
+    }
+};
 
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;

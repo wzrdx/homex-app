@@ -40,6 +40,7 @@ const colors = {
     ticketBright: '#ffd06e',
     energyBright: '#50a3f2',
     availableResource: '#95f984',
+    log: '#32302e',
 };
 
 const fonts = {

@@ -480,12 +480,12 @@ function Header() {
                         borderRadius="3px"
                     />
 
-                    <ModalBody backgroundColor="#665230" display="flex" justifyContent="center" alignItems="center">
+                    <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
                         <Log />
                     </ModalBody>
 
-                    <ModalFooter backgroundColor="#665230">
-                        <Button colorScheme="red" onClick={onLogClose}>
+                    <ModalFooter backgroundColor="dark">
+                        <Button colorScheme="orange" onClick={onLogClose}>
                             Close
                         </Button>
                     </ModalFooter>
