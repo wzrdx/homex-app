@@ -485,7 +485,7 @@ function Header() {
                     </ModalBody>
 
                     <ModalFooter backgroundColor="dark">
-                        <Button colorScheme="orange" onClick={onLogClose}>
+                        <Button colorScheme="red" onClick={onLogClose}>
                             Close
                         </Button>
                     </ModalFooter>

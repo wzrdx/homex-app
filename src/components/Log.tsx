@@ -19,8 +19,8 @@ const PAGES = [
             {
                 title: "Aurora's Awakening",
                 text: 'Minted at least one Aurora from Art of Menhir',
-                isUnlocked: true,
-                data: 5,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Emberheart'),
             },
             {
@@ -40,9 +40,9 @@ const PAGES = [
             {
                 title: "Emberheart's Enigma",
                 text: 'Minted at least one Emberheart from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
+                isUnlocked: true,
+                data: 5,
+                assets: getCelestialsAssets('Custodian', 'Emberheart'),
             },
             {
                 title: 'Aetheris Ascendant',
@@ -59,8 +59,8 @@ const PAGES = [
             {
                 title: 'Aurora Curator',
                 text: 'Minted at least 5 Aurora from Art of Menhir',
-                isUnlocked: true,
-                data: 5,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Emberheart'),
             },
             {
@@ -80,9 +80,9 @@ const PAGES = [
             {
                 title: 'Emberheart Curator',
                 text: 'Minted at least 5 Emberheart from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Verdant'),
+                isUnlocked: true,
+                data: 5,
+                assets: getCelestialsAssets('Curator', 'Emberheart'),
             },
             {
                 title: 'Aetheris Curator',
@@ -153,7 +153,7 @@ function Log() {
                 zIndex={2}
             >
                 {/* Left */}
-                <Stack flex={1} spacing={8} py={8} px={10} backgroundColor="#00000020" borderRight="1px solid #ffffff0d">
+                <Stack flex={2} spacing={8} py={8} px={10} backgroundColor="#00000020" borderRight="1px solid #ffffff0d">
                     <Stack spacing={3} alignItems="center">
                         <Stack spacing={2} direction="row" alignItems="center">
                             <IconWithShadow shadowColor="#222">
@@ -210,7 +210,7 @@ function Log() {
                 </Stack>
 
                 {/* Right */}
-                <Stack flex={3} py={8} px={10} spacing={8}>
+                <Stack flex={7} py={8} px={10} spacing={8}>
                     <Flex justifyContent="space-between" alignItems="flex-start">
                         <Stack spacing={3}>
                             <Text layerStyle="header1" textShadow="1px 1px 0px #222">
@@ -235,8 +235,8 @@ function Log() {
 
                         <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
                             <Stack direction="row" spacing={1.5} alignItems="center" color="#bebebe">
-                                <InfoOutlineIcon fontSize="17px" />
-                                <Text textShadow="1px 1px 0px #222">
+                                <InfoOutlineIcon />
+                                <Text fontSize="15px" textShadow="1px 1px 0px #222">
                                     Unlock{' '}
                                     {_(PAGES[currentPage].badges)
                                         .filter((badge) => !badge.isUnlocked)
@@ -277,7 +277,7 @@ function Log() {
                                         fontSize="14px"
                                         textShadow="1px 1px 0px #222"
                                         textAlign="center"
-                                        color={badge.isUnlocked ? 'white' : '#bebebe'}
+                                        color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
                                     >
                                         {badge.text}
                                     </Text>
@@ -314,7 +314,7 @@ const MenuItem = ({ title, text, isActive, onClick }) => {
         <Stack
             spacing={-0.5}
             borderRadius="20px"
-            px={6}
+            px={5}
             py={2.5}
             backgroundColor={isActive ? '#ffffff10' : 'transparent'}
             cursor="pointer"
