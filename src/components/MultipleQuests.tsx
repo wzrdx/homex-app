@@ -85,7 +85,7 @@ function MultipleQuests() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(9250000 + 250000 * _.size(transfers) + 550000 * _.size(selectedQuestIds))
+                .withGasLimit(14000000 + 250000 * _.size(transfers) + 550000 * _.size(selectedQuestIds))
                 .buildTransaction();
 
             await refreshAccount();
