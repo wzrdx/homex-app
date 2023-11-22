@@ -22,25 +22,52 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import ArtDrop from '../assets/images/Verdant.jpg';
 
-import Badge_1 from '../assets/log/1.png';
-import Badge_2 from '../assets/log/2.png';
-import Badge_3 from '../assets/log/3.png';
+import VerdantLocked from '../assets/log/verdant_locked.png';
+import VerdantCustodian from '../assets/log/verdant_custodian.png';
+import VerdantCurator from '../assets/log/verdant_curator.png';
+
+import EmberheartLocked from '../assets/log/emberheart_locked.png';
+import EmberheartCustodian from '../assets/log/emberheart_custodian.png';
+import EmberheartCurator from '../assets/log/emberheart_curator.png';
 
 // Achievements
-export const getBadge = (index: number) => {
-    switch (index) {
-        case 1:
-            return Badge_1;
+export const getCelestialsAssets = (
+    type: 'Custodian' | 'Curator',
+    character: 'Aurora' | 'Verdant' | 'Solara' | 'Emberheart' | 'Aetheris'
+): [string, string] => {
+    let assets: [string, string] = ['', ''];
 
-        case 2:
-            return Badge_2;
+    if (type === 'Custodian') {
+        switch (character) {
+            case 'Verdant':
+                assets = [VerdantLocked, VerdantCustodian];
+                break;
 
-        case 3:
-            return Badge_3;
+            case 'Emberheart':
+                assets = [EmberheartLocked, EmberheartCustodian];
+                break;
 
-        default:
-            console.error('Unknown badge');
+            default:
+                console.error('Unknown badge');
+        }
     }
+
+    if (type === 'Curator') {
+        switch (character) {
+            case 'Verdant':
+                assets = [VerdantLocked, VerdantCurator];
+                break;
+
+            case 'Emberheart':
+                assets = [EmberheartLocked, EmberheartCurator];
+                break;
+
+            default:
+                console.error('Unknown badge');
+        }
+    }
+
+    return assets;
 };
 
 export const getLayoutBackground = () => Background;
