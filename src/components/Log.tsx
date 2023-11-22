@@ -1,10 +1,13 @@
-import { Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ShadowButton } from '../shared/ShadowButton';
 import { getBadge } from '../services/assets';
 import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
+import _ from 'lodash';
+import { FaQuestionCircle } from 'react-icons/fa';
+import { QuestionOutlineIcon } from '@chakra-ui/icons';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
@@ -14,27 +17,32 @@ const PAGES = [
         title: 'Celestials Custodian',
         badges: [
             {
-                text: 'Minted Aurora',
+                title: "Aurora's Awakening",
+                text: 'Minted at least one Aurora from Art of Menhir',
                 isUnlocked: true,
                 data: 1,
             },
             {
-                text: 'Minted Verdant',
+                title: 'Verdant Visionary',
+                text: 'Minted at least one Verdant from Art of Menhir',
                 isUnlocked: true,
                 data: 7,
             },
             {
-                text: 'Minted Solstice',
+                title: "Solara's Spark",
+                text: 'Minted at least one Solara from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
             {
-                text: 'Minted Zephyr',
+                title: "Emberheart's Enigma",
+                text: 'Minted at least one Emberheart from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
             {
-                text: 'Minted Ember',
+                title: 'Aetheris Ascendant',
+                text: 'Minted at least one Aetheris from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
@@ -45,27 +53,32 @@ const PAGES = [
         title: 'Celestials Curator',
         badges: [
             {
-                text: 'Minted 5 or more Aurora',
+                title: 'Aurora Curator',
+                text: 'Minted at least 5 Aurora from Art of Menhir',
                 isUnlocked: false,
                 data: 1,
             },
             {
-                text: 'Minted 5 or more Verdant',
+                title: 'Verdant Curator',
+                text: 'Minted at least 5 Verdant from Art of Menhir',
                 isUnlocked: true,
                 data: 7,
             },
             {
-                text: 'Minted 5 or more Solstice',
+                title: 'Solara Curator',
+                text: 'Minted at least 5 Solara from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
             {
-                text: 'Minted 5 or more Zephyr',
+                title: 'Emberheart Curator',
+                text: 'Minted at least 5 Emberheart from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
             {
-                text: 'Minted 5 or more Ember',
+                title: 'Aetheris Curator',
+                text: 'Minted at least 5 Aetheris from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
             },
@@ -87,6 +100,19 @@ function Log() {
         await getPageCelestialsCustodian();
     };
 
+    const getTotalUnlocked = () => {
+        const badges = _(PAGES)
+            .map((page) => page.badges)
+            .flatten()
+            .value();
+
+        return (
+            <Text as="span" color="energyBright">
+                {badges.filter((badge) => badge.isUnlocked).length}/{badges.length}
+            </Text>
+        );
+    };
+
     return (
         <Box position="relative">
             <Stack
@@ -99,64 +125,110 @@ function Log() {
                 borderRadius={BORDER_RADIUS}
                 zIndex={2}
             >
-                <Stack spacing={1.5} direction="row" alignItems="center">
-                    <IconWithShadow shadowColor="#222">
-                        <LuSwords fontSize="19px" />
-                    </IconWithShadow>
+                <Stack spacing={0.5} alignItems="center">
+                    <Stack spacing={1.5} direction="row" alignItems="center">
+                        <IconWithShadow shadowColor="#222">
+                            <LuSwords fontSize="19px" />
+                        </IconWithShadow>
 
-                    <Text layerStyle="header1Alt" textShadow="1px 1px 0px #222">
-                        Traveler's Log
+                        <Text layerStyle="header1Alt" textShadow="1px 1px 0px #222">
+                            Traveler's Log
+                        </Text>
+                    </Stack>
+
+                    <Text fontWeight={500} textShadow="1px 1px 0px #222">
+                        Unlocked: {getTotalUnlocked()}
                     </Text>
                 </Stack>
 
                 <Stack spacing={8} direction="row">
-                    <Stack>
-                        {PAGES.map((page, index) => (
-                            <Box key={index}>
-                                <ShadowButton
-                                    color="#ae6133"
-                                    borderColor="#222"
-                                    isEnabled={index === currentPage}
-                                    onClick={() => setCurrentPage(index)}
-                                >
-                                    <Text textShadow="1px 1px 0px #222" color="white">
-                                        {page.title}
-                                    </Text>
-                                </ShadowButton>
-                            </Box>
-                        ))}
+                    <Stack spacing={2}>
+                        <Text layerStyle="header1Alt" textShadow="1px 1px 0px #222">
+                            Pages
+                        </Text>
+
+                        <Stack>
+                            {PAGES.map((page, index) => (
+                                <Box key={index}>
+                                    <ShadowButton
+                                        color="#ae6133"
+                                        borderColor="#222"
+                                        isEnabled={index === currentPage}
+                                        onClick={() => setCurrentPage(index)}
+                                    >
+                                        <Text textShadow="1px 1px 0px #222" color="white">
+                                            {page.title}
+                                        </Text>
+                                    </ShadowButton>
+                                </Box>
+                            ))}
+                        </Stack>
                     </Stack>
 
-                    <Box
-                        display="grid"
-                        gridAutoColumns="1fr 1fr"
-                        gridTemplateColumns="1fr 1fr 1fr"
-                        rowGap={8}
-                        columnGap={8}
-                        backgroundColor="log"
-                    >
-                        {PAGES[currentPage].badges.map((badge) => (
-                            <Stack alignItems="center" minW="186px">
-                                <Box position="relative" px={4}>
-                                    {!!badge.data && (
-                                        <Box position="absolute" top={0} left={0}>
-                                            <Text>{badge.data}</Text>
-                                        </Box>
-                                    )}
-
-                                    <Image src={badge.isUnlocked ? PAGES[currentPage].src : getBadge(1)} maxH="132px" />
-                                </Box>
-
-                                <Text
-                                    fontSize="14px"
-                                    textShadow="1px 1px 0px #222"
-                                    color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
-                                >
-                                    {badge.text}
+                    <Stack spacing={8}>
+                        <Flex justifyContent="space-between" alignItems="center">
+                            <Stack spacing={0}>
+                                <Text layerStyle="header2" textShadow="1px 1px 0px #222">
+                                    {PAGES[currentPage].title}
+                                </Text>
+                                <Text fontWeight={500} textShadow="1px 1px 0px #222">
+                                    Unlocked:{' '}
+                                    <Text as="span" color="energyBright">
+                                        {_(PAGES[currentPage].badges)
+                                            .filter((badge) => badge.isUnlocked)
+                                            .size()}
+                                        /{PAGES[currentPage].badges.length}
+                                    </Text>
                                 </Text>
                             </Stack>
-                        ))}
-                    </Box>
+
+                            <Stack direction="row" spacing={3} alignItems="center">
+                                <QuestionOutlineIcon color="whitesmoke" fontSize="23px" />
+                                <Button colorScheme="blue">Mint page</Button>
+                            </Stack>
+                        </Flex>
+
+                        <Box
+                            display="grid"
+                            gridAutoColumns="1fr 1fr"
+                            gridTemplateColumns="1fr 1fr 1fr"
+                            rowGap={8}
+                            columnGap={8}
+                        >
+                            {PAGES[currentPage].badges.map((badge, index) => (
+                                <Stack key={index} spacing={4} position="relative" alignItems="center" width="226px">
+                                    <Image src={badge.isUnlocked ? PAGES[currentPage].src : getBadge(1)} maxH="134px" />
+
+                                    <Stack spacing={0} alignItems="center">
+                                        <Text
+                                            fontSize="15px"
+                                            fontWeight={500}
+                                            textTransform="uppercase"
+                                            letterSpacing="0.5px"
+                                            textShadow="1px 1px 0px #222"
+                                            textAlign="center"
+                                            color={badge.isUnlocked ? 'white' : '#bebebe'}
+                                        >
+                                            {badge.title}
+                                        </Text>
+
+                                        <Text
+                                            fontSize="14px"
+                                            textShadow="1px 1px 0px #222"
+                                            textAlign="center"
+                                            color={badge.isUnlocked ? 'white' : '#bebebe'}
+                                        >
+                                            {badge.text}
+                                        </Text>
+
+                                        <Box visibility={badge.data ? 'visible' : 'hidden'}>
+                                            <Text layerStyle="header2">{badge.data}</Text>
+                                        </Box>
+                                    </Stack>
+                                </Stack>
+                            ))}
+                        </Box>
+                    </Stack>
                 </Stack>
             </Stack>
 
