@@ -11,6 +11,7 @@ import { GoTrophy } from 'react-icons/go';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
+const ACCENT_COLOR = 'energyBright';
 
 const PAGES = [
     {
@@ -114,7 +115,7 @@ function Log() {
             .value();
 
         return (
-            <Text fontWeight={500} color="energyBright" letterSpacing="1px" fontSize="17px" lineHeight="17px">
+            <Text fontWeight={500} color={ACCENT_COLOR} letterSpacing="1px" fontSize="17px" lineHeight="17px">
                 {badges.filter((badge) => badge.isUnlocked).length}
                 <Text as="span" mx={0.5}>
                     /
@@ -125,13 +126,8 @@ function Log() {
     };
 
     const getPageUnlocked = () => {
-        const badges = _(PAGES)
-            .map((page) => page.badges)
-            .flatten()
-            .value();
-
         return (
-            <Text fontWeight={500} color="energyBright" letterSpacing="1px" fontSize="17px" lineHeight="17px">
+            <Text fontWeight={500} color={ACCENT_COLOR} letterSpacing="1px" fontSize="17px" lineHeight="17px">
                 {_(PAGES[currentPage].badges)
                     .filter((badge) => badge.isUnlocked)
                     .size()}
@@ -153,7 +149,7 @@ function Log() {
                 zIndex={2}
             >
                 {/* Left */}
-                <Stack flex={2} spacing={8} py={8} px={10} backgroundColor="#00000020" borderRight="1px solid #ffffff0d">
+                <Stack flex={2} spacing={10} py={8} px={10} backgroundColor="#00000020" borderRight="1px solid #ffffff0d">
                     <Stack spacing={3} alignItems="center">
                         <Stack spacing={2} direction="row" alignItems="center">
                             <IconWithShadow shadowColor="#222">
@@ -166,7 +162,7 @@ function Log() {
                         </Stack>
 
                         <Stack spacing={2.5} direction="row" alignItems="stretch">
-                            <Box color="energyBright">
+                            <Box color={ACCENT_COLOR}>
                                 <IconWithShadow shadowColor="#222">
                                     <GoTrophy fontSize="36px" />
                                 </IconWithShadow>
@@ -210,7 +206,7 @@ function Log() {
                 </Stack>
 
                 {/* Right */}
-                <Stack flex={7} py={8} px={10} spacing={8}>
+                <Stack flex={7} spacing={10} py={8} px={10}>
                     <Flex justifyContent="space-between" alignItems="flex-start">
                         <Stack spacing={3}>
                             <Text layerStyle="header1" textShadow="1px 1px 0px #222">
@@ -218,7 +214,7 @@ function Log() {
                             </Text>
 
                             <Stack spacing={2.5} direction="row" alignItems="stretch">
-                                <Box color="energyBright">
+                                <Box color={ACCENT_COLOR}>
                                     <IconWithShadow shadowColor="#222">
                                         <GoTrophy fontSize="36px" />
                                     </IconWithShadow>
@@ -248,17 +244,17 @@ function Log() {
                         </Stack>
                     </Flex>
 
-                    <Box display="grid" gridAutoColumns="1fr 1fr" gridTemplateColumns="1fr 1fr 1fr" rowGap={8} columnGap={8}>
+                    <Box
+                        mb={1.5}
+                        display="grid"
+                        gridAutoColumns="1fr 1fr"
+                        gridTemplateColumns="1fr 1fr 1fr"
+                        rowGap={9}
+                        columnGap={8}
+                    >
                         {PAGES[currentPage].badges.map((badge, index) => (
-                            <Stack
-                                key={index}
-                                spacing={4}
-                                position="relative"
-                                alignItems="center"
-                                width="226px"
-                                margin="0 auto"
-                            >
-                                <Image src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]} maxH="130px" />
+                            <Stack key={index} spacing={4} position="relative" alignItems="center" px={6}>
+                                <Image src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]} maxH="144px" />
 
                                 <Stack spacing={0} alignItems="center">
                                     <Text
@@ -283,7 +279,16 @@ function Log() {
                                     </Text>
 
                                     <Box visibility={badge.data ? 'visible' : 'hidden'}>
-                                        <Text layerStyle="header2">{badge.data}</Text>
+                                        <Text
+                                            mt={1}
+                                            fontWeight={500}
+                                            letterSpacing="0.25px"
+                                            lineHeight="16px"
+                                            color={ACCENT_COLOR}
+                                            textShadow="1px 1px 0px #222"
+                                        >
+                                            {badge.data}
+                                        </Text>
                                     </Box>
                                 </Stack>
                             </Stack>

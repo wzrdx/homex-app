@@ -250,8 +250,8 @@ function Header() {
                         {process.env.NODE_ENV === 'development' && (
                             <HeaderButton
                                 type="Swords"
-                                color="#ff0050"
-                                backgroundColor="#540c1d"
+                                color="energyBright"
+                                backgroundColor="#182e4c"
                                 text="Traveler's Log"
                                 onClick={onLogOpen}
                             />
