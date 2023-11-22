@@ -284,7 +284,7 @@ function Log() {
                                             fontWeight={500}
                                             letterSpacing="0.25px"
                                             lineHeight="16px"
-                                            color={ACCENT_COLOR}
+                                            color="white"
                                             textShadow="1px 1px 0px #222"
                                         >
                                             {badge.data}
