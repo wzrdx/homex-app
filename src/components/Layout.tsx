@@ -77,7 +77,7 @@ function Layout() {
     useEffect(() => {
         // Updates
         if (isLoaded && !window.localStorage['update_1']) {
-            setTimeout(() => onModalOpen(), 1000);
+            setTimeout(() => onModalOpen(), 2500);
             window.localStorage['update_1'] = true;
         }
     }, [isLoaded]);
