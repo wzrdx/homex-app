@@ -24,42 +24,42 @@ const PAGES = [
             {
                 title: "Aurora's Awakening",
                 text: 'Minted at least one Aurora from Art of Menhir',
-                isUnlocked: true,
-                data: 6,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Aurora'),
             },
             {
                 title: 'Verdant Visionary',
                 text: 'Minted at least one Verdant from Art of Menhir',
-                isUnlocked: true,
-                data: 7,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Verdant'),
             },
             {
                 title: "Solara's Spark",
                 text: 'Minted at least one Solara from Art of Menhir',
-                isUnlocked: true,
-                data: 12,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Solara'),
             },
             {
                 title: "Emberheart's Enigma",
                 text: 'Minted at least one Emberheart from Art of Menhir',
-                isUnlocked: true,
-                data: 47,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Emberheart'),
             },
             {
                 title: 'Aetheris Ascendant',
                 text: 'Minted at least one Aetheris from Art of Menhir',
-                isUnlocked: true,
-                data: 9,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Aetheris'),
             },
             {
                 title: 'Celestials Custodian',
                 text: 'Minted at least one of each Celestials from Art of Menhir',
-                isUnlocked: true,
+                isUnlocked: false,
                 data: 0,
                 assets: getCelestialsAssets('Custodian', 'Celestials'),
             },
@@ -71,42 +71,42 @@ const PAGES = [
             {
                 title: 'Aurora Curator',
                 text: 'Minted at least 5 Aurora from Art of Menhir',
-                isUnlocked: true,
-                data: 6,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Aurora'),
             },
             {
                 title: 'Verdant Curator',
                 text: 'Minted at least 5 Verdant from Art of Menhir',
-                isUnlocked: true,
-                data: 7,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Verdant'),
             },
             {
                 title: 'Solara Curator',
                 text: 'Minted at least 5 Solara from Art of Menhir',
-                isUnlocked: true,
-                data: 12,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Solara'),
             },
             {
                 title: 'Emberheart Curator',
                 text: 'Minted at least 5 Emberheart from Art of Menhir',
-                isUnlocked: true,
-                data: 47,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Emberheart'),
             },
             {
                 title: 'Aetheris Curator',
                 text: 'Minted at least 5 Aetheris from Art of Menhir',
-                isUnlocked: true,
-                data: 9,
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Curator', 'Aetheris'),
             },
             {
-                title: 'Celestials Custodian',
+                title: 'Celestials Curator',
                 text: 'Minted at least 5 of each Celestials from Art of Menhir',
-                isUnlocked: true,
+                isUnlocked: false,
                 data: 0,
                 assets: getCelestialsAssets('Curator', 'Celestials'),
             },
@@ -118,17 +118,55 @@ function Log() {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [isMinting, setIsMinting] = useState<boolean>(false);
 
+    const [pages, setPages] = useState<
+        {
+            title: string;
+            badges: {
+                title: string;
+                text: string;
+                isUnlocked: boolean;
+                data: number;
+                assets: [string, string];
+            }[];
+        }[]
+    >(PAGES);
+
     // Init
     useEffect(() => {
         init();
     }, []);
 
     const init = async () => {
-        await getPageCelestialsCustodian();
+        const celestials = await getPageCelestialsCustodian();
+
+        const celestialsCustodian = [celestials.aurora, celestials.verdant, 0, 0, 0];
+        celestialsCustodian.push(celestialsCustodian.every((amount) => amount > 0) ? 1 : 0);
+
+        const celestialsCurator = [celestials.aurora, celestials.verdant, 0, 0, 0];
+        celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
+
+        setPages([
+            {
+                ...PAGES[0],
+                badges: _.map(PAGES[0].badges, (badge, index) => ({
+                    ...badge,
+                    data: celestialsCustodian[index],
+                    isUnlocked: celestialsCustodian[index] > 0,
+                })),
+            },
+            {
+                ...PAGES[1],
+                badges: _.map(PAGES[1].badges, (badge, index) => ({
+                    ...badge,
+                    data: celestialsCustodian[index],
+                    isUnlocked: celestialsCustodian[index] >= 5,
+                })),
+            },
+        ]);
     };
 
     const getTotalUnlocked = () => {
-        const badges = _(PAGES)
+        const badges = _(pages)
             .map((page) => page.badges)
             .flatten()
             .value();
@@ -147,13 +185,13 @@ function Log() {
     const getPageUnlocked = () => {
         return (
             <Text fontWeight={500} color={ACCENT_COLOR} letterSpacing="1px" fontSize="17px" lineHeight="17px">
-                {_(PAGES[currentPage].badges)
+                {_(pages[currentPage].badges)
                     .filter((badge) => badge.isUnlocked)
                     .size()}
                 <Text as="span" mx={0.5}>
                     /
                 </Text>
-                {PAGES[currentPage].badges.length}
+                {pages[currentPage].badges.length}
             </Text>
         );
     };
@@ -218,13 +256,13 @@ function Log() {
                         </Stack>
 
                         <Stack spacing={1}>
-                            {PAGES.map((page, index) => (
+                            {pages.map((page, index) => (
                                 <Box key={index}>
                                     <MenuItem
                                         title={page.title}
-                                        text={`${_(PAGES[index].badges)
+                                        text={`${_(pages[index].badges)
                                             .filter((badge) => badge.isUnlocked)
-                                            .size()} / ${PAGES[index].badges.length} Unlocked`}
+                                            .size()} / ${pages[index].badges.length} Unlocked`}
                                         isActive={index === currentPage}
                                         onClick={() => setCurrentPage(index)}
                                     />
@@ -239,7 +277,7 @@ function Log() {
                     {isMinting ? (
                         <PageMint
                             pageIndex={currentPage}
-                            pageName={PAGES[currentPage].title}
+                            pageName={pages[currentPage].title}
                             goBack={() => setIsMinting(false)}
                         />
                     ) : (
@@ -247,7 +285,7 @@ function Log() {
                             <Flex justifyContent="space-between" alignItems="flex-start">
                                 <Stack spacing={3}>
                                     <Text layerStyle="header1" textShadow="1px 1px 0px #222">
-                                        {PAGES[currentPage].title}
+                                        {pages[currentPage].title}
                                     </Text>
 
                                     <Stack spacing={2.5} direction="row" alignItems="stretch">
@@ -268,7 +306,7 @@ function Log() {
 
                                 <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
                                     <Stack direction="row" spacing={1} alignItems="center">
-                                        {!_(PAGES[currentPage].badges)
+                                        {!_(pages[currentPage].badges)
                                             .filter((badge) => !badge.isUnlocked)
                                             .size() ? (
                                             <>
@@ -292,7 +330,7 @@ function Log() {
 
                                                 <Text fontSize="15px" textShadow="1px 1px 0px #222" color="#cbcbcb">
                                                     Unlock{' '}
-                                                    {_(PAGES[currentPage].badges)
+                                                    {_(pages[currentPage].badges)
                                                         .filter((badge) => !badge.isUnlocked)
                                                         .size()}{' '}
                                                     more to mint
@@ -314,7 +352,7 @@ function Log() {
                                 rowGap={{ md: 6, lg: 9 }}
                                 columnGap={8}
                             >
-                                {PAGES[currentPage].badges.map((badge, index) => (
+                                {pages[currentPage].badges.map((badge, index) => (
                                     <Stack key={index} spacing={4} position="relative" alignItems="center" px={6} minH="224px">
                                         <Image
                                             src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}

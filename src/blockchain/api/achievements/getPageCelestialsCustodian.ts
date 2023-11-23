@@ -8,7 +8,10 @@ const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getPageCelestialsCustodian';
 
-export const getPageCelestialsCustodian = async () => {
+export const getPageCelestialsCustodian = async (): Promise<{
+    aurora: number;
+    verdant: number;
+}> => {
     try {
         const address = await getAddress();
 
@@ -28,11 +31,12 @@ export const getPageCelestialsCustodian = async () => {
             verdant: value.verdant.toNumber(),
         };
 
-        console.log(obj);
-
         return obj;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
-        return new Date();
+        return {
+            aurora: 0,
+            verdant: 0,
+        };
     }
 };
