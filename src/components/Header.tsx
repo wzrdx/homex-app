@@ -247,15 +247,13 @@ function Header() {
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
-                        {process.env.NODE_ENV === 'development' && (
-                            <HeaderButton
-                                type="Swords"
-                                color="#ff0050"
-                                backgroundColor="#540c1d"
-                                text="Traveler's Log"
-                                onClick={onLogOpen}
-                            />
-                        )}
+                        <HeaderButton
+                            type="Swords"
+                            color="energyBright"
+                            backgroundColor="#182e4c"
+                            text="Traveler's Log"
+                            onClick={onLogOpen}
+                        />
 
                         <HeaderButton
                             type="Settings"
@@ -480,11 +478,11 @@ function Header() {
                         borderRadius="3px"
                     />
 
-                    <ModalBody backgroundColor="#665230" display="flex" justifyContent="center" alignItems="center">
+                    <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
                         <Log />
                     </ModalBody>
 
-                    <ModalFooter backgroundColor="#665230">
+                    <ModalFooter backgroundColor="dark">
                         <Button colorScheme="red" onClick={onLogClose}>
                             Close
                         </Button>

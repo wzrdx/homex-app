@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
 import { AuthenticationProvider } from './services/authentication';
@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { ResourcesContextType, useResourcesContext } from './services/resources';
 import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, first, find, cloneDeep, remove, forEach, isEmpty, isNaN, size } from 'lodash';
+import { map, head, includes, find, cloneDeep, remove, forEach, isEmpty, size } from 'lodash';
 import { useEffect } from 'react';
 import {
     useTransactionsContext,

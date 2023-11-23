@@ -40,6 +40,11 @@ const colors = {
     ticketBright: '#ffd06e',
     energyBright: '#50a3f2',
     availableResource: '#95f984',
+    log: '#32302e',
+    mintGreen: '#2bfd89',
+    mirage: '#c58cf7',
+    blizzardEpic: '#a335ee',
+    blizzardLegendary: '#ff8000',
 };
 
 const fonts = {

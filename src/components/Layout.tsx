@@ -1,4 +1,21 @@
-import { Box, Flex, StyleProps, Text, ToastId, ToastPosition, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Flex,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    StyleProps,
+    Text,
+    ToastId,
+    ToastPosition,
+    useDisclosure,
+    useToast,
+} from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { getBackgroundStyle } from '../services/helpers';
@@ -9,6 +26,7 @@ import { getLayoutBackground } from '../services/assets';
 import { CustomToast } from '../shared/CustomToast';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
+import { Updates } from './Updates';
 
 type LayoutContext = {
     displayToast: (
@@ -37,6 +55,8 @@ function Layout() {
     const toast = useToast();
     const toastIdRef = useRef<ToastId>();
 
+    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+
     // Init
     useEffect(() => {
         getEnergy();
@@ -46,7 +66,21 @@ function Layout() {
         getTickets();
 
         getGameState();
+
+        if (!window.localStorage['update_1']) {
+            setTimeout(() => onModalOpen(), 1000);
+            window.localStorage['update_1'] = true;
+        }
     }, []);
+
+    // Updates
+    useEffect(() => {
+        // Updates
+        if (isLoaded && !window.localStorage['update_1']) {
+            setTimeout(() => onModalOpen(), 1000);
+            window.localStorage['update_1'] = true;
+        }
+    }, [isLoaded]);
 
     const displayToast = (
         type: string,
@@ -97,6 +131,30 @@ function Layout() {
                     <Outlet context={{ displayToast, closeToast, routes, routeNames }} />
                 </Box>
             </Flex>
+
+            {/* Settings */}
+            <Modal size="xl" onClose={onModalClose} isOpen={isModalOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent backgroundColor="dark">
+                    <ModalHeader>New update</ModalHeader>
+
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ boxShadow: '0 0 transparent' }}
+                        borderRadius="3px"
+                    />
+                    <ModalBody>
+                        <Updates />
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme="red" onClick={onModalClose}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     );
 }

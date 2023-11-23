@@ -1,5 +1,6 @@
 import Background from '../assets/backgrounds/1.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
+import AlternateBackground from '../assets/backgrounds/alternate.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 import Frame from '../assets/frame.png';
@@ -22,15 +23,105 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import ArtDrop from '../assets/images/Verdant.jpg';
 
-import BadgeEnabled from '../assets/log/badge_enabled.png';
-import BadgeDisabled from '../assets/log/badge_disabled.png';
+import AuroraLocked from '../assets/log/aurora_locked.png';
+import AuroraCustodian from '../assets/log/aurora_custodian.png';
+import AuroraCurator from '../assets/log/aurora_curator.png';
+
+import VerdantLocked from '../assets/log/verdant_locked.png';
+import VerdantCustodian from '../assets/log/verdant_custodian.png';
+import VerdantCurator from '../assets/log/verdant_curator.png';
+
+import SolaraLocked from '../assets/log/solara_locked.png';
+import SolaraCustodian from '../assets/log/solara_custodian.png';
+import SolaraCurator from '../assets/log/solara_curator.png';
+
+import EmberheartLocked from '../assets/log/emberheart_locked.png';
+import EmberheartCustodian from '../assets/log/emberheart_custodian.png';
+import EmberheartCurator from '../assets/log/emberheart_curator.png';
+
+import AetherisLocked from '../assets/log/aetheris_locked.png';
+import AetherisCustodian from '../assets/log/aetheris_custodian.png';
+import AetherisCurator from '../assets/log/aetheris_curator.png';
+
+import CelestialsLocked from '../assets/log/celestials_locked.png';
+import CelestialsCustodian from '../assets/log/celestials_custodian.png';
+import CelestialsCurator from '../assets/log/celestials_curator.png';
 
 // Achievements
-export const getBadgeEnabled = () => BadgeEnabled;
-export const getBadgeDisabled = () => BadgeDisabled;
+export const getCelestialsAssets = (
+    type: 'Custodian' | 'Curator',
+    badge: 'Aurora' | 'Verdant' | 'Solara' | 'Emberheart' | 'Aetheris' | 'Celestials'
+): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    if (type === 'Custodian') {
+        switch (badge) {
+            case 'Verdant':
+                assets = [VerdantLocked, VerdantCustodian];
+                break;
+
+            case 'Emberheart':
+                assets = [EmberheartLocked, EmberheartCustodian];
+                break;
+
+            case 'Aurora':
+                assets = [AuroraLocked, AuroraCustodian];
+                break;
+
+            case 'Solara':
+                assets = [SolaraLocked, SolaraCustodian];
+                break;
+
+            case 'Aetheris':
+                assets = [AetherisLocked, AetherisCustodian];
+                break;
+
+            case 'Celestials':
+                assets = [CelestialsLocked, CelestialsCustodian];
+                break;
+
+            default:
+                console.error('Unknown badge');
+        }
+    }
+
+    if (type === 'Curator') {
+        switch (badge) {
+            case 'Verdant':
+                assets = [VerdantLocked, VerdantCurator];
+                break;
+
+            case 'Emberheart':
+                assets = [EmberheartLocked, EmberheartCurator];
+                break;
+
+            case 'Aurora':
+                assets = [AuroraLocked, AuroraCurator];
+                break;
+
+            case 'Solara':
+                assets = [SolaraLocked, SolaraCurator];
+                break;
+
+            case 'Aetheris':
+                assets = [AetherisLocked, AetherisCurator];
+                break;
+
+            case 'Celestials':
+                assets = [CelestialsLocked, CelestialsCurator];
+                break;
+
+            default:
+                console.error('Unknown badge');
+        }
+    }
+
+    return assets;
+};
 
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
+export const getAlternateBackground = () => AlternateBackground;
 
 export const getFrame = () => Frame;
 export const getVisionImage = () => Vision;
