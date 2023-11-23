@@ -17,53 +17,6 @@ const ACCENT_COLOR = 'energyBright';
 
 const PAGES = [
     {
-        title: 'Locked Testing',
-        badges: [
-            {
-                title: "Aurora's Awakening",
-                text: 'Minted at least one Aurora from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Aurora'),
-            },
-            {
-                title: 'Verdant Visionary',
-                text: 'Minted at least one Verdant from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
-            },
-            {
-                title: "Solara's Spark",
-                text: 'Minted at least one Solara from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Solara'),
-            },
-            {
-                title: "Emberheart's Enigma",
-                text: 'Minted at least one Emberheart from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Emberheart'),
-            },
-            {
-                title: 'Aetheris Ascendant',
-                text: 'Minted at least one Aetheris from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Aetheris'),
-            },
-            {
-                title: 'Celestials Custodian',
-                text: 'Minted at least one of each Celestials from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Celestials'),
-            },
-        ],
-    },
-    {
         title: 'Celestials Custodian',
         badges: [
             {
@@ -207,13 +160,20 @@ function Log() {
             <Flex
                 position="relative"
                 width="1280px"
-                background="radial-gradient(circle, rgba(51,51,51,1) 0%, rgba(50,48,46,1) 50%)"
+                backgroundColor="#2b2b2b"
                 borderRadius={BORDER_RADIUS}
                 overflow="hidden"
                 zIndex={2}
             >
                 {/* Left */}
-                <Stack flex={2} spacing={10} py={8} px={10} backgroundColor="#00000020" borderRight="1px solid #ffffff0d">
+                <Stack
+                    flex={2}
+                    spacing={{ md: 8, lg: 10 }}
+                    py={{ md: 6, lg: 8 }}
+                    px={{ md: 8, lg: 10 }}
+                    backgroundColor="#00000020"
+                    borderRight="1px solid #ffffff0d"
+                >
                     <Stack spacing={3} alignItems="center">
                         <Stack spacing={2} direction="row" alignItems="center">
                             <IconWithShadow shadowColor="#222">
@@ -270,7 +230,7 @@ function Log() {
                 </Stack>
 
                 {/* Right */}
-                <Stack flex={7} position="relative" spacing={10} py={8} px={10}>
+                <Stack flex={7} position="relative" spacing={{ md: 8, lg: 10 }} py={{ md: 6, lg: 8 }} px={{ md: 8, lg: 10 }}>
                     <Flex justifyContent="space-between" alignItems="flex-start">
                         <Stack spacing={3}>
                             <Text layerStyle="header1" textShadow="1px 1px 0px #222">
@@ -336,12 +296,15 @@ function Log() {
                         display="grid"
                         gridAutoColumns="1fr 1fr"
                         gridTemplateColumns="1fr 1fr 1fr"
-                        rowGap={9}
+                        rowGap={{ md: 6, lg: 9 }}
                         columnGap={8}
                     >
                         {PAGES[currentPage].badges.map((badge, index) => (
                             <Stack key={index} spacing={4} position="relative" alignItems="center" px={6}>
-                                <Image src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]} maxH="144px" />
+                                <Image
+                                    src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}
+                                    maxH={{ md: '120px', lg: '144px' }}
+                                />
 
                                 <Stack spacing={0} alignItems="center">
                                     <Text
@@ -358,6 +321,7 @@ function Log() {
 
                                     <Text
                                         fontSize="14px"
+                                        lineHeight="19px"
                                         textShadow="1px 1px 0px #222"
                                         textAlign="center"
                                         color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
@@ -371,7 +335,6 @@ function Log() {
                                             fontWeight={500}
                                             letterSpacing="0.25px"
                                             fontSize="15px"
-                                            lineHeight="15px"
                                             color="white"
                                             textShadow="1px 1px 0px #222"
                                         >
@@ -389,6 +352,8 @@ function Log() {
                         filter="saturate(0) opacity(0.25) brightness(0.8)"
                         mixBlendMode="exclusion"
                         style={getBackgroundStyle(getLayoutBackground())}
+                        pointerEvents="none"
+                        userSelect="none"
                     ></Flex>
                 </Stack>
             </Flex>
