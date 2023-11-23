@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getCelestialsAssets } from '../services/assets';
+import { getCelestialsAssets, getLayoutBackground } from '../services/assets';
 import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
@@ -9,6 +9,7 @@ import { BiInfoCircle } from 'react-icons/bi';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { LiaScrollSolid } from 'react-icons/lia';
 import { GoTrophy } from 'react-icons/go';
+import { getBackgroundStyle } from '../services/helpers';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
@@ -208,6 +209,7 @@ function Log() {
                 width="1280px"
                 background="radial-gradient(circle, rgba(51,51,51,1) 0%, rgba(50,48,46,1) 50%)"
                 borderRadius={BORDER_RADIUS}
+                overflow="hidden"
                 zIndex={2}
             >
                 {/* Left */}
@@ -268,7 +270,7 @@ function Log() {
                 </Stack>
 
                 {/* Right */}
-                <Stack flex={7} spacing={10} py={8} px={10}>
+                <Stack flex={7} position="relative" spacing={10} py={8} px={10}>
                     <Flex justifyContent="space-between" alignItems="flex-start">
                         <Stack spacing={3}>
                             <Text layerStyle="header1" textShadow="1px 1px 0px #222">
@@ -380,6 +382,14 @@ function Log() {
                             </Stack>
                         ))}
                     </Box>
+
+                    <Flex
+                        layerStyle="absoluteCentered"
+                        mt="0 !important"
+                        filter="saturate(0) opacity(0.25) brightness(0.8)"
+                        mixBlendMode="exclusion"
+                        style={getBackgroundStyle(getLayoutBackground())}
+                    ></Flex>
                 </Stack>
             </Flex>
 
