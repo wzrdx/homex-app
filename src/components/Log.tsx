@@ -5,7 +5,8 @@ import { getCelestialsAssets } from '../services/assets';
 import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { BiInfoCircle } from 'react-icons/bi';
+import { FaRegCheckCircle } from 'react-icons/fa';
 import { LiaScrollSolid } from 'react-icons/lia';
 import { GoTrophy } from 'react-icons/go';
 
@@ -15,14 +16,61 @@ const ACCENT_COLOR = 'energyBright';
 
 const PAGES = [
     {
-        title: 'Celestials Custodian',
+        title: 'Locked Testing',
         badges: [
             {
                 title: "Aurora's Awakening",
                 text: 'Minted at least one Aurora from Art of Menhir',
                 isUnlocked: false,
                 data: 0,
+                assets: getCelestialsAssets('Custodian', 'Aurora'),
+            },
+            {
+                title: 'Verdant Visionary',
+                text: 'Minted at least one Verdant from Art of Menhir',
+                isUnlocked: false,
+                data: 0,
+                assets: getCelestialsAssets('Custodian', 'Verdant'),
+            },
+            {
+                title: "Solara's Spark",
+                text: 'Minted at least one Solara from Art of Menhir',
+                isUnlocked: false,
+                data: 0,
+                assets: getCelestialsAssets('Custodian', 'Solara'),
+            },
+            {
+                title: "Emberheart's Enigma",
+                text: 'Minted at least one Emberheart from Art of Menhir',
+                isUnlocked: false,
+                data: 0,
                 assets: getCelestialsAssets('Custodian', 'Emberheart'),
+            },
+            {
+                title: 'Aetheris Ascendant',
+                text: 'Minted at least one Aetheris from Art of Menhir',
+                isUnlocked: false,
+                data: 0,
+                assets: getCelestialsAssets('Custodian', 'Aetheris'),
+            },
+            {
+                title: 'Celestials Custodian',
+                text: 'Minted at least one of each Celestials from Art of Menhir',
+                isUnlocked: false,
+                data: 0,
+                assets: getCelestialsAssets('Custodian', 'Celestials'),
+            },
+        ],
+    },
+    {
+        title: 'Celestials Custodian',
+        badges: [
+            {
+                title: "Aurora's Awakening",
+                text: 'Minted at least one Aurora from Art of Menhir',
+                isUnlocked: true,
+                data: 6,
+                assets: getCelestialsAssets('Custodian', 'Aurora'),
             },
             {
                 title: 'Verdant Visionary',
@@ -34,23 +82,30 @@ const PAGES = [
             {
                 title: "Solara's Spark",
                 text: 'Minted at least one Solara from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
+                isUnlocked: true,
+                data: 12,
+                assets: getCelestialsAssets('Custodian', 'Solara'),
             },
             {
                 title: "Emberheart's Enigma",
                 text: 'Minted at least one Emberheart from Art of Menhir',
                 isUnlocked: true,
-                data: 5,
+                data: 47,
                 assets: getCelestialsAssets('Custodian', 'Emberheart'),
             },
             {
                 title: 'Aetheris Ascendant',
                 text: 'Minted at least one Aetheris from Art of Menhir',
-                isUnlocked: false,
+                isUnlocked: true,
+                data: 9,
+                assets: getCelestialsAssets('Custodian', 'Aetheris'),
+            },
+            {
+                title: 'Celestials Custodian',
+                text: 'Minted at least one of each Celestials from Art of Menhir',
+                isUnlocked: true,
                 data: 0,
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
+                assets: getCelestialsAssets('Custodian', 'Celestials'),
             },
         ],
     },
@@ -60,9 +115,9 @@ const PAGES = [
             {
                 title: 'Aurora Curator',
                 text: 'Minted at least 5 Aurora from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Emberheart'),
+                isUnlocked: true,
+                data: 6,
+                assets: getCelestialsAssets('Curator', 'Aurora'),
             },
             {
                 title: 'Verdant Curator',
@@ -74,23 +129,30 @@ const PAGES = [
             {
                 title: 'Solara Curator',
                 text: 'Minted at least 5 Solara from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Verdant'),
+                isUnlocked: true,
+                data: 12,
+                assets: getCelestialsAssets('Curator', 'Solara'),
             },
             {
                 title: 'Emberheart Curator',
                 text: 'Minted at least 5 Emberheart from Art of Menhir',
                 isUnlocked: true,
-                data: 5,
+                data: 47,
                 assets: getCelestialsAssets('Curator', 'Emberheart'),
             },
             {
                 title: 'Aetheris Curator',
                 text: 'Minted at least 5 Aetheris from Art of Menhir',
-                isUnlocked: false,
+                isUnlocked: true,
+                data: 9,
+                assets: getCelestialsAssets('Curator', 'Aetheris'),
+            },
+            {
+                title: 'Celestials Custodian',
+                text: 'Minted at least 5 of each Celestials from Art of Menhir',
+                isUnlocked: true,
                 data: 0,
-                assets: getCelestialsAssets('Curator', 'Verdant'),
+                assets: getCelestialsAssets('Curator', 'Celestials'),
             },
         ],
     },
@@ -230,15 +292,38 @@ function Log() {
                         </Stack>
 
                         <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
-                            <Stack direction="row" spacing={1.5} alignItems="center" color="#bebebe">
-                                <InfoOutlineIcon />
-                                <Text fontSize="15px" textShadow="1px 1px 0px #222">
-                                    Unlock{' '}
-                                    {_(PAGES[currentPage].badges)
-                                        .filter((badge) => !badge.isUnlocked)
-                                        .size()}{' '}
-                                    more to mint
-                                </Text>
+                            <Stack direction="row" spacing={1} alignItems="center">
+                                {!_(PAGES[currentPage].badges)
+                                    .filter((badge) => !badge.isUnlocked)
+                                    .size() ? (
+                                    <>
+                                        <Box color="mintGreen" pb="1px">
+                                            <IconWithShadow shadowColor="#222">
+                                                <FaRegCheckCircle />
+                                            </IconWithShadow>
+                                        </Box>
+
+                                        <Text fontSize="15px" textShadow="1px 1px 0px #222" color="mintGreen">
+                                            Minting available
+                                        </Text>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Box color="#cbcbcb" pb="1px">
+                                            <IconWithShadow shadowColor="#222">
+                                                <BiInfoCircle fontSize="19px" />
+                                            </IconWithShadow>
+                                        </Box>
+
+                                        <Text fontSize="15px" textShadow="1px 1px 0px #222" color="#cbcbcb">
+                                            Unlock{' '}
+                                            {_(PAGES[currentPage].badges)
+                                                .filter((badge) => !badge.isUnlocked)
+                                                .size()}{' '}
+                                            more to mint
+                                        </Text>
+                                    </>
+                                )}
                             </Stack>
                             <Button colorScheme="blue">Mint page</Button>
                         </Stack>
@@ -280,10 +365,11 @@ function Log() {
 
                                     <Box visibility={badge.data ? 'visible' : 'hidden'}>
                                         <Text
-                                            mt={1}
+                                            mt={1.5}
                                             fontWeight={500}
                                             letterSpacing="0.25px"
-                                            lineHeight="16px"
+                                            fontSize="15px"
+                                            lineHeight="15px"
                                             color="white"
                                             textShadow="1px 1px 0px #222"
                                         >

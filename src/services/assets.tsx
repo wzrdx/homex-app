@@ -22,23 +22,39 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import ArtDrop from '../assets/images/Verdant.jpg';
 
+import AuroraLocked from '../assets/log/aurora_locked.png';
+import AuroraCustodian from '../assets/log/aurora_custodian.png';
+import AuroraCurator from '../assets/log/aurora_curator.png';
+
 import VerdantLocked from '../assets/log/verdant_locked.png';
 import VerdantCustodian from '../assets/log/verdant_custodian.png';
 import VerdantCurator from '../assets/log/verdant_curator.png';
+
+import SolaraLocked from '../assets/log/solara_locked.png';
+import SolaraCustodian from '../assets/log/solara_custodian.png';
+import SolaraCurator from '../assets/log/solara_curator.png';
 
 import EmberheartLocked from '../assets/log/emberheart_locked.png';
 import EmberheartCustodian from '../assets/log/emberheart_custodian.png';
 import EmberheartCurator from '../assets/log/emberheart_curator.png';
 
+import AetherisLocked from '../assets/log/aetheris_locked.png';
+import AetherisCustodian from '../assets/log/aetheris_custodian.png';
+import AetherisCurator from '../assets/log/aetheris_curator.png';
+
+import CelestialsLocked from '../assets/log/celestials_locked.png';
+import CelestialsCustodian from '../assets/log/celestials_custodian.png';
+import CelestialsCurator from '../assets/log/celestials_curator.png';
+
 // Achievements
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',
-    character: 'Aurora' | 'Verdant' | 'Solara' | 'Emberheart' | 'Aetheris'
+    badge: 'Aurora' | 'Verdant' | 'Solara' | 'Emberheart' | 'Aetheris' | 'Celestials'
 ): [string, string] => {
     let assets: [string, string] = ['', ''];
 
     if (type === 'Custodian') {
-        switch (character) {
+        switch (badge) {
             case 'Verdant':
                 assets = [VerdantLocked, VerdantCustodian];
                 break;
@@ -47,19 +63,51 @@ export const getCelestialsAssets = (
                 assets = [EmberheartLocked, EmberheartCustodian];
                 break;
 
+            case 'Aurora':
+                assets = [AuroraLocked, AuroraCustodian];
+                break;
+
+            case 'Solara':
+                assets = [SolaraLocked, SolaraCustodian];
+                break;
+
+            case 'Aetheris':
+                assets = [AetherisLocked, AetherisCustodian];
+                break;
+
+            case 'Celestials':
+                assets = [CelestialsLocked, CelestialsCustodian];
+                break;
+
             default:
                 console.error('Unknown badge');
         }
     }
 
     if (type === 'Curator') {
-        switch (character) {
+        switch (badge) {
             case 'Verdant':
                 assets = [VerdantLocked, VerdantCurator];
                 break;
 
             case 'Emberheart':
                 assets = [EmberheartLocked, EmberheartCurator];
+                break;
+
+            case 'Aurora':
+                assets = [AuroraLocked, AuroraCurator];
+                break;
+
+            case 'Solara':
+                assets = [SolaraLocked, SolaraCurator];
+                break;
+
+            case 'Aetheris':
+                assets = [AetherisLocked, AetherisCurator];
+                break;
+
+            case 'Celestials':
+                assets = [CelestialsLocked, CelestialsCurator];
                 break;
 
             default:

@@ -41,6 +41,7 @@ const colors = {
     energyBright: '#50a3f2',
     availableResource: '#95f984',
     log: '#32302e',
+    mintGreen: '#2bfd89',
 };
 
 const fonts = {
