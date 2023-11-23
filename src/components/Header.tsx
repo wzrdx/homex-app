@@ -247,15 +247,13 @@ function Header() {
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
-                        {process.env.NODE_ENV === 'development' && (
-                            <HeaderButton
-                                type="Swords"
-                                color="energyBright"
-                                backgroundColor="#182e4c"
-                                text="Traveler's Log"
-                                onClick={onLogOpen}
-                            />
-                        )}
+                        <HeaderButton
+                            type="Swords"
+                            color="energyBright"
+                            backgroundColor="#182e4c"
+                            text="Traveler's Log"
+                            onClick={onLogOpen}
+                        />
 
                         <HeaderButton
                             type="Settings"
