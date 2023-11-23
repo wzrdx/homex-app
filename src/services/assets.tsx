@@ -1,5 +1,6 @@
 import Background from '../assets/backgrounds/1.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
+import AlternateBackground from '../assets/backgrounds/alternate.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 import Frame from '../assets/frame.png';
@@ -120,6 +121,7 @@ export const getCelestialsAssets = (
 
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
+export const getAlternateBackground = () => AlternateBackground;
 
 export const getFrame = () => Frame;
 export const getVisionImage = () => Vision;
