@@ -150,16 +150,19 @@ function Log() {
                 ...PAGES[0],
                 badges: _.map(PAGES[0].badges, (badge, index) => ({
                     ...badge,
-                    data: celestialsCustodian[index],
                     isUnlocked: celestialsCustodian[index] > 0,
+                    data: index === PAGES[1].badges.length - 1 ? 0 : celestialsCustodian[index],
                 })),
             },
             {
                 ...PAGES[1],
                 badges: _.map(PAGES[1].badges, (badge, index) => ({
                     ...badge,
-                    data: celestialsCustodian[index],
-                    isUnlocked: celestialsCustodian[index] >= 5,
+                    isUnlocked:
+                        index === PAGES[1].badges.length - 1
+                            ? (_.last(celestialsCurator) as number) > 0
+                            : celestialsCurator[index] >= 5,
+                    data: index === PAGES[1].badges.length - 1 ? 0 : celestialsCurator[index],
                 })),
             },
         ]);
