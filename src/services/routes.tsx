@@ -14,6 +14,7 @@ import Unbond from '../components/Staking/Unbond';
 import Shop from '../components/Shop';
 import Profile from '../components/XP/Profile';
 import XPLeaderboard from '../components/XP/XPLeaderboard';
+import EcoBottle from '../components/EcoBottle';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -34,6 +35,7 @@ export const routeNames = {
     shop: 'shop',
     profile: 'profile',
     xp: 'xp',
+    ecoBottle: 'ecoBottle',
 };
 
 export const routes = [
@@ -101,34 +103,34 @@ export const routes = [
         defaultChildRoute: routeNames.current,
     },
     // Battles
-    {
-        path: routeNames.battles,
-        component: Section,
-        authenticatedRoute: true,
-        isMainRoute: true,
-        children: [
-            {
-                path: routeNames.past,
-                component: Battles,
-                isTabRoute: true,
-            },
-            {
-                path: routeNames.leaderboard,
-                component: Leaderboard,
-                isTabRoute: true,
-            },
-            {
-                path: routeNames.entry,
-                component: Entry,
-                isTabRoute: true,
-            },
-            {
-                path: `:id`,
-                component: CompetitionDetails,
-            },
-        ],
-        defaultChildRoute: routeNames.leaderboard,
-    },
+    // {
+    //     path: routeNames.battles,
+    //     component: Section,
+    //     authenticatedRoute: true,
+    //     isMainRoute: true,
+    //     children: [
+    //         {
+    //             path: routeNames.past,
+    //             component: Battles,
+    //             isTabRoute: true,
+    //         },
+    //         {
+    //             path: routeNames.leaderboard,
+    //             component: Leaderboard,
+    //             isTabRoute: true,
+    //         },
+    //         {
+    //             path: routeNames.entry,
+    //             component: Entry,
+    //             isTabRoute: true,
+    //         },
+    //         {
+    //             path: `:id`,
+    //             component: CompetitionDetails,
+    //         },
+    //     ],
+    //     defaultChildRoute: routeNames.leaderboard,
+    // },
     // Rewards
     {
         path: routeNames.rewards,
@@ -140,6 +142,13 @@ export const routes = [
     {
         path: routeNames.shop,
         component: Shop,
+        authenticatedRoute: true,
+        isMainRoute: true,
+    },
+    // Rewards
+    {
+        path: routeNames.ecoBottle,
+        component: EcoBottle,
         authenticatedRoute: true,
         isMainRoute: true,
     },

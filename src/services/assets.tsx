@@ -1,5 +1,7 @@
 import Background from '../assets/backgrounds/1.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
+import EcoBg from '../assets/backgrounds/eco_bg.jpg';
+
 import AlternateBackground from '../assets/backgrounds/alternate.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
@@ -119,7 +121,7 @@ export const getCelestialsAssets = (
     return assets;
 };
 
-export const getLayoutBackground = () => Background;
+export const getLayoutBackground = () => EcoBg;
 export const getUnlockBackground = () => Unlock;
 export const getAlternateBackground = () => AlternateBackground;
 

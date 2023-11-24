@@ -36,9 +36,10 @@ import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Log';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
+import Logo from '../assets/ecobottle_logo.png';
 
 const ROUTE_WIDTH = 100;
-const BONUS_XP_END = new Date('2023-11-06T09:00:00.000Z');
+const BONUS_XP_END = new Date('2023-11-29T21:00:00.000Z');
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -120,7 +121,11 @@ function Header() {
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
-                                    visibility={isArtDropOngoing && route === routeNames.shop ? 'visible' : 'hidden'}
+                                    visibility={
+                                        route === routeNames.ecoBottle || (isArtDropOngoing && route === routeNames.shop)
+                                            ? 'visible'
+                                            : 'hidden'
+                                    }
                                     borderWidth="2px"
                                     borderColor="wheat"
                                     transform="rotate(45deg)"
@@ -403,11 +408,13 @@ function Header() {
                             <Text ml={1} fontSize="15px" textTransform="uppercase" lineHeight="18px" letterSpacing="0.5px">
                                 <Text as="span" color="#5ff070" fontWeight={600}>
                                     Double Xp
-                                </Text>{' '}
-                                <Text as="span" fontWeight={500}>
-                                    Weekend
                                 </Text>
+                                {' & '}
                             </Text>
+
+                            <Image mx={1} src={Logo} width="32px" />
+
+                            <Text fontWeight={500}>EcoBottle Event</Text>
 
                             <Box mx={2.5}>
                                 <Separator type="vertical" width="1px" height="28px" />

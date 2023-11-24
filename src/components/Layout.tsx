@@ -77,7 +77,7 @@ function Layout() {
     useEffect(() => {
         // Updates
         if (isLoaded && !window.localStorage['update_1']) {
-            setTimeout(() => onModalOpen(), 2500);
+            setTimeout(() => onModalOpen(), 4000);
             window.localStorage['update_1'] = true;
         }
     }, [isLoaded]);
@@ -125,8 +125,8 @@ function Layout() {
                     height={{ md: '82%', lg: '86%' }}
                     layerStyle="layout"
                     margin="0 auto"
-                    pt={{ md: 3, lg: 8, xl: 16, '2xl': 20 }}
-                    pb={{ md: 6, lg: 8, xl: 16, '2xl': 20 }}
+                    pt={{ md: 3, lg: 6, xl: 16, '2xl': 20 }}
+                    pb={{ md: 6, lg: 6, xl: 16, '2xl': 20 }}
                 >
                     <Outlet context={{ displayToast, closeToast, routes, routeNames }} />
                 </Box>
