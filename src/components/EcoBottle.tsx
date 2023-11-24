@@ -1,12 +1,10 @@
 import { Flex, Spinner, Stack, Text, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { getXpLeaderboard } from '../blockchain/api/getXpLeaderboard';
-import { getXpLeaderboardSize } from '../blockchain/api/getXpLeaderboardSize';
 import { pairwise, getUsername } from '../services/helpers';
-import { getLevel } from '../services/xp';
-import { useSection } from './Section';
 import Logo from '../assets/ecobottle_logo.png';
+import { getEcobottleLeaderboard } from '../blockchain/api/ecobottle/getEcobottleLeaderboard';
+import { getEcobottleLeaderboardSize } from '../blockchain/api/ecobottle/getEcobottleLeaderboardSize';
 
 const CHUNK_SIZE = 50;
 const LEADERBOARD_SIZE = 100;
@@ -31,8 +29,6 @@ function EcoBottle() {
         {
             name: string;
             xp: number;
-            level: number;
-            color: string;
         }[]
     >();
 
@@ -42,7 +38,7 @@ function EcoBottle() {
     }, []);
 
     const init = async () => {
-        const leaderboardSize = await getXpLeaderboardSize();
+        const leaderboardSize = await getEcobottleLeaderboardSize();
 
         const chunks = new Array(Math.floor(leaderboardSize / CHUNK_SIZE))
             .fill(CHUNK_SIZE)
@@ -66,7 +62,7 @@ function EcoBottle() {
                 .unshift(0)
                 .value(),
             (current: number, next: number) => {
-                apiCalls.push(getXpLeaderboard(current, next));
+                apiCalls.push(getEcobottleLeaderboard(current, next));
             }
         );
 
@@ -85,13 +81,9 @@ function EcoBottle() {
         const array = await Promise.all(
             _(sorted)
                 .map(async (player) => {
-                    const { level, color } = getLevel(player.xp);
-
                     return {
                         name: await getUsername(player.address),
                         xp: player.xp,
-                        level,
-                        color,
                     };
                 })
                 .value()
@@ -107,7 +99,7 @@ function EcoBottle() {
                 <Spinner mt={3} size="sm" />
             ) : (
                 <Stack spacing={6} p={6} maxHeight="100%" backgroundColor="#111" borderRadius="9px">
-                    <Stack spacing={4} alignItems="center" justifyContent="center" maxW="480px">
+                    <Stack spacing={4} alignItems="center" justifyContent="center" maxW="516px">
                         <Image src={Logo} width="52px" />
 
                         <Stack spacing={1}>
@@ -124,12 +116,12 @@ function EcoBottle() {
                             </Text>
                         </Stack>
 
-                        <Text layerStyle="header2">
+                        {/* <Text layerStyle="header2">
                             1 XP ≃ 1{' '}
                             <Text as="span" color="#0099d8">
                                 EcoBottle Token ($CAP)
                             </Text>
-                        </Text>
+                        </Text> */}
 
                         <Text textAlign="center">
                             The top 10 players will be airdropped
@@ -145,29 +137,31 @@ function EcoBottle() {
                     </Stack>
 
                     <Flex justifyContent="center" overflowY="auto" overflowX="hidden">
-                        <Flex flexDir="column">
-                            <Flex mb={1}>
-                                {_.map(COLUMNS, (column: any, index: number) => (
-                                    <Text key={index} layerStyle="header1Alt" minWidth={column.width}>
-                                        {column.name}
-                                    </Text>
+                        {!_.isEmpty(players) && (
+                            <Flex flexDir="column">
+                                <Flex mb={1}>
+                                    {_.map(COLUMNS, (column: any, index: number) => (
+                                        <Text key={index} layerStyle="header1Alt" minWidth={column.width}>
+                                            {column.name}
+                                        </Text>
+                                    ))}
+                                </Flex>
+
+                                {_.map(players, (player, index: number) => (
+                                    <Flex mt={2} alignItems="center" key={index}>
+                                        <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
+
+                                        <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
+                                            {player.name}
+                                        </Text>
+
+                                        <Flex minWidth={COLUMNS[2].width}>
+                                            <Text>{player.xp}</Text>
+                                        </Flex>
+                                    </Flex>
                                 ))}
                             </Flex>
-
-                            {_.map(players, (player, index: number) => (
-                                <Flex mt={2} alignItems="center" key={index}>
-                                    <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
-
-                                    <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
-                                        {player.name}
-                                    </Text>
-
-                                    <Flex minWidth={COLUMNS[2].width}>
-                                        <Text>{player.xp}</Text>
-                                    </Flex>
-                                </Flex>
-                            ))}
-                        </Flex>
+                        )}
                     </Flex>
                 </Stack>
             )}

@@ -417,6 +417,21 @@
             ]
         },
         {
+            "name": "getEcobottleXp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
             "name": "changeBattleTimestamp",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -1048,6 +1063,35 @@
         },
         {
             "name": "getXpLeaderboard",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<PlayerXp>"
+                }
+            ]
+        },
+        {
+            "name": "getEcobottleLeaderboardSize",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getEcobottleLeaderboard",
             "mutability": "readonly",
             "inputs": [
                 {
