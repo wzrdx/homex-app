@@ -136,8 +136,8 @@ function EcoBottle() {
                         </Text>
                     </Stack>
 
-                    <Flex justifyContent="center" overflowY="auto" overflowX="hidden">
-                        {!_.isEmpty(players) && (
+                    {!_.isEmpty(players) && (
+                        <Flex justifyContent="center" overflowY="auto" overflowX="hidden">
                             <Flex flexDir="column">
                                 <Flex mb={1}>
                                     {_.map(COLUMNS, (column: any, index: number) => (
@@ -161,8 +161,8 @@ function EcoBottle() {
                                     </Flex>
                                 ))}
                             </Flex>
-                        )}
-                    </Flex>
+                        </Flex>
+                    )}
                 </Stack>
             )}
         </Flex>
