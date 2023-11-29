@@ -1,10 +1,9 @@
 import { Box, Flex, Text, Image, Stack } from '@chakra-ui/react';
-import Update from '../assets/log/aurora_curator.png';
 
 export const Updates = ({}) => {
     return (
         <Stack justifyContent="center" alignItems="center">
-            <Image mb={4} src={Update} maxW="240px" />
+            {/* <Image mb={4} src={} maxW="240px" /> */}
             <Text layerStyle="header2" textAlign="center">
                 Achievements are here!
             </Text>

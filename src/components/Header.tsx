@@ -254,7 +254,7 @@ function Header() {
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
                         <HeaderButton
                             type="Swords"
-                            color="energyBright"
+                            color="travelersLog"
                             backgroundColor="#182e4c"
                             text="Traveler's Log"
                             onClick={onLogOpen}

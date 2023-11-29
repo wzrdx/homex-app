@@ -43,6 +43,10 @@ const colors = {
     log: '#32302e',
     mintGreen: '#2bfd89',
     mirage: '#c58cf7',
+    travelersLog: '#79b4ed',
+    blizzardCommon: 'white',
+    blizzardUncommon: '#1eff00',
+    blizzardRare: '#0070dd',
     blizzardEpic: '#a335ee',
     blizzardLegendary: '#ff8000',
 };

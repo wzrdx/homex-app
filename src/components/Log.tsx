@@ -1,135 +1,29 @@
 import _ from 'lodash';
 import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getCelestialsAssets, getAlternateBackground } from '../services/assets';
+import { getAlternateBackground } from '../services/assets';
 import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
 import { BiInfoCircle } from 'react-icons/bi';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { LiaScrollSolid } from 'react-icons/lia';
+import { BsGem } from 'react-icons/bs';
 import { GoTrophy } from 'react-icons/go';
 import { getBackgroundStyle } from '../services/helpers';
 import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
+import { PAGES, TravelersLogPage } from '../services/achievements';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
-const ACCENT_COLOR = 'energyBright';
-
-const PAGES = [
-    {
-        title: 'Celestials Custodian',
-        badges: [
-            {
-                title: "Aurora's Awakening",
-                text: 'Minted at least one Aurora from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Aurora'),
-            },
-            {
-                title: 'Verdant Visionary',
-                text: 'Minted at least one Verdant from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
-            },
-            {
-                title: "Solara's Spark",
-                text: 'Minted at least one Solara from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Solara'),
-            },
-            {
-                title: "Emberheart's Enigma",
-                text: 'Minted at least one Emberheart from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Emberheart'),
-            },
-            {
-                title: 'Aetheris Ascendant',
-                text: 'Minted at least one Aetheris from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Aetheris'),
-            },
-            {
-                title: 'Celestials Custodian',
-                text: 'Minted at least one of each Celestials from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Custodian', 'Celestials'),
-            },
-        ],
-    },
-    {
-        title: 'Celestials Curator',
-        badges: [
-            {
-                title: 'Aurora Curator',
-                text: 'Minted at least 5 Aurora from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Aurora'),
-            },
-            {
-                title: 'Verdant Curator',
-                text: 'Minted at least 5 Verdant from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Verdant'),
-            },
-            {
-                title: 'Solara Curator',
-                text: 'Minted at least 5 Solara from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Solara'),
-            },
-            {
-                title: 'Emberheart Curator',
-                text: 'Minted at least 5 Emberheart from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Emberheart'),
-            },
-            {
-                title: 'Aetheris Curator',
-                text: 'Minted at least 5 Aetheris from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Aetheris'),
-            },
-            {
-                title: 'Celestials Curator',
-                text: 'Minted at least 5 of each Celestials from Art of Menhir',
-                isUnlocked: false,
-                data: 0,
-                assets: getCelestialsAssets('Curator', 'Celestials'),
-            },
-        ],
-    },
-];
+const ACCENT_COLOR = 'travelersLog';
 
 function Log() {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [isMinting, setIsMinting] = useState<boolean>(false);
 
-    const [pages, setPages] = useState<
-        {
-            title: string;
-            badges: {
-                title: string;
-                text: string;
-                isUnlocked: boolean;
-                data: number;
-                assets: [string, string];
-            }[];
-        }[]
-    >(PAGES);
+    const [pages, setPages] = useState<TravelersLogPage[]>(PAGES);
 
     // Init
     useEffect(() => {
@@ -151,7 +45,7 @@ function Log() {
                 badges: _.map(PAGES[0].badges, (badge, index) => ({
                     ...badge,
                     isUnlocked: celestialsCustodian[index] > 0,
-                    data: index === PAGES[1].badges.length - 1 ? 0 : celestialsCustodian[index],
+                    value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCustodian[index],
                 })),
             },
             {
@@ -162,7 +56,15 @@ function Log() {
                         index === PAGES[1].badges.length - 1
                             ? (_.last(celestialsCurator) as number) > 0
                             : celestialsCurator[index] >= 5,
-                    data: index === PAGES[1].badges.length - 1 ? 0 : celestialsCurator[index],
+                    value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCurator[index],
+                })),
+            },
+            {
+                ...PAGES[2],
+                badges: _.map(PAGES[2].badges, (badge, index) => ({
+                    ...badge,
+                    isUnlocked: false,
+                    value: index,
                 })),
             },
         ]);
@@ -189,7 +91,7 @@ function Log() {
         return (
             <Text fontWeight={500} color={ACCENT_COLOR} letterSpacing="1px" fontSize="17px" lineHeight="17px">
                 {_(pages[currentPage].badges)
-                    .filter((badge) => badge.isUnlocked)
+                    .filter((badge) => !!badge.isUnlocked)
                     .size()}
                 <Text as="span" mx={0.5}>
                     /
@@ -263,8 +165,9 @@ function Log() {
                                 <Box key={index}>
                                     <MenuItem
                                         title={page.title}
+                                        color={`blizzard${page.rarity}`}
                                         text={`${_(pages[index].badges)
-                                            .filter((badge) => badge.isUnlocked)
+                                            .filter((badge) => !!badge.isUnlocked)
                                             .size()} / ${pages[index].badges.length} Unlocked`}
                                         isActive={index === currentPage}
                                         onClick={() => setCurrentPage(index)}
@@ -291,19 +194,44 @@ function Log() {
                                         {pages[currentPage].title}
                                     </Text>
 
-                                    <Stack spacing={2.5} direction="row" alignItems="stretch">
-                                        <Box color={ACCENT_COLOR}>
-                                            <IconWithShadow shadowColor="#222">
-                                                <GoTrophy fontSize="36px" />
-                                            </IconWithShadow>
-                                        </Box>
+                                    <Stack direction="row" spacing={12}>
+                                        <Stack spacing={2.5} direction="row" alignItems="stretch">
+                                            <Box color={ACCENT_COLOR}>
+                                                <IconWithShadow shadowColor="#222">
+                                                    <GoTrophy fontSize="36px" />
+                                                </IconWithShadow>
+                                            </Box>
 
-                                        <Flex flexDir="column" justifyContent="space-between">
-                                            {getPageUnlocked()}
-                                            <Text fontWeight={500} fontSize="15px" lineHeight="15px">
-                                                Unlocked
-                                            </Text>
-                                        </Flex>
+                                            <Flex flexDir="column" justifyContent="space-between">
+                                                {getPageUnlocked()}
+                                                <Text fontWeight={500} fontSize="15px" lineHeight="15px">
+                                                    Unlocked
+                                                </Text>
+                                            </Flex>
+                                        </Stack>
+
+                                        <Stack spacing={2.5} direction="row" alignItems="stretch">
+                                            <Box color={`blizzard${pages[currentPage].rarity}`}>
+                                                <IconWithShadow shadowColor="#222">
+                                                    <BsGem fontSize="36px" />
+                                                </IconWithShadow>
+                                            </Box>
+
+                                            <Flex flexDir="column" justifyContent="space-between">
+                                                <Text
+                                                    fontWeight={500}
+                                                    color={`blizzard${pages[currentPage].rarity}`}
+                                                    letterSpacing="1px"
+                                                    fontSize="17px"
+                                                    lineHeight="17px"
+                                                >
+                                                    {pages[currentPage].rarity}
+                                                </Text>
+                                                <Text fontWeight={500} fontSize="15px" lineHeight="15px">
+                                                    Rarity
+                                                </Text>
+                                            </Flex>
+                                        </Stack>
                                     </Stack>
                                 </Stack>
 
@@ -385,7 +313,7 @@ function Log() {
                                                 {badge.text}
                                             </Text>
 
-                                            <Box visibility={badge.data ? 'visible' : 'hidden'}>
+                                            <Box visibility={badge.value ? 'visible' : 'hidden'}>
                                                 <Text
                                                     mt={1.5}
                                                     fontWeight={500}
@@ -394,7 +322,7 @@ function Log() {
                                                     color="white"
                                                     textShadow="1px 1px 0px #222"
                                                 >
-                                                    {badge.data}
+                                                    {badge.value}
                                                 </Text>
                                             </Box>
                                         </Stack>
@@ -434,7 +362,7 @@ function Log() {
 
 export default Log;
 
-const MenuItem = ({ title, text, isActive, onClick }) => {
+const MenuItem = ({ title, color, text, isActive, onClick }) => {
     return (
         <Stack
             spacing={-0.5}
@@ -447,7 +375,7 @@ const MenuItem = ({ title, text, isActive, onClick }) => {
             _hover={{ backgroundColor: isActive ? '#ffffff10' : '#ffffff08' }}
             onClick={onClick}
         >
-            <Text fontWeight={500} fontSize="17px" textShadow="1px 1px 0px #222">
+            <Text fontWeight={500} fontSize="17px" textShadow="1px 1px 0px #222" color={color}>
                 {title}
             </Text>
             <Text color="#ffffff98" fontSize="15px" textShadow="1px 1px 0px #222">

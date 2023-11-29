@@ -76,10 +76,10 @@ function Layout() {
     // Updates
     useEffect(() => {
         // Updates
-        if (isLoaded && !window.localStorage['update_1']) {
-            setTimeout(() => onModalOpen(), 4000);
-            window.localStorage['update_1'] = true;
-        }
+        // if (isLoaded && !window.localStorage['update_1']) {
+        //     setTimeout(() => onModalOpen(), 4000);
+        //     window.localStorage['update_1'] = true;
+        // }
     }, [isLoaded]);
 
     const displayToast = (
