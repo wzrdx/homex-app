@@ -121,7 +121,7 @@ export const getCelestialsAssets = (
     return assets;
 };
 
-export const getLayoutBackground = () => EcoBg;
+export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
 export const getAlternateBackground = () => AlternateBackground;
 
