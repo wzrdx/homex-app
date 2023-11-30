@@ -399,9 +399,10 @@ function Header() {
                         )}
                     </Flex>
 
-                    {differenceInSeconds(BONUS_XP_END, new Date()) > 0 && (
+                    {/* TODO: */}
+                    {(differenceInSeconds(BONUS_XP_END, new Date()) > 0 || true) && (
                         <Flex alignItems="center" pointerEvents="all">
-                            <Box mb="2px">
+                            {/* <Box mb="2px">
                                 <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
                             </Box>
 
@@ -410,9 +411,9 @@ function Header() {
                                     Double Xp
                                 </Text>
                                 {' & '}
-                            </Text>
+                            </Text> */}
 
-                            <Image mx={1} src={Logo} width="32px" />
+                            <Image mx={1.5} src={Logo} width="32px" />
 
                             <Text fontWeight={500}>EcoBottle Event</Text>
 
@@ -420,9 +421,10 @@ function Header() {
                                 <Separator type="vertical" width="1px" height="28px" />
                             </Box>
 
-                            <TimeIcon boxSize={4} />
-                            <Text ml={1.5} fontSize="15px">
-                                {formatDistanceToNow(BONUS_XP_END)} left
+                            {/* <TimeIcon boxSize={4} /> */}
+                            <Text fontSize="15px">
+                                {/* {formatDistanceToNow(BONUS_XP_END)} left */}
+                                Ended
                             </Text>
                         </Flex>
                     )}
