@@ -121,11 +121,7 @@ function Header() {
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
                                 <Box
-                                    visibility={
-                                        route === routeNames.ecoBottle || (isArtDropOngoing && route === routeNames.shop)
-                                            ? 'visible'
-                                            : 'hidden'
-                                    }
+                                    visibility={isArtDropOngoing && route === routeNames.shop ? 'visible' : 'hidden'}
                                     borderWidth="2px"
                                     borderColor="wheat"
                                     transform="rotate(45deg)"
@@ -399,8 +395,7 @@ function Header() {
                         )}
                     </Flex>
 
-                    {/* TODO: */}
-                    {(differenceInSeconds(BONUS_XP_END, new Date()) > 0 || true) && (
+                    {differenceInSeconds(BONUS_XP_END, new Date()) > 0 && (
                         <Flex alignItems="center" pointerEvents="all">
                             {/* <Box mb="2px">
                                 <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
@@ -413,19 +408,15 @@ function Header() {
                                 {' & '}
                             </Text> */}
 
-                            <Image mx={1.5} src={Logo} width="32px" />
-
-                            <Text fontWeight={500}>EcoBottle Event</Text>
-
-                            <Box mx={2.5}>
+                            {/* <Box mx={2.5}>
                                 <Separator type="vertical" width="1px" height="28px" />
-                            </Box>
+                            </Box> */}
 
                             {/* <TimeIcon boxSize={4} /> */}
-                            <Text fontSize="15px">
-                                {/* {formatDistanceToNow(BONUS_XP_END)} left */}
+                            {/* <Text fontSize="15px">
+                                {formatDistanceToNow(BONUS_XP_END)} left
                                 Ended
-                            </Text>
+                            </Text> */}
                         </Flex>
                     )}
 
