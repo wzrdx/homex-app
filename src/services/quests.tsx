@@ -46,82 +46,84 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: 'The Endless Dunes',
+        title: "Desert's Whisper",
         description:
-            'Begin your journey in the vast deserts of Menhir, where shifting sands conceal secrets yet to be unveiled.',
+            'Begin your odyssey in the deserts of Menhir, where whispers in the wind beckon you toward ancient elemental artifacts yet to be unveiled.',
     },
     {
-        title: 'Mirage of Pathways',
-        description: "Encounter a perplexing maze buried beneath the desert's surface, an enigmatic gateway to the unknown.",
-    },
-    {
-        title: 'Sandswept Cryptic Whispers',
-        description: 'Hear cryptic whispers carried by the desert winds, guiding you deeper into the labyrinthine mysteries.',
-    },
-    {
-        title: 'Veiled Oasis of Decisions',
+        title: "Mirage's Lure",
         description:
-            'Discover an oasis amidst the dunes, surrounded by an ancient maze that demands choices with obscured consequences.',
+            'Encounter a mirage that conceals elusive artifacts, their nature obscured by the shifting sands that dance with the secrets of the desert.',
     },
     {
-        title: 'The Whispering Sands',
+        title: "Sands' Elemental Hues",
         description:
-            'Traverse the Whispering Sands, where the very earth murmurs ancient riddles, hinting at the direction of your obscured destination.',
+            'Witness sands taking on elemental hues, guiding you to artifacts hidden beneath the surface of the ancient desert.',
     },
     {
-        title: 'Shifting Pillars of Uncertainty',
+        title: 'Oasis of Elemental',
         description:
-            'Confront pillars rising from the sands, forming a maze of uncertainty where every step is a veiled choice.',
+            "Discover an oasis surrounded by elemental trials, where collecting the artifacts becomes a cryptic passage through the secrets of Menhir's sands.",
     },
     {
-        title: 'Mirage of the Forgotten',
+        title: 'Whispering Sands',
         description:
-            'Stumble upon a mirage that conceals a maze, a forgotten construct challenging you to decipher its veiled patterns.',
+            'Traverse the Whispering Sands anew, each footstep echoing the ancient resonance of the elemental artifacts waiting to be unveiled.',
     },
     {
-        title: 'The Hourglass',
+        title: 'Elemental Pillars',
         description:
-            'Uncover an illusion within the mirage, a shifting distortion that conceals the true nature of the perplexing labyrinth.',
+            'Confront towering pillars rising from the sands, elemental artifacts intertwined with the destiny that unfolds in the enigmatic desert.',
     },
     {
-        title: 'Labyrinthine Echoes',
+        title: 'Mirage of Balance',
         description:
-            "Listen to echoes within the labyrinth, ancient whispers that beckon you forward into the obscured heart of Menhir's deserts.",
+            'Stumble upon a mirage that hints at the delicate balance of ancient elemental artifacts, beckoning you to decipher their obscured purpose.',
     },
     {
-        title: "The Dunes' Deceptive Dance",
+        title: 'Mirage Redux',
         description:
-            'Witness the deceptive dance of the dunes, where the very landscape becomes a maze, twisting and turning in an enigmatic choreography.',
+            'Uncover an illusion within the mirage, where the elemental artifacts cast veiled shadows, challenging you to discern reality from the ethereal.',
     },
     {
-        title: 'The Oasis of Fateful Crossroads',
+        title: 'Elemental Labyrinth',
         description:
-            'Reach a fateful crossroads within an oasis, where the ancient maze branches into shadowed paths, each holding veiled destinies.',
+            "Listen to echoes within an elemental labyrinth, whispers guiding you toward the elusive artifacts scattered throughout Menhir's desert expanse.",
     },
     {
-        title: 'The Cryptic Compass',
+        title: "Dunes' Elemental",
         description:
-            'Find a cryptic compass that points to hidden gateways within the labyrinth, each gate leading to an undisclosed realm.',
+            'Witness the elemental dance of the dunes, where sands reveal hidden artifacts, entwined in the rhythm of an enigmatic choreography.',
     },
     {
-        title: 'Mirage of a Hidden Citadel',
+        title: 'Fateful Crossroads',
         description:
-            'Discern a mirage concealing a hidden citadel within the maze, an ancient bastion guarding obscure knowledge.',
+            'Reach a fateful crossroads where elements converge, each path leading to elemental artifacts that unlock cryptic destinies.',
     },
     {
-        title: 'Shrouded Guardians',
+        title: 'Elemental Compass',
         description:
-            "Encounter shrouded guardians of the maze, ethereal beings who test your resolve to navigate the labyrinth's veiled complexities.",
+            'Find an elemental compass pointing toward concealed artifacts, each artifact unlocking gateways to realms steeped in elemental mystery.',
     },
     {
-        title: 'The Whispered Endings',
+        title: 'Mirage of the Citadel',
         description:
-            'Hear whispered tales of endings as you approach the heart of the maze, where the sands hold secrets of cryptic conclusions.',
+            'Discern a mirage concealing an elemental citadel, guarded by ancient forces and holding secrets of the elemental artifacts.',
     },
     {
-        title: "The Traveler's Veiled Legacy",
+        title: 'Shrouded Keepers',
         description:
-            'Conclude your journey as the traveler who conquered the deserts and deciphered the ancient mazes, leaving behind a legacy shrouded in the mysteries of Menhir.',
+            'Encounter shrouded keepers of the elements, ethereal guardians challenging your resolve to collect the elemental artifacts scattered through the desert.',
+    },
+    {
+        title: "Whispers' Endings",
+        description:
+            "Hear elemental whispers foretelling enigmatic endings as you approach the heart of Menhir's desert, where sands conceal secrets of cryptic conclusions.",
+    },
+    {
+        title: "Traveler's Legacy",
+        description:
+            "Conclude your odyssey as the traveler who gathered the elemental artifacts, leaving behind a legacy intertwined with the mysteries of Menhir's ancient sands.",
     },
 ];
 
