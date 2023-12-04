@@ -2,6 +2,7 @@ import { getCelestialsAssets, getCelestialsCollector } from './assets';
 
 export interface TravelersLogPage {
     title: string;
+    isNew: boolean;
     rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
     badges: {
         title: string;
@@ -15,6 +16,7 @@ export interface TravelersLogPage {
 export const PAGES: TravelersLogPage[] = [
     {
         title: 'Celestials Custodian',
+        isNew: false,
         rarity: 'Epic',
         badges: [
             {
@@ -51,6 +53,7 @@ export const PAGES: TravelersLogPage[] = [
     },
     {
         title: 'Celestials Curator',
+        isNew: false,
         rarity: 'Legendary',
         badges: [
             {
@@ -87,6 +90,7 @@ export const PAGES: TravelersLogPage[] = [
     },
     {
         title: 'Celestials Collector',
+        isNew: true,
         rarity: 'Rare',
         badges: [
             {

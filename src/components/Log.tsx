@@ -14,6 +14,7 @@ import { getBackgroundStyle } from '../services/helpers';
 import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
 import { PAGES, TravelersLogPage } from '../services/achievements';
+import { NewSymbol } from '../shared/NewSymbol';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
@@ -105,7 +106,7 @@ function Log() {
         <Box position="relative">
             <Flex
                 position="relative"
-                width="1200px"
+                width="1260px"
                 minH={{ md: '632px', lg: '736px' }}
                 alignItems="stretch"
                 backgroundColor="#2b2b2b"
@@ -165,6 +166,7 @@ function Log() {
                                 <Box key={index}>
                                     <MenuItem
                                         title={page.title}
+                                        isNew={page.isNew}
                                         color={`blizzard${page.rarity}`}
                                         text={`${_(pages[index].badges)
                                             .filter((badge) => !!badge.isUnlocked)
@@ -362,10 +364,11 @@ function Log() {
 
 export default Log;
 
-const MenuItem = ({ title, color, text, isActive, onClick }) => {
+const MenuItem = ({ title, isNew, color, text, isActive, onClick }) => {
     return (
-        <Stack
-            spacing={-0.5}
+        <Flex
+            justifyContent="space-between"
+            alignItems="center"
             borderRadius="20px"
             px={5}
             py={2.5}
@@ -375,13 +378,17 @@ const MenuItem = ({ title, color, text, isActive, onClick }) => {
             _hover={{ backgroundColor: isActive ? '#ffffff10' : '#ffffff08' }}
             onClick={onClick}
         >
-            <Text fontWeight={500} fontSize="17px" textShadow="1px 1px 0px #222" color={color}>
-                {title}
-            </Text>
-            <Text color="#ffffff98" fontSize="15px" textShadow="1px 1px 0px #222">
-                {text}
-            </Text>
-        </Stack>
+            <Stack spacing={-0.5}>
+                <Text fontWeight={500} fontSize="17px" textShadow="1px 1px 0px #222" color={color}>
+                    {title}
+                </Text>
+                <Text color="#ffffff98" fontSize="15px" textShadow="1px 1px 0px #222">
+                    {text}
+                </Text>
+            </Stack>
+
+            <NewSymbol isVisible={isNew} />
+        </Flex>
     );
 };
 

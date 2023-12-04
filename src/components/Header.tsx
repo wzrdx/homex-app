@@ -37,6 +37,7 @@ import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Log';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import Logo from '../assets/ecobottle_logo.png';
+import { NewSymbol } from '../shared/NewSymbol';
 
 const ROUTE_WIDTH = 100;
 const BONUS_XP_END = new Date('2023-11-29T21:00:00.000Z');
@@ -120,27 +121,7 @@ function Header() {
                     <Flex className="Header-Menu" position="relative">
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
-                                <Box
-                                    visibility={
-                                        route === routeNames.ecoBottle || (isArtDropOngoing && route === routeNames.shop)
-                                            ? 'visible'
-                                            : 'hidden'
-                                    }
-                                    borderWidth="2px"
-                                    borderColor="wheat"
-                                    transform="rotate(45deg)"
-                                    boxShadow="0 0 3px wheat"
-                                    backgroundColor="#2f2f2f"
-                                >
-                                    <Box
-                                        color="wheat"
-                                        transform="rotate(-45deg)"
-                                        fontSize={{ md: '18px', lg: '19px' }}
-                                        margin="-3px"
-                                    >
-                                        <BsExclamation />
-                                    </Box>
-                                </Box>
+                                <NewSymbol isVisible={isArtDropOngoing && route === routeNames.shop ? true : false} />
 
                                 <NavLink
                                     to={route}
