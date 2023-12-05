@@ -13,6 +13,8 @@ import _ from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
 import { RESOURCE_ELEMENTS } from './resources';
 
+export const range = (length: number) => Array.from({ length }, (_, i) => i + 1);
+
 export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundImage: `url(${source})`,
     backgroundSize: 'cover',
