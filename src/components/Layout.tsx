@@ -66,19 +66,14 @@ function Layout() {
         getTickets();
 
         getGameState();
-
-        if (!window.localStorage['update_1']) {
-            setTimeout(() => onModalOpen(), 1000);
-            window.localStorage['update_1'] = true;
-        }
     }, []);
 
     // Updates
     useEffect(() => {
         // Updates
-        if (isLoaded && !window.localStorage['update_1']) {
-            setTimeout(() => onModalOpen(), 4000);
-            window.localStorage['update_1'] = true;
+        if (isLoaded && !window.localStorage['update_2']) {
+            setTimeout(() => onModalOpen(), 3000);
+            window.localStorage['update_2'] = true;
         }
     }, [isLoaded]);
 

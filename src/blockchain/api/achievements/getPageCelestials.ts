@@ -6,11 +6,12 @@ import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getPageCelestialsCustodian';
+const FUNCTION_NAME = 'getPageCelestials';
 
-export const getPageCelestialsCustodian = async (): Promise<{
+export const getPageCelestials = async (): Promise<{
     aurora: number;
     verdant: number;
+    solara: number;
 }> => {
     try {
         const address = await getAddress();
@@ -29,6 +30,7 @@ export const getPageCelestialsCustodian = async (): Promise<{
         const obj = {
             aurora: value.aurora.toNumber(),
             verdant: value.verdant.toNumber(),
+            solara: value.solara.toNumber(),
         };
 
         return obj;
@@ -37,6 +39,7 @@ export const getPageCelestialsCustodian = async (): Promise<{
         return {
             aurora: 0,
             verdant: 0,
+            solara: 0,
         };
     }
 };

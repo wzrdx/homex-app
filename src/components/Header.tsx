@@ -39,7 +39,7 @@ import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import Logo from '../assets/ecobottle_logo.png';
 
 const ROUTE_WIDTH = 100;
-const BONUS_XP_END = new Date('2023-11-29T21:00:00.000Z');
+const BONUS_XP_END = new Date('2023-12-11T15:00:00.000Z');
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -397,7 +397,7 @@ function Header() {
 
                     {differenceInSeconds(BONUS_XP_END, new Date()) > 0 && (
                         <Flex alignItems="center" pointerEvents="all">
-                            {/* <Box mb="2px">
+                            <Box mb="2px">
                                 <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
                             </Box>
 
@@ -405,18 +405,16 @@ function Header() {
                                 <Text as="span" color="#5ff070" fontWeight={600}>
                                     Double Xp
                                 </Text>
-                                {' & '}
-                            </Text> */}
+                            </Text>
 
-                            {/* <Box mx={2.5}>
+                            <Box mx={2.5}>
                                 <Separator type="vertical" width="1px" height="28px" />
-                            </Box> */}
+                            </Box>
 
-                            {/* <TimeIcon boxSize={4} /> */}
-                            {/* <Text fontSize="15px">
+                            <TimeIcon boxSize={4} />
+                            <Text ml={1.5} fontSize="15px">
                                 {formatDistanceToNow(BONUS_XP_END)} left
-                                Ended
-                            </Text> */}
+                            </Text>
                         </Flex>
                     )}
 

@@ -138,17 +138,6 @@
             "outputs": []
         },
         {
-            "name": "getStakedWallets",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
             "name": "getRarityClass",
             "mutability": "readonly",
             "inputs": [
@@ -752,12 +741,6 @@
             "outputs": []
         },
         {
-            "name": "clearUnstakedWallets",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -888,6 +871,25 @@
             ]
         },
         {
+            "name": "getStakedWallets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Address>"
+                }
+            ]
+        },
+        {
             "name": "claimReward",
             "mutability": "mutable",
             "inputs": [],
@@ -907,6 +909,18 @@
                     "type": "u32"
                 }
             ]
+        },
+        {
+            "name": "airdropArt",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": []
         },
         {
             "name": "setArtDropTimestamp",
@@ -962,14 +976,7 @@
             "outputs": []
         },
         {
-            "name": "test",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "getPageCelestialsCustodian",
+            "name": "getPageCelestials",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -1214,6 +1221,10 @@
                 },
                 {
                     "name": "verdant",
+                    "type": "u32"
+                },
+                {
+                    "name": "solara",
                     "type": "u32"
                 }
             ]

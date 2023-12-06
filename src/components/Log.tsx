@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getCelestialsAssets, getAlternateBackground } from '../services/assets';
-import { getPageCelestialsCustodian } from '../blockchain/api/achievements/getPageCelestialsCustodian';
+import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
 import { BiInfoCircle } from 'react-icons/bi';
@@ -137,12 +137,12 @@ function Log() {
     }, []);
 
     const init = async () => {
-        const celestials = await getPageCelestialsCustodian();
+        const celestials = await getPageCelestials();
 
-        const celestialsCustodian = [celestials.aurora, celestials.verdant, 0, 0, 0];
+        const celestialsCustodian = [celestials.aurora, celestials.verdant, celestials.solara, 0, 0];
         celestialsCustodian.push(celestialsCustodian.every((amount) => amount > 0) ? 1 : 0);
 
-        const celestialsCurator = [celestials.aurora, celestials.verdant, 0, 0, 0];
+        const celestialsCurator = [celestials.aurora, celestials.verdant, celestials.solara, 0, 0];
         celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
 
         setPages([
