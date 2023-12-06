@@ -752,21 +752,7 @@
             "outputs": []
         },
         {
-            "name": "cleanMigratedWallets",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "migrateWallets",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "migrateTokens",
+            "name": "clearUnstakedWallets",
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
@@ -816,16 +802,6 @@
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
-        },
-        {
-            "name": "getCleanupAddressesCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
         },
         {
             "name": "getStakedNFTsCount",
@@ -887,53 +863,9 @@
             ]
         },
         {
-            "name": "getStakedAddressesLength",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
             "name": "getStakedWalletsLength",
             "mutability": "readonly",
             "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getStakedUsers",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<Address>"
-                }
-            ]
-        },
-        {
-            "name": "getMigrationSize",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
             "outputs": [
                 {
                     "type": "u32"
@@ -1030,7 +962,7 @@
             "outputs": []
         },
         {
-            "name": "achievement",
+            "name": "test",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
