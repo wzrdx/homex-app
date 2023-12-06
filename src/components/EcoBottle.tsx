@@ -83,13 +83,14 @@ function EcoBottle() {
                 .map(async (player) => {
                     return {
                         name: await getUsername(player.address),
+                        addr: player.address,
                         xp: player.xp,
                     };
                 })
                 .value()
         );
 
-        console.log(array);
+        console.log(array.slice(0, 15));
         setPlayers(array);
     };
 
@@ -124,7 +125,7 @@ function EcoBottle() {
                         </Text> */}
 
                         <Text textAlign="center">
-                            The top 10 players will be airdropped
+                            The top 15 players who minted EcoBottle will be airdropped
                             <br />
                             <Text as="span" fontWeight={500} color="ticketGold">
                                 10 Golden Tickets
@@ -149,7 +150,9 @@ function EcoBottle() {
 
                                 {_.map(players, (player, index: number) => (
                                     <Flex mt={2} alignItems="center" key={index}>
-                                        <Text minWidth={COLUMNS[0].width}>{index + 1}</Text>
+                                        <Text minWidth={COLUMNS[0].width} color={index < 15 ? 'energyBright' : 'whitesmoke'}>
+                                            {index + 1}
+                                        </Text>
 
                                         <Text pr={6} layerStyle="ellipsis" width={COLUMNS[1].width}>
                                             {player.name}
