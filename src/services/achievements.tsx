@@ -1,4 +1,4 @@
-import { getCelestialsAssets, getCelestialsCollector } from './assets';
+import { getCelestialsAssets, getCelestialsCollector, getCelestialsHoarder } from './assets';
 
 export interface TravelersLogPage {
     title: string;
@@ -95,18 +95,40 @@ export const PAGES: TravelersLogPage[] = [
         badges: [
             {
                 title: 'Aficionado',
-                text: 'Own at least 10 Celestials from Art of Menhir',
+                text: 'Own at least one of each Celestials from Art of Menhir',
                 assets: getCelestialsCollector(1),
             },
             {
                 title: 'Advocate',
-                text: 'Own at least 50 Celestials from Art of Menhir',
+                text: 'Own at least 3 of each Celestials from Art of Menhir',
                 assets: getCelestialsCollector(2),
             },
             {
                 title: 'Allegiant',
-                text: 'Own at least 100 Celestials from Art of Menhir',
+                text: 'Own at least 5 of each Celestials from Art of Menhir',
                 assets: getCelestialsCollector(3),
+            },
+        ],
+    },
+    {
+        title: 'Celestials Hoarder',
+        isNew: true,
+        rarity: 'Uncommon',
+        badges: [
+            {
+                title: 'Keeper',
+                text: 'Own at least 10 Celestials from Art of Menhir',
+                assets: getCelestialsHoarder(1),
+            },
+            {
+                title: 'Gatherer',
+                text: 'Own at least 50 Celestials from Art of Menhir',
+                assets: getCelestialsHoarder(2),
+            },
+            {
+                title: 'Stockpiler',
+                text: 'Own at least 100 Celestials from Art of Menhir',
+                assets: getCelestialsHoarder(3),
             },
         ],
     },

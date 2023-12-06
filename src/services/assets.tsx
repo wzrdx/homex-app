@@ -49,12 +49,17 @@ import CelestialsLocked from '../assets/log/celestials_minters/celestials_locked
 import CelestialsCustodian from '../assets/log/celestials_minters/celestials_custodian.png';
 import CelestialsCurator from '../assets/log/celestials_minters/celestials_curator.png';
 
-import CelestialsCollector1Locked from '../assets/log/celestials_collector/celestials_collector_1_locked.png';
-import CelestialsCollector1Unlocked from '../assets/log/celestials_collector/celestials_collector_1_unlocked.png';
-import CelestialsCollector2Locked from '../assets/log/celestials_collector/celestials_collector_2_locked.png';
-import CelestialsCollector2Unlocked from '../assets/log/celestials_collector/celestials_collector_2_unlocked.png';
-import CelestialsCollector3Locked from '../assets/log/celestials_collector/celestials_collector_3_locked.png';
-import CelestialsCollector3Unlocked from '../assets/log/celestials_collector/celestials_collector_3_unlocked.png';
+import CelestialsHoarder1Locked from '../assets/log/celestials_hoarder/celestials_hoarder_1_locked.png';
+import CelestialsHoarder1Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_1_unlocked.png';
+import CelestialsHoarder2Locked from '../assets/log/celestials_hoarder/celestials_hoarder_2_locked.png';
+import CelestialsHoarder2Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_2_unlocked.png';
+import CelestialsHoarder3Locked from '../assets/log/celestials_hoarder/celestials_hoarder_3_locked.png';
+import CelestialsHoarder3Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_3_unlocked.png';
+
+import CelestialsCollectorLocked from '../assets/log/celestials_collector/locked.png';
+import CelestialsCollector1 from '../assets/log/celestials_collector/1.png';
+import CelestialsCollector2 from '../assets/log/celestials_collector/2.png';
+import CelestialsCollector3 from '../assets/log/celestials_collector/3.png';
 
 // Celestials
 export const getCelestialsAssets = (
@@ -128,21 +133,41 @@ export const getCelestialsAssets = (
     return assets;
 };
 
+export const getCelestialsHoarder = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [CelestialsHoarder1Locked, CelestialsHoarder1Unlocked];
+            break;
+        case 2:
+            assets = [CelestialsHoarder2Locked, CelestialsHoarder2Unlocked];
+            break;
+        case 3:
+            assets = [CelestialsHoarder3Locked, CelestialsHoarder3Unlocked];
+            break;
+        default:
+            console.error('Unknown hoarder type');
+    }
+
+    return assets;
+};
+
 export const getCelestialsCollector = (type: 1 | 2 | 3): [string, string] => {
     let assets: [string, string] = ['', ''];
 
     switch (type) {
         case 1:
-            assets = [CelestialsCollector1Locked, CelestialsCollector1Unlocked];
+            assets = [CelestialsCollectorLocked, CelestialsCollector1];
             break;
         case 2:
-            assets = [CelestialsCollector2Locked, CelestialsCollector2Unlocked];
+            assets = [CelestialsCollectorLocked, CelestialsCollector2];
             break;
         case 3:
-            assets = [CelestialsCollector3Locked, CelestialsCollector3Unlocked];
+            assets = [CelestialsCollectorLocked, CelestialsCollector3];
             break;
         default:
-            console.error('Unknown collector type');
+            console.error('Unknown hoarder type');
     }
 
     return assets;

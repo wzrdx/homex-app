@@ -64,7 +64,15 @@ function Log() {
                 ...PAGES[2],
                 badges: _.map(PAGES[2].badges, (badge, index) => ({
                     ...badge,
-                    isUnlocked: false,
+                    isUnlocked: true,
+                    value: index,
+                })),
+            },
+            {
+                ...PAGES[3],
+                badges: _.map(PAGES[3].badges, (badge, index) => ({
+                    ...badge,
+                    isUnlocked: true,
                     value: index,
                 })),
             },
