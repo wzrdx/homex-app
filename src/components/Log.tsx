@@ -191,11 +191,7 @@ function Log() {
                 {/* Right */}
                 <Box flex={7} position="relative" py={{ md: 6, lg: 8 }} px={{ md: 8, lg: 10 }}>
                     {isMinting ? (
-                        <PageMint
-                            pageIndex={currentPage}
-                            pageName={pages[currentPage].title}
-                            goBack={() => setIsMinting(false)}
-                        />
+                        <PageMint pageIndex={currentPage} page={pages[currentPage]} goBack={() => setIsMinting(false)} />
                     ) : (
                         <Stack spacing={{ md: 8, lg: 10 }} height="100%">
                             <Flex justifyContent="space-between" alignItems="flex-start">
@@ -400,7 +396,7 @@ const MenuItem = ({ title, isNew, color, text, isActive, onClick }) => {
     );
 };
 
-const PageMint = ({ pageIndex, pageName, goBack }) => {
+const PageMint = ({ pageIndex, page, goBack }) => {
     return (
         <Stack height="100%">
             <Flex py={1.5} justifyContent="flex-end" alignItems="flex-start">
@@ -445,18 +441,12 @@ const PageMint = ({ pageIndex, pageName, goBack }) => {
                             <br />
                             The{' '}
                             <Text as="span" color="white" fontWeight={500}>
-                                {pageName}
+                                {page.title}
                             </Text>{' '}
                             Page is{' '}
-                            {pageIndex === 0 ? (
-                                <Text as="span" color="blizzardEpic" fontWeight={500}>
-                                    Epic
-                                </Text>
-                            ) : (
-                                <Text as="span" color="blizzardLegendary" fontWeight={500}>
-                                    Legendary
-                                </Text>
-                            )}
+                            <Text as="span" color={`blizzard${page.rarity}`} fontWeight={500}>
+                                {page.rarity}
+                            </Text>
                             .
                         </Text>
                     </Stack>
@@ -474,7 +464,7 @@ const PageMint = ({ pageIndex, pageName, goBack }) => {
                             {', '}
                             token airdrop eligibility,
                             <br />
-                            and playing a pivotal role in the upcoming{' '}
+                            and will play a pivotal role in the upcoming{' '}
                             <Text as="span" color="orange" fontWeight={500}>
                                 Dungeons
                             </Text>{' '}
