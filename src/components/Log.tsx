@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getAlternateBackground } from '../services/assets';
 import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
@@ -7,7 +7,7 @@ import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../shared/IconWithShadow';
 import { BiInfoCircle } from 'react-icons/bi';
 import { FaRegCheckCircle } from 'react-icons/fa';
-import { LiaScrollSolid } from 'react-icons/lia';
+import { LiaScrollSolid, LiaCalendarCheck } from 'react-icons/lia';
 import { BsGem } from 'react-icons/bs';
 import { GoTrophy } from 'react-icons/go';
 import { getBackgroundStyle } from '../services/helpers';
@@ -15,7 +15,6 @@ import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
 import { PAGES, TravelersLogPage } from '../services/achievements';
 import { NewSymbol } from '../shared/NewSymbol';
-import { getNFTsCount } from '../services/authentication';
 import { AOM_ID } from '../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getSFTDetails } from '../services/resources';
@@ -37,16 +36,30 @@ function Log() {
         init();
     }, []);
 
+    const getSFTBalance = async (id: string): Promise<number> => {
+        try {
+            const { data } = await getSFTDetails(address, id);
+            return !data ? 0 : Number.parseInt(data.balance);
+        } catch (error: any) {
+            return 0;
+        }
+    };
+
     const init = async () => {
-        const { data: data } = await getSFTDetails(address, `${AOM_ID}-02`);
-        console.log(data);
+        const celestialsBalance = [
+            await getSFTBalance(`${AOM_ID}-01`),
+            await getSFTBalance(`${AOM_ID}-02`),
+            await getSFTBalance(`${AOM_ID}-03`),
+            await getSFTBalance(`${AOM_ID}-04`),
+            await getSFTBalance(`${AOM_ID}-05`),
+        ];
 
-        const celestials = await getPageCelestials();
+        const celestialsPage = await getPageCelestials();
 
-        const celestialsCustodian = [celestials.aurora, celestials.verdant, celestials.solara, 0, 0];
+        const celestialsCustodian = [celestialsPage?.aurora, celestialsPage?.verdant, celestialsPage?.solara, 0, 0];
         celestialsCustodian.push(celestialsCustodian.every((amount) => amount > 0) ? 1 : 0);
 
-        const celestialsCurator = [celestials.aurora, celestials.verdant, celestials.solara, 0, 0];
+        const celestialsCurator = [celestialsPage?.aurora, celestialsPage?.verdant, celestialsPage?.solara, 0, 0];
         celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
 
         setPages([
@@ -54,7 +67,7 @@ function Log() {
                 ...PAGES[0],
                 badges: _.map(PAGES[0].badges, (badge, index) => ({
                     ...badge,
-                    isUnlocked: celestialsCustodian[index] > 0,
+                    isUnlocked: celestialsCustodian[index] >= (_.first(PAGES[0].limits) as number),
                     value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCustodian[index],
                 })),
             },
@@ -65,7 +78,7 @@ function Log() {
                     isUnlocked:
                         index === PAGES[1].badges.length - 1
                             ? (_.last(celestialsCurator) as number) > 0
-                            : celestialsCurator[index] >= 5,
+                            : celestialsCurator[index] >= (_.first(PAGES[1].limits) as number),
                     value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCurator[index],
                 })),
             },
@@ -73,16 +86,15 @@ function Log() {
                 ...PAGES[2],
                 badges: _.map(PAGES[2].badges, (badge, index) => ({
                     ...badge,
-                    isUnlocked: true,
-                    value: index,
+                    isUnlocked: celestialsBalance.every((balance) => balance >= PAGES[2].limits[index]),
                 })),
             },
             {
                 ...PAGES[3],
                 badges: _.map(PAGES[3].badges, (badge, index) => ({
                     ...badge,
-                    isUnlocked: true,
-                    value: index,
+                    isUnlocked: _.sum(celestialsBalance) >= PAGES[3].limits[index],
+                    value: _.sum(celestialsBalance),
                 })),
             },
         ]);
@@ -140,7 +152,7 @@ function Log() {
                     backgroundColor="#00000020"
                     borderRight="1px solid #ffffff0d"
                 >
-                    <Stack spacing={3} alignItems="center">
+                    <Stack spacing={4} alignItems="center">
                         <Stack spacing={2} direction="row" alignItems="center">
                             <IconWithShadow shadowColor="#222">
                                 <LuSwords fontSize="22px" />
@@ -204,7 +216,7 @@ function Log() {
                     ) : (
                         <Stack spacing={{ md: 8, lg: 10 }} height="100%">
                             <Flex justifyContent="space-between" alignItems="flex-start">
-                                <Stack spacing={3}>
+                                <Stack spacing={4}>
                                     <Text layerStyle="header1" textShadow="1px 1px 0px #222">
                                         {pages[currentPage].title}
                                     </Text>
@@ -415,13 +427,15 @@ const PageMint = ({ pageIndex, page, goBack }) => {
             </Flex>
 
             <Flex height="100%" justifyContent="center" alignItems="center">
-                <Stack spacing={10} pb={10} justifyContent="center" alignItems="center">
-                    <Stack justifyContent="center" alignItems="center">
-                        <IconWithShadow shadowColor="#222">
-                            <LiaScrollSolid fontSize="42px" />
-                        </IconWithShadow>
+                <Stack spacing={10} pb={10} justifyContent="center">
+                    <Stack direction="row" spacing={2} alignItems="center">
+                        <Center width="50px" height="50px" pb="2px">
+                            <IconWithShadow shadowColor="#222">
+                                <LiaScrollSolid fontSize="49px" />
+                            </IconWithShadow>
+                        </Center>
 
-                        <Text textShadow="1px 1px 0px #222" textAlign="center" margin="0 auto">
+                        <Text textShadow="1px 1px 0px #222" margin="0 auto">
                             Unlocking all the Badges within a page allows a{' '}
                             <Text as="span" color="energyBright" fontWeight={500}>
                                 one time
@@ -429,27 +443,29 @@ const PageMint = ({ pageIndex, page, goBack }) => {
                             mint
                             <br />
                             of a collectible{' '}
-                            <Text as="span" color="mirage" fontWeight={500}>
+                            <Text as="span" color="page" fontWeight={500}>
                                 Traveler's Log Page
                             </Text>{' '}
                             Semi-Fungible Token.
                         </Text>
                     </Stack>
 
-                    <Stack justifyContent="center" alignItems="center">
-                        <IconWithShadow shadowColor="#222">
-                            <GiLockedChest fontSize="36px" />
-                        </IconWithShadow>
+                    <Stack direction="row" alignItems="center">
+                        <Center width="50px" height="50px" pb="2px">
+                            <IconWithShadow shadowColor="#222">
+                                <GiLockedChest fontSize="40px" />
+                            </IconWithShadow>
+                        </Center>
 
-                        <Text textShadow="1px 1px 0px #222" textAlign="center" margin="0 auto">
+                        <Text textShadow="1px 1px 0px #222" margin="0 auto">
                             Each{' '}
-                            <Text as="span" color="mirage" fontWeight={500}>
+                            <Text as="span" color="page" fontWeight={500}>
                                 Traveler's Log Page
                             </Text>{' '}
                             has a different rarity.
                             <br />
                             The{' '}
-                            <Text as="span" color="white" fontWeight={500}>
+                            <Text as="span" fontWeight={500}>
                                 {page.title}
                             </Text>{' '}
                             Page is{' '}
@@ -460,24 +476,45 @@ const PageMint = ({ pageIndex, page, goBack }) => {
                         </Text>
                     </Stack>
 
-                    <Stack justifyContent="center" alignItems="center">
-                        <IconWithShadow shadowColor="#222">
-                            <VscTools fontSize="36px" />
-                        </IconWithShadow>
+                    <Stack direction="row" alignItems="center">
+                        <Center width="50px" height="50px" pb="2px">
+                            <IconWithShadow shadowColor="#222">
+                                <VscTools fontSize="42px" />
+                            </IconWithShadow>
+                        </Center>
 
-                        <Text textShadow="1px 1px 0px #222" textAlign="center" margin="0 auto">
+                        <Text textShadow="1px 1px 0px #222" margin="0 auto">
                             Pages will be vital for{' '}
                             <Text as="span" color="energyBright" fontWeight={500}>
                                 Staking
                             </Text>
                             {', '}
-                            token airdrop eligibility,
-                            <br />
-                            and will play a pivotal role in the upcoming{' '}
-                            <Text as="span" color="orange" fontWeight={500}>
-                                Dungeons
+                            <Text as="span" color="mirage" fontWeight={500}>
+                                Maze
                             </Text>{' '}
-                            update.
+                            token farming,
+                            <br />
+                            and will play a pivotal role in the upcoming system & updates.
+                        </Text>
+                    </Stack>
+
+                    <Stack direction="row" alignItems="center">
+                        <Center width="50px" height="50px" pb="2px">
+                            <IconWithShadow shadowColor="#222">
+                                <LiaCalendarCheck fontSize="48px" />
+                            </IconWithShadow>
+                        </Center>
+
+                        <Text textShadow="1px 1px 0px #222" margin="0 auto">
+                            Minting of{' '}
+                            <Text as="span" color="page" fontWeight={500}>
+                                Traveler's Log Pages
+                            </Text>{' '}
+                            will become available in{' '}
+                            <Text as="span" fontWeight={500}>
+                                January 2024
+                            </Text>
+                            .
                         </Text>
                     </Stack>
                 </Stack>

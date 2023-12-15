@@ -4,6 +4,7 @@ export interface TravelersLogPage {
     title: string;
     isNew: boolean;
     rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
+    limits: number[];
     badges: {
         title: string;
         text: string;
@@ -18,6 +19,7 @@ export const PAGES: TravelersLogPage[] = [
         title: 'Celestials Custodian',
         isNew: false,
         rarity: 'Epic',
+        limits: [1],
         badges: [
             {
                 title: "Aurora's Awakening",
@@ -55,6 +57,7 @@ export const PAGES: TravelersLogPage[] = [
         title: 'Celestials Curator',
         isNew: false,
         rarity: 'Legendary',
+        limits: [5],
         badges: [
             {
                 title: 'Aurora Curator',
@@ -92,6 +95,7 @@ export const PAGES: TravelersLogPage[] = [
         title: 'Celestials Collector',
         isNew: true,
         rarity: 'Rare',
+        limits: [1, 2, 5],
         badges: [
             {
                 title: 'Aficionado',
@@ -100,7 +104,7 @@ export const PAGES: TravelersLogPage[] = [
             },
             {
                 title: 'Advocate',
-                text: 'Own at least 3 of each Celestials from Art of Menhir',
+                text: 'Own at least 2 of each Celestials from Art of Menhir',
                 assets: getCelestialsCollector(2),
             },
             {
@@ -113,7 +117,8 @@ export const PAGES: TravelersLogPage[] = [
     {
         title: 'Celestials Hoarder',
         isNew: true,
-        rarity: 'Uncommon',
+        rarity: 'Rare',
+        limits: [10, 30, 100],
         badges: [
             {
                 title: 'Keeper',
@@ -122,7 +127,7 @@ export const PAGES: TravelersLogPage[] = [
             },
             {
                 title: 'Gatherer',
-                text: 'Own at least 50 Celestials from Art of Menhir',
+                text: 'Own at least 30 Celestials from Art of Menhir',
                 assets: getCelestialsHoarder(2),
             },
             {

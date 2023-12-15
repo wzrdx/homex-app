@@ -44,6 +44,7 @@ const colors = {
     mintGreen: '#2bfd89',
     mirage: '#c58cf7',
     travelersLog: '#79b4ed',
+    page: '#fad28d',
     blizzardCommon: 'white',
     blizzardUncommon: '#1eff00',
     blizzardRare: '#0070dd',

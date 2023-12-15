@@ -12,6 +12,8 @@ export const getPageCelestials = async (): Promise<{
     aurora: number;
     verdant: number;
     solara: number;
+    emberheart: number;
+    aetheris: number;
 }> => {
     try {
         const address = await getAddress();
@@ -31,6 +33,8 @@ export const getPageCelestials = async (): Promise<{
             aurora: value.aurora.toNumber(),
             verdant: value.verdant.toNumber(),
             solara: value.solara.toNumber(),
+            emberheart: 0,
+            aetheris: 0,
         };
 
         return obj;
@@ -40,6 +44,8 @@ export const getPageCelestials = async (): Promise<{
             aurora: 0,
             verdant: 0,
             solara: 0,
+            emberheart: 0,
+            aetheris: 0,
         };
     }
 };

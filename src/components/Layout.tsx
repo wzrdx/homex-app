@@ -70,11 +70,10 @@ function Layout() {
 
     // Updates
     useEffect(() => {
-        // Updates
-        // if (isLoaded && !window.localStorage['update_2']) {
-        //     setTimeout(() => onModalOpen(), 3000);
-        //     window.localStorage['update_2'] = true;
-        // }
+        if (isLoaded && !window.localStorage['update_3']) {
+            setTimeout(() => onModalOpen(), 1000);
+            window.localStorage['update_3'] = true;
+        }
     }, [isLoaded]);
 
     const displayToast = (
@@ -127,11 +126,11 @@ function Layout() {
                 </Box>
             </Flex>
 
-            {/* Settings */}
+            {/* Updates */}
             <Modal size="xl" onClose={onModalClose} isOpen={isModalOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent backgroundColor="dark">
-                    <ModalHeader>New update</ModalHeader>
+                    <ModalHeader>New updates!</ModalHeader>
 
                     <ModalCloseButton
                         zIndex={1}
