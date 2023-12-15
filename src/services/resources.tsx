@@ -77,6 +77,11 @@ export const RESOURCE_ELEMENTS: any = {
     },
 };
 
+export const getSFTDetails = (address: string, tokenId: string): Promise<{ data: { balance: string } }> =>
+    axios.get(`accounts/${address}/nfts/${tokenId}`, {
+        baseURL: API_URL,
+    });
+
 export const getResourceElements = (key: string) => RESOURCE_ELEMENTS[key];
 
 export interface ResourcesContextType {
@@ -118,7 +123,6 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                // console.log('getEnergy');
                 setResources((state) => ({
                     ...state,
                     energy: Number.parseInt(result.data.balance) / 1000000,
@@ -142,7 +146,6 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                // console.log('getHerbs');
                 setResources((state) => ({
                     ...state,
                     herbs: Number.parseInt(result.data.balance) / 1000000,
@@ -166,7 +169,6 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                // console.log('getGems');
                 setResources((state) => ({
                     ...state,
                     gems: Number.parseInt(result.data.balance) / 1000000,
@@ -190,7 +192,6 @@ export const ResourcesProvider = ({ children }) => {
             });
 
             if (result.data) {
-                // console.log('getEssence');
                 setResources((state) => ({
                     ...state,
                     essence: Number.parseInt(result.data.balance) / 1000000,
@@ -209,12 +210,9 @@ export const ResourcesProvider = ({ children }) => {
 
     const getTickets = async () => {
         try {
-            const result = await axios.get(`accounts/${address}/nfts/${TICKETS_TOKEN_ID}-01`, {
-                baseURL: API_URL,
-            });
+            const result = await getSFTDetails(address, `${TICKETS_TOKEN_ID}-01`);
 
             if (result.data) {
-                // console.log('getTickets');
                 setResources((state) => ({
                     ...state,
                     tickets: Number.parseInt(result.data.balance),

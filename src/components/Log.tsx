@@ -15,12 +15,18 @@ import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
 import { PAGES, TravelersLogPage } from '../services/achievements';
 import { NewSymbol } from '../shared/NewSymbol';
+import { getNFTsCount } from '../services/authentication';
+import { AOM_ID } from '../blockchain/config';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { getSFTDetails } from '../services/resources';
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
 const ACCENT_COLOR = 'travelersLog';
 
 function Log() {
+    let { address } = useGetAccountInfo();
+
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [isMinting, setIsMinting] = useState<boolean>(false);
 
@@ -32,6 +38,9 @@ function Log() {
     }, []);
 
     const init = async () => {
+        const { data: data } = await getSFTDetails(address, `${AOM_ID}-02`);
+        console.log(data);
+
         const celestials = await getPageCelestials();
 
         const celestialsCustodian = [celestials.aurora, celestials.verdant, celestials.solara, 0, 0];
