@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { API_KEY } from '../components/Settings';
 
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 
 export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgqc8s6t5594e4en4ffl60r6hn52hajkpkkukrqww29av',
@@ -37,6 +37,8 @@ export const ENERGY_TOKEN_ID = getEnvValue('ENERGY-e0c232', 'ENERGY-36fb1d');
 export const HERBS_TOKEN_ID = getEnvValue('HERBS-d49962', 'HERBS-1c45fb');
 export const GEMS_TOKEN_ID = getEnvValue('GEMS-ae2194', 'GEMS-5fbf7d');
 export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-1318e1', 'ESSENCE-67531c');
+
+export const AOM_ID = getEnvValue('AOM-edf5eb', 'AOM-f37bc5');
 
 export const REWARDS_QUERYING_INTERVAL = 15000;
 export const isStakingDisabled = false;
