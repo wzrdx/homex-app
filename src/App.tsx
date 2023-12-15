@@ -146,14 +146,6 @@ function App() {
                         displayEnergyGain(tx?.hash);
                         break;
 
-                    case TransactionType.Migration:
-                        displayToast(
-                            'Migration succesful',
-                            `Successfully migrated ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
-                            'green.500'
-                        );
-                        break;
-
                     case TransactionType.ClaimEnergy:
                         displayEnergyGain(tx?.hash);
                         break;

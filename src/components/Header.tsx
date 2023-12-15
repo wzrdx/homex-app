@@ -40,7 +40,7 @@ import Logo from '../assets/ecobottle_logo.png';
 import { NewSymbol } from '../shared/NewSymbol';
 
 const ROUTE_WIDTH = 100;
-const BONUS_XP_END = new Date('2023-11-29T21:00:00.000Z');
+const BONUS_XP_END = new Date('2023-12-11T15:00:00.000Z');
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -390,12 +390,7 @@ function Header() {
                                 <Text as="span" color="#5ff070" fontWeight={600}>
                                     Double Xp
                                 </Text>
-                                {' & '}
                             </Text>
-
-                            <Image mx={1} src={Logo} width="32px" />
-
-                            <Text fontWeight={500}>EcoBottle Event</Text>
 
                             <Box mx={2.5}>
                                 <Separator type="vertical" width="1px" height="28px" />

@@ -809,6 +809,37 @@ export const RAFFLES: any[] = [
         nonce: 3317,
         url: 'https://ipfs.io/ipfs/bafybeigfsavl3figwpet6uy6bcllpahkmuabxioxahuxbvrdx36kqfcjt4/6691.png',
     },
+    // Trial 15 - Starts with ID 101
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.5)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.5)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.5)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.5)],
+        winners: 1,
+    },
+    {
+        type: RewardType.Prizes,
+        id: getId(),
+        prizes: [getEGLDPrize(0.5)],
+        winners: 1,
+    },
 ];
 
 export const BATTLES: any[] = [

@@ -1,6 +1,5 @@
 import Background from '../assets/backgrounds/1.jpg';
 import Unlock from '../assets/backgrounds/2.jpg';
-import EcoBg from '../assets/backgrounds/eco_bg.jpg';
 
 import AlternateBackground from '../assets/backgrounds/alternate.jpg';
 import Ticket from '../assets/ticket_small.png';
@@ -23,7 +22,7 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
-import ArtDrop from '../assets/images/Verdant.jpg';
+import ArtDrop from '../assets/images/Solara.jpg';
 
 import AuroraLocked from '../assets/log/celestials_minters/aurora_locked.png';
 import AuroraCustodian from '../assets/log/celestials_minters/aurora_custodian.png';
@@ -173,7 +172,7 @@ export const getCelestialsCollector = (type: 1 | 2 | 3): [string, string] => {
     return assets;
 };
 
-export const getLayoutBackground = () => EcoBg;
+export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;
 export const getAlternateBackground = () => AlternateBackground;
 

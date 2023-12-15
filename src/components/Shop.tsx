@@ -18,7 +18,7 @@ import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import { isAfter } from 'date-fns';
 
 const PRICE = 3;
-const XP = 1500;
+const XP = 3000;
 
 function Shop() {
     const [timestamp, setTimestamp] = useState<Date>();
@@ -96,7 +96,7 @@ function Shop() {
                 <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
                     <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
-                            Verdant Art Drop
+                            Solara Art Drop
                         </Text>
 
                         {isAfter(new Date(), timestamp) ? (
@@ -107,16 +107,17 @@ function Shop() {
                     </Flex>
 
                     <Stack direction="row" spacing={4} alignItems="center">
-                        <Image width={{ md: '234px', lg: '292px' }} src={getArtDrop()} />
+                        <Image width={{ md: '250px', lg: '306px' }} src={getArtDrop()} />
                         <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
-                            Deep within Menhir's heart, ancient trees formed a cathedral where Verdant faced disruption to the
-                            cherished balance. Sensing a disturbance, he met Luminara, a majestic deer spirit lamenting
-                            outsiders exploiting the land. Verdant, attuned to nature, sought understanding. The ghostly deer, a
-                            centuries-old guardian, expressed sorrow for felled trees and a delicate balance. Together, they
-                            transformed into sparkling lights, preserving Menhir's vitality. Luminara's haunting melody became a
-                            harmonious anthem, marking a newfound alliance. The tale echoed through ages, reminding of spirits
-                            and guardians uniting for Menhir's well-being. Passed down through generations, the story reinforced
-                            the importance of respecting nature and forming alliances.
+                            In the timeless deserts of Menhir, there lived a legendary hero named Solara. With flowing black
+                            hair that framed her face like the midnight sky and skin warmly kissed by the sun's tender embrace,
+                            she wandered the dunes as an eternal guardian. Armed with potent magic fueled by the sun's fiery
+                            essence, Solara defended the arid lands and the nomadic tribes within. Her tales resonated through
+                            the ages - stories of summoning storms to quench the desert's unyielding thirst and wielding the
+                            sun's rays to repel invaders. Draped in robes adorned with ancient symbols, Solara emerged as a
+                            symbol of unwavering resilience, her footsteps leaving no discernible trace in the ever-shifting
+                            sands. Though silent, her legendary echo reverberated through the winds that softly whispered her
+                            name across Menhir's expanse.
                         </Text>
                     </Stack>
 

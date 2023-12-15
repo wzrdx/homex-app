@@ -15,7 +15,6 @@ export enum TransactionType {
     ClaimReward,
     ClaimUnbondedNFTs,
     Restake,
-    Migration,
     MintArtDrop,
 }
 

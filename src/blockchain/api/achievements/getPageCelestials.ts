@@ -1,14 +1,18 @@
 import { ResultsParser, ContractFunction, Address, AddressValue } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
+import { smartContract } from '../../smartContract';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getMigrationSize';
+const FUNCTION_NAME = 'getPageCelestials';
 
-export const getMigrationSizeQuery = async () => {
+export const getPageCelestials = async (): Promise<{
+    aurora: number;
+    verdant: number;
+    solara: number;
+}> => {
     try {
         const address = await getAddress();
 
@@ -21,11 +25,21 @@ export const getMigrationSizeQuery = async () => {
         const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
 
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-        const value: number = firstValue?.valueOf()?.toNumber();
+        const value = firstValue?.valueOf();
 
-        return value;
+        const obj = {
+            aurora: value.aurora.toNumber(),
+            verdant: value.verdant.toNumber(),
+            solara: value.solara.toNumber(),
+        };
+
+        return obj;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
-        return 0;
+        return {
+            aurora: 0,
+            verdant: 0,
+            solara: 0,
+        };
     }
 };

@@ -138,17 +138,6 @@
             "outputs": []
         },
         {
-            "name": "getStakedWallets",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
             "name": "getRarityClass",
             "mutability": "readonly",
             "inputs": [
@@ -752,26 +741,6 @@
             "outputs": []
         },
         {
-            "name": "cleanMigratedWallets",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "migrateWallets",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "migrateTokens",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -816,16 +785,6 @@
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
-        },
-        {
-            "name": "getCleanupAddressesCount",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
         },
         {
             "name": "getStakedNFTsCount",
@@ -887,53 +846,9 @@
             ]
         },
         {
-            "name": "getStakedAddressesLength",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
             "name": "getStakedWalletsLength",
             "mutability": "readonly",
             "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getStakedUsers",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<Address>"
-                }
-            ]
-        },
-        {
-            "name": "getMigrationSize",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
             "outputs": [
                 {
                     "type": "u32"
@@ -952,6 +867,25 @@
             "outputs": [
                 {
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getStakedWallets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Address>"
                 }
             ]
         },
@@ -975,6 +909,18 @@
                     "type": "u32"
                 }
             ]
+        },
+        {
+            "name": "airdropArt",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": []
         },
         {
             "name": "setArtDropTimestamp",
@@ -1030,14 +976,7 @@
             "outputs": []
         },
         {
-            "name": "achievement",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "getPageCelestialsCustodian",
+            "name": "getPageCelestials",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -1282,6 +1221,10 @@
                 },
                 {
                     "name": "verdant",
+                    "type": "u32"
+                },
+                {
+                    "name": "solara",
                     "type": "u32"
                 }
             ]
