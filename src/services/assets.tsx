@@ -24,31 +24,43 @@ import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
 import ArtDrop from '../assets/images/Solara.jpg';
 
-import AuroraLocked from '../assets/log/aurora_locked.png';
-import AuroraCustodian from '../assets/log/aurora_custodian.png';
-import AuroraCurator from '../assets/log/aurora_curator.png';
+import AuroraLocked from '../assets/log/celestials_minters/aurora_locked.png';
+import AuroraCustodian from '../assets/log/celestials_minters/aurora_custodian.png';
+import AuroraCurator from '../assets/log/celestials_minters/aurora_curator.png';
 
-import VerdantLocked from '../assets/log/verdant_locked.png';
-import VerdantCustodian from '../assets/log/verdant_custodian.png';
-import VerdantCurator from '../assets/log/verdant_curator.png';
+import VerdantLocked from '../assets/log/celestials_minters/verdant_locked.png';
+import VerdantCustodian from '../assets/log/celestials_minters/verdant_custodian.png';
+import VerdantCurator from '../assets/log/celestials_minters/verdant_curator.png';
 
-import SolaraLocked from '../assets/log/solara_locked.png';
-import SolaraCustodian from '../assets/log/solara_custodian.png';
-import SolaraCurator from '../assets/log/solara_curator.png';
+import SolaraLocked from '../assets/log/celestials_minters/solara_locked.png';
+import SolaraCustodian from '../assets/log/celestials_minters/solara_custodian.png';
+import SolaraCurator from '../assets/log/celestials_minters/solara_curator.png';
 
-import EmberheartLocked from '../assets/log/emberheart_locked.png';
-import EmberheartCustodian from '../assets/log/emberheart_custodian.png';
-import EmberheartCurator from '../assets/log/emberheart_curator.png';
+import EmberheartLocked from '../assets/log/celestials_minters/emberheart_locked.png';
+import EmberheartCustodian from '../assets/log/celestials_minters/emberheart_custodian.png';
+import EmberheartCurator from '../assets/log/celestials_minters/emberheart_curator.png';
 
-import AetherisLocked from '../assets/log/aetheris_locked.png';
-import AetherisCustodian from '../assets/log/aetheris_custodian.png';
-import AetherisCurator from '../assets/log/aetheris_curator.png';
+import AetherisLocked from '../assets/log/celestials_minters/aetheris_locked.png';
+import AetherisCustodian from '../assets/log/celestials_minters/aetheris_custodian.png';
+import AetherisCurator from '../assets/log/celestials_minters/aetheris_curator.png';
 
-import CelestialsLocked from '../assets/log/celestials_locked.png';
-import CelestialsCustodian from '../assets/log/celestials_custodian.png';
-import CelestialsCurator from '../assets/log/celestials_curator.png';
+import CelestialsLocked from '../assets/log/celestials_minters/celestials_locked.png';
+import CelestialsCustodian from '../assets/log/celestials_minters/celestials_custodian.png';
+import CelestialsCurator from '../assets/log/celestials_minters/celestials_curator.png';
 
-// Achievements
+import CelestialsHoarder1Locked from '../assets/log/celestials_hoarder/celestials_hoarder_1_locked.png';
+import CelestialsHoarder1Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_1_unlocked.png';
+import CelestialsHoarder2Locked from '../assets/log/celestials_hoarder/celestials_hoarder_2_locked.png';
+import CelestialsHoarder2Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_2_unlocked.png';
+import CelestialsHoarder3Locked from '../assets/log/celestials_hoarder/celestials_hoarder_3_locked.png';
+import CelestialsHoarder3Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_3_unlocked.png';
+
+import CelestialsCollectorLocked from '../assets/log/celestials_collector/locked.png';
+import CelestialsCollector1 from '../assets/log/celestials_collector/1.png';
+import CelestialsCollector2 from '../assets/log/celestials_collector/2.png';
+import CelestialsCollector3 from '../assets/log/celestials_collector/3.png';
+
+// Celestials
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',
     badge: 'Aurora' | 'Verdant' | 'Solara' | 'Emberheart' | 'Aetheris' | 'Celestials'
@@ -82,7 +94,7 @@ export const getCelestialsAssets = (
                 break;
 
             default:
-                console.error('Unknown badge');
+                console.error('Unknown Celestials badge');
         }
     }
 
@@ -113,8 +125,48 @@ export const getCelestialsAssets = (
                 break;
 
             default:
-                console.error('Unknown badge');
+                console.error('Unknown Celestials badge');
         }
+    }
+
+    return assets;
+};
+
+export const getCelestialsHoarder = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [CelestialsHoarder1Locked, CelestialsHoarder1Unlocked];
+            break;
+        case 2:
+            assets = [CelestialsHoarder2Locked, CelestialsHoarder2Unlocked];
+            break;
+        case 3:
+            assets = [CelestialsHoarder3Locked, CelestialsHoarder3Unlocked];
+            break;
+        default:
+            console.error('Unknown hoarder type');
+    }
+
+    return assets;
+};
+
+export const getCelestialsCollector = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [CelestialsCollectorLocked, CelestialsCollector1];
+            break;
+        case 2:
+            assets = [CelestialsCollectorLocked, CelestialsCollector2];
+            break;
+        case 3:
+            assets = [CelestialsCollectorLocked, CelestialsCollector3];
+            break;
+        default:
+            console.error('Unknown hoarder type');
     }
 
     return assets;

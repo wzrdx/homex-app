@@ -1,12 +1,17 @@
-import { Box, Flex, Text, Image, Stack } from '@chakra-ui/react';
-import Update from '../assets/images/Solara.jpg';
+import _ from 'lodash';
+import { Box, Flex, Text, Image, Stack, Center } from '@chakra-ui/react';
+import { getCelestialsCollector, getCelestialsHoarder } from '../services/assets';
 
 export const Updates = ({}) => {
     return (
-        <Stack justifyContent="center" alignItems="center">
-            <Image mb={4} src={Update} maxW="240px" />
-            <Text layerStyle="header2" textAlign="center">
-                The Solara art drop is live!
+        <Stack justifyContent="center" spacing={6} alignItems="center">
+            <Stack direction="row" spacing={8}>
+                <Image src={_.last(getCelestialsCollector(3))} maxW="180px" />
+                <Image src={_.last(getCelestialsHoarder(3))} maxW="180px" />
+            </Stack>
+
+            <Text fontWeight={500} fontSize="17px" letterSpacing="0.5px" textAlign="center" px={12}>
+                Two new Celestials pages have been added to the Traveler's Log.
             </Text>
         </Stack>
     );

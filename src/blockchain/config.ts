@@ -38,6 +38,8 @@ export const HERBS_TOKEN_ID = getEnvValue('HERBS-d49962', 'HERBS-1c45fb');
 export const GEMS_TOKEN_ID = getEnvValue('GEMS-ae2194', 'GEMS-5fbf7d');
 export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-1318e1', 'ESSENCE-67531c');
 
+export const AOM_ID = getEnvValue('AOM-edf5eb', 'AOM-f37bc5');
+
 export const REWARDS_QUERYING_INTERVAL = 15000;
 export const isStakingDisabled = false;
 

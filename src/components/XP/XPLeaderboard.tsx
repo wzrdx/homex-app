@@ -1,30 +1,44 @@
-import { Flex, Spinner, Text } from '@chakra-ui/react';
+import _ from 'lodash';
+import { Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getXpLeaderboard } from '../../blockchain/api/getXpLeaderboard';
 import { getUsername, pairwise } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
 import { getXpLeaderboardSize } from '../../blockchain/api/getXpLeaderboardSize';
-import _ from 'lodash';
+import { LiaScrollSolid } from 'react-icons/lia';
 
 const CHUNK_SIZE = 50;
 const LEADERBOARD_SIZE = 100;
 
-const COLUMNS = [
+const COLUMNS: {
+    name: string;
+    icon: JSX.Element;
+    width: string;
+}[] = [
     {
         name: 'Rank',
+        icon: <></>,
         width: '84px',
     },
     {
         name: 'Player',
-        width: '256px',
+        icon: <></>,
+        width: '236px',
     },
     {
         name: 'XP',
+        icon: <></>,
         width: '108px',
     },
     {
         name: 'Level',
+        icon: <></>,
+        width: '84px',
+    },
+    {
+        name: 'Pages',
+        icon: <LiaScrollSolid fontSize="23px" />,
         width: '48px',
     },
 ];
@@ -114,11 +128,25 @@ function XPLeaderboard() {
                 <Flex layerStyle="layout" justifyContent="center" overflowY="auto" overflowX="hidden">
                     <Flex px={8} flexDir="column" overflowY="auto" overflowX="hidden">
                         <Flex mb={1}>
-                            {_.map(COLUMNS, (column: any, index: number) => (
-                                <Text key={index} layerStyle="header2" minWidth={column.width}>
-                                    {column.name}
-                                </Text>
-                            ))}
+                            {_.map(
+                                COLUMNS,
+                                (
+                                    column: {
+                                        name: string;
+                                        icon: JSX.Element;
+                                        width: string;
+                                    },
+                                    index: number
+                                ) => (
+                                    <Stack key={index} direction="row" layerStyle="center" spacing={1}>
+                                        <Text layerStyle="header2" minWidth={column.width}>
+                                            {column.name}
+                                        </Text>
+
+                                        {column.icon}
+                                    </Stack>
+                                )
+                            )}
                         </Flex>
 
                         {_.map(players, (player, index: number) => (
@@ -136,6 +164,8 @@ function XPLeaderboard() {
                                 <Text width={COLUMNS[3].width} color={player.color} fontWeight={500}>
                                     {player.level}
                                 </Text>
+
+                                <Text width={COLUMNS[4].width}>0</Text>
                             </Flex>
                         ))}
                     </Flex>
