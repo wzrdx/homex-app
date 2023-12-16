@@ -689,7 +689,12 @@
             "name": "setQuestsXp",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "multiplier",
+                    "type": "u32"
+                }
+            ],
             "outputs": []
         },
         {
@@ -909,18 +914,6 @@
                     "type": "u32"
                 }
             ]
-        },
-        {
-            "name": "airdropArt",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "wallets",
-                    "type": "List<Address>"
-                }
-            ],
-            "outputs": []
         },
         {
             "name": "setArtDropTimestamp",
@@ -1225,6 +1218,14 @@
                 },
                 {
                     "name": "solara",
+                    "type": "u32"
+                },
+                {
+                    "name": "emberheart",
+                    "type": "u32"
+                },
+                {
+                    "name": "aetheris",
                     "type": "u32"
                 }
             ]

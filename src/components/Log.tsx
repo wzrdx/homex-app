@@ -56,10 +56,22 @@ function Log() {
 
         const celestialsPage = await getPageCelestials();
 
-        const celestialsCustodian = [celestialsPage?.aurora, celestialsPage?.verdant, celestialsPage?.solara, 0, 0];
+        const celestialsCustodian = [
+            celestialsPage?.aurora,
+            celestialsPage?.verdant,
+            celestialsPage?.solara,
+            celestialsPage?.emberheart,
+            celestialsPage?.aetheris,
+        ];
         celestialsCustodian.push(celestialsCustodian.every((amount) => amount > 0) ? 1 : 0);
 
-        const celestialsCurator = [celestialsPage?.aurora, celestialsPage?.verdant, celestialsPage?.solara, 0, 0];
+        const celestialsCurator = [
+            celestialsPage?.aurora,
+            celestialsPage?.verdant,
+            celestialsPage?.solara,
+            celestialsPage?.emberheart,
+            celestialsPage?.aetheris,
+        ];
         celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
 
         setPages([

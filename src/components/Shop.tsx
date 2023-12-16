@@ -96,7 +96,7 @@ function Shop() {
                 <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
                     <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
-                            Solara Art Drop
+                            Emberheart Art Drop
                         </Text>
 
                         {isAfter(new Date(), timestamp) ? (

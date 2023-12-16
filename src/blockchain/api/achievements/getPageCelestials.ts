@@ -33,8 +33,8 @@ export const getPageCelestials = async (): Promise<{
             aurora: value.aurora.toNumber(),
             verdant: value.verdant.toNumber(),
             solara: value.solara.toNumber(),
-            emberheart: 0,
-            aetheris: 0,
+            emberheart: value.emberheart.toNumber(),
+            aetheris: value.aetheris.toNumber(),
         };
 
         return obj;
