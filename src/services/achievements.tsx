@@ -1,6 +1,13 @@
-import { getCelestialsAssets, getCelestialsCollector, getCelestialsHoarder } from './assets';
+import {
+    getBudgetTravelersCommonAssets,
+    getBudgetTravelersUncommonAssets,
+    getCelestialsAssets,
+    getCelestialsCollector,
+    getCelestialsHoarder,
+} from './assets';
 
 export interface TravelersLogPage {
+    id: number;
     title: string;
     isNew: boolean;
     rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
@@ -14,8 +21,12 @@ export interface TravelersLogPage {
     }[];
 }
 
+let id = 0;
+const getId = () => ++id;
+
 export const PAGES: TravelersLogPage[] = [
     {
+        id: getId(),
         title: 'Celestials Custodian',
         isNew: false,
         rarity: 'Epic',
@@ -54,6 +65,7 @@ export const PAGES: TravelersLogPage[] = [
         ],
     },
     {
+        id: getId(),
         title: 'Celestials Curator',
         isNew: false,
         rarity: 'Legendary',
@@ -92,8 +104,9 @@ export const PAGES: TravelersLogPage[] = [
         ],
     },
     {
+        id: getId(),
         title: 'Celestials Collector',
-        isNew: true,
+        isNew: false,
         rarity: 'Rare',
         limits: [1, 2, 5],
         badges: [
@@ -115,8 +128,9 @@ export const PAGES: TravelersLogPage[] = [
         ],
     },
     {
+        id: getId(),
         title: 'Celestials Hoarder',
-        isNew: true,
+        isNew: false,
         rarity: 'Rare',
         limits: [10, 30, 100],
         badges: [
@@ -134,6 +148,45 @@ export const PAGES: TravelersLogPage[] = [
                 title: 'Stockpiler',
                 text: 'Own at least 100 Celestials from Art of Menhir',
                 assets: getCelestialsHoarder(3),
+            },
+        ],
+    },
+    {
+        id: getId(),
+        title: 'Budget Travelers',
+        isNew: true,
+        rarity: 'Common',
+        limits: [1, 5, 10, 1, 5, 10],
+        badges: [
+            {
+                title: 'Common Holder',
+                text: 'Stake at least one Common Traveler',
+                assets: getBudgetTravelersCommonAssets(1),
+            },
+            {
+                title: 'Commons Patron',
+                text: 'Stake at least 5 Common Travelers',
+                assets: getBudgetTravelersCommonAssets(2),
+            },
+            {
+                title: 'Commons Whale',
+                text: 'Stake at least 10 Common Travelers',
+                assets: getBudgetTravelersCommonAssets(3),
+            },
+            {
+                title: 'Uncommon Holder',
+                text: 'Stake at least one Uncommon Traveler',
+                assets: getBudgetTravelersUncommonAssets(1),
+            },
+            {
+                title: 'Uncommons Patron',
+                text: 'Stake at least 5 Uncommon Travelers',
+                assets: getBudgetTravelersUncommonAssets(2),
+            },
+            {
+                title: 'Uncommons Whale',
+                text: 'Stake at least 10 Uncommon Travelers',
+                assets: getBudgetTravelersUncommonAssets(3),
             },
         ],
     },

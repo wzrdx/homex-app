@@ -60,6 +60,16 @@ import CelestialsCollector1 from '../assets/log/celestials_collector/1.png';
 import CelestialsCollector2 from '../assets/log/celestials_collector/2.png';
 import CelestialsCollector3 from '../assets/log/celestials_collector/3.png';
 
+import BudgetTravelersCommonLocked from '../assets/log/budget_travelers/common_locked.png';
+import BudgetTravelersCommon1 from '../assets/log/budget_travelers/common_1.png';
+import BudgetTravelersCommon2 from '../assets/log/budget_travelers/common_2.png';
+import BudgetTravelersCommon3 from '../assets/log/budget_travelers/common_3.png';
+
+import BudgetTravelersUncommonLocked from '../assets/log/budget_travelers/uncommon_locked.png';
+import BudgetTravelersUncommon1 from '../assets/log/budget_travelers/uncommon_1.png';
+import BudgetTravelersUncommon2 from '../assets/log/budget_travelers/uncommon_2.png';
+import BudgetTravelersUncommon3 from '../assets/log/budget_travelers/uncommon_3.png';
+
 // Celestials
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',
@@ -167,6 +177,46 @@ export const getCelestialsCollector = (type: 1 | 2 | 3): [string, string] => {
             break;
         default:
             console.error('Unknown hoarder type');
+    }
+
+    return assets;
+};
+
+export const getBudgetTravelersCommonAssets = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [BudgetTravelersCommonLocked, BudgetTravelersCommon1];
+            break;
+        case 2:
+            assets = [BudgetTravelersCommonLocked, BudgetTravelersCommon2];
+            break;
+        case 3:
+            assets = [BudgetTravelersCommonLocked, BudgetTravelersCommon3];
+            break;
+        default:
+            console.error('Unknown asset type');
+    }
+
+    return assets;
+};
+
+export const getBudgetTravelersUncommonAssets = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [BudgetTravelersUncommonLocked, BudgetTravelersUncommon1];
+            break;
+        case 2:
+            assets = [BudgetTravelersUncommonLocked, BudgetTravelersUncommon2];
+            break;
+        case 3:
+            assets = [BudgetTravelersUncommonLocked, BudgetTravelersUncommon3];
+            break;
+        default:
+            console.error('Unknown asset type');
     }
 
     return assets;
