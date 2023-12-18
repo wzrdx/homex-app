@@ -46,84 +46,84 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: "Desert's Whisper",
+        title: 'Arctic Echoes',
         description:
-            'Begin your odyssey in the deserts of Menhir, where whispers in the wind beckon you toward ancient elemental artifacts yet to be unveiled.',
+            "Commence your journey in the frozen expanse of Menhir's arctic mountains, where echoes in the wind beckon toward ancient artifacts shrouded in mystery.",
     },
     {
-        title: "Mirage's Lure",
+        title: "Blizzard's Veil",
         description:
-            'Encounter a mirage that conceals elusive artifacts, their nature obscured by the shifting sands that dance with the secrets of the desert.',
+            'Confront a blizzard that veils elusive artifacts, their forms obscured by the swirling snow, dancing with the secrets of the Arctic heights.',
     },
     {
-        title: "Sands' Elemental Hues",
+        title: "Frigid Artifacts' Embrace",
         description:
-            'Witness sands taking on elemental hues, guiding you to artifacts hidden beneath the surface of the ancient desert.',
+            "Witness the frigid landscape taking on hues of ancient artifacts, guiding your quest beneath the icy surface of Menhir's enigmatic mountains.",
     },
     {
-        title: 'Oasis of Elemental',
+        title: 'Frostbitten Trials',
         description:
-            "Discover an oasis surrounded by elemental trials, where collecting the artifacts becomes a cryptic passage through the secrets of Menhir's sands.",
+            "Discover an icebound realm, a testing ground where collecting artifacts becomes a cryptic passage through the secrets of Menhir's Arctic peaks, overcoming the biting winds.",
     },
     {
-        title: 'Whispering Sands',
+        title: 'The Frozen Whispers',
         description:
-            'Traverse the Whispering Sands anew, each footstep echoing the ancient resonance of the elemental artifacts waiting to be unveiled.',
+            'Traverse the frozen wilderness, each step echoing the resonance of ancient artifacts hidden within the snowy expanse, waiting to be unveiled.',
     },
     {
-        title: 'Elemental Pillars',
+        title: "Summit's Elemental Relics",
         description:
-            'Confront towering pillars rising from the sands, elemental artifacts intertwined with the destiny that unfolds in the enigmatic desert.',
+            "Ascend to the mountain's summit, where elemental relics emerge from the snow, intertwined with the destiny that unfolds in the enigmatic Arctic heights.",
     },
     {
-        title: 'Mirage of Balance',
+        title: "Veiled Storm's Mirage",
         description:
-            'Stumble upon a mirage that hints at the delicate balance of ancient elemental artifacts, beckoning you to decipher their obscured purpose.',
+            'Encounter a mirage within the storm, a fleeting vision that hints at the balance of ancient artifacts, challenging you to decipher their obscured purpose.',
     },
     {
-        title: 'Mirage Redux',
+        title: "The Storm's Whisper",
         description:
-            'Uncover an illusion within the mirage, where the elemental artifacts cast veiled shadows, challenging you to discern reality from the ethereal.',
+            'Uncover a whisper within the storm, where the elemental artifacts cast veiled shadows, challenging you to discern reality from the ethereal midst of the blizzard.',
     },
     {
-        title: 'Elemental Labyrinth',
+        title: 'Icy Labyrinth of Echoes',
         description:
-            "Listen to echoes within an elemental labyrinth, whispers guiding you toward the elusive artifacts scattered throughout Menhir's desert expanse.",
+            "Listen to echoes within an icy labyrinth, whispers guiding you toward elusive artifacts scattered amidst Menhir's Arctic peaks, even as the storm rages.",
     },
     {
-        title: "Dunes' Elemental",
+        title: 'Frosty Dance of Elements',
         description:
-            'Witness the elemental dance of the dunes, where sands reveal hidden artifacts, entwined in the rhythm of an enigmatic choreography.',
+            'Witness the frosty dance of the elements, where snow reveals hidden artifacts, entwined in the rhythm of an enigmatic choreography.',
     },
     {
-        title: 'Fateful Crossroads',
+        title: 'Crossroads of Glacial Destiny',
         description:
-            'Reach a fateful crossroads where elements converge, each path leading to elemental artifacts that unlock cryptic destinies.',
+            'Reach a crossroads where glaciers converge, each path leading to artifacts that unlock cryptic destinies, with snowstorms veiling the way.',
     },
     {
-        title: 'Elemental Compass',
+        title: 'The Frostbitten Compass',
         description:
-            'Find an elemental compass pointing toward concealed artifacts, each artifact unlocking gateways to realms steeped in elemental mystery.',
+            "Find a frostbitten compass pointing toward concealed artifacts, each revealing gateways to realms steeped in the mysteries of Menhir's Arctic heights.",
     },
     {
-        title: 'Mirage of the Citadel',
+        title: 'Icy Citadel',
         description:
-            'Discern a mirage concealing an elemental citadel, guarded by ancient forces and holding secrets of the elemental artifacts.',
+            'Discern a mirage concealing an icy citadel, guarded by ancient forces and holding secrets of the elemental artifacts amidst the Arctic storms.',
     },
     {
-        title: 'Shrouded Keepers',
+        title: 'Frostlings',
         description:
-            'Encounter shrouded keepers of the elements, ethereal guardians challenging your resolve to collect the elemental artifacts scattered through the desert.',
+            'Encounter shrouded keepers of frost, ethereal guardians challenging your resolve to collect the ancient artifacts scattered amidst the Arctic tempests.',
     },
     {
-        title: "Whispers' Endings",
+        title: 'Whispers in the Ice',
         description:
-            "Hear elemental whispers foretelling enigmatic endings as you approach the heart of Menhir's desert, where sands conceal secrets of cryptic conclusions.",
+            "Hear whispers of Arctic endings as you approach the heart of Menhir's frozen peaks, where snowstorms conceal secrets of cryptic conclusions.",
     },
     {
-        title: "Traveler's Legacy",
+        title: 'Frost Legacy',
         description:
-            "Conclude your odyssey as the traveler who gathered the elemental artifacts, leaving behind a legacy intertwined with the mysteries of Menhir's ancient sands.",
+            "Finish your odyssey as the traveler who gathered the ancient artifacts, leaving behind a legacy intertwined with the mysteries of Menhir's Arctic heights, forever veiled in the icy winds.",
     },
 ];
 
