@@ -840,6 +840,31 @@ export const RAFFLES: any[] = [
         prizes: [getEGLDPrize(0.5)],
         winners: 1,
     },
+    // Trial 16 - Starts with ID 107
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        nonce: 1,
+        name: 'Home X Traveler #2750',
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/2750.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        nonce: 1,
+        name: 'Home X Traveler #310',
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/310.png',
+    },
+    {
+        type: RewardType.NFT,
+        id: getId(),
+        winners: 1,
+        nonce: 1,
+        name: 'Home X Traveler #2662',
+        url: 'https://media.elrond.com/nfts/asset/bafybeidixut3brb7brnjow42l2mu7fbw7dbkghbpsavbhaewcbeeum7mpi/2662.png',
+    },
 ];
 
 export const BATTLES: any[] = [
