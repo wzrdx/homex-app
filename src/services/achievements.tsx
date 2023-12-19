@@ -112,17 +112,17 @@ export const PAGES: TravelersLogPage[] = [
         badges: [
             {
                 title: 'Aficionado',
-                text: 'Own at least one of each Celestials from Art of Menhir',
+                text: 'Own at least one of each of the 5 Celestials from Art of Menhir',
                 assets: getCelestialsCollector(1),
             },
             {
                 title: 'Advocate',
-                text: 'Own at least 2 of each Celestials from Art of Menhir',
+                text: 'Own at least 2 of each of the 5 Celestials from Art of Menhir',
                 assets: getCelestialsCollector(2),
             },
             {
                 title: 'Allegiant',
-                text: 'Own at least 5 of each Celestials from Art of Menhir',
+                text: 'Own at least 5 of each of the 5 Celestials from Art of Menhir',
                 assets: getCelestialsCollector(3),
             },
         ],

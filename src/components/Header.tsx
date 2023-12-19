@@ -36,7 +36,6 @@ import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Log';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
-import Logo from '../assets/ecobottle_logo.png';
 import { NewSymbol } from '../shared/NewSymbol';
 
 const ROUTE_WIDTH = 100;
