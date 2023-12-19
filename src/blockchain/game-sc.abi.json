@@ -485,6 +485,22 @@
             "outputs": []
         },
         {
+            "name": "airdropRaffleTraveler",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "clearRaffle",
             "onlyOwner": true,
             "mutability": "mutable",
