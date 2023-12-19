@@ -37,12 +37,12 @@ function Log() {
 
     // Init
     useEffect(() => {
-        // initializeCelestialsPages();
+        initializeCelestialsPages();
     }, []);
 
-    useEffect(() => {
-        initializeTravelersPages();
-    }, [stakingInfo]);
+    // useEffect(() => {
+    //     initializeTravelersPages();
+    // }, [stakingInfo]);
 
     const getSFTBalance = async (id: string): Promise<number> => {
         try {
