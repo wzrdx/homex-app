@@ -118,6 +118,20 @@ function Shop() {
                             the enduring magic within the heart of the planet. In hushed whispers, travelers spoke of the times
                             Emberheart's presence emerged from the depths, casting a glow that brought hope to the arid expanse.
                         </Text>
+
+                        {/* <Text>
+                            In the hidden depths below Menhir's surface, a mysterious legend unfolded—Aetheris, the enigmatic
+                            Celestial representing the intricate underground mazes. Clad in scarlet robes that seemed to blend
+                            with the very essence of the labyrinthine passages, Aetheris wielded unparalleled power. With a mere
+                            gesture, she could channel powerful gusts of energy, manipulating the very currents that threaded
+                            through the subterranean realms. Her scarlet robes billowed like the whispers of unseen winds as she
+                            navigated the complex mazes, leaving behind an aura of mystique. Tales spoke of Aetheris' ability to
+                            commune with the intricate patterns of the underground passages, sensing disturbances and preserving
+                            the delicate equilibrium of Menhir's hidden world. As the most powerful Celestial, Aetheris remained
+                            a figure of awe and reverence. The nomadic tribes, in hushed tones, spoke of her interventions in
+                            times of peril, when the underground mazes seemed to shift and reshape. Aetheris, with her scarlet
+                            robes ablaze, would emerge to channel energies that brought order to the labyrinthine chaos.
+                        </Text> */}
                     </Stack>
 
                     <Flex justifyContent="center" alignItems="center" userSelect="none">
