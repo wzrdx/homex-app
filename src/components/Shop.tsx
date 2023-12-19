@@ -109,15 +109,14 @@ function Shop() {
                     <Stack direction="row" spacing={4} alignItems="center">
                         <Image width={{ md: '250px', lg: '306px' }} src={getArtDrop()} />
                         <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
-                            In the timeless deserts of Menhir, there lived a legendary hero named Solara. With flowing black
-                            hair that framed her face like the midnight sky and skin warmly kissed by the sun's tender embrace,
-                            she wandered the dunes as an eternal guardian. Armed with potent magic fueled by the sun's fiery
-                            essence, Solara defended the arid lands and the nomadic tribes within. Her tales resonated through
-                            the ages - stories of summoning storms to quench the desert's unyielding thirst and wielding the
-                            sun's rays to repel invaders. Draped in robes adorned with ancient symbols, Solara emerged as a
-                            symbol of unwavering resilience, her footsteps leaving no discernible trace in the ever-shifting
-                            sands. Though silent, her legendary echo reverberated through the winds that softly whispered her
-                            name across Menhir's expanse.
+                            In the heart of Menhir's shimmering mines, where precious gems sparkled like distant stars, there
+                            arose another legend—the formidable Emberheart. With eyes ablaze like molten rubies, he donned
+                            desert robes that absorbed the essence of the stones. Clad in robes resonating with an otherworldly
+                            energy, Emberheart stood as a beacon of strength. His legendary gaze discerned the true nature of
+                            gems, revealing hidden potential, and his influence extended beyond the mines, protecting the
+                            delicate balance of Menhir's subterranean world. The legend of Emberheart sparkled, a testament to
+                            the enduring magic within the heart of the planet. In hushed whispers, travelers spoke of the times
+                            Emberheart's presence emerged from the depths, casting a glow that brought hope to the arid expanse.
                         </Text>
                     </Stack>
 
