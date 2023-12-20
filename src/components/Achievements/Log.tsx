@@ -1,26 +1,33 @@
-import _, { Dictionary } from 'lodash';
+import _ from 'lodash';
 import { Box, Button, Center, Flex, Image, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAlternateBackground } from '../services/assets';
-import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
+import { getAlternateBackground } from '../../services/assets';
+import { getPageCelestials } from '../../blockchain/api/achievements/getPageCelestials';
 import { LuSwords } from 'react-icons/lu';
-import { IconWithShadow } from '../shared/IconWithShadow';
+import { IconWithShadow } from '../../shared/IconWithShadow';
 import { BiInfoCircle } from 'react-icons/bi';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { LiaScrollSolid, LiaCalendarCheck } from 'react-icons/lia';
 import { BsGem } from 'react-icons/bs';
 import { GoTrophy } from 'react-icons/go';
-import { getBackgroundStyle } from '../services/helpers';
+import { getBackgroundStyle } from '../../services/helpers';
 import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
-import { PAGES, TravelersLogPage } from '../services/achievements';
-import { NewSymbol } from '../shared/NewSymbol';
-import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { PAGES, TravelersLogPage } from '../../services/achievements';
+import { NewSymbol } from '../../shared/NewSymbol';
+import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { getSFTDetails } from '../services/resources';
-import { useStoreContext, StoreContextType } from '../services/store';
-import { Stake } from '../blockchain/hooks/useGetStakingInfo';
-import { getRarityClasses } from '../blockchain/api/getRarityClasses';
+import { getSFTDetails } from '../../services/resources';
+import { useStoreContext, StoreContextType } from '../../services/store';
+import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { getRarityClasses } from '../../blockchain/api/getRarityClasses';
+import { LogTutorial } from './LogTutorial';
+
+enum View {
+    Page = 'Page',
+    Tutorial = 'Tutorial',
+    Mint = 'Mint',
+}
 
 const OFFSET = 0.5;
 const BORDER_RADIUS = '16px';
@@ -31,7 +38,8 @@ function Log() {
     const { stakingInfo } = useStoreContext() as StoreContextType;
 
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const [isMinting, setIsMinting] = useState<boolean>(false);
+
+    const [view, setView] = useState<View>(View.Page);
 
     const [pages, setPages] = useState<TravelersLogPage[]>([]);
 
@@ -83,7 +91,6 @@ function Log() {
         celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
 
         setPages([
-            ...pages,
             {
                 ...PAGES[0],
                 badges: _.map(PAGES[0].badges, (badge, index) => ({
@@ -214,12 +221,173 @@ function Log() {
         );
     };
 
+    const getView = (): JSX.Element => {
+        switch (view) {
+            case View.Mint:
+                return <PageMint pageIndex={currentPage} page={pages[currentPage]} goBack={() => setView(View.Page)} />;
+
+            case View.Tutorial:
+                return <LogTutorial goBack={() => setView(View.Page)} />;
+
+            case View.Page:
+                return (
+                    <Stack spacing={{ md: 8, lg: 10 }} height="100%">
+                        <Flex justifyContent="space-between" alignItems="flex-start">
+                            <Stack spacing={4}>
+                                <Text layerStyle="header1" textShadow="1px 1px 0px #222">
+                                    {pages[currentPage].title}
+                                </Text>
+
+                                <Stack direction="row" spacing={12}>
+                                    <Stack spacing={2.5} direction="row" alignItems="stretch">
+                                        <Box color={ACCENT_COLOR}>
+                                            <IconWithShadow shadowColor="#222">
+                                                <GoTrophy fontSize="36px" />
+                                            </IconWithShadow>
+                                        </Box>
+
+                                        <Flex flexDir="column" justifyContent="space-between">
+                                            {getPageUnlocked()}
+                                            <Text fontWeight={500} fontSize="15px" lineHeight="15px">
+                                                Unlocked
+                                            </Text>
+                                        </Flex>
+                                    </Stack>
+
+                                    <Stack spacing={2.5} direction="row" alignItems="stretch">
+                                        <Box color={`blizzard${pages[currentPage].rarity}`}>
+                                            <IconWithShadow shadowColor="#222">
+                                                <BsGem fontSize="36px" />
+                                            </IconWithShadow>
+                                        </Box>
+
+                                        <Flex flexDir="column" justifyContent="space-between">
+                                            <Text
+                                                fontWeight={500}
+                                                color={`blizzard${pages[currentPage].rarity}`}
+                                                letterSpacing="1px"
+                                                fontSize="17px"
+                                                lineHeight="17px"
+                                            >
+                                                {pages[currentPage].rarity}
+                                            </Text>
+                                            <Text fontWeight={500} fontSize="15px" lineHeight="15px">
+                                                Rarity
+                                            </Text>
+                                        </Flex>
+                                    </Stack>
+                                </Stack>
+                            </Stack>
+
+                            <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    {!_(pages[currentPage].badges)
+                                        .filter((badge) => !badge.isUnlocked)
+                                        .size() ? (
+                                        <>
+                                            <Box color="mintGreen" pb="1px">
+                                                <IconWithShadow shadowColor="#222">
+                                                    <FaRegCheckCircle />
+                                                </IconWithShadow>
+                                            </Box>
+
+                                            <Text fontSize="15px" textShadow="1px 1px 0px #222" color="mintGreen">
+                                                Minting available
+                                            </Text>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Box color="#cbcbcb" pb="1px">
+                                                <IconWithShadow shadowColor="#222">
+                                                    <BiInfoCircle fontSize="19px" />
+                                                </IconWithShadow>
+                                            </Box>
+
+                                            <Text fontSize="15px" textShadow="1px 1px 0px #222" color="#cbcbcb">
+                                                Unlock{' '}
+                                                {_(pages[currentPage].badges)
+                                                    .filter((badge) => !badge.isUnlocked)
+                                                    .size()}{' '}
+                                                more to mint
+                                            </Text>
+                                        </>
+                                    )}
+                                </Stack>
+
+                                <Button colorScheme="blue" onClick={() => setView(View.Mint)}>
+                                    Mint page
+                                </Button>
+                            </Stack>
+                        </Flex>
+
+                        <Box
+                            mb={1.5}
+                            display="grid"
+                            gridAutoColumns="1fr 1fr"
+                            gridTemplateColumns="1fr 1fr 1fr"
+                            rowGap={{ md: 6, lg: 9 }}
+                            columnGap={8}
+                        >
+                            {pages[currentPage].badges.map((badge, index) => (
+                                <Stack key={index} spacing={4} position="relative" alignItems="center" px={6} minH="224px">
+                                    <Image
+                                        src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}
+                                        maxH={{ md: '120px', lg: '144px' }}
+                                    />
+
+                                    <Stack spacing={0} alignItems="center">
+                                        <Text
+                                            fontSize="15px"
+                                            fontWeight={500}
+                                            textTransform="uppercase"
+                                            letterSpacing="0.5px"
+                                            textShadow="1px 1px 0px #222"
+                                            textAlign="center"
+                                            color={badge.isUnlocked ? 'white' : '#bebebe'}
+                                        >
+                                            {badge.title}
+                                        </Text>
+
+                                        <Text
+                                            fontSize="14px"
+                                            lineHeight="19px"
+                                            textShadow="1px 1px 0px #222"
+                                            textAlign="center"
+                                            color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
+                                        >
+                                            {badge.text}
+                                        </Text>
+
+                                        <Box visibility={badge.value ? 'visible' : 'hidden'}>
+                                            <Text
+                                                mt={1.5}
+                                                fontWeight={500}
+                                                letterSpacing="0.25px"
+                                                fontSize="15px"
+                                                color="white"
+                                                textShadow="1px 1px 0px #222"
+                                            >
+                                                {badge.value}
+                                            </Text>
+                                        </Box>
+                                    </Stack>
+                                </Stack>
+                            ))}
+                        </Box>
+                    </Stack>
+                );
+
+            default:
+                return <></>;
+        }
+    };
+
     return (
         <Box position="relative">
             <Flex
                 position="relative"
                 width="1260px"
-                minH={{ md: '632px', lg: '736px' }}
+                minH={{ md: '636px', lg: '736px' }}
                 alignItems="stretch"
                 backgroundColor="#2b2b2b"
                 borderRadius={BORDER_RADIUS}
@@ -266,6 +434,12 @@ function Log() {
                                         </Text>
                                     </Flex>
                                 </Stack>
+
+                                <Center pt={1}>
+                                    <Button colorScheme="blue" size="sm" onClick={() => setView(View.Tutorial)}>
+                                        How does it work?
+                                    </Button>
+                                </Center>
                             </Stack>
 
                             <Stack spacing={4}>
@@ -300,164 +474,7 @@ function Log() {
 
                         {/* Right */}
                         <Box flex={7} position="relative" py={{ md: 6, lg: 8 }} px={{ md: 8, lg: 10 }}>
-                            {isMinting ? (
-                                <PageMint
-                                    pageIndex={currentPage}
-                                    page={pages[currentPage]}
-                                    goBack={() => setIsMinting(false)}
-                                />
-                            ) : (
-                                <Stack spacing={{ md: 8, lg: 10 }} height="100%">
-                                    <Flex justifyContent="space-between" alignItems="flex-start">
-                                        <Stack spacing={4}>
-                                            <Text layerStyle="header1" textShadow="1px 1px 0px #222">
-                                                {pages[currentPage].title}
-                                            </Text>
-
-                                            <Stack direction="row" spacing={12}>
-                                                <Stack spacing={2.5} direction="row" alignItems="stretch">
-                                                    <Box color={ACCENT_COLOR}>
-                                                        <IconWithShadow shadowColor="#222">
-                                                            <GoTrophy fontSize="36px" />
-                                                        </IconWithShadow>
-                                                    </Box>
-
-                                                    <Flex flexDir="column" justifyContent="space-between">
-                                                        {getPageUnlocked()}
-                                                        <Text fontWeight={500} fontSize="15px" lineHeight="15px">
-                                                            Unlocked
-                                                        </Text>
-                                                    </Flex>
-                                                </Stack>
-
-                                                <Stack spacing={2.5} direction="row" alignItems="stretch">
-                                                    <Box color={`blizzard${pages[currentPage].rarity}`}>
-                                                        <IconWithShadow shadowColor="#222">
-                                                            <BsGem fontSize="36px" />
-                                                        </IconWithShadow>
-                                                    </Box>
-
-                                                    <Flex flexDir="column" justifyContent="space-between">
-                                                        <Text
-                                                            fontWeight={500}
-                                                            color={`blizzard${pages[currentPage].rarity}`}
-                                                            letterSpacing="1px"
-                                                            fontSize="17px"
-                                                            lineHeight="17px"
-                                                        >
-                                                            {pages[currentPage].rarity}
-                                                        </Text>
-                                                        <Text fontWeight={500} fontSize="15px" lineHeight="15px">
-                                                            Rarity
-                                                        </Text>
-                                                    </Flex>
-                                                </Stack>
-                                            </Stack>
-                                        </Stack>
-
-                                        <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
-                                            <Stack direction="row" spacing={1} alignItems="center">
-                                                {!_(pages[currentPage].badges)
-                                                    .filter((badge) => !badge.isUnlocked)
-                                                    .size() ? (
-                                                    <>
-                                                        <Box color="mintGreen" pb="1px">
-                                                            <IconWithShadow shadowColor="#222">
-                                                                <FaRegCheckCircle />
-                                                            </IconWithShadow>
-                                                        </Box>
-
-                                                        <Text fontSize="15px" textShadow="1px 1px 0px #222" color="mintGreen">
-                                                            Minting available
-                                                        </Text>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Box color="#cbcbcb" pb="1px">
-                                                            <IconWithShadow shadowColor="#222">
-                                                                <BiInfoCircle fontSize="19px" />
-                                                            </IconWithShadow>
-                                                        </Box>
-
-                                                        <Text fontSize="15px" textShadow="1px 1px 0px #222" color="#cbcbcb">
-                                                            Unlock{' '}
-                                                            {_(pages[currentPage].badges)
-                                                                .filter((badge) => !badge.isUnlocked)
-                                                                .size()}{' '}
-                                                            more to mint
-                                                        </Text>
-                                                    </>
-                                                )}
-                                            </Stack>
-                                            <Button colorScheme="blue" onClick={() => setIsMinting(true)}>
-                                                Mint page
-                                            </Button>
-                                        </Stack>
-                                    </Flex>
-
-                                    <Box
-                                        mb={1.5}
-                                        display="grid"
-                                        gridAutoColumns="1fr 1fr"
-                                        gridTemplateColumns="1fr 1fr 1fr"
-                                        rowGap={{ md: 6, lg: 9 }}
-                                        columnGap={8}
-                                    >
-                                        {pages[currentPage].badges.map((badge, index) => (
-                                            <Stack
-                                                key={index}
-                                                spacing={4}
-                                                position="relative"
-                                                alignItems="center"
-                                                px={6}
-                                                minH="224px"
-                                            >
-                                                <Image
-                                                    src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}
-                                                    maxH={{ md: '120px', lg: '144px' }}
-                                                />
-
-                                                <Stack spacing={0} alignItems="center">
-                                                    <Text
-                                                        fontSize="15px"
-                                                        fontWeight={500}
-                                                        textTransform="uppercase"
-                                                        letterSpacing="0.5px"
-                                                        textShadow="1px 1px 0px #222"
-                                                        textAlign="center"
-                                                        color={badge.isUnlocked ? 'white' : '#bebebe'}
-                                                    >
-                                                        {badge.title}
-                                                    </Text>
-
-                                                    <Text
-                                                        fontSize="14px"
-                                                        lineHeight="19px"
-                                                        textShadow="1px 1px 0px #222"
-                                                        textAlign="center"
-                                                        color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
-                                                    >
-                                                        {badge.text}
-                                                    </Text>
-
-                                                    <Box visibility={badge.value ? 'visible' : 'hidden'}>
-                                                        <Text
-                                                            mt={1.5}
-                                                            fontWeight={500}
-                                                            letterSpacing="0.25px"
-                                                            fontSize="15px"
-                                                            color="white"
-                                                            textShadow="1px 1px 0px #222"
-                                                        >
-                                                            {badge.value}
-                                                        </Text>
-                                                    </Box>
-                                                </Stack>
-                                            </Stack>
-                                        ))}
-                                    </Box>
-                                </Stack>
-                            )}
+                            {getView()}
 
                             {/* Background */}
                             <Flex
@@ -529,7 +546,7 @@ const PageMint = ({ pageIndex, page, goBack }) => {
             </Flex>
 
             <Flex height="100%" justifyContent="center" alignItems="center">
-                <Stack spacing={10} pb={10} justifyContent="center">
+                <Stack spacing={10} pb={10} justifyContent="center" maxW="600px">
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Center width="50px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">

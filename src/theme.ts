@@ -41,6 +41,7 @@ const colors = {
     energyBright: '#50a3f2',
     availableResource: '#95f984',
     log: '#32302e',
+    logHighlight: '#90cdf4',
     mintGreen: '#2bfd89',
     mirage: '#c58cf7',
     travelersLog: '#79b4ed',

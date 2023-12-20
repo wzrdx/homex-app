@@ -34,7 +34,7 @@ import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
-import Log from './Log';
+import Log from './Achievements/Log';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import { NewSymbol } from '../shared/NewSymbol';
 
