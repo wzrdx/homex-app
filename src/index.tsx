@@ -10,7 +10,6 @@ import { ResourcesProvider } from './services/resources';
 import { ColorModeScript } from '@chakra-ui/react';
 import { QuestsProvider } from './services/quests';
 import { StoreProvider } from './services/store';
-import { RewardsProvider } from './services/rewards';
 import ReactGA from 'react-ga4';
 
 ReactGA.initialize('G-0ZW6TBSBMG');
@@ -31,10 +30,8 @@ root.render(
                 <ResourcesProvider>
                     <QuestsProvider>
                         <StoreProvider>
-                            <RewardsProvider>
-                                <ColorModeScript initialColorMode="dark" />
-                                <App />
-                            </RewardsProvider>
+                            <ColorModeScript initialColorMode="dark" />
+                            <App />
                         </StoreProvider>
                     </QuestsProvider>
                 </ResourcesProvider>

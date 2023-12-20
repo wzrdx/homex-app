@@ -4,7 +4,7 @@ export const API_KEY = 'api';
 export const MUSIC_KEY = 'music';
 
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
 
 export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq03qfld7ypk27r2k0wgux89573pw2htq8ukrqze9mpw',

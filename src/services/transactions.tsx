@@ -7,23 +7,18 @@ export enum TransactionType {
     StartMultipleQuests,
     CompleteQuest,
     CompleteAllQuests,
-    JoinRaffle,
-    JoinBattle,
     Stake,
     Unstake,
     ClaimEnergy,
-    ClaimReward,
     ClaimUnbondedNFTs,
     Restake,
-    Migration,
+    MintArtDrop,
 }
 
 export enum TxResolution {
     UpdateQuestsAndResources = 'UpdateResources',
     UpdateEnergy = 'UpdateEnergy',
-    UpdateTicketsAndRewards = 'UpdateTicketsAndRewards',
-    UpdateTicketsAndRaffles = 'UpdateTicketsAndRaffles',
-    UpdateTicketsAndBattles = 'UpdateTicketsAndBattles',
+    UpdateTickets = 'UpdateTickets',
     UpdateStakingInfo = 'UpdateStakingInfo',
     UpdateStakingAndNFTs = 'UpdateStakingAndNFTs',
 }

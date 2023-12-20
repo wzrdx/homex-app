@@ -13,9 +13,9 @@ import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import Separator from '../shared/Separator';
-import { LargeTimer } from '../shared/LargeTimer';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import { isAfter } from 'date-fns';
+import { LargeTimer } from '../shared/LargeTimer';
 
 const PRICE = 3;
 const XP = 3000;
@@ -93,7 +93,7 @@ function Shop() {
             {!timestamp ? (
                 <Spinner />
             ) : (
-                <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
+                <Stack spacing={6} alignItems="center" userSelect="none">
                     <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
                             Emberheart Art Drop
@@ -106,9 +106,9 @@ function Shop() {
                         )}
                     </Flex>
 
-                    <Stack direction="row" spacing={4} alignItems="center">
-                        <Image width={{ md: '250px', lg: '306px' }} src={getArtDrop()} />
-                        <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
+                    <Stack spacing={4} alignItems="center">
+                        <Image src={getArtDrop()} />
+                        <Text textAlign="justify">
                             In the heart of Menhir's shimmering mines, where precious gems sparkled like distant stars, there
                             arose another legend—the formidable Emberheart. With eyes ablaze like molten rubies, he donned
                             desert robes that absorbed the essence of the stones. Clad in robes resonating with an otherworldly
@@ -118,92 +118,80 @@ function Shop() {
                             the enduring magic within the heart of the planet. In hushed whispers, travelers spoke of the times
                             Emberheart's presence emerged from the depths, casting a glow that brought hope to the arid expanse.
                         </Text>
-
-                        {/* <Text>
-                            In the hidden depths below Menhir's surface, a mysterious legend unfolded—Aetheris, the enigmatic
-                            Celestial representing the intricate underground mazes. Clad in scarlet robes that seemed to blend
-                            with the very essence of the labyrinthine passages, Aetheris wielded unparalleled power. With a mere
-                            gesture, she could channel powerful gusts of energy, manipulating the very currents that threaded
-                            through the subterranean realms. Her scarlet robes billowed like the whispers of unseen winds as she
-                            navigated the complex mazes, leaving behind an aura of mystique. Tales spoke of Aetheris' ability to
-                            commune with the intricate patterns of the underground passages, sensing disturbances and preserving
-                            the delicate equilibrium of Menhir's hidden world. As the most powerful Celestial, Aetheris remained
-                            a figure of awe and reverence. The nomadic tribes, in hushed tones, spoke of her interventions in
-                            times of peril, when the underground mazes seemed to shift and reshape. Aetheris, with her scarlet
-                            robes ablaze, would emerge to channel energies that brought order to the labyrinthine chaos.
-                        </Text> */}
                     </Stack>
 
-                    <Flex justifyContent="center" alignItems="center" userSelect="none">
-                        <Text>Amount Due:</Text>
-                        <Text mx={2} fontWeight={500} color="ticketGold">
-                            {amount * PRICE}
-                        </Text>
-                        <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
-
-                        <Box mx={4}>
-                            <Separator type="vertical" width="1px" height="36px" />
-                        </Box>
-
-                        <Text fontWeight={800} mr={2}>
-                            XP
-                        </Text>
-
-                        <Text as="span" mr={0.5}>
-                            +
-                        </Text>
-                        <Text as="span" fontWeight={600}>
-                            {amount * XP}
-                        </Text>
-                    </Flex>
-
-                    <Box display="flex" alignItems="center">
-                        <Box
-                            px="1"
-                            cursor="pointer"
-                            transition="all 0.1s ease-in"
-                            _hover={{ color: '#b8b8b8' }}
-                            onClick={() => {
-                                if (amount > 1) {
-                                    setAmount(amount - 1);
-                                }
-                            }}
-                        >
-                            <AiOutlineMinus fontSize="19px" />
-                        </Box>
-
-                        <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
-                            <Text textAlign="center" fontSize="18px" fontWeight={500} userSelect="none">
-                                {amount}
+                    <Stack spacing={3} alignItems="center" justifyContent="center">
+                        <Flex justifyContent="center" alignItems="center" userSelect="none">
+                            <Text>Amount Due:</Text>
+                            <Text mx={2} fontWeight={500} color="ticketGold">
+                                {amount * PRICE}
                             </Text>
-                        </Box>
+                            <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
 
-                        <Box
-                            px="1"
-                            cursor="pointer"
-                            transition="all 0.1s ease-in"
-                            _hover={{ color: '#b8b8b8' }}
-                            onClick={() => {
-                                if (amount < resources.tickets / PRICE) {
-                                    setAmount(amount + 1);
-                                }
-                            }}
-                        >
-                            <AiOutlinePlus fontSize="19px" />
-                        </Box>
-                    </Box>
+                            <Box mx={4}>
+                                <Separator type="vertical" width="1px" height="36px" />
+                            </Box>
 
-                    <Box>
-                        <ActionButton
-                            disabled={!resources.tickets || isAfter(new Date(), timestamp)}
-                            isLoading={isButtonLoading || isTxPending(TransactionType.MintArtDrop)}
-                            colorScheme="default"
-                            onClick={mint}
-                            customStyle={{ width: '156px' }}
-                        >
-                            <Text userSelect="none">Mint</Text>
-                        </ActionButton>
-                    </Box>
+                            <Text fontWeight={800} mr={2}>
+                                XP
+                            </Text>
+
+                            <Text as="span" mr={0.5}>
+                                +
+                            </Text>
+                            <Text as="span" fontWeight={600}>
+                                {amount * XP}
+                            </Text>
+                        </Flex>
+
+                        <Flex pb={1.5} alignItems="center">
+                            <Box
+                                px="1"
+                                cursor="pointer"
+                                transition="all 0.1s ease-in"
+                                _hover={{ color: '#b8b8b8' }}
+                                onClick={() => {
+                                    if (amount > 1) {
+                                        setAmount(amount - 1);
+                                    }
+                                }}
+                            >
+                                <AiOutlineMinus fontSize="26px" />
+                            </Box>
+
+                            <Flex width="22px" mx={1.5} alignItems="center" justifyContent="center">
+                                <Text textAlign="center" fontSize="20px" fontWeight={500} userSelect="none">
+                                    {amount}
+                                </Text>
+                            </Flex>
+
+                            <Box
+                                px="1"
+                                cursor="pointer"
+                                transition="all 0.1s ease-in"
+                                _hover={{ color: '#b8b8b8' }}
+                                onClick={() => {
+                                    if (amount < resources.tickets / PRICE) {
+                                        setAmount(amount + 1);
+                                    }
+                                }}
+                            >
+                                <AiOutlinePlus fontSize="26px" />
+                            </Box>
+                        </Flex>
+
+                        <Box>
+                            <ActionButton
+                                disabled={!resources.tickets || isAfter(new Date(), timestamp)}
+                                isLoading={isButtonLoading || isTxPending(TransactionType.MintArtDrop)}
+                                colorScheme="default"
+                                onClick={mint}
+                                customStyle={{ width: '156px' }}
+                            >
+                                <Text userSelect="none">Mint</Text>
+                            </ActionButton>
+                        </Box>
+                    </Stack>
                 </Stack>
             )}
         </Flex>

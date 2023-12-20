@@ -15,7 +15,6 @@ import { useTransactionsContext, TransactionsContextType, Transaction, TxResolut
 import { QuestsContextType, useQuestsContext } from './services/quests';
 import { useStoreContext, StoreContextType } from './services/store';
 import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
-import { useRewardsContext, RewardsContextType } from './services/rewards';
 
 function App() {
     const { pendingTxs, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
@@ -27,8 +26,6 @@ function App() {
     const { getStakingInfo, getWalletNFTs } = useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
-
-    const { getRaffles, getBattles } = useRewardsContext() as RewardsContextType;
 
     // Init
     useEffect(() => {
@@ -86,18 +83,8 @@ function App() {
                 getEnergy();
                 break;
 
-            case TxResolution.UpdateTicketsAndRewards:
+            case TxResolution.UpdateTickets:
                 getTickets();
-                break;
-
-            case TxResolution.UpdateTicketsAndRaffles:
-                getTickets();
-                getRaffles();
-                break;
-
-            case TxResolution.UpdateTicketsAndBattles:
-                getTickets();
-                getBattles();
                 break;
 
             case TxResolution.UpdateQuestsAndResources:

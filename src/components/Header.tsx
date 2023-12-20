@@ -1,6 +1,18 @@
-import { Box, Flex, Image, IconButton, Menu, MenuButton, MenuItem, MenuList, MenuGroup, MenuDivider } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    Image,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    MenuGroup,
+    MenuDivider,
+    Text,
+} from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { routeNames } from '../services/routes';
+import { routeNames, routes } from '../services/routes';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import Resource from '../shared/Resource';
@@ -8,7 +20,7 @@ import { getSmallLogo } from '../services/assets';
 import _ from 'lodash';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { getShortAddress } from '../services/helpers';
+import { getShortAddress, toTitleCase } from '../services/helpers';
 import { useAuthenticationContext, AuthenticationContextType } from '../services/authentication';
 import { logout } from '@multiversx/sdk-dapp/utils';
 
@@ -43,13 +55,13 @@ function Header({}) {
                     <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon fontSize="38px" />} variant="ghost" />
                     <MenuList>
                         <MenuGroup title="Menu">
-                            <NavLink to={routeNames.staking}>
-                                <MenuItem>Staking</MenuItem>
-                            </NavLink>
-
-                            <NavLink to={routeNames.quests}>
-                                <MenuItem>Quests</MenuItem>
-                            </NavLink>
+                            {routes.map((route, index) => (
+                                <NavLink key={index} to={route.path}>
+                                    <MenuItem>
+                                        <Text>{toTitleCase(route.path)}</Text>
+                                    </MenuItem>
+                                </NavLink>
+                            ))}
                         </MenuGroup>
 
                         <MenuDivider />
