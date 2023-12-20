@@ -546,9 +546,9 @@ const PageMint = ({ pageIndex, page, goBack }) => {
             </Flex>
 
             <Flex height="100%" justifyContent="center" alignItems="center">
-                <Stack spacing={10} pb={10} justifyContent="center" maxW="600px">
+                <Stack spacing={8} pb="52px" justifyContent="center" maxW="600px">
                     <Stack direction="row" spacing={2} alignItems="center">
-                        <Center width="50px" height="50px" pb="2px">
+                        <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">
                                 <LiaScrollSolid fontSize="49px" />
                             </IconWithShadow>
@@ -556,7 +556,7 @@ const PageMint = ({ pageIndex, page, goBack }) => {
 
                         <Text textShadow="1px 1px 0px #222" margin="0 auto">
                             Unlocking all the Badges within a page allows a{' '}
-                            <Text as="span" color="energyBright" fontWeight={500}>
+                            <Text as="span" color="logHighlight" fontWeight={500}>
                                 one time
                             </Text>{' '}
                             mint
@@ -570,7 +570,7 @@ const PageMint = ({ pageIndex, page, goBack }) => {
                     </Stack>
 
                     <Stack direction="row" alignItems="center">
-                        <Center width="50px" height="50px" pb="2px">
+                        <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">
                                 <GiLockedChest fontSize="40px" />
                             </IconWithShadow>
@@ -596,7 +596,7 @@ const PageMint = ({ pageIndex, page, goBack }) => {
                     </Stack>
 
                     <Stack direction="row" alignItems="center">
-                        <Center width="50px" height="50px" pb="2px">
+                        <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">
                                 <VscTools fontSize="42px" />
                             </IconWithShadow>
@@ -604,21 +604,18 @@ const PageMint = ({ pageIndex, page, goBack }) => {
 
                         <Text textShadow="1px 1px 0px #222" margin="0 auto">
                             Pages will be vital for{' '}
-                            <Text as="span" color="energyBright" fontWeight={500}>
+                            <Text as="span" color="logHighlight" fontWeight={500}>
                                 Staking
                             </Text>
                             {', '}
-                            <Text as="span" color="mirage" fontWeight={500}>
-                                Maze
-                            </Text>{' '}
-                            token farming,
+                            Maze token farming,
                             <br />
                             and will play a pivotal role in the upcoming system & updates.
                         </Text>
                     </Stack>
 
                     <Stack direction="row" alignItems="center">
-                        <Center width="50px" height="50px" pb="2px">
+                        <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">
                                 <LiaCalendarCheck fontSize="48px" />
                             </IconWithShadow>
@@ -633,7 +630,7 @@ const PageMint = ({ pageIndex, page, goBack }) => {
                             <Text as="span" fontWeight={500}>
                                 January 2024
                             </Text>
-                            .
+                            . Certain conditions may apply.
                         </Text>
                     </Stack>
                 </Stack>
