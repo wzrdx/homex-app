@@ -10,7 +10,7 @@ export const contractAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq03qfld7ypk27r2k0wgux89573pw2htq8ukrqze9mpw',
     'erd1qqqqqqqqqqqqqpgqpt68cy4cde6ff2wzcfsfncjv6gxjxda8dn7q9ekje9'
 );
-export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
+export const walletConnectV2ProjectId = 'e778492a18fef9113620802a4a41d7c2';
 
 export const apiTimeout = 60000;
 export const EGLD_DENOMINATION = 1000000000000000000;
