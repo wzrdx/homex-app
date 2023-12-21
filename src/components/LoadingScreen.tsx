@@ -41,7 +41,17 @@ function LoadingScreen({ setIsLoaded }) {
     }, []);
 
     return (
-        <Flex position="fixed" top={0} right={0} bottom={0} left={0} zIndex={5} pointerEvents="none" userSelect="none">
+        <Flex
+            display={['none', 'flex']}
+            position="fixed"
+            top={0}
+            right={0}
+            bottom={0}
+            left={0}
+            zIndex={5}
+            pointerEvents="none"
+            userSelect="none"
+        >
             <>
                 <Flex justifyContent="center" position="absolute" top={0} right={0} bottom={0} left={0} zIndex={6}>
                     <video style={{ height: '100%' }} autoPlay={true} muted={true} onEnded={onVideoEnd}>
