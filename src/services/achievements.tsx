@@ -3,14 +3,15 @@ import {
     getBudgetTravelersCommonAssets,
     getBudgetTravelersUncommonAssets,
     getCelestialsAssets,
-    getCelestialsCollector,
-    getCelestialsHoarder,
+    getCelestialsCollectorAssets,
+    getCelestialsHoarderAssets,
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { AOM_ID } from '../blockchain/config';
 import _ from 'lodash';
 import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
+import { zeroPad } from './helpers';
 
 enum TravelersLogPageRarity {
     Common = 'Common',
@@ -63,30 +64,12 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-11-01'),
         rarity: TravelersLogPageRarity.Legendary,
     },
-    // {
-    //     index: getIndex(),
-    //     title: 'Celestials Collector',
-    //     dateAdded: new Date('2023-12-01'),
-    //     rarity: TravelersLogPageRarity.Rare,
-    //     limits: [1, 2, 5],
-    //     badges: [
-    //         {
-    //             title: 'Aficionado',
-    //             text: 'Own at least one of each of the 5 Celestials from Art of Menhir',
-    //             assets: getCelestialsCollector(1),
-    //         },
-    //         {
-    //             title: 'Advocate',
-    //             text: 'Own at least 2 of each of the 5 Celestials from Art of Menhir',
-    //             assets: getCelestialsCollector(2),
-    //         },
-    //         {
-    //             title: 'Allegiant',
-    //             text: 'Own at least 5 of each of the 5 Celestials from Art of Menhir',
-    //             assets: getCelestialsCollector(3),
-    //         },
-    //     ],
-    // },
+    {
+        index: getIndex(),
+        title: 'Celestials Collector',
+        dateAdded: new Date('2023-12-01'),
+        rarity: TravelersLogPageRarity.Rare,
+    },
     // {
     //     index: getIndex(),
     //     title: 'Celestials Hoarder',
@@ -160,6 +143,7 @@ export interface AchievementsSharedData {
         emberheart: number;
         aetheris: number;
     };
+    celestialsBalance?: number[];
 }
 
 export interface AchievementsContextType {
@@ -301,6 +285,43 @@ export const AchievementsProvider = ({ children }) => {
         };
     };
 
+    const getCelestialsCollector = (): TravelersLogPageMetadata => {
+        const badges = [
+            {
+                title: 'Aficionado',
+                text: 'Own at least one of each of the 5 Celestials from Art of Menhir',
+                assets: getCelestialsCollectorAssets(1),
+            },
+            {
+                title: 'Advocate',
+                text: 'Own at least 2 of each of the 5 Celestials from Art of Menhir',
+                assets: getCelestialsCollectorAssets(2),
+            },
+            {
+                title: 'Allegiant',
+                text: 'Own at least 5 of each of the 5 Celestials from Art of Menhir',
+                assets: getCelestialsCollectorAssets(3),
+            },
+        ];
+
+        const getBadges = async (balance: number[]): Promise<TravelersLogBadge[]> => {
+            console.log('getCelestialsCollector', balance);
+
+            const limits = [1, 2, 5];
+
+            return _.map(badges, (badge, index) => ({
+                ...badge,
+                isUnlocked: balance.every((balance) => balance >= limits[index]),
+            }));
+        };
+
+        return {
+            getBadges,
+            getData: getCelestialsBalance,
+            dataKey: 'celestialsBalance',
+        };
+    };
+
     // Data functions
     const getCelestialsPage = async () => {
         setData({
@@ -309,30 +330,34 @@ export const AchievementsProvider = ({ children }) => {
         });
     };
 
-    // const getCelestialsBalance = async () => {
-    //     if (!celestialsBalance) {
-    //         const balance = await Promise.all(
-    //             Array.from({ length: 5 }, (_, index) => `${AOM_ID}-${index + 1}`).map(async (id) => {
-    //                 return await getSFTBalance(id);
-    //             })
-    //         );
-    //         setCelestialsBalance(balance);
-    //         return balance;
-    //     }
+    const getCelestialsBalance = async () => {
+        console.log('getCelestialsBalance');
 
-    //     return celestialsBalance;
-    // };
+        setData({
+            ...data,
+            celestialsBalance: await Promise.all(
+                Array.from({ length: 5 }, (_, index) => `${AOM_ID}-${zeroPad(index + 1)}`).map(async (id) => {
+                    return await getSFTBalance(id);
+                })
+            ),
+        });
+    };
 
-    // const getSFTBalance = async (id: string): Promise<number> => {
-    //     try {
-    //         const { data } = await getSFTDetails(address, id);
-    //         return !data ? 0 : Number.parseInt(data.balance);
-    //     } catch (error: any) {
-    //         return 0;
-    //     }
-    // };
+    // Helpers
+    const getSFTBalance = async (id: string): Promise<number> => {
+        try {
+            const { data } = await getSFTDetails(address, id);
+            return !data ? 0 : Number.parseInt(data.balance);
+        } catch (error: any) {
+            return 0;
+        }
+    };
 
-    const [pages] = useState<TravelersLogPageMetadata[]>([getCelestialsCustodian(), getCelestialsCurator()]);
+    const [pages] = useState<TravelersLogPageMetadata[]>([
+        getCelestialsCustodian(),
+        getCelestialsCurator(),
+        getCelestialsCollector(),
+    ]);
 
     return (
         <AchievementsContext.Provider

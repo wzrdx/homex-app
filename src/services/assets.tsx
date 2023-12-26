@@ -145,7 +145,7 @@ export const getCelestialsAssets = (
     return assets;
 };
 
-export const getCelestialsHoarder = (type: 1 | 2 | 3): [string, string] => {
+export const getCelestialsHoarderAssets = (type: 1 | 2 | 3): [string, string] => {
     let assets: [string, string] = ['', ''];
 
     switch (type) {
@@ -165,7 +165,7 @@ export const getCelestialsHoarder = (type: 1 | 2 | 3): [string, string] => {
     return assets;
 };
 
-export const getCelestialsCollector = (type: 1 | 2 | 3): [string, string] => {
+export const getCelestialsCollectorAssets = (type: 1 | 2 | 3): [string, string] => {
     let assets: [string, string] = ['', ''];
 
     switch (type) {
