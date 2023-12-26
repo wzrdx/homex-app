@@ -37,6 +37,7 @@ import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Achievements/Log';
 import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
 import { NewSymbol } from '../shared/NewSymbol';
+import { AchievementsProvider } from '../services/achievements';
 
 const ROUTE_WIDTH = 100;
 const BONUS_XP_END = new Date('2023-12-11T15:00:00.000Z');
@@ -461,7 +462,9 @@ function Header() {
                     />
 
                     <ModalBody backgroundColor="dark" display="flex" justifyContent="center" alignItems="center">
-                        <Log />
+                        <AchievementsProvider>
+                            <Log />
+                        </AchievementsProvider>
                     </ModalBody>
 
                     <ModalFooter backgroundColor="dark">

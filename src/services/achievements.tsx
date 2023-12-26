@@ -1,3 +1,4 @@
+import { createContext, useContext, useState } from 'react';
 import {
     getBudgetTravelersCommonAssets,
     getBudgetTravelersUncommonAssets,
@@ -5,189 +6,342 @@ import {
     getCelestialsCollector,
     getCelestialsHoarder,
 } from './assets';
+import { getSFTDetails } from './resources';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { AOM_ID } from '../blockchain/config';
+import _ from 'lodash';
+import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
 
-export interface TravelersLogPage {
-    id: number;
-    title: string;
-    isNew: boolean;
-    rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
-    limits: number[];
-    badges: {
-        title: string;
-        text: string;
-        isUnlocked?: boolean;
-        value?: number;
-        assets: [string, string];
-    }[];
+enum TravelersLogPageRarity {
+    Common = 'Common',
+    Uncommon = 'Uncommon',
+    Rare = 'Rare',
+    Epic = 'Epic',
+    Legendary = 'Legendary',
 }
 
-let id = 0;
-const getId = () => ++id;
+/**
+ * Page identity information which needs to be displayed
+ */
+export interface TravelersLogPageHeader {
+    index: number;
+    title: string;
+    dateAdded: Date;
+    rarity: TravelersLogPageRarity;
+}
 
-export const PAGES: TravelersLogPage[] = [
+/**
+ * Page metadata information which needs to be fetched
+ */
+export interface TravelersLogPageMetadata {
+    getBadges: (_?: any) => Promise<TravelersLogBadge[]>;
+    getData: () => Promise<void>;
+    dataKey: string;
+}
+
+export interface TravelersLogBadge {
+    title: string;
+    text: string;
+    assets: [string, string];
+    isUnlocked?: boolean;
+    value?: number;
+}
+
+let index = -1;
+const getIndex = () => ++index;
+
+export const PAGE_HEADERS: TravelersLogPageHeader[] = [
     {
-        id: getId(),
+        index: getIndex(),
         title: 'Celestials Custodian',
-        isNew: false,
-        rarity: 'Epic',
-        limits: [1],
-        badges: [
+        dateAdded: new Date('2023-11-01'),
+        rarity: TravelersLogPageRarity.Epic,
+    },
+    {
+        index: getIndex(),
+        title: 'Celestials Curator',
+        dateAdded: new Date('2023-11-01'),
+        rarity: TravelersLogPageRarity.Legendary,
+    },
+    // {
+    //     index: getIndex(),
+    //     title: 'Celestials Collector',
+    //     dateAdded: new Date('2023-12-01'),
+    //     rarity: TravelersLogPageRarity.Rare,
+    //     limits: [1, 2, 5],
+    //     badges: [
+    //         {
+    //             title: 'Aficionado',
+    //             text: 'Own at least one of each of the 5 Celestials from Art of Menhir',
+    //             assets: getCelestialsCollector(1),
+    //         },
+    //         {
+    //             title: 'Advocate',
+    //             text: 'Own at least 2 of each of the 5 Celestials from Art of Menhir',
+    //             assets: getCelestialsCollector(2),
+    //         },
+    //         {
+    //             title: 'Allegiant',
+    //             text: 'Own at least 5 of each of the 5 Celestials from Art of Menhir',
+    //             assets: getCelestialsCollector(3),
+    //         },
+    //     ],
+    // },
+    // {
+    //     index: getIndex(),
+    //     title: 'Celestials Hoarder',
+    //     dateAdded: new Date('2023-12-01'),
+    //     rarity: TravelersLogPageRarity.Rare,
+    //     limits: [10, 30, 100],
+    //     badges: [
+    //         {
+    //             title: 'Keeper',
+    //             text: 'Own at least 10 Celestials from Art of Menhir',
+    //             assets: getCelestialsHoarder(1),
+    //         },
+    //         {
+    //             title: 'Gatherer',
+    //             text: 'Own at least 30 Celestials from Art of Menhir',
+    //             assets: getCelestialsHoarder(2),
+    //         },
+    //         {
+    //             title: 'Stockpiler',
+    //             text: 'Own at least 100 Celestials from Art of Menhir',
+    //             assets: getCelestialsHoarder(3),
+    //         },
+    //     ],
+    // },
+    // {
+    //     index: getIndex(),
+    //     title: 'Budget Travelers',
+    //     dateAdded: new Date('2023-12-26'),
+    //     rarity: TravelersLogPageRarity.Common,
+    //     limits: [1, 5, 10, 1, 5, 10],
+    //     badges: [
+    //         {
+    //             title: 'Common Holder',
+    //             text: 'Stake at least one Common Traveler',
+    //             assets: getBudgetTravelersCommonAssets(1),
+    //         },
+    //         {
+    //             title: 'Commons Patron',
+    //             text: 'Stake at least 5 Common Travelers',
+    //             assets: getBudgetTravelersCommonAssets(2),
+    //         },
+    //         {
+    //             title: 'Commons Whale',
+    //             text: 'Stake at least 10 Common Travelers',
+    //             assets: getBudgetTravelersCommonAssets(3),
+    //         },
+    //         {
+    //             title: 'Uncommon Holder',
+    //             text: 'Stake at least one Uncommon Traveler',
+    //             assets: getBudgetTravelersUncommonAssets(1),
+    //         },
+    //         {
+    //             title: 'Uncommons Patron',
+    //             text: 'Stake at least 5 Uncommon Travelers',
+    //             assets: getBudgetTravelersUncommonAssets(2),
+    //         },
+    //         {
+    //             title: 'Uncommons Whale',
+    //             text: 'Stake at least 10 Uncommon Travelers',
+    //             assets: getBudgetTravelersUncommonAssets(3),
+    //         },
+    //     ],
+    // },
+];
+
+export interface AchievementsSharedData {
+    celestialsPage?: {
+        aurora: number;
+        verdant: number;
+        solara: number;
+        emberheart: number;
+        aetheris: number;
+    };
+}
+
+export interface AchievementsContextType {
+    data: AchievementsSharedData;
+    pages: TravelersLogPageMetadata[];
+}
+
+const AchievementsContext = createContext<AchievementsContextType | null>(null);
+
+export const useAchievementsContext = () => useContext(AchievementsContext);
+
+export const AchievementsProvider = ({ children }) => {
+    const [data, setData] = useState<AchievementsSharedData>({});
+    let { address } = useGetAccountInfo();
+
+    // Metadata functions
+    const getCelestialsCustodian = (): TravelersLogPageMetadata => {
+        const type = 'Custodian';
+
+        const badges = [
             {
                 title: "Aurora's Awakening",
                 text: 'Minted at least one Aurora from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Aurora'),
+                assets: getCelestialsAssets(type, 'Aurora'),
             },
             {
                 title: 'Verdant Visionary',
                 text: 'Minted at least one Verdant from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Verdant'),
+                assets: getCelestialsAssets(type, 'Verdant'),
             },
             {
                 title: "Solara's Spark",
                 text: 'Minted at least one Solara from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Solara'),
+                assets: getCelestialsAssets(type, 'Solara'),
             },
             {
                 title: "Emberheart's Enigma",
                 text: 'Minted at least one Emberheart from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Emberheart'),
+                assets: getCelestialsAssets(type, 'Emberheart'),
             },
             {
                 title: 'Aetheris Ascendant',
                 text: 'Minted at least one Aetheris from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Aetheris'),
+                assets: getCelestialsAssets(type, 'Aetheris'),
             },
             {
                 title: 'Celestials Custodian',
                 text: 'Minted at least one of each Celestials from Art of Menhir',
-                assets: getCelestialsAssets('Custodian', 'Celestials'),
+                assets: getCelestialsAssets(type, 'Celestials'),
             },
-        ],
-    },
-    {
-        id: getId(),
-        title: 'Celestials Curator',
-        isNew: false,
-        rarity: 'Legendary',
-        limits: [5],
-        badges: [
+        ];
+
+        const getBadges = async (page: {
+            aurora: number;
+            verdant: number;
+            solara: number;
+            emberheart: number;
+            aetheris: number;
+        }): Promise<TravelersLogBadge[]> => {
+            console.log('Celestials Custodian', 'getBadges', page);
+
+            const baseValues = [page?.aurora, page?.verdant, page?.solara, page?.emberheart, page?.aetheris];
+            const celestialsCustodian = [...baseValues, baseValues.every((amount) => amount > 0) ? 1 : 0];
+
+            return _.map(badges, (badge, index) => ({
+                ...badge,
+                isUnlocked: celestialsCustodian[index] >= 1,
+                value: index === badges.length - 1 ? 0 : celestialsCustodian[index],
+            }));
+        };
+
+        return {
+            getBadges,
+            getData: getCelestialsPage,
+            dataKey: 'celestialsPage',
+        };
+    };
+
+    const getCelestialsCurator = (): TravelersLogPageMetadata => {
+        const type = 'Curator';
+
+        const badges = [
             {
                 title: 'Aurora Curator',
                 text: 'Minted at least 5 Aurora from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Aurora'),
+                assets: getCelestialsAssets(type, 'Aurora'),
             },
             {
                 title: 'Verdant Curator',
                 text: 'Minted at least 5 Verdant from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Verdant'),
+                assets: getCelestialsAssets(type, 'Verdant'),
             },
             {
                 title: 'Solara Curator',
                 text: 'Minted at least 5 Solara from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Solara'),
+                assets: getCelestialsAssets(type, 'Solara'),
             },
             {
                 title: 'Emberheart Curator',
                 text: 'Minted at least 5 Emberheart from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Emberheart'),
+                assets: getCelestialsAssets(type, 'Emberheart'),
             },
             {
                 title: 'Aetheris Curator',
                 text: 'Minted at least 5 Aetheris from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Aetheris'),
+                assets: getCelestialsAssets(type, 'Aetheris'),
             },
             {
                 title: 'Celestials Curator',
                 text: 'Minted at least 5 of each Celestials from Art of Menhir',
-                assets: getCelestialsAssets('Curator', 'Celestials'),
+                assets: getCelestialsAssets(type, 'Celestials'),
             },
-        ],
-    },
-    {
-        id: getId(),
-        title: 'Celestials Collector',
-        isNew: false,
-        rarity: 'Rare',
-        limits: [1, 2, 5],
-        badges: [
-            {
-                title: 'Aficionado',
-                text: 'Own at least one of each of the 5 Celestials from Art of Menhir',
-                assets: getCelestialsCollector(1),
-            },
-            {
-                title: 'Advocate',
-                text: 'Own at least 2 of each of the 5 Celestials from Art of Menhir',
-                assets: getCelestialsCollector(2),
-            },
-            {
-                title: 'Allegiant',
-                text: 'Own at least 5 of each of the 5 Celestials from Art of Menhir',
-                assets: getCelestialsCollector(3),
-            },
-        ],
-    },
-    {
-        id: getId(),
-        title: 'Celestials Hoarder',
-        isNew: false,
-        rarity: 'Rare',
-        limits: [10, 30, 100],
-        badges: [
-            {
-                title: 'Keeper',
-                text: 'Own at least 10 Celestials from Art of Menhir',
-                assets: getCelestialsHoarder(1),
-            },
-            {
-                title: 'Gatherer',
-                text: 'Own at least 30 Celestials from Art of Menhir',
-                assets: getCelestialsHoarder(2),
-            },
-            {
-                title: 'Stockpiler',
-                text: 'Own at least 100 Celestials from Art of Menhir',
-                assets: getCelestialsHoarder(3),
-            },
-        ],
-    },
-    {
-        id: getId(),
-        title: 'Budget Travelers',
-        isNew: true,
-        rarity: 'Common',
-        limits: [1, 5, 10, 1, 5, 10],
-        badges: [
-            {
-                title: 'Common Holder',
-                text: 'Stake at least one Common Traveler',
-                assets: getBudgetTravelersCommonAssets(1),
-            },
-            {
-                title: 'Commons Patron',
-                text: 'Stake at least 5 Common Travelers',
-                assets: getBudgetTravelersCommonAssets(2),
-            },
-            {
-                title: 'Commons Whale',
-                text: 'Stake at least 10 Common Travelers',
-                assets: getBudgetTravelersCommonAssets(3),
-            },
-            {
-                title: 'Uncommon Holder',
-                text: 'Stake at least one Uncommon Traveler',
-                assets: getBudgetTravelersUncommonAssets(1),
-            },
-            {
-                title: 'Uncommons Patron',
-                text: 'Stake at least 5 Uncommon Travelers',
-                assets: getBudgetTravelersUncommonAssets(2),
-            },
-            {
-                title: 'Uncommons Whale',
-                text: 'Stake at least 10 Uncommon Travelers',
-                assets: getBudgetTravelersUncommonAssets(3),
-            },
-        ],
-    },
-];
+        ];
+
+        const getBadges = async (page: {
+            aurora: number;
+            verdant: number;
+            solara: number;
+            emberheart: number;
+            aetheris: number;
+        }): Promise<TravelersLogBadge[]> => {
+            console.log('Celestials Curator', 'getBadges', page);
+
+            const baseValues = [page?.aurora, page?.verdant, page?.solara, page?.emberheart, page?.aetheris];
+            const celestialsCurator = [...baseValues, baseValues.every((amount) => amount >= 5) ? 1 : 0];
+
+            return _.map(badges, (badge, index) => ({
+                ...badge,
+                isUnlocked:
+                    index === badges.length - 1 ? (_.last(celestialsCurator) as number) > 0 : celestialsCurator[index] >= 5,
+                value: index === badges.length - 1 ? 0 : celestialsCurator[index],
+            }));
+        };
+
+        return {
+            getBadges,
+            getData: getCelestialsPage,
+            dataKey: 'celestialsPage',
+        };
+    };
+
+    // Data functions
+    const getCelestialsPage = async () => {
+        setData({
+            ...data,
+            celestialsPage: await getPageCelestials(),
+        });
+    };
+
+    // const getCelestialsBalance = async () => {
+    //     if (!celestialsBalance) {
+    //         const balance = await Promise.all(
+    //             Array.from({ length: 5 }, (_, index) => `${AOM_ID}-${index + 1}`).map(async (id) => {
+    //                 return await getSFTBalance(id);
+    //             })
+    //         );
+    //         setCelestialsBalance(balance);
+    //         return balance;
+    //     }
+
+    //     return celestialsBalance;
+    // };
+
+    // const getSFTBalance = async (id: string): Promise<number> => {
+    //     try {
+    //         const { data } = await getSFTDetails(address, id);
+    //         return !data ? 0 : Number.parseInt(data.balance);
+    //     } catch (error: any) {
+    //         return 0;
+    //     }
+    // };
+
+    const [pages] = useState<TravelersLogPageMetadata[]>([getCelestialsCustodian(), getCelestialsCurator()]);
+
+    return (
+        <AchievementsContext.Provider
+            value={{
+                data,
+                pages,
+            }}
+        >
+            {children}
+        </AchievementsContext.Provider>
+    );
+};
