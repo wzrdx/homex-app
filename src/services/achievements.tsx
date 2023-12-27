@@ -14,6 +14,7 @@ import { getPageCelestials } from '../blockchain/api/achievements/getPageCelesti
 import { zeroPad } from './helpers';
 import { useStoreContext, StoreContextType } from './store';
 import { Stake } from '../blockchain/hooks/useGetStakingInfo';
+import { getRarityClasses } from '../blockchain/api/getRarityClasses';
 
 enum TravelersLogPageRarity {
     Common = 'Common',
@@ -390,51 +391,7 @@ export const AchievementsProvider = ({ children }) => {
             (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
         );
 
-        // TODO: Production
-        // const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
-        const rarities = [
-            {
-                nonce: 31,
-                rarityClass: 1,
-            },
-            {
-                nonce: 32,
-                rarityClass: 1,
-            },
-            {
-                nonce: 17,
-                rarityClass: 1,
-            },
-            {
-                nonce: 9,
-                rarityClass: 1,
-            },
-            {
-                nonce: 14,
-                rarityClass: 1,
-            },
-            {
-                nonce: 12,
-                rarityClass: 2,
-            },
-            {
-                nonce: 41,
-                rarityClass: 2,
-            },
-            {
-                nonce: 42,
-                rarityClass: 2,
-            },
-            {
-                nonce: 43,
-                rarityClass: 2,
-            },
-            {
-                nonce: 44,
-                rarityClass: 2,
-            },
-        ];
-
+        const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
         const rarityCount = _.countBy(rarities, 'rarityClass');
 
         setData({
