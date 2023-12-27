@@ -1,33 +1,19 @@
 import _ from 'lodash';
-import { Box, Button, Center, Flex, Image, Spinner, Stack, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
+import { useState } from 'react';
 import { getAlternateBackground } from '../../services/assets';
 import { LuSwords } from 'react-icons/lu';
 import { IconWithShadow } from '../../shared/IconWithShadow';
-import { BiInfoCircle } from 'react-icons/bi';
-import { FaRegCheckCircle } from 'react-icons/fa';
 import { LiaScrollSolid, LiaCalendarCheck } from 'react-icons/lia';
-import { BsGem } from 'react-icons/bs';
-import { GoTrophy } from 'react-icons/go';
 import { getBackgroundStyle } from '../../services/helpers';
 import { GiLockedChest } from 'react-icons/gi';
 import { VscTools } from 'react-icons/vsc';
-import {
-    AchievementsContextType,
-    PAGE_HEADERS,
-    TravelersLogPageHeader,
-    useAchievementsContext,
-} from '../../services/achievements';
+import { PAGE_HEADERS } from '../../services/achievements';
 import { NewSymbol } from '../../shared/NewSymbol';
-import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { getSFTDetails } from '../../services/resources';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
-import { getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import { LogTutorial } from './LogTutorial';
 import { Page } from './Page';
 import { differenceInDays } from 'date-fns';
+import { BsGem } from 'react-icons/bs';
 
 enum View {
     Page = 'Page',
@@ -42,134 +28,6 @@ function Log() {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [view, setView] = useState<View>(View.Page);
 
-    // const initializeCelestialsPages = async () => {
-    //     const celestialsBalance = [
-    //         await getSFTBalance(`${AOM_ID}-01`),
-    //         await getSFTBalance(`${AOM_ID}-02`),
-    //         await getSFTBalance(`${AOM_ID}-03`),
-    //         await getSFTBalance(`${AOM_ID}-04`),
-    //         await getSFTBalance(`${AOM_ID}-05`),
-    //     ];
-
-    //     const celestialsPage = await getPageCelestials();
-
-    //     const celestialsCustodian = [
-    //         celestialsPage?.aurora,
-    //         celestialsPage?.verdant,
-    //         celestialsPage?.solara,
-    //         celestialsPage?.emberheart,
-    //         celestialsPage?.aetheris,
-    //     ];
-    //     celestialsCustodian.push(celestialsCustodian.every((amount) => amount > 0) ? 1 : 0);
-
-    //     const celestialsCurator = [
-    //         celestialsPage?.aurora,
-    //         celestialsPage?.verdant,
-    //         celestialsPage?.solara,
-    //         celestialsPage?.emberheart,
-    //         celestialsPage?.aetheris,
-    //     ];
-    //     celestialsCurator.push(celestialsCurator.every((amount) => amount >= 5) ? 1 : 0);
-
-    //     setPages([
-    //         {
-    //             ...PAGES[0],
-    //             badges: _.map(PAGES[0].badges, (badge, index) => ({
-    //                 ...badge,
-    //                 isUnlocked: celestialsCustodian[index] >= (_.first(PAGES[0].limits) as number),
-    //                 value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCustodian[index],
-    //             })),
-    //         },
-    //         {
-    //             ...PAGES[1],
-    //             badges: _.map(PAGES[1].badges, (badge, index) => ({
-    //                 ...badge,
-    //                 isUnlocked:
-    //                     index === PAGES[1].badges.length - 1
-    //                         ? (_.last(celestialsCurator) as number) > 0
-    //                         : celestialsCurator[index] >= (_.first(PAGES[1].limits) as number),
-    //                 value: index === PAGES[1].badges.length - 1 ? 0 : celestialsCurator[index],
-    //             })),
-    //         },
-    //         {
-    //             ...PAGES[2],
-    //             badges: _.map(PAGES[2].badges, (badge, index) => ({
-    //                 ...badge,
-    //                 isUnlocked: celestialsBalance.every((balance) => balance >= PAGES[2].limits[index]),
-    //             })),
-    //         },
-    //         {
-    //             ...PAGES[3],
-    //             badges: _.map(PAGES[3].badges, (badge, index) => ({
-    //                 ...badge,
-    //                 isUnlocked: _.sum(celestialsBalance) >= PAGES[3].limits[index],
-    //                 value: _.sum(celestialsBalance),
-    //             })),
-    //         },
-    //     ]);
-    // };
-
-    // const initializeTravelersPages = async () => {
-    //     if (!stakingInfo) {
-    //         return;
-    //     }
-
-    //     const stakedTravelers: Stake[] = _.filter(
-    //         stakingInfo.tokens,
-    //         (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
-    //     );
-
-    //     // const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
-    //     const rarities = [
-    //         {
-    //             nonce: 31,
-    //             rarityClass: 1,
-    //         },
-    //         {
-    //             nonce: 32,
-    //             rarityClass: 1,
-    //         },
-    //         {
-    //             nonce: 17,
-    //             rarityClass: 1,
-    //         },
-    //         {
-    //             nonce: 9,
-    //             rarityClass: 1,
-    //         },
-    //         {
-    //             nonce: 14,
-    //             rarityClass: 1,
-    //         },
-    //         {
-    //             nonce: 12,
-    //             rarityClass: 2,
-    //         },
-    //         {
-    //             nonce: 11,
-    //             rarityClass: 2,
-    //         },
-    //     ];
-
-    //     const rarityCount = _.countBy(rarities, 'rarityClass');
-
-    //     setPages([
-    //         ...pages,
-    //         {
-    //             ...PAGES[4],
-    //             badges: _.map(PAGES[4].badges, (badge, index) => {
-    //                 const rarityClass = index >= 3 ? '2' : '1';
-
-    //                 return {
-    //                     ...badge,
-    //                     isUnlocked: rarityCount[rarityClass] >= PAGES[4].limits[index],
-    //                     value: rarityCount[rarityClass],
-    //                 };
-    //             }),
-    //         },
-    //     ]);
-    // };
-
     const getTotalPagesMinted = () => {
         return (
             <Text fontWeight={500} color="page" letterSpacing="1px" fontSize="17px" lineHeight="17px">
@@ -177,7 +35,7 @@ function Log() {
                 <Text as="span" mx={0.5}>
                     /
                 </Text>
-                5
+                {PAGE_HEADERS.length}
             </Text>
         );
     };
@@ -318,21 +176,21 @@ const MenuItem = ({ title, rarity, isNew, isActive, onClick }) => {
         <Flex
             justifyContent="space-between"
             alignItems="center"
-            borderRadius="20px"
-            px={5}
-            py={2.5}
+            borderRadius="16px"
+            px={4}
+            py={3}
             backgroundColor={isActive ? '#ffffff10' : 'transparent'}
             cursor="pointer"
             transition="all 0.1s cubic-bezier(0.21, 0.6, 0.35, 1)"
             _hover={{ backgroundColor: isActive ? '#ffffff10' : '#ffffff08' }}
             onClick={onClick}
         >
-            <Stack spacing={-0.5}>
+            <Stack direction="row" spacing={3}>
+                <Box color={`blizzard${rarity}`} pt="2px">
+                    <BsGem fontSize="21px" />
+                </Box>
                 <Text fontWeight={500} textShadow="1px 1px 0px #222">
                     {title}
-                </Text>
-                <Text color={`blizzard${rarity}`} fontWeight={500} textShadow="1px 1px 0px #222">
-                    {rarity}
                 </Text>
             </Stack>
 

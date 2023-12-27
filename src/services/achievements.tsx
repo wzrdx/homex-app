@@ -8,10 +8,12 @@ import {
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { AOM_ID } from '../blockchain/config';
+import { AOM_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import _ from 'lodash';
 import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
+import { useStoreContext, StoreContextType } from './store';
+import { Stake } from '../blockchain/hooks/useGetStakingInfo';
 
 enum TravelersLogPageRarity {
     Common = 'Common',
@@ -70,69 +72,18 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-12-01'),
         rarity: TravelersLogPageRarity.Rare,
     },
-    // {
-    //     index: getIndex(),
-    //     title: 'Celestials Hoarder',
-    //     dateAdded: new Date('2023-12-01'),
-    //     rarity: TravelersLogPageRarity.Rare,
-    //     limits: [10, 30, 100],
-    //     badges: [
-    //         {
-    //             title: 'Keeper',
-    //             text: 'Own at least 10 Celestials from Art of Menhir',
-    //             assets: getCelestialsHoarder(1),
-    //         },
-    //         {
-    //             title: 'Gatherer',
-    //             text: 'Own at least 30 Celestials from Art of Menhir',
-    //             assets: getCelestialsHoarder(2),
-    //         },
-    //         {
-    //             title: 'Stockpiler',
-    //             text: 'Own at least 100 Celestials from Art of Menhir',
-    //             assets: getCelestialsHoarder(3),
-    //         },
-    //     ],
-    // },
-    // {
-    //     index: getIndex(),
-    //     title: 'Budget Travelers',
-    //     dateAdded: new Date('2023-12-26'),
-    //     rarity: TravelersLogPageRarity.Common,
-    //     limits: [1, 5, 10, 1, 5, 10],
-    //     badges: [
-    //         {
-    //             title: 'Common Holder',
-    //             text: 'Stake at least one Common Traveler',
-    //             assets: getBudgetTravelersCommonAssets(1),
-    //         },
-    //         {
-    //             title: 'Commons Patron',
-    //             text: 'Stake at least 5 Common Travelers',
-    //             assets: getBudgetTravelersCommonAssets(2),
-    //         },
-    //         {
-    //             title: 'Commons Whale',
-    //             text: 'Stake at least 10 Common Travelers',
-    //             assets: getBudgetTravelersCommonAssets(3),
-    //         },
-    //         {
-    //             title: 'Uncommon Holder',
-    //             text: 'Stake at least one Uncommon Traveler',
-    //             assets: getBudgetTravelersUncommonAssets(1),
-    //         },
-    //         {
-    //             title: 'Uncommons Patron',
-    //             text: 'Stake at least 5 Uncommon Travelers',
-    //             assets: getBudgetTravelersUncommonAssets(2),
-    //         },
-    //         {
-    //             title: 'Uncommons Whale',
-    //             text: 'Stake at least 10 Uncommon Travelers',
-    //             assets: getBudgetTravelersUncommonAssets(3),
-    //         },
-    //     ],
-    // },
+    {
+        index: getIndex(),
+        title: 'Celestials Hoarder',
+        dateAdded: new Date('2023-12-01'),
+        rarity: TravelersLogPageRarity.Rare,
+    },
+    {
+        index: getIndex(),
+        title: 'Budget Travelers',
+        dateAdded: new Date('2023-12-27'),
+        rarity: TravelersLogPageRarity.Common,
+    },
 ];
 
 export interface AchievementsSharedData {
@@ -144,6 +95,7 @@ export interface AchievementsSharedData {
         aetheris: number;
     };
     celestialsBalance?: number[];
+    rarityCount?: _.Dictionary<number>;
 }
 
 export interface AchievementsContextType {
@@ -157,7 +109,9 @@ export const useAchievementsContext = () => useContext(AchievementsContext);
 
 export const AchievementsProvider = ({ children }) => {
     const [data, setData] = useState<AchievementsSharedData>({});
+
     let { address } = useGetAccountInfo();
+    const { stakingInfo } = useStoreContext() as StoreContextType;
 
     // Metadata functions
     const getCelestialsCustodian = (): TravelersLogPageMetadata => {
@@ -203,8 +157,6 @@ export const AchievementsProvider = ({ children }) => {
             emberheart: number;
             aetheris: number;
         }): Promise<TravelersLogBadge[]> => {
-            console.log('Celestials Custodian', 'getBadges', page);
-
             const baseValues = [page?.aurora, page?.verdant, page?.solara, page?.emberheart, page?.aetheris];
             const celestialsCustodian = [...baseValues, baseValues.every((amount) => amount > 0) ? 1 : 0];
 
@@ -265,8 +217,6 @@ export const AchievementsProvider = ({ children }) => {
             emberheart: number;
             aetheris: number;
         }): Promise<TravelersLogBadge[]> => {
-            console.log('Celestials Curator', 'getBadges', page);
-
             const baseValues = [page?.aurora, page?.verdant, page?.solara, page?.emberheart, page?.aetheris];
             const celestialsCurator = [...baseValues, baseValues.every((amount) => amount >= 5) ? 1 : 0];
 
@@ -305,9 +255,7 @@ export const AchievementsProvider = ({ children }) => {
         ];
 
         const getBadges = async (balance: number[]): Promise<TravelersLogBadge[]> => {
-            console.log('getCelestialsCollector', balance);
-
-            const limits = [1, 2, 5];
+            const limits = [10, 30, 100];
 
             return _.map(badges, (badge, index) => ({
                 ...badge,
@@ -322,6 +270,97 @@ export const AchievementsProvider = ({ children }) => {
         };
     };
 
+    const getCelestialsHoarder = (): TravelersLogPageMetadata => {
+        const badges = [
+            {
+                title: 'Keeper',
+                text: 'Own at least 10 Celestials from Art of Menhir',
+                assets: getCelestialsHoarderAssets(1),
+            },
+            {
+                title: 'Gatherer',
+                text: 'Own at least 30 Celestials from Art of Menhir',
+                assets: getCelestialsHoarderAssets(2),
+            },
+            {
+                title: 'Stockpiler',
+                text: 'Own at least 100 Celestials from Art of Menhir',
+                assets: getCelestialsHoarderAssets(3),
+            },
+        ];
+
+        const getBadges = async (balance: number[]): Promise<TravelersLogBadge[]> => {
+            const limits = [1, 2, 5];
+
+            return _.map(badges, (badge, index) => ({
+                ...badge,
+                isUnlocked: _.sum(balance) >= limits[index],
+                value: _.sum(balance),
+            }));
+        };
+
+        return {
+            getBadges,
+            getData: getCelestialsBalance,
+            dataKey: 'celestialsBalance',
+        };
+    };
+
+    const getBudgetTravelers = (): TravelersLogPageMetadata => {
+        const badges = [
+            {
+                title: 'Common Holder',
+                text: 'Stake at least one Common Traveler',
+                assets: getBudgetTravelersCommonAssets(1),
+            },
+            {
+                title: 'Commons Patron',
+                text: 'Stake at least 2 Common Travelers',
+                assets: getBudgetTravelersCommonAssets(2),
+            },
+            {
+                title: 'Commons Whale',
+                text: 'Stake at least 5 Common Travelers',
+                assets: getBudgetTravelersCommonAssets(3),
+            },
+            {
+                title: 'Uncommon Holder',
+                text: 'Stake at least one Uncommon Traveler',
+                assets: getBudgetTravelersUncommonAssets(1),
+            },
+            {
+                title: 'Uncommons Patron',
+                text: 'Stake at least 2 Uncommon Travelers',
+                assets: getBudgetTravelersUncommonAssets(2),
+            },
+            {
+                title: 'Uncommons Whale',
+                text: 'Stake at least 5 Uncommon Travelers',
+                assets: getBudgetTravelersUncommonAssets(3),
+            },
+        ];
+
+        const getBadges = async (rarityCount: _.Dictionary<number>): Promise<TravelersLogBadge[]> => {
+            const limits = [1, 2, 5];
+
+            return _.map(badges, (badge, index) => {
+                const rarityClass = index >= 3 ? '2' : '1';
+
+                return {
+                    ...badge,
+                    isUnlocked: rarityCount[rarityClass] >= limits[index % 3],
+                    value: rarityCount[rarityClass],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getRarityCount,
+            dataKey: 'rarityCount',
+        };
+    };
+
     // Data functions
     const getCelestialsPage = async () => {
         setData({
@@ -331,8 +370,6 @@ export const AchievementsProvider = ({ children }) => {
     };
 
     const getCelestialsBalance = async () => {
-        console.log('getCelestialsBalance');
-
         setData({
             ...data,
             celestialsBalance: await Promise.all(
@@ -340,6 +377,69 @@ export const AchievementsProvider = ({ children }) => {
                     return await getSFTBalance(id);
                 })
             ),
+        });
+    };
+
+    const getRarityCount = async () => {
+        if (!stakingInfo) {
+            return;
+        }
+
+        const stakedTravelers: Stake[] = _.filter(
+            stakingInfo.tokens,
+            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
+        );
+
+        // TODO: Production
+        // const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
+        const rarities = [
+            {
+                nonce: 31,
+                rarityClass: 1,
+            },
+            {
+                nonce: 32,
+                rarityClass: 1,
+            },
+            {
+                nonce: 17,
+                rarityClass: 1,
+            },
+            {
+                nonce: 9,
+                rarityClass: 1,
+            },
+            {
+                nonce: 14,
+                rarityClass: 1,
+            },
+            {
+                nonce: 12,
+                rarityClass: 2,
+            },
+            {
+                nonce: 41,
+                rarityClass: 2,
+            },
+            {
+                nonce: 42,
+                rarityClass: 2,
+            },
+            {
+                nonce: 43,
+                rarityClass: 2,
+            },
+            {
+                nonce: 44,
+                rarityClass: 2,
+            },
+        ];
+
+        const rarityCount = _.countBy(rarities, 'rarityClass');
+
+        setData({
+            ...data,
+            rarityCount,
         });
     };
 
@@ -357,6 +457,8 @@ export const AchievementsProvider = ({ children }) => {
         getCelestialsCustodian(),
         getCelestialsCurator(),
         getCelestialsCollector(),
+        getCelestialsHoarder(),
+        getBudgetTravelers(),
     ]);
 
     return (
