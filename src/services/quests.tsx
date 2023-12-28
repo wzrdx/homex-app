@@ -239,7 +239,7 @@ const XP = [
 export const QUESTS: any[] = [
     // Herbalism
     {
-        id: 0,
+        id: getId(),
         type: 'herbalism',
         name: LORE[0].title,
         description: <Text layerStyle="questDescription">{LORE[0].description}</Text>,
@@ -263,7 +263,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[0],
     },
     {
-        id: 1,
+        id: getId(),
         type: 'herbalism',
         name: LORE[1].title,
         description: <Text layerStyle="questDescription">{LORE[1].description}</Text>,
@@ -287,7 +287,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[1],
     },
     {
-        id: 2,
+        id: getId(),
         type: 'herbalism',
         name: LORE[2].title,
         description: <Text layerStyle="questDescription">{LORE[2].description}</Text>,
@@ -311,7 +311,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[2],
     },
     {
-        id: 3,
+        id: getId(),
         type: 'herbalism',
         name: LORE[3].title,
         description: <Text layerStyle="questDescription">{LORE[3].description}</Text>,
@@ -335,7 +335,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[3],
     },
     {
-        id: 4,
+        id: getId(),
         type: 'herbalism',
         name: LORE[4].title,
         description: <Text layerStyle="questDescription">{LORE[4].description}</Text>,
@@ -361,7 +361,7 @@ export const QUESTS: any[] = [
 
     // Jewelcrafting
     {
-        id: 5,
+        id: getId(),
         type: 'jewelcrafting',
         name: LORE[5].title,
         description: <Text layerStyle="questDescription">{LORE[5].description}</Text>,
@@ -385,7 +385,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[5],
     },
     {
-        id: 6,
+        id: getId(),
         type: 'jewelcrafting',
         name: LORE[6].title,
         description: <Text layerStyle="questDescription">{LORE[6].description}</Text>,
@@ -409,7 +409,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[6],
     },
     {
-        id: 7,
+        id: getId(),
         type: 'jewelcrafting',
         name: LORE[7].title,
         description: <Text layerStyle="questDescription">{LORE[7].description}</Text>,
@@ -433,7 +433,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[7],
     },
     {
-        id: 8,
+        id: getId(),
         type: 'jewelcrafting',
         name: LORE[8].title,
         description: <Text layerStyle="questDescription">{LORE[8].description}</Text>,
@@ -457,7 +457,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[8],
     },
     {
-        id: 9,
+        id: getId(),
         type: 'jewelcrafting',
         name: LORE[9].title,
         description: <Text layerStyle="questDescription">{LORE[9].description}</Text>,
@@ -483,7 +483,7 @@ export const QUESTS: any[] = [
 
     // Divination
     {
-        id: 10,
+        id: getId(),
         type: 'divination',
         name: LORE[10].title,
         description: <Text layerStyle="questDescription">{LORE[10].description}</Text>,
@@ -509,7 +509,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[10],
     },
     {
-        id: 11,
+        id: getId(),
         type: 'divination',
         name: LORE[11].title,
         description: <Text layerStyle="questDescription">{LORE[11].description}</Text>,
@@ -535,7 +535,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[11],
     },
     {
-        id: 12,
+        id: getId(),
         type: 'divination',
         name: LORE[12].title,
         description: <Text layerStyle="questDescription">{LORE[12].description}</Text>,
@@ -561,7 +561,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[12],
     },
     {
-        id: 13,
+        id: getId(),
         type: 'divination',
         name: LORE[13].title,
         description: <Text layerStyle="questDescription">{LORE[13].description}</Text>,
@@ -587,7 +587,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[13],
     },
     {
-        id: 14,
+        id: getId(),
         type: 'divination',
         name: LORE[14].title,
         description: <Text layerStyle="questDescription">{LORE[14].description}</Text>,
@@ -615,7 +615,7 @@ export const QUESTS: any[] = [
 
     // Alchemy
     {
-        id: 15,
+        id: getId(),
         type: 'alchemy',
         name: LORE[15].title,
         description: <Text layerStyle="questDescription">{LORE[15].description}</Text>,
@@ -644,7 +644,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[15],
     },
     {
-        id: 16,
+        id: getId(),
         type: 'alchemy',
         name: LORE[16].title,
         description: <Text layerStyle="questDescription">{LORE[16].description}</Text>,
@@ -678,7 +678,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[16],
     },
     {
-        id: 17,
+        id: getId(),
         type: 'alchemy',
         name: LORE[17].title,
         description: <Text layerStyle="questDescription">{LORE[17].description}</Text>,
@@ -714,7 +714,7 @@ export const QUESTS: any[] = [
 
     // Consecration
     {
-        id: 18,
+        id: getId(),
         type: 'consecration',
         name: LORE[18].title,
         description: <Text layerStyle="questDescription">{LORE[18].description}</Text>,
@@ -743,7 +743,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[18],
     },
     {
-        id: 19,
+        id: getId(),
         type: 'consecration',
         name: LORE[19].title,
         description: <Text layerStyle="questDescription">{LORE[19].description}</Text>,
@@ -772,7 +772,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[19],
     },
     {
-        id: 20,
+        id: getId(),
         type: 'consecration',
         name: LORE[20].title,
         description: <Text layerStyle="questDescription">{LORE[20].description}</Text>,
@@ -803,7 +803,7 @@ export const QUESTS: any[] = [
 
     // Missions
     {
-        id: 21,
+        id: getId(),
         type: 'final',
         isFinal: true,
         name: LORE[21].title,
@@ -831,7 +831,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[21],
     },
     {
-        id: 22,
+        id: getId(),
         type: 'final',
         isFinal: true,
         name: LORE[22].title,
@@ -859,7 +859,7 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[22],
     },
     {
-        id: 23,
+        id: getId(),
         type: 'final',
         isFinal: true,
         name: LORE[23].title,
@@ -887,6 +887,8 @@ export const QUESTS: any[] = [
         image: QUEST_IMAGES[23],
     },
 ];
+
+console.log(QUESTS);
 
 export const getQuest = (id = 1): Quest => {
     return QUESTS.find((m) => m.id === id);
