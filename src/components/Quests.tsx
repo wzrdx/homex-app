@@ -79,7 +79,7 @@ function Quests() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(9250000 + 250000 * _.size(transfers) + 550000 * _.size(selectedQuestIds))
+                .withGasLimit(26000000 + 250000 * _.size(transfers) + 1500000 * _.size(selectedQuestIds))
                 .buildTransaction();
 
             await refreshAccount();
@@ -144,11 +144,11 @@ function Quests() {
         }));
 
         const gasLimit: number =
-            12000000 +
-            300000 * otherOngoingQuestsCount +
+            22000000 +
+            400000 * otherOngoingQuestsCount +
             (rewardedResources.includes('tickets') ? 1500000 : 0) +
             250000 * _.size(rewardedResources) +
-            250000 * _.size(completedQuests);
+            350000 * _.size(completedQuests);
 
         try {
             const tx = smartContract.methods
@@ -425,6 +425,9 @@ function Quests() {
 
                             <Text layerStyle="header1">Alchemy</Text>
                             {getQuestCards('alchemy')}
+
+                            <Text layerStyle="header1">Consecration</Text>
+                            {getQuestCards('consecration')}
 
                             <Text layerStyle="header1">Missions</Text>
                             {getQuestCards('final')}
