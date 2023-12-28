@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
     <BrowserRouter>
         <DappProvider
-            environment={EnvironmentsEnum.devnet}
+            environment={EnvironmentsEnum.mainnet}
             customNetworkConfig={{
                 name: 'customConfig',
                 apiTimeout,
