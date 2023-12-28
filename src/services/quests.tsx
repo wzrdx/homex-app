@@ -15,6 +15,23 @@ import Quest_13 from '../assets/quests/13.png';
 import Quest_14 from '../assets/quests/14.png';
 import Quest_15 from '../assets/quests/15.png';
 import Quest_16 from '../assets/quests/16.png';
+import Quest_17 from '../assets/quests/1.png';
+import Quest_18 from '../assets/quests/1.png';
+import Quest_19 from '../assets/quests/1.png';
+import Quest_20 from '../assets/quests/1.png';
+import Quest_21 from '../assets/quests/1.png';
+import Quest_22 from '../assets/quests/1.png';
+import Quest_23 from '../assets/quests/1.png';
+import Quest_24 from '../assets/quests/1.png';
+
+// import Quest_17 from '../assets/quests/17.png';
+// import Quest_18 from '../assets/quests/18.png';
+// import Quest_19 from '../assets/quests/19.png';
+// import Quest_20 from '../assets/quests/20.png';
+// import Quest_21 from '../assets/quests/21.png';
+// import Quest_22 from '../assets/quests/22.png';
+// import Quest_23 from '../assets/quests/23.png';
+// import Quest_24 from '../assets/quests/24.png';
 
 import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
@@ -29,15 +46,43 @@ import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { BigNumber } from 'bignumber.js';
 
+const QUEST_IMAGES = [
+    Quest_1,
+    Quest_2,
+    Quest_3,
+    Quest_4,
+    Quest_5,
+    Quest_6,
+    Quest_7,
+    Quest_8,
+    Quest_9,
+    Quest_10,
+    Quest_11,
+    Quest_12,
+    Quest_13,
+    Quest_14,
+    Quest_15,
+    Quest_16,
+    Quest_17,
+    Quest_18,
+    Quest_19,
+    Quest_20,
+    Quest_21,
+    Quest_22,
+    Quest_23,
+    Quest_24,
+];
+
 let ID = 0;
 
 const BASE_DURATION = 60; // minutes
-const BASE_COST = 15;
-const BASE_REWARD = 15;
+const BASE_COST = 16;
+const BASE_REWARD = 14;
 
 const XP_MULTIPLIER = 10;
 
-const ESSENCE_HANDICAP = 1;
+const ESSENCE_HANDICAP = 2;
+const MISSIONS_MULTIPLIER = 1.3;
 
 const getId = () => ++ID;
 
@@ -46,110 +91,164 @@ const LORE: {
     description: string;
 }[] = [
     {
-        title: 'Arctic Echoes',
+        title: 'Desert Bloom',
         description:
-            "Commence your journey in the frozen expanse of Menhir's arctic mountains, where echoes in the wind beckon toward ancient artifacts shrouded in mystery.",
+            "Explore the outskirts of Menhir to discover rare desert herbs. Collect them and deliver to the city's alchemists, who will use their properties to enhance the soil and promote agricultural growth.",
     },
     {
-        title: "Blizzard's Veil",
+        title: 'Guardian of the Sands',
         description:
-            'Confront a blizzard that veils elusive artifacts, their forms obscured by the swirling snow, dancing with the secrets of the Arctic heights.',
+            "Investigate reports of a mythical desert creature disrupting herb cultivation. Track and befriend the creature to guard the city's herb gardens, ensuring a bountiful harvest.",
     },
     {
-        title: "Frigid Artifacts' Embrace",
+        title: 'Celestial Harvest',
         description:
-            "Witness the frigid landscape taking on hues of ancient artifacts, guiding your quest beneath the icy surface of Menhir's enigmatic mountains.",
+            'Align with the celestial calendar by gathering herbs under specific planetary alignments. Craft a sacred potion that, when consumed during rituals, enhances the connection between the citizens and their gods.',
     },
     {
-        title: 'Frostbitten Trials',
+        title: 'Mirage Medicine',
         description:
-            "Discover an icebound realm, a testing ground where collecting artifacts becomes a cryptic passage through the secrets of Menhir's Arctic peaks, overcoming the biting winds.",
+            "Uncover the secrets of elusive mirage herbs said to have extraordinary healing properties. Create potent medicines to treat ailments and bolster the city's health.",
     },
     {
-        title: 'The Frozen Whispers',
+        title: 'Whispering Winds',
         description:
-            'Traverse the frozen wilderness, each step echoing the resonance of ancient artifacts hidden within the snowy expanse, waiting to be unveiled.',
+            "Navigate the desert's shifting dunes to find a rare herb affected by the winds. Extract its essence to create incense, used in rituals to commune with the desert spirits and seek their guidance for the city's prosperity.",
     },
     {
-        title: "Summit's Elemental Relics",
+        title: 'Gleaming Foundations',
         description:
-            "Ascend to the mountain's summit, where elemental relics emerge from the snow, intertwined with the destiny that unfolds in the enigmatic Arctic heights.",
+            "Explore the desert mines to gather rare gems. Use them to enchant the city's foundational stones, enhancing the durability and mystical properties of Menhir's buildings.",
     },
     {
-        title: "Veiled Storm's Mirage",
+        title: 'Luminous Architectures',
         description:
-            'Encounter a mirage within the storm, a fleeting vision that hints at the balance of ancient artifacts, challenging you to decipher their obscured purpose.',
+            "Harness the power of radiant gems to craft enchanting lanterns. Illuminate Menhir's streets with these mystical lights, creating a mesmerizing ambiance and attracting positive energy.",
     },
     {
-        title: "The Storm's Whisper",
+        title: 'Crystal Spires Rising',
         description:
-            'Uncover a whisper within the storm, where the elemental artifacts cast veiled shadows, challenging you to discern reality from the ethereal midst of the blizzard.',
+            "Venture into the depths of the desert to extract precious crystals. Forge towering spires adorned with these crystals, elevating the city's skyline and harnessing their magical energies for prosperity.",
     },
     {
-        title: 'Icy Labyrinth of Echoes',
+        title: 'Eternal Sands Sanctuary',
         description:
-            "Listen to echoes within an icy labyrinth, whispers guiding you toward elusive artifacts scattered amidst Menhir's Arctic peaks, even as the storm rages.",
+            'Seek out a hidden oasis adorned with rare gems. Collect these gems to construct a serene sanctuary in the heart of Menhir, a place where citizens can find solace and connection with the desert spirits.',
     },
     {
-        title: 'Frosty Dance of Elements',
+        title: 'Gemstone Guardians',
         description:
-            'Witness the frosty dance of the elements, where snow reveals hidden artifacts, entwined in the rhythm of an enigmatic choreography.',
+            "Craft animated guardians using enchanted gems to protect the city's buildings from harm. Empower these constructs to ward off any threats and maintain the integrity of Menhir's structures.",
     },
     {
-        title: 'Crossroads of Glacial Destiny',
+        title: 'Whispers of the Oracle',
         description:
-            'Reach a crossroads where glaciers converge, each path leading to artifacts that unlock cryptic destinies, with snowstorms veiling the way.',
+            "Tap into the ancient art of divination to unveil hidden truths. Visit the city oracle and assist in conducting a powerful divination ritual, revealing insights that guide the city's leaders in making wise decisions.",
     },
     {
-        title: 'The Frostbitten Compass',
+        title: 'Ethereal Infusion',
         description:
-            "Find a frostbitten compass pointing toward concealed artifacts, each revealing gateways to realms steeped in the mysteries of Menhir's Arctic heights.",
+            "Enter the mystic chambers within the city's heart and channel ethereal essences into the central energy conduit. Enhance the city's power grid, providing a steady and harmonious flow of energy to every corner of Menhir.",
     },
     {
-        title: 'Icy Citadel',
+        title: 'Serenity in the Sanctum',
         description:
-            'Discern a mirage concealing an icy citadel, guarded by ancient forces and holding secrets of the elemental artifacts amidst the Arctic storms.',
+            'Visit the Tranquil Sanctum, a sacred space dedicated to divination. Assist the priests in performing a ritual to bring peace and serenity to the city, dispelling negative energies and fostering a sense of unity among the citizens.',
     },
     {
-        title: 'Frostlings',
+        title: 'Dreamweaver',
         description:
-            'Encounter shrouded keepers of frost, ethereal guardians challenging your resolve to collect the ancient artifacts scattered amidst the Arctic tempests.',
+            "Collaborate with the Dreamweaver's Guild to enhance the citizens' dreams through divination. Conduct a ceremonial ritual in the pavilion, amplifying positive visions that inspire creativity and innovation among the populace.",
     },
     {
-        title: 'Whispers in the Ice',
+        title: 'Celestial Clockwork',
         description:
-            "Hear whispers of Arctic endings as you approach the heart of Menhir's frozen peaks, where snowstorms conceal secrets of cryptic conclusions.",
+            'Visit the observatory and align the Celestial Clock with the cosmic energies. By attuning the clock to celestial rhythms, ensure that the city benefits from auspicious alignments, bringing prosperity and good fortune to Menhir.',
     },
     {
-        title: 'Frost Legacy',
+        title: 'Mystic Mirage Brew',
         description:
-            "Finish your odyssey as the traveler who gathered the ancient artifacts, leaving behind a legacy intertwined with the mysteries of Menhir's Arctic heights, forever veiled in the icy winds.",
+            "Source elusive mirage herbs and blend them with crystal-clear spring water. Craft a mystic potion that grants temporary invisibility, aiding the city's covert operations and safeguarding its secrets.",
+    },
+    {
+        title: 'Sandstorm Sustenance',
+        description:
+            "Venture into the heart of a sandstorm to collect unique ingredients. Brew a specialized potion that shields the city from the adverse effects of sandstorms, ensuring the safety of Menhir's inhabitants.",
+    },
+    {
+        title: 'Celestial Harmony Elixir',
+        description:
+            'Harness the power of celestial herbs and rare gems to create a harmonizing elixir. Conduct an intricate brewing process, producing a potion that fosters unity and cooperation among the citizens, promoting a harmonious community.',
+    },
+    {
+        title: "Altar's Foundation",
+        description:
+            "Lay the groundwork for the Altar's construction by gathering sacred stones and rare minerals. Collaborate with skilled builders to ensure the structural integrity, while simultaneously performing an intricate consecration ritual. Channel the desert's energy into the foundation, imbuing the Altar with the blessings of the land.",
+    },
+    {
+        title: 'Aegis of Sanctity',
+        description:
+            'As the Altar takes shape, embark on a quest to procure enchanted gems and mystical artifacts. Craft protective wards and symbols to adorn the Altar, safeguarding it from malevolent forces. Consecrate each protective element with a series of rituals, invoking the desert spirits to instill a divine shield around the sacred structure.',
+    },
+    {
+        title: 'Celestial Convergence',
+        description:
+            "Continuously attune the Altar to the celestial energies by regularly visiting the Astral Observatory. Perform recurring rituals during specific celestial alignments to renew and enhance the Altar's connection with the cosmos. This ongoing commitment ensures that the Altar remains a focal point of divine energy, radiating blessings upon Menhir and its inhabitants.",
+    },
+    {
+        title: 'Rituals of the Eternal Sands',
+        description:
+            "Venture into the heart of the desert to gather the rarest herbs, mine precious gems, and attune yourself to the celestial energies. Collaborate with the city's alchemists, jewelcrafters, diviners, and master the ancient rituals in a grand ceremony at the city's core.",
+    },
+    {
+        title: 'Labyrinth of Mysteries',
+        description:
+            "A mystical labyrinth has emerged beneath Menhir, and only a true hero can navigate its twists and turns. Combine the powers of alchemy, jewelcrafting, divination, and herbalism to unlock the labyrinth's secrets. Brew potions to reveal hidden passages, use enchanted gems to illuminate the way, and consult oracles to decipher cryptic inscriptions.",
+    },
+    {
+        title: 'Desert Ascendance',
+        description:
+            "The city is on the brink of a transformation, and it falls upon you to ascend to the highest peak of the desert. Merge the wisdom of herbalism, the mystique of divination, the craftsmanship of jewelcrafting, and the alchemical prowess to reach the summit. Encounter ancient spirits and prove your worthiness by creating an elixir that merges the essence of the desert, celestial energies, and the city's resilience. The climactic finale awaits as you shape the destiny of Menhir through unparalleled trials and triumphs.",
     },
 ];
 
 const XP = [
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    XP_MULTIPLIER,
-    4 * XP_MULTIPLIER,
-    4 * XP_MULTIPLIER,
-    4 * XP_MULTIPLIER,
-    4 * XP_MULTIPLIER,
-    8 * XP_MULTIPLIER,
-    8 * XP_MULTIPLIER,
+    // Herbalism
+    XP_MULTIPLIER * 1.1,
+    XP_MULTIPLIER * 1.2,
+    XP_MULTIPLIER * 1.3,
+    XP_MULTIPLIER * 1.4,
+    XP_MULTIPLIER * 1.5,
+    // Jewelcrafting
+    XP_MULTIPLIER * 1.1,
+    XP_MULTIPLIER * 1.2,
+    XP_MULTIPLIER * 1.3,
+    XP_MULTIPLIER * 1.4,
+    XP_MULTIPLIER * 1.5,
+    // Divination
+    4 * XP_MULTIPLIER * 1.1,
+    4 * XP_MULTIPLIER * 1.2,
+    4 * XP_MULTIPLIER * 1.3,
+    4 * XP_MULTIPLIER * 1.4,
+    4 * XP_MULTIPLIER * 1.5,
+    // Alchemy
+    8 * XP_MULTIPLIER * 1.1,
+    8 * XP_MULTIPLIER * 1.2,
+    8 * XP_MULTIPLIER * 1.3,
+    // Consecration
+    25 * XP_MULTIPLIER * 1.1,
+    25 * XP_MULTIPLIER * 1.2,
+    25 * XP_MULTIPLIER * 1.3,
+    // Missions
     10 * XP_MULTIPLIER,
     20 * XP_MULTIPLIER,
+    30 * XP_MULTIPLIER,
 ];
 
 export const QUESTS: any[] = [
     // Herbalism
     {
-        id: getId(),
+        id: 0,
         type: 'herbalism',
         name: LORE[0].title,
         description: <Text layerStyle="questDescription">{LORE[0].description}</Text>,
@@ -170,10 +269,10 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_1,
+        image: QUEST_IMAGES[0],
     },
     {
-        id: getId(),
+        id: 1,
         type: 'herbalism',
         name: LORE[1].title,
         description: <Text layerStyle="questDescription">{LORE[1].description}</Text>,
@@ -194,10 +293,10 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_2,
+        image: QUEST_IMAGES[1],
     },
     {
-        id: getId(),
+        id: 2,
         type: 'herbalism',
         name: LORE[2].title,
         description: <Text layerStyle="questDescription">{LORE[2].description}</Text>,
@@ -218,10 +317,10 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_3,
+        image: QUEST_IMAGES[2],
     },
     {
-        id: getId(),
+        id: 3,
         type: 'herbalism',
         name: LORE[3].title,
         description: <Text layerStyle="questDescription">{LORE[3].description}</Text>,
@@ -242,15 +341,39 @@ export const QUESTS: any[] = [
             },
         ],
         layers: [],
-        image: Quest_4,
+        image: QUEST_IMAGES[3],
+    },
+    {
+        id: 4,
+        type: 'herbalism',
+        name: LORE[4].title,
+        description: <Text layerStyle="questDescription">{LORE[4].description}</Text>,
+        requirements: {
+            energy: 48 * BASE_COST,
+        },
+        duration: 16 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 96 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[4],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[4],
     },
 
     // Jewelcrafting
     {
-        id: getId(),
+        id: 5,
         type: 'jewelcrafting',
-        name: LORE[4].title,
-        description: <Text layerStyle="questDescription">{LORE[4].description}</Text>,
+        name: LORE[5].title,
+        description: <Text layerStyle="questDescription">{LORE[5].description}</Text>,
         requirements: {
             energy: 1 * BASE_COST,
         },
@@ -264,17 +387,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[4],
+                value: XP[5],
             },
         ],
         layers: [],
-        image: Quest_5,
+        image: QUEST_IMAGES[5],
     },
     {
-        id: getId(),
+        id: 6,
         type: 'jewelcrafting',
-        name: LORE[5].title,
-        description: <Text layerStyle="questDescription">{LORE[5].description}</Text>,
+        name: LORE[6].title,
+        description: <Text layerStyle="questDescription">{LORE[6].description}</Text>,
         requirements: {
             energy: 6 * BASE_COST,
         },
@@ -288,17 +411,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[5],
+                value: XP[6],
             },
         ],
         layers: [],
-        image: Quest_6,
+        image: QUEST_IMAGES[6],
     },
     {
-        id: getId(),
+        id: 7,
         type: 'jewelcrafting',
-        name: LORE[6].title,
-        description: <Text layerStyle="questDescription">{LORE[6].description}</Text>,
+        name: LORE[7].title,
+        description: <Text layerStyle="questDescription">{LORE[7].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
         },
@@ -312,17 +435,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[6],
+                value: XP[7],
             },
         ],
         layers: [],
-        image: Quest_7,
+        image: QUEST_IMAGES[7],
     },
     {
-        id: getId(),
+        id: 8,
         type: 'jewelcrafting',
-        name: LORE[7].title,
-        description: <Text layerStyle="questDescription">{LORE[7].description}</Text>,
+        name: LORE[8].title,
+        description: <Text layerStyle="questDescription">{LORE[8].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
         },
@@ -336,19 +459,43 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[7],
+                value: XP[8],
             },
         ],
         layers: [],
-        image: Quest_8,
+        image: QUEST_IMAGES[8],
+    },
+    {
+        id: 9,
+        type: 'jewelcrafting',
+        name: LORE[9].title,
+        description: <Text layerStyle="questDescription">{LORE[9].description}</Text>,
+        requirements: {
+            energy: 48 * BASE_COST,
+        },
+        duration: 16 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 48 * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[9],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[9],
     },
 
     // Divination
     {
-        id: getId(),
+        id: 10,
         type: 'divination',
-        name: LORE[8].title,
-        description: <Text layerStyle="questDescription">{LORE[8].description}</Text>,
+        name: LORE[10].title,
+        description: <Text layerStyle="questDescription">{LORE[10].description}</Text>,
         requirements: {
             energy: 4 * BASE_COST,
             herbs: 4 * BASE_COST,
@@ -364,17 +511,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[8],
+                value: XP[10],
             },
         ],
         layers: [],
-        image: Quest_9,
+        image: QUEST_IMAGES[10],
     },
     {
-        id: getId(),
+        id: 11,
         type: 'divination',
-        name: LORE[9].title,
-        description: <Text layerStyle="questDescription">{LORE[9].description}</Text>,
+        name: LORE[11].title,
+        description: <Text layerStyle="questDescription">{LORE[11].description}</Text>,
         requirements: {
             energy: 12 * BASE_COST,
             herbs: 12 * BASE_COST,
@@ -390,17 +537,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[9],
+                value: XP[11],
             },
         ],
         layers: [],
-        image: Quest_10,
+        image: QUEST_IMAGES[11],
     },
     {
-        id: getId(),
+        id: 12,
         type: 'divination',
-        name: LORE[10].title,
-        description: <Text layerStyle="questDescription">{LORE[10].description}</Text>,
+        name: LORE[12].title,
+        description: <Text layerStyle="questDescription">{LORE[12].description}</Text>,
         requirements: {
             energy: 24 * BASE_COST,
             herbs: 24 * BASE_COST,
@@ -416,17 +563,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[10],
+                value: XP[12],
             },
         ],
         layers: [],
-        image: Quest_11,
+        image: QUEST_IMAGES[12],
     },
     {
-        id: getId(),
+        id: 13,
         type: 'divination',
-        name: LORE[11].title,
-        description: <Text layerStyle="questDescription">{LORE[11].description}</Text>,
+        name: LORE[13].title,
+        description: <Text layerStyle="questDescription">{LORE[13].description}</Text>,
         requirements: {
             energy: 48 * BASE_COST,
             herbs: 48 * BASE_COST,
@@ -442,19 +589,45 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[11],
+                value: XP[13],
             },
         ],
         layers: [],
-        image: Quest_12,
+        image: QUEST_IMAGES[13],
+    },
+    {
+        id: 14,
+        type: 'divination',
+        name: LORE[14].title,
+        description: <Text layerStyle="questDescription">{LORE[14].description}</Text>,
+        requirements: {
+            energy: 96 * BASE_COST,
+            herbs: 96 * BASE_COST,
+            gems: 48 * BASE_COST,
+        },
+        duration: 16 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 24 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[14],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[14],
     },
 
     // Alchemy
     {
-        id: getId(),
+        id: 15,
         type: 'alchemy',
-        name: LORE[12].title,
-        description: <Text layerStyle="questDescription">{LORE[12].description}</Text>,
+        name: LORE[15].title,
+        description: <Text layerStyle="questDescription">{LORE[15].description}</Text>,
         requirements: {
             energy: 96 * BASE_COST,
         },
@@ -473,17 +646,17 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[12],
+                value: XP[15],
             },
         ],
         layers: [],
-        image: Quest_13,
+        image: QUEST_IMAGES[15],
     },
     {
-        id: getId(),
+        id: 16,
         type: 'alchemy',
-        name: LORE[13].title,
-        description: <Text layerStyle="questDescription">{LORE[13].description}</Text>,
+        name: LORE[16].title,
+        description: <Text layerStyle="questDescription">{LORE[16].description}</Text>,
         requirements: {
             energy: 3 * 96 * BASE_COST,
         },
@@ -507,25 +680,148 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[13],
+                value: XP[16],
             },
         ],
         layers: [],
-        image: Quest_14,
+        image: QUEST_IMAGES[16],
+    },
+    {
+        id: 17,
+        type: 'alchemy',
+        name: LORE[17].title,
+        description: <Text layerStyle="questDescription">{LORE[17].description}</Text>,
+        requirements: {
+            energy: 3 * 3 * 96 * BASE_COST,
+        },
+        duration: 12 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: 96 * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: 48 * BASE_REWARD,
+            },
+            {
+                resource: 'essence',
+                name: 'Nimbus Orb',
+                value: 24 * (BASE_REWARD - ESSENCE_HANDICAP),
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[17],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[17],
+    },
+
+    // Consecration
+    {
+        id: 18,
+        type: 'consecration',
+        name: LORE[18].title,
+        description: <Text layerStyle="questDescription">{LORE[18].description}</Text>,
+        requirements: {
+            energy: 2 * 6 * BASE_COST,
+        },
+        duration: 4 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: (12 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: (6 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[18],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[18],
+    },
+    {
+        id: 19,
+        type: 'consecration',
+        name: LORE[19].title,
+        description: <Text layerStyle="questDescription">{LORE[19].description}</Text>,
+        requirements: {
+            energy: 2 * 12 * BASE_COST,
+        },
+        duration: 8 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: (24 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: (12 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[19],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[19],
+    },
+    {
+        id: 20,
+        type: 'consecration',
+        name: LORE[20].title,
+        description: <Text layerStyle="questDescription">{LORE[20].description}</Text>,
+        requirements: {
+            energy: 2 * 24 * BASE_COST,
+        },
+        duration: 12 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'herbs',
+                name: 'Cereus',
+                value: (48 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'gems',
+                name: 'Magnesite',
+                value: (24 / 2) * BASE_REWARD,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[20],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[20],
     },
 
     // Missions
     {
-        id: getId(),
+        id: 21,
         type: 'final',
         isFinal: true,
-        name: LORE[14].title,
-        description: <Text layerStyle="questDescription">{LORE[14].description}</Text>,
+        name: LORE[21].title,
+        description: <Text layerStyle="questDescription">{LORE[21].description}</Text>,
         requirements: {
-            energy: Math.round(1.2 * 16 * BASE_COST),
-            herbs: Math.round(1.2 * 32 * BASE_COST),
-            gems: Math.round(1.2 * 16 * BASE_COST),
-            essence: Math.round(1.2 * 12 * BASE_COST),
+            energy: Math.round(MISSIONS_MULTIPLIER * 16 * BASE_COST),
+            herbs: Math.round(MISSIONS_MULTIPLIER * 32 * BASE_COST),
+            gems: Math.round(MISSIONS_MULTIPLIER * 16 * BASE_COST),
+            essence: Math.round(MISSIONS_MULTIPLIER * 12 * BASE_COST),
         },
         duration: 8 * BASE_DURATION,
         rewards: [
@@ -537,23 +833,23 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[14],
+                value: XP[21],
             },
         ],
         layers: [],
-        image: Quest_15,
+        image: QUEST_IMAGES[21],
     },
     {
-        id: getId(),
+        id: 22,
         type: 'final',
         isFinal: true,
-        name: LORE[15].title,
-        description: <Text layerStyle="questDescription">{LORE[15].description}</Text>,
+        name: LORE[22].title,
+        description: <Text layerStyle="questDescription">{LORE[22].description}</Text>,
         requirements: {
-            energy: Math.round(1.2 * 2 * 16 * BASE_COST),
-            herbs: Math.round(1.2 * 2 * 32 * BASE_COST),
-            gems: Math.round(1.2 * 2 * 16 * BASE_COST),
-            essence: Math.round(1.2 * 2 * 12 * BASE_COST),
+            energy: Math.round(MISSIONS_MULTIPLIER * 2 * 16 * BASE_COST),
+            herbs: Math.round(MISSIONS_MULTIPLIER * 2 * 32 * BASE_COST),
+            gems: Math.round(MISSIONS_MULTIPLIER * 2 * 16 * BASE_COST),
+            essence: Math.round(MISSIONS_MULTIPLIER * 2 * 12 * BASE_COST),
         },
         duration: 16 * BASE_DURATION,
         rewards: [
@@ -565,11 +861,39 @@ export const QUESTS: any[] = [
             {
                 resource: 'xp',
                 name: 'XP',
-                value: XP[15],
+                value: XP[22],
             },
         ],
         layers: [],
-        image: Quest_16,
+        image: QUEST_IMAGES[22],
+    },
+    {
+        id: 23,
+        type: 'final',
+        isFinal: true,
+        name: LORE[23].title,
+        description: <Text layerStyle="questDescription">{LORE[23].description}</Text>,
+        requirements: {
+            energy: Math.round(MISSIONS_MULTIPLIER * 3 * 16 * BASE_COST),
+            herbs: Math.round(MISSIONS_MULTIPLIER * 3 * 32 * BASE_COST),
+            gems: Math.round(MISSIONS_MULTIPLIER * 3 * 16 * BASE_COST),
+            essence: Math.round(MISSIONS_MULTIPLIER * 3 * 12 * BASE_COST),
+        },
+        duration: 24 * BASE_DURATION,
+        rewards: [
+            {
+                resource: 'tickets',
+                name: 'Tickets',
+                value: 3,
+            },
+            {
+                resource: 'xp',
+                name: 'XP',
+                value: XP[23],
+            },
+        ],
+        layers: [],
+        image: QUEST_IMAGES[23],
     },
 ];
 
