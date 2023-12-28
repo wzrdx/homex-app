@@ -840,7 +840,7 @@ export const RAFFLES: any[] = [
         prizes: [getEGLDPrize(0.5)],
         winners: 1,
     },
-    // Trial 16 - Starts with ID 107
+    // Trial 16 - Starts with ID 106
     {
         type: RewardType.NFT,
         id: getId(),
