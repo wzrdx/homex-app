@@ -888,8 +888,6 @@ export const QUESTS: any[] = [
     },
 ];
 
-console.log(QUESTS);
-
 export const getQuest = (id = 1): Quest => {
     return QUESTS.find((m) => m.id === id);
 };

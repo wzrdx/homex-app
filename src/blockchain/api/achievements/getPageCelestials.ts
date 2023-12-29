@@ -37,8 +37,6 @@ export const getPageCelestials = async (): Promise<{
             aetheris: value.aetheris.toNumber(),
         };
 
-        console.log(FUNCTION_NAME);
-
         return obj;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
