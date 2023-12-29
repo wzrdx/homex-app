@@ -127,7 +127,7 @@ function Log() {
                                     <MenuItem
                                         title={header.title}
                                         rarity={header.rarity}
-                                        isNew={differenceInDays(header.dateAdded, new Date()) > 7}
+                                        isNew={differenceInDays(new Date(), header.dateAdded) <= 7}
                                         isActive={index === currentPage}
                                         onClick={() => setCurrentPage(index)}
                                     />
@@ -201,15 +201,15 @@ const MenuItem = ({ title, rarity, isNew, isActive, onClick }) => {
 
 const PageMint = ({ pageIndex, page, goBack }) => {
     return (
-        <Stack height="100%">
-            <Flex py={1.5} justifyContent="flex-end" alignItems="flex-start">
+        <Stack height="100%" position="relative">
+            <Flex position="absolute" top={0} right={0} py={1.5} justifyContent="flex-end" alignItems="flex-start">
                 <Button colorScheme="orange" onClick={goBack}>
                     Achievements
                 </Button>
             </Flex>
 
             <Flex height="100%" justifyContent="center" alignItems="center">
-                <Stack spacing={8} pb="52px" justifyContent="center" maxW="600px">
+                <Stack spacing={8} justifyContent="center" maxW="600px">
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">

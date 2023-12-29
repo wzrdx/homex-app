@@ -82,7 +82,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
     {
         index: getIndex(),
         title: 'Budget Travelers',
-        dateAdded: new Date('2023-12-27'),
+        dateAdded: new Date('2023-12-29'),
         rarity: TravelersLogPageRarity.Common,
     },
 ];
@@ -311,38 +311,38 @@ export const AchievementsProvider = ({ children }) => {
         const badges = [
             {
                 title: 'Common Holder',
-                text: 'Stake at least one Common Traveler',
+                text: 'Have at least one Common Traveler staked',
                 assets: getBudgetTravelersCommonAssets(1),
             },
             {
                 title: 'Commons Patron',
-                text: 'Stake at least 2 Common Travelers',
+                text: 'Have at least 2 Common Travelers staked',
                 assets: getBudgetTravelersCommonAssets(2),
             },
             {
                 title: 'Commons Whale',
-                text: 'Stake at least 5 Common Travelers',
+                text: 'Have at least 3 Common Travelers staked',
                 assets: getBudgetTravelersCommonAssets(3),
             },
             {
                 title: 'Uncommon Holder',
-                text: 'Stake at least one Uncommon Traveler',
+                text: 'Have at least one Uncommon Traveler staked',
                 assets: getBudgetTravelersUncommonAssets(1),
             },
             {
                 title: 'Uncommons Patron',
-                text: 'Stake at least 2 Uncommon Travelers',
+                text: 'Have at least 2 Uncommon Travelers staked',
                 assets: getBudgetTravelersUncommonAssets(2),
             },
             {
                 title: 'Uncommons Whale',
-                text: 'Stake at least 5 Uncommon Travelers',
+                text: 'Have at least 3 Uncommon Travelers staked',
                 assets: getBudgetTravelersUncommonAssets(3),
             },
         ];
 
         const getBadges = async (rarityCount: _.Dictionary<number>): Promise<TravelersLogBadge[]> => {
-            const limits = [1, 2, 5];
+            const limits = [1, 2, 3];
 
             return _.map(badges, (badge, index) => {
                 const rarityClass = index >= 3 ? '2' : '1';

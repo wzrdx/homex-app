@@ -1,24 +1,23 @@
-import { Box, Button, Center, Flex, Image, Link, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Button, Center, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { LiaScrollSolid } from 'react-icons/lia';
-import { TbListCheck } from 'react-icons/tb';
 import { WiTime4 } from 'react-icons/wi';
 import { LuKeyRound } from 'react-icons/lu';
 import { BiBadge } from 'react-icons/bi';
 import { IconWithShadow } from '../../shared/IconWithShadow';
 import { Highlight } from '../../shared/Highlight';
-import { getAOMLogo, getEldersLogo, getSmallLogo, getTravelersLogo } from '../../services/assets';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 export const LogTutorial = ({ goBack }) => {
     return (
-        <Stack height="100%">
-            <Flex py={1.5} alignItems="flex-start">
+        <Stack height="100%" position="relative">
+            <Flex position="absolute" top={0} left={0} py={1.5} alignItems="flex-start">
                 <Button colorScheme="orange" onClick={goBack}>
                     Go back
                 </Button>
             </Flex>
 
             <Flex height="100%" justifyContent="center" alignItems="center">
-                <Stack spacing={8} pb="52px" justifyContent="center" maxW="600px">
+                <Stack spacing={8} justifyContent="center" maxW="600px">
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Center width="54px" minW="54px" height="50px" pb="2px">
                             <IconWithShadow shadowColor="#222">
@@ -81,27 +80,27 @@ export const LogTutorial = ({ goBack }) => {
                         </Text>
                     </Stack>
 
-                    <Stack spacing={6} alignItems="center">
-                        <Text fontWeight={500}>The Traveler's Log references the Home X collections</Text>
+                    <Stack spacing={2.5} alignItems="center">
+                        <Text>The Traveler's Log references the Home X collections:</Text>
 
-                        <Stack spacing={12} direction="row" alignItems="center">
+                        <Stack spacing={1}>
                             <Link href="https://xoxno.com/collection/AOM-f37bc5" isExternal _hover={{ opacity: 0.75 }}>
-                                <Stack spacing={2} alignItems="center">
-                                    <Image src={getAOMLogo()} width="64px" />
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    <ArrowForwardIcon fontSize="18px" />
                                     <Text fontWeight={500}>Art of Menhir</Text>
                                 </Stack>
                             </Link>
 
                             <Link href="https://xoxno.com/collection/TRAVELER-51bdef" isExternal _hover={{ opacity: 0.75 }}>
-                                <Stack spacing={2} alignItems="center">
-                                    <Image src={getTravelersLogo()} width="64px" />
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    <ArrowForwardIcon fontSize="18px" />
                                     <Text fontWeight={500}>The First Travelers</Text>
                                 </Stack>
                             </Link>
 
                             <Link href="https://xoxno.com/collection/HOMEXELDER-d43957" isExternal _hover={{ opacity: 0.75 }}>
-                                <Stack spacing={2} alignItems="center">
-                                    <Image src={getEldersLogo()} width="64px" />
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    <ArrowForwardIcon fontSize="18px" />
                                     <Text fontWeight={500}>The Elders</Text>
                                 </Stack>
                             </Link>

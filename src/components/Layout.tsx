@@ -70,9 +70,9 @@ function Layout() {
 
     // Updates
     useEffect(() => {
-        if (isLoaded && !window.localStorage['update_3']) {
+        if (isLoaded && !window.localStorage['update_4']) {
             setTimeout(() => onModalOpen(), 1500);
-            window.localStorage['update_3'] = true;
+            window.localStorage['update_4'] = true;
         }
     }, [isLoaded]);
 
