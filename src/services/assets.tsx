@@ -25,7 +25,7 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
-import ArtDrop from '../assets/images/Emberheart.jpg';
+import ArtDrop from '../assets/images/Aetheris.jpg';
 
 import AuroraLocked from '../assets/log/celestials_minters/aurora_locked.png';
 import AuroraCustodian from '../assets/log/celestials_minters/aurora_custodian.png';
