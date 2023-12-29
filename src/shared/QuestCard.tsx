@@ -4,7 +4,7 @@ import { getQuestImage } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { differenceInSeconds } from 'date-fns';
-import { first, map, size } from 'lodash';
+import { filter, first, map, size } from 'lodash';
 import { Quest, QuestReward } from '../types';
 import { TimeIcon } from '@chakra-ui/icons';
 
@@ -51,19 +51,27 @@ export const QuestCard: FunctionComponent<
 
     const isQuestOngoing = (): boolean => !!timestamp && differenceInSeconds(timestamp, new Date()) > 0;
 
+    const getFilteredRewards = (rewards: QuestReward[]): QuestReward[] =>
+        filter(rewards, (questReward: QuestReward) => questReward.resource !== 'xp');
+
     const getRewardsBlock = (): JSX.Element => {
         if (isQuestOngoing()) {
             return <TimeIcon boxSize="28px" color="almostWhite" />;
         }
 
-        if (size(quest.rewards) == 1) {
+        if (size(getFilteredRewards(quest.rewards)) == 1) {
             return (
-                <Image width="28px" src={RESOURCE_ELEMENTS[(first<QuestReward>(quest.rewards) as QuestReward).resource].icon} />
+                <Image
+                    width="28px"
+                    src={
+                        RESOURCE_ELEMENTS[(first<QuestReward>(getFilteredRewards(quest.rewards)) as QuestReward).resource].icon
+                    }
+                />
             );
-        } else if (size(quest.rewards) == 2) {
+        } else if (size(getFilteredRewards(quest.rewards)) == 2) {
             return (
                 <Flex flexDir="column" justifyContent="space-between" height="100%" pr="4px">
-                    {map(quest.rewards, (reward, index) => (
+                    {map(getFilteredRewards(quest.rewards), (reward, index) => (
                         <Image key={index} width="24px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
                     ))}
                 </Flex>
@@ -71,7 +79,7 @@ export const QuestCard: FunctionComponent<
         } else {
             return (
                 <Flex flexDir="column" justifyContent="space-between" height="100%" pr="12px">
-                    {map(quest.rewards, (reward, index) => (
+                    {map(getFilteredRewards(quest.rewards), (reward, index) => (
                         <Image key={index} width="16px" src={RESOURCE_ELEMENTS[reward.resource].icon} />
                     ))}
                 </Flex>

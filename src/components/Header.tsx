@@ -218,15 +218,13 @@ function Header() {
                                     fontSize="15px"
                                     lineHeight="17px"
                                     letterSpacing="0.25px"
+                                    color="#f97316"
                                     fontWeight={500}
                                 >
-                                    Trial{' '}
-                                    <Text as="span" color="#f97316">
-                                        {trial?.count}
-                                    </Text>
+                                    Menhir
                                 </Text>
                                 <Text fontSize="14px" lineHeight="15px">
-                                    {format(trial?.timestamp as Date, 'dd MMM, HH:mm')}
+                                    {format(new Date('2024-02-01'), 'dd MMM, HH:mm')}
                                 </Text>
                             </Stack>
                         )}
