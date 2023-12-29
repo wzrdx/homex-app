@@ -256,7 +256,7 @@ export const AchievementsProvider = ({ children }) => {
         ];
 
         const getBadges = async (balance: number[]): Promise<TravelersLogBadge[]> => {
-            const limits = [10, 30, 100];
+            const limits = [1, 2, 5];
 
             return _.map(badges, (badge, index) => ({
                 ...badge,
@@ -291,7 +291,7 @@ export const AchievementsProvider = ({ children }) => {
         ];
 
         const getBadges = async (balance: number[]): Promise<TravelersLogBadge[]> => {
-            const limits = [1, 2, 5];
+            const limits = [10, 30, 100];
 
             return _.map(badges, (badge, index) => ({
                 ...badge,
