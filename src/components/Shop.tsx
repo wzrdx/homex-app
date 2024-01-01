@@ -93,112 +93,112 @@ function Shop() {
             {!timestamp ? (
                 <Spinner />
             ) : (
-                <Flex alignItems="flex-start">
-                    <Alert status="info" width="auto">
-                        <AlertIcon />
-                        There is nothing to be bought at the moment
-                    </Alert>
-                </Flex>
+                // <Flex alignItems="flex-start">
+                //     <Alert status="info" width="auto">
+                //         <AlertIcon />
+                //         There is nothing to be bought at the moment
+                //     </Alert>
+                // </Flex>
 
-                // <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
-                //     <Flex flexDir="column" alignItems="center" justifyContent="center">
-                //         <Text layerStyle="header1Alt" color="brightBlue">
-                //             Aetheris Art Drop
-                //         </Text>
+                <Stack spacing={{ md: 2, lg: 4 }} alignItems="center" userSelect="none">
+                    <Flex flexDir="column" alignItems="center" justifyContent="center">
+                        <Text layerStyle="header1Alt" color="brightBlue">
+                            Aetheris Art Drop
+                        </Text>
 
-                //         {isAfter(new Date(), timestamp) ? (
-                //             <Text layerStyle="header2">MINT ENDED</Text>
-                //         ) : (
-                //             <LargeTimer timestamp={timestamp} callback={() => init()} />
-                //         )}
-                //     </Flex>
+                        {isAfter(new Date(), timestamp) ? (
+                            <Text layerStyle="header2">MINT ENDED</Text>
+                        ) : (
+                            <LargeTimer timestamp={timestamp} callback={() => init()} />
+                        )}
+                    </Flex>
 
-                //     <Stack direction="row" spacing={4} alignItems="center">
-                //         <Image width={{ md: '250px', lg: '306px' }} src={getArtDrop()} />
+                    <Stack direction="row" spacing={4} alignItems="center">
+                        <Image width={{ md: '250px', lg: '306px' }} src={getArtDrop()} />
 
-                //         <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
-                //             In the hidden depths below Menhir's surface, a mysterious legend unfolded—Aetheris, the enigmatic
-                //             Celestial representing the intricate underground mazes. Her scarlet robes billowed like the whispers
-                //             of unseen winds as she navigated the complex mazes, leaving behind an aura of mystique. Tales spoke
-                //             of Aetheris' ability to commune with the patterns of the underground passages, sensing disturbances
-                //             and preserving the equilibrium of Menhir's hidden world. As the most powerful Celestial, Aetheris
-                //             remained a figure of awe and reverence. The travelers, in hushed tones, spoke of her interventions
-                //             in times of peril, when the underground mazes seemed to shift and reshape. Aetheris, with her robes
-                //             ablaze, would emerge to channel energies that brought order to the labyrinthine chaos.
-                //         </Text>
-                //     </Stack>
+                        <Text width={{ md: '398px', lg: '342px' }} lineHeight={{ md: '21px', lg: '22px' }} textAlign="justify">
+                            In the hidden depths below Menhir's surface, a mysterious legend unfolded—Aetheris, the enigmatic
+                            Celestial representing the intricate underground mazes. Her scarlet robes billowed like the whispers
+                            of unseen winds as she navigated the complex mazes, leaving behind an aura of mystique. Tales spoke
+                            of Aetheris' ability to commune with the patterns of the underground passages, sensing disturbances
+                            and preserving the equilibrium of Menhir's hidden world. As the most powerful Celestial, Aetheris
+                            remained a figure of awe and reverence. The travelers, in hushed tones, spoke of her interventions
+                            in times of peril, when the underground mazes seemed to shift and reshape. Aetheris, with her robes
+                            ablaze, would emerge to channel energies that brought order to the labyrinthine chaos.
+                        </Text>
+                    </Stack>
 
-                //     <Flex justifyContent="center" alignItems="center" userSelect="none">
-                //         <Text>Amount Due:</Text>
-                //         <Text mx={2} fontWeight={500} color="ticketGold">
-                //             {amount * PRICE}
-                //         </Text>
-                //         <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
+                    <Flex justifyContent="center" alignItems="center" userSelect="none">
+                        <Text>Amount Due:</Text>
+                        <Text mx={2} fontWeight={500} color="ticketGold">
+                            {amount * PRICE}
+                        </Text>
+                        <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
 
-                //         <Box mx={4}>
-                //             <Separator type="vertical" width="1px" height="36px" />
-                //         </Box>
+                        <Box mx={4}>
+                            <Separator type="vertical" width="1px" height="36px" />
+                        </Box>
 
-                //         <Text fontWeight={800} mr={2}>
-                //             XP
-                //         </Text>
+                        <Text fontWeight={800} mr={2}>
+                            XP
+                        </Text>
 
-                //         <Text as="span" mr={0.5}>
-                //             +
-                //         </Text>
-                //         <Text as="span" fontWeight={600}>
-                //             {amount * XP}
-                //         </Text>
-                //     </Flex>
+                        <Text as="span" mr={0.5}>
+                            +
+                        </Text>
+                        <Text as="span" fontWeight={600}>
+                            {amount * XP}
+                        </Text>
+                    </Flex>
 
-                //     <Box display="flex" alignItems="center">
-                //         <Box
-                //             px="1"
-                //             cursor="pointer"
-                //             transition="all 0.1s ease-in"
-                //             _hover={{ color: '#b8b8b8' }}
-                //             onClick={() => {
-                //                 if (amount > 1) {
-                //                     setAmount(amount - 1);
-                //                 }
-                //             }}
-                //         >
-                //             <AiOutlineMinus fontSize="19px" />
-                //         </Box>
+                    <Box display="flex" alignItems="center">
+                        <Box
+                            px="1"
+                            cursor="pointer"
+                            transition="all 0.1s ease-in"
+                            _hover={{ color: '#b8b8b8' }}
+                            onClick={() => {
+                                if (amount > 1) {
+                                    setAmount(amount - 1);
+                                }
+                            }}
+                        >
+                            <AiOutlineMinus fontSize="19px" />
+                        </Box>
 
-                //         <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
-                //             <Text textAlign="center" fontSize="18px" fontWeight={500} userSelect="none">
-                //                 {amount}
-                //             </Text>
-                //         </Box>
+                        <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
+                            <Text textAlign="center" fontSize="18px" fontWeight={500} userSelect="none">
+                                {amount}
+                            </Text>
+                        </Box>
 
-                //         <Box
-                //             px="1"
-                //             cursor="pointer"
-                //             transition="all 0.1s ease-in"
-                //             _hover={{ color: '#b8b8b8' }}
-                //             onClick={() => {
-                //                 if (amount < resources.tickets / PRICE) {
-                //                     setAmount(amount + 1);
-                //                 }
-                //             }}
-                //         >
-                //             <AiOutlinePlus fontSize="19px" />
-                //         </Box>
-                //     </Box>
+                        <Box
+                            px="1"
+                            cursor="pointer"
+                            transition="all 0.1s ease-in"
+                            _hover={{ color: '#b8b8b8' }}
+                            onClick={() => {
+                                if (amount < resources.tickets / PRICE) {
+                                    setAmount(amount + 1);
+                                }
+                            }}
+                        >
+                            <AiOutlinePlus fontSize="19px" />
+                        </Box>
+                    </Box>
 
-                //     <Box>
-                //         <ActionButton
-                //             disabled={!resources.tickets || isAfter(new Date(), timestamp)}
-                //             isLoading={isButtonLoading || isTxPending(TransactionType.MintArtDrop)}
-                //             colorScheme="default"
-                //             onClick={mint}
-                //             customStyle={{ width: '156px' }}
-                //         >
-                //             <Text userSelect="none">Mint</Text>
-                //         </ActionButton>
-                //     </Box>
-                // </Stack>
+                    <Box>
+                        <ActionButton
+                            disabled={!resources.tickets || isAfter(new Date(), timestamp)}
+                            isLoading={isButtonLoading || isTxPending(TransactionType.MintArtDrop)}
+                            colorScheme="default"
+                            onClick={mint}
+                            customStyle={{ width: '156px' }}
+                        >
+                            <Text userSelect="none">Mint</Text>
+                        </ActionButton>
+                    </Box>
+                </Stack>
             )}
         </Flex>
     );
