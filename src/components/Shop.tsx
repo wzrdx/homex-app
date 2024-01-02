@@ -96,7 +96,7 @@ function Shop() {
                 <Stack spacing={6} alignItems="center" userSelect="none">
                     <Flex flexDir="column" alignItems="center" justifyContent="center">
                         <Text layerStyle="header1Alt" color="brightBlue">
-                            Emberheart Art Drop
+                            Aetheris Art Drop
                         </Text>
 
                         {isAfter(new Date(), timestamp) ? (
@@ -109,14 +109,14 @@ function Shop() {
                     <Stack spacing={4} alignItems="center">
                         <Image src={getArtDrop()} />
                         <Text textAlign="justify">
-                            In the heart of Menhir's shimmering mines, where precious gems sparkled like distant stars, there
-                            arose another legend—the formidable Emberheart. With eyes ablaze like molten rubies, he donned
-                            desert robes that absorbed the essence of the stones. Clad in robes resonating with an otherworldly
-                            energy, Emberheart stood as a beacon of strength. His legendary gaze discerned the true nature of
-                            gems, revealing hidden potential, and his influence extended beyond the mines, protecting the
-                            delicate balance of Menhir's subterranean world. The legend of Emberheart sparkled, a testament to
-                            the enduring magic within the heart of the planet. In hushed whispers, travelers spoke of the times
-                            Emberheart's presence emerged from the depths, casting a glow that brought hope to the arid expanse.
+                            In the hidden depths below Menhir's surface, a mysterious legend unfolded—Aetheris, the enigmatic
+                            Celestial representing the intricate underground mazes. Her scarlet robes billowed like the whispers
+                            of unseen winds as she navigated the complex mazes, leaving behind an aura of mystique. Tales spoke
+                            of Aetheris' ability to commune with the patterns of the underground passages, sensing disturbances
+                            and preserving the equilibrium of Menhir's hidden world. As the most powerful Celestial, Aetheris
+                            remained a figure of awe and reverence. The travelers, in hushed tones, spoke of her interventions
+                            in times of peril, when the underground mazes seemed to shift and reshape. Aetheris, with her robes
+                            ablaze, would emerge to channel energies that brought order to the labyrinthine chaos.
                         </Text>
                     </Stack>
 

@@ -3,7 +3,7 @@ import Unlock from '../assets/backgrounds/2.jpg';
 import Ticket from '../assets/ticket_small.png';
 import TicketSFT from '../assets/ticket_sft.jpg';
 import Logo from '../assets/logo_small.png';
-import ArtDrop from '../assets/images/Emberheart.jpg';
+import ArtDrop from '../assets/images/Aetheris.jpg';
 
 export const getArtDrop = () => ArtDrop;
 
