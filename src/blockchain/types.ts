@@ -20,10 +20,6 @@ export interface Participant {
     username?: string;
 }
 
-export interface BattleParticipant extends Participant {
-    quests: number;
-}
-
 export interface NFT {
     name: string;
     nonce: number;

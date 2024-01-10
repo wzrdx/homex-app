@@ -44,7 +44,7 @@ function App() {
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
 
-    const { getRaffles, getBattles, getTicketsAmount } = useRewardsContext() as RewardsContextType;
+    const { getRaffles, getTicketsAmount } = useRewardsContext() as RewardsContextType;
 
     // Init
     useEffect(() => {
@@ -154,10 +154,6 @@ function App() {
                         displayToast('Tickets sent', 'Successfully joined the raffle', 'green.500');
                         break;
 
-                    case TransactionType.JoinBattle:
-                        displayToast('Tickets sent', 'Successfully joined the battle', 'green.500');
-                        break;
-
                     case TransactionType.ClaimReward:
                         displayResourcesToast(
                             'Successfully claimed reward',
@@ -231,11 +227,6 @@ function App() {
             case TxResolution.UpdateTicketsAndRaffles:
                 getTickets();
                 getRaffles();
-                break;
-
-            case TxResolution.UpdateTicketsAndBattles:
-                getTickets();
-                getBattles();
                 break;
 
             case TxResolution.UpdateQuestsAndResources:

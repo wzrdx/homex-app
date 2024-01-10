@@ -78,12 +78,7 @@ function Raffles() {
                             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
                                 {_.map(displayedCompetitions, (raffle, index) => (
                                     <Box key={index}>
-                                        <RaffleCard
-                                            id={raffle.id}
-                                            timestamp={raffle.timestamp}
-                                            tickets={raffle.tickets}
-                                            _raffles={raffles}
-                                        />
+                                        <RaffleCard id={raffle.id} timestamp={raffle.timestamp} tickets={raffle.tickets} />
                                     </Box>
                                 ))}
                             </Box>
