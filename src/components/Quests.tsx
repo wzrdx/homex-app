@@ -144,11 +144,11 @@ function Quests() {
         }));
 
         const gasLimit: number =
-            22000000 +
-            400000 * otherOngoingQuestsCount +
+            25000000 +
+            500000 * otherOngoingQuestsCount +
             (rewardedResources.includes('tickets') ? 1500000 : 0) +
             250000 * _.size(rewardedResources) +
-            350000 * _.size(completedQuests);
+            500000 * _.size(completedQuests);
 
         try {
             const tx = smartContract.methods
