@@ -66,7 +66,7 @@ const QUEST_IMAGES = [
 
 let ID = 0;
 
-const BASE_DURATION = 1; // TODO: (duration in minutes)
+const BASE_DURATION = 60; // (duration in minutes)
 const BASE_COST = 16;
 const BASE_REWARD = 14;
 
