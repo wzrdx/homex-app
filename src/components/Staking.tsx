@@ -8,8 +8,6 @@ import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
 import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
 import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
-import { TransactionsContextType, useTransactionsContext } from '../services/transactions';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 
 type StakingContext = {
     height: number;

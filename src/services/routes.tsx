@@ -63,7 +63,7 @@ export const routes = [
                 isTabRoute: true,
             },
         ],
-        defaultChildRoute: routeNames.stake,
+        defaultChildRoute: routeNames.unstake,
     },
     // Quests
     {

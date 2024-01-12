@@ -19,7 +19,6 @@ import { routeNames, routes as serviceRoutes } from '../services/routes';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSoundsContext, SoundsContextType } from '../services/sounds';
 import { findIndex } from 'lodash';
-import { BsExclamation } from 'react-icons/bs';
 import { TimeIcon } from '@chakra-ui/icons';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbMusic, TbMusicOff, TbArrowBigUpLinesFilled } from 'react-icons/tb';
@@ -29,7 +28,6 @@ import Gameplay from './Gameplay';
 import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
-import { getNumberCall } from '../blockchain/generics/getNumberCall';
 import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date-fns';
 import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
@@ -56,7 +54,6 @@ function Header() {
     const [offset, setOffset] = useState<number>(0);
 
     const [trial, setTrial] = useState<{
-        count: number;
         timestamp: Date;
     }>();
 
@@ -80,11 +77,9 @@ function Header() {
         }
 
         // Trial
-        const count = await getNumberCall('getCurrentTrial');
         const timestamp = await getTrialTimestamp();
 
         setTrial({
-            count,
             timestamp,
         });
 

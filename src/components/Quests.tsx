@@ -33,8 +33,7 @@ import { Timer } from '../shared/Timer';
 import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import Reward from '../shared/Reward';
-import { getFrame, getFrameGlow, getSpinningTicket, getVisionImage } from '../services/assets';
-import { VideoLayer } from '../shared/VideoLayer';
+import { getFrame, getSpinningTicket, getVisionImage } from '../services/assets';
 import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
@@ -190,7 +189,7 @@ function Quests() {
 
         const rewardsCount: number = currentQuest.rewards.length;
         const isMission: boolean = currentQuest.type === 'final';
-        const gasLimit: number = 10000000 + rewardsCount * 950000 + (isMission ? 2500000 : 0);
+        const gasLimit: number = 12500000 + rewardsCount * 950000 + (isMission ? 2500000 : 0);
 
         try {
             const tx = smartContract.methods
@@ -262,11 +261,11 @@ function Quests() {
         }));
 
         const gasLimit: number =
-            22000000 +
-            400000 * otherOngoingQuestsCount +
+            25000000 +
+            500000 * otherOngoingQuestsCount +
             (rewardedResources.includes('tickets') ? 1500000 : 0) +
             250000 * _.size(rewardedResources) +
-            350000 * _.size(completedQuests);
+            500000 * _.size(completedQuests);
 
         try {
             const tx = smartContract.methods
