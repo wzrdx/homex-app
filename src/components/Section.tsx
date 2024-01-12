@@ -22,7 +22,7 @@ function Section() {
     const [route, setRoute] = useState<any>();
     const ref = useRef(null);
 
-    const { getRaffles, getBattles } = useRewardsContext() as RewardsContextType;
+    const { getRaffles } = useRewardsContext() as RewardsContextType;
 
     // Init
     useEffect(() => {
@@ -32,10 +32,6 @@ function Section() {
         // Custom calls
         if (currentRoute === routeNames.raffles) {
             getRaffles();
-        }
-
-        if (currentRoute === routeNames.battles) {
-            getBattles();
         }
     }, [location.pathname.split('/')[1]]);
 

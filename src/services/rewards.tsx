@@ -867,30 +867,14 @@ export const RAFFLES: any[] = [
     },
 ];
 
-export const BATTLES: any[] = [
-    {
-        id: getId(),
-        amount: 60,
-        winners: 30,
-    },
-    {
-        id: getId(),
-        amount: 54,
-        winners: 15,
-    },
-];
-
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 
 const RAFFLES_FUNCTION_NAME = 'getRaffles';
-const BATTLES_FUNCTION_NAME = 'getBattles';
 
 export interface RewardsContextType {
     raffles: Competition[] | undefined;
     getRaffles: () => Promise<any>;
-    battles: Competition[] | undefined;
-    getBattles: () => Promise<any>;
     ticketsAmount: number | undefined;
     getTicketsAmount: () => Promise<void>;
 }
@@ -907,15 +891,10 @@ export const useRewardsContext = () => useContext(RewardsContext);
 
 export const RewardsProvider = ({ children }) => {
     const [raffles, setRaffles] = useState<Competition[]>();
-    const [battles, setBattles] = useState<Competition[]>();
     const [ticketsAmount, setTicketsAmount] = useState<number>();
 
     const getRaffles = async () => {
         setRaffles(await getCompetition(RAFFLES_FUNCTION_NAME));
-    };
-
-    const getBattles = async () => {
-        setBattles(await getCompetition(BATTLES_FUNCTION_NAME));
     };
 
     const getCompetition = async (functionName: string): Promise<Competition[]> => {
@@ -950,7 +929,7 @@ export const RewardsProvider = ({ children }) => {
     };
 
     return (
-        <RewardsContext.Provider value={{ raffles, getRaffles, battles, getBattles, ticketsAmount, getTicketsAmount }}>
+        <RewardsContext.Provider value={{ raffles, getRaffles, ticketsAmount, getTicketsAmount }}>
             {children}
         </RewardsContext.Provider>
     );

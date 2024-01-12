@@ -4,12 +4,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useSection } from '../components/Section';
-import ParticipantsList from './ParticipantsList';
 import PrizesList from './PrizesList';
 
 export enum CompetitionType {
     Raffle = 'Raffle',
-    Battle = 'Battle',
 }
 
 function useQuery() {
@@ -25,7 +23,6 @@ function CompetitionDetails() {
     let query = useQuery();
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [isCompleted, setCompleted] = useState<boolean>(false);
     const [type, setType] = useState<CompetitionType>();
 
     // Init
@@ -34,10 +31,7 @@ function CompetitionDetails() {
     }, []);
 
     const init = async () => {
-        console.log(location.pathname.includes('raffles') ? CompetitionType.Raffle : CompetitionType.Battle);
-
-        setType(location.pathname.includes('raffles') ? CompetitionType.Raffle : CompetitionType.Battle);
-        setCompleted(query.get('completed') === 'true');
+        setType(CompetitionType.Raffle);
         setIsLoading(false);
     };
 
@@ -60,13 +54,7 @@ function CompetitionDetails() {
                 </Flex>
             </Flex>
 
-            {isLoading ? (
-                <Spinner mt={6} />
-            ) : isCompleted ? (
-                <PrizesList id={Number.parseInt(id as string)} type={type as CompetitionType} />
-            ) : (
-                <ParticipantsList id={id} />
-            )}
+            {isLoading ? <Spinner mt={6} /> : <PrizesList id={Number.parseInt(id as string)} type={type as CompetitionType} />}
         </Flex>
     );
 }

@@ -39,7 +39,6 @@ import { ActionButton } from './ActionButton/ActionButton';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
 import { getRaffleHashes } from '../blockchain/api/getRaffleHashes';
 import { CompetitionType } from './CompetitionDetails';
-import { getBattleHashes } from '../blockchain/api/getBattleHashes';
 
 const COLUMNS = [
     {
@@ -75,7 +74,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
 
     const [winners, setWinners] = useState<Array<Winner>>();
 
-    const { raffles, battles } = useRewardsContext() as RewardsContextType;
+    const { raffles } = useRewardsContext() as RewardsContextType;
 
     const [competition, setCompetition] = useState<{
         id: number;
@@ -92,11 +91,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
         if (type === CompetitionType.Raffle && !_.isEmpty(raffles)) {
             setCompetition(_.find(raffles, (raffle) => raffle.id == id));
         }
-
-        if (type === CompetitionType.Battle && !_.isEmpty(battles)) {
-            setCompetition(_.find(battles, (battle) => battle.id == id));
-        }
-    }, [raffles, battles]);
+    }, [raffles]);
 
     useEffect(() => {
         if (competition) {
@@ -105,9 +100,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
     }, [competition]);
 
     const init = async () => {
-        const hashesQuery = type === CompetitionType.Raffle ? getRaffleHashes : getBattleHashes;
-
-        const hashes = await hashesQuery(id);
+        const hashes = await getRaffleHashes(id);
         setHashes(hashes);
 
         const result = await Promise.all(_.map(hashes, (hash) => getTransaction(hash)));

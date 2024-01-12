@@ -19,9 +19,6 @@ import Wallet from '../shared/Wallet';
 import { getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
 import { useStoreContext, StoreContextType } from '../services/store';
-import { StakingInfo } from '../blockchain/hooks/useGetStakingInfo';
-import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
-import { isWalletStakedQuery } from '../blockchain/api/isWalletStaked';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
@@ -56,18 +53,14 @@ const Unlock = () => {
         if (!address) {
             logout(`/unlock`);
         } else {
-            // Staking Info is required by child components
-            await getStakingInfo();
+            // stakingInfo is required by child components
+            const stakingInfo = await getStakingInfo();
 
-            const isStaked: boolean = await isWalletStakedQuery();
-
-            if (isStaked || TEAM.includes(address)) {
+            if ((stakingInfo && stakingInfo.isStaked) || TEAM.includes(address)) {
                 console.warn('Bypassing authentication');
             } else {
                 const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
                 const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
-
-                console.warn('Holder', travelerTokens + elderTokens);
 
                 if (travelerTokens + elderTokens === 0) {
                     setError(AuthenticationError.NotHolder);
@@ -80,7 +73,7 @@ const Unlock = () => {
         }
     };
 
-    const getText = (text: string, displayTimer = false) => (
+    const getText = (text: string) => (
         <Flex flexDir="column" alignItems="center">
             <Text fontSize="17px" fontWeight={500} color="white" textAlign="center">
                 {text}
