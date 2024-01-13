@@ -11,7 +11,7 @@ export const LogTutorial = ({ goBack }) => {
     return (
         <Stack height="100%" position="relative">
             <Flex position="absolute" top={0} left={0} py={1.5} alignItems="flex-start">
-                <Button colorScheme="orange" onClick={goBack}>
+                <Button colorScheme="green" onClick={goBack}>
                     Go back
                 </Button>
             </Flex>

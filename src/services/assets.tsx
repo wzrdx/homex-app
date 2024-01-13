@@ -73,6 +73,16 @@ import BudgetTravelersUncommon1 from '../assets/log/budget_travelers/uncommon_1.
 import BudgetTravelersUncommon2 from '../assets/log/budget_travelers/uncommon_2.png';
 import BudgetTravelersUncommon3 from '../assets/log/budget_travelers/uncommon_3.png';
 
+import RareTravelersRareLocked from '../assets/log/rare_travelers/rare_locked.png';
+import RareTravelersRare1 from '../assets/log/rare_travelers/rare_1.png';
+import RareTravelersRare2 from '../assets/log/rare_travelers/rare_2.png';
+import RareTravelersRare3 from '../assets/log/rare_travelers/rare_3.png';
+
+import RareTravelersRoyalLocked from '../assets/log/rare_travelers/royal_locked.png';
+import RareTravelersRoyal1 from '../assets/log/rare_travelers/royal_1.png';
+import RareTravelersRoyal2 from '../assets/log/rare_travelers/royal_2.png';
+import RareTravelersRoyal3 from '../assets/log/rare_travelers/royal_3.png';
+
 // Celestials
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',
@@ -217,6 +227,46 @@ export const getBudgetTravelersUncommonAssets = (type: 1 | 2 | 3): [string, stri
             break;
         case 3:
             assets = [BudgetTravelersUncommonLocked, BudgetTravelersUncommon3];
+            break;
+        default:
+            console.error('Unknown asset type');
+    }
+
+    return assets;
+};
+
+export const getRareTravelersRareAssets = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [RareTravelersRareLocked, RareTravelersRare1];
+            break;
+        case 2:
+            assets = [RareTravelersRareLocked, RareTravelersRare2];
+            break;
+        case 3:
+            assets = [RareTravelersRareLocked, RareTravelersRare3];
+            break;
+        default:
+            console.error('Unknown asset type');
+    }
+
+    return assets;
+};
+
+export const getRareTravelersRoyalAssets = (type: 1 | 2 | 3): [string, string] => {
+    let assets: [string, string] = ['', ''];
+
+    switch (type) {
+        case 1:
+            assets = [RareTravelersRoyalLocked, RareTravelersRoyal1];
+            break;
+        case 2:
+            assets = [RareTravelersRoyalLocked, RareTravelersRoyal2];
+            break;
+        case 3:
+            assets = [RareTravelersRoyalLocked, RareTravelersRoyal3];
             break;
         default:
             console.error('Unknown asset type');

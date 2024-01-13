@@ -25,7 +25,7 @@ export const HeaderButton: FunctionComponent<
         <Flex
             ml={2.5}
             alignItems="center"
-            padding="6px 14px"
+            padding="8px 15px"
             borderRadius="9999px"
             backgroundColor={backgroundColor}
             cursor="pointer"

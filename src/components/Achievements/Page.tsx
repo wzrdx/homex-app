@@ -152,7 +152,7 @@ export const Page = ({ index, toggleMint }) => {
                             <Stack key={index} spacing={4} position="relative" alignItems="center" px={6} minH="224px">
                                 <Image
                                     src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}
-                                    maxH={{ md: '120px', lg: '144px' }}
+                                    maxH={{ md: '120px', lg: '168px', xl: '206px' }}
                                 />
 
                                 <Stack spacing={0} alignItems="center">

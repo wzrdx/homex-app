@@ -5,6 +5,8 @@ import {
     getCelestialsAssets,
     getCelestialsCollectorAssets,
     getCelestialsHoarderAssets,
+    getRareTravelersRareAssets,
+    getRareTravelersRoyalAssets,
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -85,6 +87,12 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-12-29'),
         rarity: TravelersLogPageRarity.Common,
     },
+    // {
+    //     index: getIndex(),
+    //     title: 'Rare Travelers',
+    //     dateAdded: new Date('2024-01-13'),
+    //     rarity: TravelersLogPageRarity.Uncommon,
+    // },
 ];
 
 export interface AchievementsSharedData {
@@ -362,6 +370,61 @@ export const AchievementsProvider = ({ children }) => {
         };
     };
 
+    const getRareTravelers = (): TravelersLogPageMetadata => {
+        const badges = [
+            {
+                title: 'Rare Holder',
+                text: 'Have at least one Rare Traveler staked',
+                assets: getRareTravelersRareAssets(1),
+            },
+            {
+                title: 'Rares Patron',
+                text: 'Have at least 2 Rare Travelers staked',
+                assets: getRareTravelersRareAssets(2),
+            },
+            {
+                title: 'Rares Whale',
+                text: 'Have at least 3 Rare Travelers staked',
+                assets: getRareTravelersRareAssets(3),
+            },
+            {
+                title: 'Royal Holder',
+                text: 'Have at least one Royal Traveler staked',
+                assets: getRareTravelersRoyalAssets(1),
+            },
+            {
+                title: 'Royals Patron',
+                text: 'Have at least 2 Royal Travelers staked',
+                assets: getRareTravelersRoyalAssets(2),
+            },
+            {
+                title: 'Royals Whale',
+                text: 'Have at least 3 Royal Travelers staked',
+                assets: getRareTravelersRoyalAssets(3),
+            },
+        ];
+
+        const getBadges = async (rarityCount: _.Dictionary<number>): Promise<TravelersLogBadge[]> => {
+            const limits = [1, 2, 3];
+
+            return _.map(badges, (badge, index) => {
+                const rarityClass = index >= 3 ? '4' : '3';
+
+                return {
+                    ...badge,
+                    isUnlocked: rarityCount[rarityClass] >= limits[index % 3],
+                    value: rarityCount[rarityClass],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getRarityCount,
+            dataKey: 'rarityCount',
+        };
+    };
+
     // Data functions
     const getCelestialsPage = async () => {
         setData({
@@ -416,6 +479,7 @@ export const AchievementsProvider = ({ children }) => {
         getCelestialsCollector(),
         getCelestialsHoarder(),
         getBudgetTravelers(),
+        // getRareTravelers(),
     ]);
 
     return (

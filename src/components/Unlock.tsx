@@ -56,8 +56,6 @@ const Unlock = () => {
             // stakingInfo is required by child components
             const stakingInfo = await getStakingInfo();
 
-            console.log(stakingInfo);
-
             if ((stakingInfo && stakingInfo.isStaked) || TEAM.includes(address)) {
                 console.warn('Bypassing authentication');
             } else {

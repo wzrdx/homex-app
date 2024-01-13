@@ -8,14 +8,16 @@ const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getLogSummary';
 
-export const getLogSummary = async (): Promise<{
+export interface LogSummary {
     questsCompleted: number;
     herbalism: number;
     jewelcrafting: number;
     divination: number;
     tickets: number;
     energy: number;
-}> => {
+}
+
+export const getLogSummary = async (): Promise<LogSummary> => {
     try {
         const address = await getAddress();
 

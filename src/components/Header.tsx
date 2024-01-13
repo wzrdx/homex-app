@@ -421,7 +421,7 @@ function Header() {
                 </ModalContent>
             </Modal>
 
-            {/* Traveler's Log */}
+            {/* Log */}
             <Modal size="full" onClose={onLogClose} isOpen={isLogOpen}>
                 <ModalOverlay />
                 <ModalContent>
@@ -438,7 +438,7 @@ function Header() {
                         </AchievementsProvider>
                     </ModalBody>
 
-                    <ModalFooter backgroundColor="dark">
+                    <ModalFooter backgroundColor="dark" position="absolute" bottom={0} right={0}>
                         <Button colorScheme="red" onClick={onLogClose}>
                             Close
                         </Button>
