@@ -87,12 +87,12 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-12-29'),
         rarity: TravelersLogPageRarity.Common,
     },
-    // {
-    //     index: getIndex(),
-    //     title: 'Rare Travelers',
-    //     dateAdded: new Date('2024-01-13'),
-    //     rarity: TravelersLogPageRarity.Uncommon,
-    // },
+    {
+        index: getIndex(),
+        title: 'Rare Travelers',
+        dateAdded: new Date('2024-01-13'),
+        rarity: TravelersLogPageRarity.Uncommon,
+    },
 ];
 
 export interface AchievementsSharedData {
@@ -479,7 +479,7 @@ export const AchievementsProvider = ({ children }) => {
         getCelestialsCollector(),
         getCelestialsHoarder(),
         getBudgetTravelers(),
-        // getRareTravelers(),
+        getRareTravelers(),
     ]);
 
     return (
