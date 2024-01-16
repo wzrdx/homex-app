@@ -78,7 +78,7 @@ function Stake() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(16000000 + 250000 * stakedNFTsCount + 2150000 * _.size(transfers))
+                .withGasLimit(50000000 + 250000 * stakedNFTsCount + 2150000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
