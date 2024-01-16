@@ -68,7 +68,7 @@ function Log() {
             <Flex
                 position="relative"
                 width={{ md: '1240px', lg: '1260px', xl: '1486px' }}
-                minH={{ md: '636px', lg: '768px', xl: '844px' }}
+                height={{ md: '636px', lg: '768px', xl: '844px' }}
                 alignItems="stretch"
                 backgroundColor="#2b2b2b"
                 borderRadius={BORDER_RADIUS}
@@ -83,6 +83,8 @@ function Log() {
                     px={{ md: 8, lg: 10 }}
                     backgroundColor="#00000020"
                     borderRight="1px solid #ffffff0d"
+                    overflowX="hidden"
+                    overflowY="auto"
                 >
                     <Stack spacing={4} alignItems="center">
                         <Stack spacing={2} direction="row" alignItems="center">

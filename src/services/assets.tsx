@@ -83,6 +83,9 @@ import RareTravelersRoyal1 from '../assets/log/rare_travelers/royal_1.png';
 import RareTravelersRoyal2 from '../assets/log/rare_travelers/royal_2.png';
 import RareTravelersRoyal3 from '../assets/log/rare_travelers/royal_3.png';
 
+import EldersLocked from '../assets/log/elders/elders_locked.png';
+import EldersUnlocked from '../assets/log/elders/elders_unlocked.png';
+
 // Celestials
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',
@@ -274,6 +277,8 @@ export const getRareTravelersRoyalAssets = (type: 1 | 2 | 3): [string, string] =
 
     return assets;
 };
+
+export const getEldersAssets = (): [string, string] => [EldersLocked, EldersUnlocked];
 
 export const getLayoutBackground = () => Background;
 export const getUnlockBackground = () => Unlock;

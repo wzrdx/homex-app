@@ -5,12 +5,13 @@ import {
     getCelestialsAssets,
     getCelestialsCollectorAssets,
     getCelestialsHoarderAssets,
+    getEldersAssets,
     getRareTravelersRareAssets,
     getRareTravelersRoyalAssets,
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { AOM_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import _ from 'lodash';
 import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
@@ -92,6 +93,12 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         title: 'Rare Travelers',
         dateAdded: new Date('2024-01-13'),
         rarity: TravelersLogPageRarity.Uncommon,
+    },
+    {
+        index: getIndex(),
+        title: 'Variety Hunter',
+        dateAdded: new Date('2024-01-16'),
+        rarity: TravelersLogPageRarity.Rare,
     },
 ];
 
@@ -425,6 +432,56 @@ export const AchievementsProvider = ({ children }) => {
         };
     };
 
+    const getVarietyHunter = (): TravelersLogPageMetadata => {
+        const badges = [
+            {
+                title: 'Common Hunter',
+                text: 'Have at least one Common Traveler staked',
+                assets: getBudgetTravelersCommonAssets(1),
+            },
+            {
+                title: 'Uncommon Hunter',
+                text: 'Have at least one Uncommon Traveler staked',
+                assets: getBudgetTravelersUncommonAssets(1),
+            },
+            {
+                title: 'Rare Hunter',
+                text: 'Have at least one Rare Traveler staked',
+                assets: getRareTravelersRareAssets(1),
+            },
+            {
+                title: 'Royal Hunter',
+                text: 'Have at least one Royal Traveler staked',
+                assets: getRareTravelersRoyalAssets(1),
+            },
+            {
+                title: 'Elder Hunter',
+                text: 'Have at least one Elder staked',
+                assets: getEldersAssets(),
+            },
+        ];
+
+        const getBadges = async (rarityCount: _.Dictionary<number>): Promise<TravelersLogBadge[]> => {
+            const classes = [1, 2, 3, 4, 0];
+
+            return _.map(badges, (badge, index) => {
+                const rarityClass = classes[index];
+
+                return {
+                    ...badge,
+                    isUnlocked: rarityCount[rarityClass] > 0,
+                    value: rarityCount[rarityClass],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getRarityCount,
+            dataKey: 'rarityCount',
+        };
+    };
+
     // Data functions
     const getCelestialsPage = async () => {
         setData({
@@ -457,6 +514,11 @@ export const AchievementsProvider = ({ children }) => {
         const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
         const rarityCount = _.countBy(rarities, 'rarityClass');
 
+        // Elders
+        rarityCount[0] = _(stakingInfo.tokens)
+            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+            .size();
+
         setData({
             ...data,
             rarityCount,
@@ -480,6 +542,7 @@ export const AchievementsProvider = ({ children }) => {
         getCelestialsHoarder(),
         getBudgetTravelers(),
         getRareTravelers(),
+        getVarietyHunter(),
     ]);
 
     return (

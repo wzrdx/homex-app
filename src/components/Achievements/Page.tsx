@@ -171,6 +171,7 @@ export const Page = ({ index, toggleMint }) => {
                                     <Text
                                         fontSize="14px"
                                         lineHeight="19px"
+                                        minH="38px"
                                         textShadow="1px 1px 0px #222"
                                         textAlign="center"
                                         color={badge.isUnlocked ? 'whitesmoke' : '#bebebe'}
