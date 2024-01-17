@@ -65,7 +65,7 @@ function Staking() {
                 .claimStakingRewards()
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(30000000 + 500000 * stakedNFTsCount)
+                .withGasLimit(100000000 + 1000000 * stakedNFTsCount)
                 .buildTransaction();
 
             await refreshAccount();
