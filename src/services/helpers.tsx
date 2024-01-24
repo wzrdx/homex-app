@@ -153,18 +153,10 @@ export const getTotalQuestsRewards = (quests: Quest[]) => {
     return rewards;
 };
 
-export const getUnbondingDuration = (tokenId: string): number => {
-    switch (tokenId) {
-        case TRAVELERS_COLLECTION_ID:
-            return 604800;
-
-        case ELDERS_COLLECTION_ID:
-            return 604800;
-
-        default:
-            return 604800;
-    }
+export const getUnbondingDuration = (): number => {
+    const duration = process.env.NODE_ENV === 'development' ? 15 : 604800;
+    return duration;
 };
 
 export const hasFinishedUnbonding = (token: NFT): boolean =>
-    !!token.timestamp && isAfter(new Date(), addSeconds(token.timestamp, getUnbondingDuration(token.tokenId)));
+    !!token.timestamp && isAfter(new Date(), addSeconds(token.timestamp, getUnbondingDuration()));

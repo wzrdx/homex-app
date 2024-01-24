@@ -34,11 +34,12 @@ import { NFT } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
-import { getTravelersPadding, pairwise, toHexNumber } from '../../services/helpers';
+import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
 import Yield from '../../shared/Yield';
 import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { formatDistance } from 'date-fns';
 
 function Unstake() {
     const { height } = useStaking();
@@ -347,7 +348,9 @@ function Unstake() {
                                     <Text color="almostWhite">
                                         The unbonding duration is{' '}
                                         <Text as="span" fontWeight={600}>
-                                            7 days
+                                            {formatDistance(new Date(0), new Date(getUnbondingDuration() * 1000), {
+                                                addSuffix: false,
+                                            })}
                                         </Text>
                                     </Text>
                                 </Flex>

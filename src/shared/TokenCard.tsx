@@ -95,7 +95,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                         p={1}
                     >
                         <Timer
-                            timestamp={addSeconds(token.timestamp as Date, getUnbondingDuration(token.tokenId))}
+                            timestamp={addSeconds(token.timestamp as Date, getUnbondingDuration())}
                             callback={() => setState(true)}
                             displayClock={false}
                             customStyle={{ fontSize: '21px', fontWeight: 500, userSelect: 'none' }}
