@@ -216,10 +216,7 @@ function Header() {
                                     color="#f97316"
                                     fontWeight={500}
                                 >
-                                    Menhir
-                                </Text>
-                                <Text fontSize="14px" lineHeight="15px">
-                                    {format(new Date('2024-02-01'), 'dd MMM, HH:mm')}
+                                    Break
                                 </Text>
                             </Stack>
                         )}
