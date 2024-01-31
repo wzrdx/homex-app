@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { StakingInfo, useGetStakingInfo } from '../blockchain/hooks/useGetStakingInfo';
+import { StakingInfo, useGetStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { NFT } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces } from './authentication';
 import { pairwise } from './helpers';

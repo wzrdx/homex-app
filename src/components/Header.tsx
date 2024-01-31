@@ -29,11 +29,11 @@ import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
 import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date-fns';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Achievements/Log';
-import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
+import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
 import { NewSymbol } from '../shared/NewSymbol';
 import { AchievementsProvider } from '../services/achievements';
 

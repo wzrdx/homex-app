@@ -2,7 +2,7 @@ import { ResultsParser, ContractFunction, Address, AddressValue } from '@multive
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { useState } from 'react';
 import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { map, size } from 'lodash';
 

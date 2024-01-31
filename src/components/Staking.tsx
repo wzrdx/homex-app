@@ -6,7 +6,7 @@ import { StoreContextType, useStoreContext } from '../services/store';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import Stats from './Staking/Stats';
-import { useGetStakedNFTsCount } from '../blockchain/hooks/useGetStakedNFTsCount';
+import { useGetStakedNFTsCount } from '../blockchain/game/hooks/useGetStakedNFTsCount';
 import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 
 type StakingContext = {

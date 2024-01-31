@@ -1,0 +1,147 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.71.0-nightly",
+            "commitHash": "a2b1646c597329d0a25efa3889b66650f65de1de",
+            "commitDate": "2023-05-25",
+            "channel": "Nightly",
+            "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
+        },
+        "contractCrate": {
+            "name": "auxiliary-sc",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.47.1"
+        }
+    },
+    "name": "AuxiliaryScContract",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "upgrade",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "setAddressGame",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sc_addr",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setArtMapper",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getAOMTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "canMintPage",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "index",
+                    "type": "u8"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "verifyPage",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wallet",
+                    "type": "Address"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createPageToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "cid",
+                    "type": "bytes"
+                },
+                {
+                    "name": "edition",
+                    "type": "bytes"
+                },
+                {
+                    "name": "rarity",
+                    "type": "u8"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "mintPage",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "wallet",
+                    "type": "Address"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        }
+    ],
+    "esdtAttributes": [],
+    "hasCallback": false,
+    "types": {}
+}

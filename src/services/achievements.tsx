@@ -13,11 +13,11 @@ import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import _ from 'lodash';
-import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
+import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
 import { useStoreContext, StoreContextType } from './store';
-import { Stake } from '../blockchain/hooks/useGetStakingInfo';
-import { getRarityClasses } from '../blockchain/api/getRarityClasses';
+import { Stake } from '../blockchain/game/hooks/useGetStakingInfo';
+import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
 
 enum TravelersLogPageRarity {
     Common = 'Common',

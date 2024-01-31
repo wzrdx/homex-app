@@ -10,11 +10,11 @@ import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import Separator from '../shared/Separator';
 import { LargeTimer } from '../shared/LargeTimer';
-import { getArtDropTimestamp } from '../blockchain/api/getArtDropTimestamp';
+import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
 import { isAfter } from 'date-fns';
 
 const PRICE = 3;

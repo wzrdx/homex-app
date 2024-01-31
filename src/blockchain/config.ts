@@ -4,10 +4,16 @@ import { API_KEY } from '../components/Settings';
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : devValue);
 
-export const contractAddress = getEnvValue(
+export const gameScAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgqc8s6t5594e4en4ffl60r6hn52hajkpkkukrqww29av',
     'erd1qqqqqqqqqqqqqpgqpt68cy4cde6ff2wzcfsfncjv6gxjxda8dn7q9ekje9'
 );
+
+export const auxiliaryScAddress = getEnvValue(
+    'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk',
+    'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk'
+);
+
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 
 export const apiTimeout = 60000;
@@ -25,6 +31,8 @@ export const API_URL = getEnvValue(
 
 export const GATEWAY_URL = 'https://gateway.multiversx.com';
 export const EXPLORER_URL = getEnvValue('https://devnet-explorer.multiversx.com', 'https://explorer.multiversx.com');
+
+export const HOMEX_API = getEnvValue('http://localhost:8080', 'https://api.homex.quest');
 
 export const COLLECTION_SIZE = getEnvValue(300, 3333);
 export const TRAVELERS_COLLECTION_ID = getEnvValue('TRAVELERS-659fa7', 'TRAVELER-51bdef');

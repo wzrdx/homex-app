@@ -1,7 +1,7 @@
 import { ResultsParser, ContractFunction, U32Value } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 import { map } from 'lodash';
 
 const resultsParser = new ResultsParser();

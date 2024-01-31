@@ -1,9 +1,9 @@
 import { ResultsParser, ContractFunction, List, U16Type, U16Value } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 import { map } from 'lodash';
-import { RarityClass } from '../types';
+import { RarityClass } from '../../types';
 
 export interface Rarity {
     nonce: number;

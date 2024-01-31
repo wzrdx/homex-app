@@ -4,7 +4,7 @@ import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
 import { ELDERS_COLLECTION_ID } from '../blockchain/config';
-import { Rarity } from '../blockchain/api/getRarityClasses';
+import { Rarity } from '../blockchain/game/api/getRarityClasses';
 import { addSeconds } from 'date-fns';
 import { Timer } from './Timer';
 import { useState } from 'react';

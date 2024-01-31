@@ -3,7 +3,7 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getUsername } from '../../services/helpers';
 import { getLevel } from '../../services/xp';
-import { getPlayerXp } from '../../blockchain/api/getPlayerXp';
+import { getPlayerXp } from '../../blockchain/game/api/getPlayerXp';
 import { IoWalletOutline } from 'react-icons/io5';
 import { logout } from '@multiversx/sdk-dapp/utils';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';

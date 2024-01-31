@@ -35,10 +35,10 @@ import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
-import { smartContract } from '../../blockchain/smartContract';
-import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
+import { smartContract } from '../../blockchain/game/smartContract';
+import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 import Yield from '../../shared/Yield';
-import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { Stake } from '../../blockchain/game/hooks/useGetStakingInfo';
 import { formatDistance } from 'date-fns';
 
 function Unstake() {

@@ -1,6 +1,6 @@
 import { find, findIndex, includes } from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { isGamePausedQuery } from '../blockchain/api/isGamePaused';
+import { isGamePausedQuery } from '../blockchain/game/api/isGamePaused';
 
 export enum TransactionType {
     StartQuest,

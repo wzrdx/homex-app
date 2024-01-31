@@ -1,7 +1,7 @@
 import { ResultsParser, ContractFunction, Address, AddressValue } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();

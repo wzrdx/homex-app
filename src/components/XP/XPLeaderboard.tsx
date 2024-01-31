@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getXpLeaderboard } from '../../blockchain/api/getXpLeaderboard';
+import { getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
 import { getUsername, pairwise } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
-import { getXpLeaderboardSize } from '../../blockchain/api/getXpLeaderboardSize';
+import { getXpLeaderboardSize } from '../../blockchain/game/api/getXpLeaderboardSize';
 import { LiaScrollSolid } from 'react-icons/lia';
 
 const CHUNK_SIZE = 50;

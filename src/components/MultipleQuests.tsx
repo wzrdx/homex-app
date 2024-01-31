@@ -27,10 +27,10 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
 import { addMinutes, isAfter, isBefore } from 'date-fns';
 
 function MultipleQuests() {

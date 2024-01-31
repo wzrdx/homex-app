@@ -21,9 +21,9 @@ import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
-import { smartContract } from '../../blockchain/smartContract';
-import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
-import { Stake } from '../../blockchain/hooks/useGetStakingInfo';
+import { smartContract } from '../../blockchain/game/smartContract';
+import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { Stake } from '../../blockchain/game/hooks/useGetStakingInfo';
 import { getUnixTime } from 'date-fns';
 
 function Unbond() {

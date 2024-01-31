@@ -6,11 +6,11 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
 import { ActionButton } from './ActionButton/ActionButton';
 import { getTicketsPrize } from '../services/rewards';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
 import { intervalToDuration } from 'date-fns';
 import { zeroPad } from '../services/helpers';
 

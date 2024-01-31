@@ -1,6 +1,6 @@
 import { Box, Text, Flex, Alert, AlertIcon } from '@chakra-ui/react';
 import { NFT, RarityClass } from '../blockchain/types';
-import { Rarity } from '../blockchain/api/getRarityClasses';
+import { Rarity } from '../blockchain/game/api/getRarityClasses';
 import { useEffect, useState } from 'react';
 import { getRarityClassInfo } from '../services/helpers';
 import _ from 'lodash';

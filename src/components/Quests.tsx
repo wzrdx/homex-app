@@ -27,7 +27,7 @@ import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
@@ -38,7 +38,7 @@ import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
+import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
 
