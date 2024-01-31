@@ -1,6 +1,5 @@
 import { Stack, Flex, Button, Center, Text, Box, Image } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { canMintPage } from '../../blockchain/auxiliary/generics/canMintPage';
 import { PAGE_HEADERS } from '../../services/achievements';
 import { BsGem } from 'react-icons/bs';
 import { Interactor } from './Interactor';
@@ -12,9 +11,7 @@ export const PageMint = ({ index, page, goBack }) => {
         init();
     }, []);
 
-    const init = async () => {
-        const result = await canMintPage(index + 1);
-    };
+    const init = async () => {};
 
     return (
         <Box height="100%" position="relative">
@@ -25,8 +22,8 @@ export const PageMint = ({ index, page, goBack }) => {
             </Flex>
 
             <Stack spacing={5} height="100%" py={12} alignItems="center" justifyContent="center">
-                <Stack spacing={1.5} alignItems="center" mb="-2.5px">
-                    <Text layerStyle="header2" lineHeight="16px">
+                <Stack spacing={2} alignItems="center" mb="-1px">
+                    <Text layerStyle="header1Alt" lineHeight="16px">
                         {PAGE_HEADERS[index].title}
                     </Text>
 
@@ -41,7 +38,14 @@ export const PageMint = ({ index, page, goBack }) => {
                     </Stack>
                 </Stack>
 
-                <Image src={PAGE_HEADERS[index].image} height="80%" boxShadow="0 0 3px #00000038" alt="Page" />
+                <Image
+                    src={PAGE_HEADERS[index].image}
+                    height="80%"
+                    outline="2px solid"
+                    outlineColor={`blizzard${page.rarity}`}
+                    outlineOffset="4px"
+                    alt="Page"
+                />
 
                 <Interactor index={index} />
             </Stack>

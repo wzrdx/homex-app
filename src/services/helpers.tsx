@@ -161,11 +161,3 @@ export const getUnbondingDuration = (): number => {
 
 export const hasFinishedUnbonding = (token: NFT): boolean =>
     !!token.timestamp && isAfter(new Date(), addSeconds(token.timestamp, getUnbondingDuration()));
-
-export const getPageMintingCost = (rarity: TravelersLogPageRarity): number => {
-    if (rarity === TravelersLogPageRarity.Epic || rarity === TravelersLogPageRarity.Legendary) {
-        return 1;
-    } else {
-        return 3;
-    }
-};
