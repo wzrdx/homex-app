@@ -12,6 +12,7 @@ import { Quest } from '../types';
 import _ from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
 import { RESOURCE_ELEMENTS } from './resources';
+import { TravelersLogPageRarity } from './achievements';
 
 export const range = (length: number) => Array.from({ length }, (_, i) => i + 1);
 
@@ -160,3 +161,11 @@ export const getUnbondingDuration = (): number => {
 
 export const hasFinishedUnbonding = (token: NFT): boolean =>
     !!token.timestamp && isAfter(new Date(), addSeconds(token.timestamp, getUnbondingDuration()));
+
+export const getPageMintingCost = (rarity: TravelersLogPageRarity): number => {
+    if (rarity === TravelersLogPageRarity.Epic || rarity === TravelersLogPageRarity.Legendary) {
+        return 1;
+    } else {
+        return 3;
+    }
+};

@@ -46,7 +46,7 @@ function Log() {
     const getView = (): JSX.Element => {
         switch (view) {
             case View.Mint:
-                return <PageMint pageIndex={currentPage} page={PAGE_HEADERS[currentPage]} goBack={() => setView(View.Page)} />;
+                return <PageMint index={currentPage} page={PAGE_HEADERS[currentPage]} goBack={() => setView(View.Page)} />;
 
             case View.Tutorial:
                 return <LogTutorial goBack={() => setView(View.Page)} />;
@@ -66,7 +66,7 @@ function Log() {
         <Box position="relative">
             <Flex
                 position="relative"
-                width={{ md: '1240px', lg: '1260px', xl: '1486px' }}
+                width={{ md: '1240px', lg: '1280px', xl: '1486px' }}
                 height={{ md: '636px', lg: '768px', xl: '844px' }}
                 alignItems="stretch"
                 backgroundColor="#2b2b2b"
