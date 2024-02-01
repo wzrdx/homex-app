@@ -29,7 +29,6 @@ import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
 import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date-fns';
-import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
 import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Achievements/Log';
@@ -53,10 +52,6 @@ function Header() {
     const [routes, setRoutes] = useState<Array<string>>([]);
     const [offset, setOffset] = useState<number>(0);
 
-    const [trial, setTrial] = useState<{
-        timestamp: Date;
-    }>();
-
     const [isArtDropOngoing, setArtDropOngoing] = useState<boolean>(false);
 
     // Init
@@ -75,13 +70,6 @@ function Header() {
         if (isMusicOn) {
             setIsMusicOn(true);
         }
-
-        // Trial
-        const timestamp = await getTrialTimestamp();
-
-        setTrial({
-            timestamp,
-        });
 
         const artDropTimestamp = await getArtDropTimestamp();
 
@@ -204,25 +192,18 @@ function Header() {
                             }}
                         />
 
-                        {!trial ? (
-                            <Spinner ml={5} />
-                        ) : (
-                            <Stack spacing={0.5} ml={5} alignItems="center" justifyContent="center">
-                                <Text
-                                    textTransform="uppercase"
-                                    fontSize="15px"
-                                    lineHeight="17px"
-                                    letterSpacing="0.25px"
-                                    color="#f97316"
-                                    fontWeight={500}
-                                >
-                                    Menhir
-                                </Text>
-                                <Text fontSize="14px" lineHeight="15px">
-                                    {format(new Date('2024-02-01'), 'dd MMM, HH:mm')}
-                                </Text>
-                            </Stack>
-                        )}
+                        <Stack spacing={0.5} ml={5} alignItems="center" justifyContent="center">
+                            <Text
+                                textTransform="uppercase"
+                                fontSize="15px"
+                                lineHeight="17px"
+                                letterSpacing="0.25px"
+                                color="#f97316"
+                                fontWeight={500}
+                            >
+                                Break
+                            </Text>
+                        </Stack>
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">

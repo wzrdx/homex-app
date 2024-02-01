@@ -30,8 +30,7 @@ import { CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
-import { getTrialTimestamp } from '../blockchain/game/api/getTrialTimestamp';
-import { addMinutes, isAfter, isBefore } from 'date-fns';
+import { addMinutes, isAfter } from 'date-fns';
 
 function MultipleQuests() {
     const { ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
@@ -39,7 +38,6 @@ function MultipleQuests() {
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
-    const [trialTimestamp, setTrialTimestamp] = useState<Date>();
 
     const { address } = useGetAccountInfo();
 
@@ -60,7 +58,6 @@ function MultipleQuests() {
 
     const init = async () => {
         getOngoingQuests();
-        setTrialTimestamp(await getTrialTimestamp());
     };
 
     const startQuests = async () => {
@@ -117,56 +114,6 @@ function MultipleQuests() {
         } catch (err) {
             console.error('Error occured during startQuests', err);
         }
-    };
-
-    const getLongestQuestInfo = (): { longestQuest: Quest; isAfterEnd: boolean } => {
-        const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const longestQuest = _(quests).orderBy('duration', 'desc').first() as Quest;
-        const isAfterEnd = isAfter(addMinutes(new Date(), longestQuest.duration), trialTimestamp as Date);
-
-        return {
-            longestQuest,
-            isAfterEnd,
-        };
-    };
-
-    const canBeCompleted = (): boolean => {
-        if (!trialTimestamp) {
-            return false;
-        }
-
-        if (_.isEmpty(selectedQuestIds)) {
-            return true;
-        }
-
-        const { isAfterEnd } = getLongestQuestInfo();
-
-        return !isAfterEnd;
-    };
-
-    const checkCompletionTime = () => {
-        let result = <Flex></Flex>;
-
-        if (!trialTimestamp || _.isEmpty(selectedQuestIds)) {
-            return result;
-        }
-
-        const { longestQuest, isAfterEnd } = getLongestQuestInfo();
-
-        if (isAfterEnd) {
-            result = (
-                <Flex flexDir="column">
-                    <Flex alignItems="center" color="brightRed">
-                        <MdOutlineErrorOutline style={{ marginBottom: '1px' }} fontSize="19px" />
-                        <Text ml={1}>Quest duration exceeds end of Trial </Text>
-                    </Flex>
-
-                    <Text>{longestQuest.name}</Text>
-                </Flex>
-            );
-        }
-
-        return result;
     };
 
     const onCheckboxGroupChange = useCallback((array: string[]) => {
@@ -267,7 +214,7 @@ function MultipleQuests() {
         );
     };
 
-    const canStartMultipleQuests = (): boolean => {
+    const canStartQuests = (): boolean => {
         if (_.size(selectedQuestIds) === 0) {
             return false;
         }
@@ -346,7 +293,7 @@ function MultipleQuests() {
                         Total Requirements
                     </Text>
 
-                    {!canStartMultipleQuests() && _.size(selectedQuestIds) > 0 && (
+                    {!canStartQuests() && _.size(selectedQuestIds) > 0 && (
                         <Flex ml={1} alignItems="center" color="brightRed">
                             <MdOutlineErrorOutline style={{ marginBottom: '1px' }} fontSize="19px" />
                             <Text ml={1}>Not enough resources</Text>
@@ -365,12 +312,10 @@ function MultipleQuests() {
 
             <ModalFooter>
                 <Flex width="100%" justifyContent="space-between" alignItems="center" minH="48px">
-                    {checkCompletionTime()}
-
                     <ActionButton
                         colorScheme="blue"
                         customStyle={{ width: '142px' }}
-                        disabled={isGamePaused || !canStartMultipleQuests() || !canBeCompleted()}
+                        disabled={isGamePaused || !canStartQuests()}
                         isLoading={isButtonLoading || isTxPending(TransactionType.StartMultipleQuests)}
                         onClick={startQuests}
                     >
