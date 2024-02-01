@@ -1,6 +1,6 @@
 import { Stack, Flex, Button, Center, Text, Box, Image, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { canMintPage } from '../../blockchain/auxiliary/generics/canMintPage';
+import { canMintPage } from '../../blockchain/auxiliary/api/canMintPage';
 import { PAGE_HEADERS } from '../../services/achievements';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { useStoreContext, StoreContextType } from '../../services/store';

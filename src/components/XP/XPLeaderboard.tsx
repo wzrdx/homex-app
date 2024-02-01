@@ -52,6 +52,7 @@ function XPLeaderboard() {
             xp: number;
             level: number;
             color: string;
+            pagesMinted: number;
         }[]
     >();
 
@@ -72,6 +73,7 @@ function XPLeaderboard() {
                 {
                     address: string;
                     xp: number;
+                    pagesMinted: number;
                 }[]
             >
         > = [];
@@ -97,6 +99,7 @@ function XPLeaderboard() {
         players: {
             address: string;
             xp: number;
+            pagesMinted: number;
         }[]
     ) => {
         const sorted = _(players).orderBy('xp', 'desc').take(LEADERBOARD_SIZE).value();
@@ -109,6 +112,7 @@ function XPLeaderboard() {
                     return {
                         name: await getUsername(player.address),
                         xp: player.xp,
+                        pagesMinted: player.pagesMinted,
                         level,
                         color,
                     };
@@ -116,7 +120,6 @@ function XPLeaderboard() {
                 .value()
         );
 
-        console.log(array);
         setPlayers(array);
     };
 
@@ -165,7 +168,7 @@ function XPLeaderboard() {
                                     {player.level}
                                 </Text>
 
-                                <Text width={COLUMNS[4].width}>0</Text>
+                                <Text width={COLUMNS[4].width}>{player.pagesMinted}</Text>
                             </Flex>
                         ))}
                     </Flex>

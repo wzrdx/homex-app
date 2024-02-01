@@ -15,6 +15,7 @@ export const getXpLeaderboard = async (
     {
         address: string;
         xp: number;
+        pagesMinted: number;
     }[]
 > => {
     try {
@@ -32,6 +33,7 @@ export const getXpLeaderboard = async (
         const array = map(value, (item) => ({
             address: item?.address?.bech32(),
             xp: item?.xp?.toNumber(),
+            pagesMinted: item?.pages_minted?.toNumber(),
         }));
 
         return array;

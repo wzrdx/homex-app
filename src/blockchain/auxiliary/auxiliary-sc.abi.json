@@ -41,12 +41,16 @@
             "outputs": []
         },
         {
-            "name": "setArtMapper",
+            "name": "setTokenMappers",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "token_id",
+                    "name": "aom_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "tickets_id",
                     "type": "TokenIdentifier"
                 }
             ],
@@ -54,6 +58,16 @@
         },
         {
             "name": "getAOMTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getTicketsId",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -78,6 +92,21 @@
             "outputs": [
                 {
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getPagesMinted",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -125,9 +154,7 @@
             "name": "mintPage",
             "onlyOwner": true,
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
+            "payableInTokens": ["*"],
             "inputs": [
                 {
                     "name": "wallet",

@@ -29,6 +29,49 @@
             "outputs": []
         },
         {
+            "name": "setAddressAuxiliary",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sc_addr",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "upgradeProperties",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "setSpecialRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sc_addr",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "transferRole",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sc_addr",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "withdrawEgld",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -79,18 +122,6 @@
                 {
                     "name": "alloc",
                     "type": "List<Airdrop>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setTrialTimestamp",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -265,16 +296,6 @@
         },
         {
             "name": "getArtDropTimestamp",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getTrialTimestamp",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
@@ -467,21 +488,17 @@
             ]
         },
         {
-            "name": "getUserTokenNonces",
+            "name": "isWalletStaked",
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "user_address",
+                    "name": "address",
                     "type": "Address"
-                },
-                {
-                    "name": "token_id",
-                    "type": "TokenIdentifier"
                 }
             ],
             "outputs": [
                 {
-                    "type": "List<u64>"
+                    "type": "bool"
                 }
             ]
         },
@@ -549,6 +566,22 @@
                     "type": "u32"
                 }
             ]
+        },
+        {
+            "name": "mint",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "u32"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
         },
         {
             "name": "getPageCelestials",
@@ -719,6 +752,10 @@
                 },
                 {
                     "name": "xp",
+                    "type": "u32"
+                },
+                {
+                    "name": "pages_minted",
                     "type": "u32"
                 }
             ]

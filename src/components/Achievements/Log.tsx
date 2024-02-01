@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Box, Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAlternateBackground } from '../../services/assets';
 import { LuSwords } from 'react-icons/lu';
 import { RxDashboard } from 'react-icons/rx';
@@ -16,6 +16,7 @@ import { differenceInDays } from 'date-fns';
 import { BsGem } from 'react-icons/bs';
 import { Summary } from './Summary';
 import { PageMint } from './PageMint';
+import { getPagesMinted } from '../../blockchain/auxiliary/api/getPagesMinted';
 
 enum View {
     Page = 'Page',
@@ -31,10 +32,20 @@ function Log() {
     const [currentPage, setCurrentPage] = useState<number>(-1);
     const [view, setView] = useState<View>(View.Summary);
 
+    const [mintedPages, setMintedPages] = useState<number>(0);
+
+    useEffect(() => {
+        init();
+    }, []);
+
+    const init = async () => {
+        setMintedPages(await getPagesMinted());
+    };
+
     const getTotalPagesMinted = () => {
         return (
             <Text fontWeight={500} color="page" letterSpacing="1px" fontSize="17px" lineHeight="17px">
-                0
+                {mintedPages}
                 <Text as="span" mx={0.5}>
                     /
                 </Text>
