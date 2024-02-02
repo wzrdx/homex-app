@@ -111,6 +111,13 @@
             ]
         },
         {
+            "name": "debug",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "verifyPage",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -152,14 +159,9 @@
         },
         {
             "name": "mintPage",
-            "onlyOwner": true,
             "mutability": "mutable",
             "payableInTokens": ["*"],
             "inputs": [
-                {
-                    "name": "wallet",
-                    "type": "Address"
-                },
                 {
                     "name": "index",
                     "type": "u32"

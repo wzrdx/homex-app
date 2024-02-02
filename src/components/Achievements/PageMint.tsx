@@ -7,7 +7,6 @@ import { Interactor } from './Interactor';
 export const PageMint = ({ index, page, goBack }) => {
     // Init
     useEffect(() => {
-        console.log(index + 1);
         init();
     }, []);
 
@@ -44,6 +43,8 @@ export const PageMint = ({ index, page, goBack }) => {
                     outline="2px solid"
                     outlineColor={`blizzard${page.rarity}`}
                     outlineOffset="4px"
+                    minW="278px"
+                    minH="392px"
                     alt="Page"
                 />
 
