@@ -49,8 +49,6 @@ export const Interactor = ({ index }) => {
     }, [canMint]);
 
     const init = async () => {
-        // TODO: Check isPageMinted and add a green overlay over the image
-
         // Checks if a verification is required and calls 'setCanMint' either way in order to stop loading
         let value = true;
 

@@ -1,10 +1,7 @@
 import _ from 'lodash';
-import { Text, Flex, Image, Stack, Box, Spinner, Alert, AlertIcon, Center } from '@chakra-ui/react';
+import { Flex, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getArtDrop } from '../services/assets';
-import { ActionButton } from '../shared/ActionButton/ActionButton';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { useResourcesContext, ResourcesContextType, RESOURCE_ELEMENTS } from '../services/resources';
+import { useResourcesContext, ResourcesContextType } from '../services/resources';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
@@ -12,10 +9,7 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import Separator from '../shared/Separator';
-import { LargeTimer } from '../shared/LargeTimer';
 import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
-import { isAfter } from 'date-fns';
 
 const PRICE = 3;
 const XP = 1500;
