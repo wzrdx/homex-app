@@ -2,22 +2,32 @@ import { Stack, Flex, Button, Center, Text, Box, Image, Spinner, useToast } from
 import { useEffect, useState } from 'react';
 import { canMintPage } from '../../blockchain/auxiliary/api/canMintPage';
 import { PAGE_HEADERS } from '../../services/achievements';
-import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../../services/resources';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { InfoIcon } from '@chakra-ui/icons';
 import { verifyPage } from '../../services/api';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useMutation } from 'react-query';
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { TICKETS_TOKEN_ID, CHAIN_ID } from '../../blockchain/config';
+import { smartContract } from '../../blockchain/auxiliary/smartContract';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 
 export const Interactor = ({ index }) => {
     const toast = useToast();
 
     const { address } = useGetAccountInfo();
     const { stakingInfo } = useStoreContext() as StoreContextType;
+    const { resources } = useResourcesContext() as ResourcesContextType;
+    const { setPendingTxs, isMintPageTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isLoading, setLoading] = useState<boolean>(true);
     const [canMint, setCanMint] = useState<boolean>();
     const [isStaked, setIsStaked] = useState<boolean>(false);
+
+    const [isMintingLoading, setMintingLoading] = useState<boolean>();
 
     // Init
     useEffect(() => {
@@ -39,6 +49,8 @@ export const Interactor = ({ index }) => {
     }, [canMint]);
 
     const init = async () => {
+        // TODO: Check isPageMinted and add a green overlay over the image
+
         // Checks if a verification is required and calls 'setCanMint' either way in order to stop loading
         let value = true;
 
@@ -70,6 +82,55 @@ export const Interactor = ({ index }) => {
         },
     });
 
+    const mintPage = async () => {
+        if (!resources.tickets || !canMint) {
+            return;
+        }
+
+        setMintingLoading(true);
+
+        const user = new Address(address);
+
+        try {
+            const tx = smartContract.methods
+                .mintPage([index + 1])
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, 3))
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(30000000)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setMintingLoading(false);
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.MintPage,
+                    data: {
+                        index,
+                        name: PAGE_HEADERS[index].title,
+                    },
+                    resolution: TxResolution.UpdateTickets,
+                },
+            ]);
+        } catch (err) {
+            console.error('Error occured during mintPage', err);
+        }
+    };
+
     const getMintingView = () =>
         isStaked ? (
             <Stack spacing={4} alignItems="center">
@@ -81,7 +142,13 @@ export const Interactor = ({ index }) => {
                     <Image width="22px" src={RESOURCE_ELEMENTS['tickets'].icon} alt="Resource" />
                 </Center>
 
-                <Button colorScheme="orange">Mint page</Button>
+                <Button
+                    colorScheme="orange"
+                    onClick={mintPage}
+                    isLoading={isMintingLoading || isMintPageTxPending(TransactionType.MintPage, index)}
+                >
+                    Mint page
+                </Button>
             </Stack>
         ) : (
             <Stack direction="row" spacing={1.5} alignItems="center">

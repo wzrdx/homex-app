@@ -77,6 +77,25 @@
             ]
         },
         {
+            "name": "isPageMinted",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "index",
+                    "type": "u8"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "canMintPage",
             "mutability": "readonly",
             "inputs": [

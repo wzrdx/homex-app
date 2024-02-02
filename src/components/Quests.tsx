@@ -44,10 +44,8 @@ import MultipleQuests from './MultipleQuests';
 const LARGE_FRAME_SIZE = 426;
 const MEDIUM_FRAME_SIZE = 350;
 
-const GRACE_PERIOD_INTERVAL = 24;
-
 function Quests() {
-    const { displayToast, closeToast } = useLayout();
+    const { displayToast } = useLayout();
     const navigate = useNavigate();
 
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
