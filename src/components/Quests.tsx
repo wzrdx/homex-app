@@ -399,13 +399,6 @@ function Quests() {
                                 <Text>Claim Rewards</Text>
                             </ActionButton>
                         )}
-
-                        {!isGamePaused && isQuestDefault() && (
-                            <Alert status="error">
-                                <AlertIcon />
-                                Quest duration exceeds end of Trial
-                            </Alert>
-                        )}
                     </Box>
 
                     <Box>

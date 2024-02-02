@@ -191,19 +191,6 @@ function Header() {
                                 onGameplayOpen();
                             }}
                         />
-
-                        <Stack spacing={0.5} ml={5} alignItems="center" justifyContent="center">
-                            <Text
-                                textTransform="uppercase"
-                                fontSize="15px"
-                                lineHeight="17px"
-                                letterSpacing="0.25px"
-                                color="#f97316"
-                                fontWeight={500}
-                            >
-                                Break
-                            </Text>
-                        </Stack>
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
