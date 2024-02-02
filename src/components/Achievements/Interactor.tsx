@@ -14,6 +14,8 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
+import { LEVELS } from '../../services/xp';
 
 export const Interactor = ({ index }) => {
     const toast = useToast();
@@ -28,6 +30,8 @@ export const Interactor = ({ index }) => {
     const [isStaked, setIsStaked] = useState<boolean>(false);
 
     const [isMintingLoading, setMintingLoading] = useState<boolean>();
+
+    const { xp } = useAuthenticationContext() as AuthenticationContextType;
 
     // Init
     useEffect(() => {
@@ -129,8 +133,32 @@ export const Interactor = ({ index }) => {
         }
     };
 
-    const getMintingView = () =>
-        isStaked ? (
+    const getMintingView = () => {
+        if (!isStaked) {
+            return (
+                <Stack direction="row" spacing={1.5} alignItems="center">
+                    <InfoIcon color="redClrs" />
+
+                    <Text textShadow="1px 1px 0px #222" color="redClrs">
+                        You must be staked to mint
+                    </Text>
+                </Stack>
+            );
+        }
+
+        if (xp < LEVELS[29].xp) {
+            return (
+                <Stack direction="row" spacing={1.5} alignItems="center">
+                    <InfoIcon color="mintGreen" />
+
+                    <Text textShadow="1px 1px 0px #222" color="mintGreen">
+                        Level 30 is required to mint
+                    </Text>
+                </Stack>
+            );
+        }
+
+        return (
             <Stack spacing={4} alignItems="center">
                 <Center>
                     <Text>Price:</Text>
@@ -148,15 +176,8 @@ export const Interactor = ({ index }) => {
                     Mint page
                 </Button>
             </Stack>
-        ) : (
-            <Stack direction="row" spacing={1.5} alignItems="center">
-                <InfoIcon color="redClrs" />
-
-                <Text textShadow="1px 1px 0px #222" color="redClrs">
-                    You must be staked to mint
-                </Text>
-            </Stack>
         );
+    };
 
     const getVerificationView = () => (
         <Stack alignItems="center">

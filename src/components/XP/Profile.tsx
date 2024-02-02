@@ -3,7 +3,6 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getUsername } from '../../services/helpers';
 import { getLevel } from '../../services/xp';
-import { getPlayerXp } from '../../blockchain/game/api/getPlayerXp';
 import { IoWalletOutline } from 'react-icons/io5';
 import { logout } from '@multiversx/sdk-dapp/utils';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
@@ -12,11 +11,10 @@ import { useNavigate } from 'react-router-dom';
 function Profile() {
     let { address } = useGetAccountInfo();
 
-    const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
+    const { xp, getXp, setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
     const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>();
-    const [xp, setXp] = useState<number>();
     const [levelInfo, setLevelInfo] = useState<{
         level: number;
         percentage: number;
@@ -30,11 +28,14 @@ function Profile() {
         init();
     }, []);
 
-    const init = async () => {
-        setUsername(await getUsername(address));
-        const xp = await getPlayerXp();
-        setXp(xp);
+    // XP
+    useEffect(() => {
         setLevelInfo(getLevel(xp));
+    }, [xp]);
+
+    const init = async () => {
+        getXp();
+        setUsername(await getUsername(address));
     };
 
     return (

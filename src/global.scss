@@ -108,8 +108,12 @@ body {
 // Dapp Tx Toasts
 @media (min-width: 768px) {
     .Tx-Toast {
-        right: 1rem !important;
-        bottom: 1rem !important;
+        right: 0.5rem !important;
+        bottom: 0.5rem !important;
+    }
+
+    .Tx-Toast:last-child {
+        margin-bottom: 0 !important;
     }
 }
 

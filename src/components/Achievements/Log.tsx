@@ -17,6 +17,7 @@ import { BsGem } from 'react-icons/bs';
 import { Summary } from './Summary';
 import { PageMint } from './PageMint';
 import { getPagesMinted } from '../../blockchain/auxiliary/api/getPagesMinted';
+import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
 
 enum View {
     Page = 'Page',
@@ -34,11 +35,15 @@ function Log() {
 
     const [mintedPages, setMintedPages] = useState<number>(0);
 
+    const { getXp } = useAuthenticationContext() as AuthenticationContextType;
+
     useEffect(() => {
         init();
     }, []);
 
     const init = async () => {
+        // Update XP which may be needed for checking, if the player mints a page
+        getXp();
         setMintedPages(await getPagesMinted());
     };
 
