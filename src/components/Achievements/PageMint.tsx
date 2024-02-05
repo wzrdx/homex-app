@@ -16,7 +16,7 @@ export const PageMint = ({ index, page, goBack }) => {
     }, []);
 
     const init = async () => {
-        setPageMinted(await isPageMinted(index + 1));
+        setPageMinted(await isPageMinted(index));
         setLoading(false);
     };
 

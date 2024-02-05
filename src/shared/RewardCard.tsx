@@ -114,7 +114,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 </Flex>
             </Flex>
 
-            <Flex py={2.5} width="100%" alignItems="center" justifyContent="center">
+            <Flex py={3} width="100%" alignItems="center" justifyContent="center">
                 <Text layerStyle="header2">Elder Ticket Rewards</Text>
             </Flex>
 

@@ -57,16 +57,16 @@ export const Interactor = ({ index }) => {
         let value = true;
 
         if (PAGE_HEADERS[index].requiresVerification) {
-            value = await canMintPage(index + 1);
+            value = await canMintPage(index);
         }
 
         setCanMint(value);
     };
 
-    const verify = useMutation(() => verifyPage(address, index + 1), {
+    const verify = useMutation(() => verifyPage(address, index), {
         onSuccess: async (data) => {
             console.log('Response:', data);
-            setCanMint(await canMintPage(index + 1));
+            setCanMint(await canMintPage(index));
         },
         onError: (error: any) => {
             console.error(error.response.data);
@@ -93,13 +93,14 @@ export const Interactor = ({ index }) => {
 
         const user = new Address(address);
 
+        // TODO: Gas limit
         try {
             const tx = smartContract.methods
-                .mintPage([index + 1])
+                .mintPage([index])
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, 3))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(30000000)
+                .withGasLimit(100000000)
                 .buildTransaction();
 
             await refreshAccount();
