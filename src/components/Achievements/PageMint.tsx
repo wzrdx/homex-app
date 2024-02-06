@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Stack, Flex, Button, Center, Text, Box, Image, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { PAGE_HEADERS } from '../../services/achievements';
@@ -5,23 +6,48 @@ import { BsGem } from 'react-icons/bs';
 import { Interactor } from './Interactor';
 import { isPageMinted } from '../../blockchain/auxiliary/api/isPageMinted';
 import { getAOMLogo } from '../../services/assets';
+import { useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import { useTransactionsContext, TransactionsContextType, TransactionType, Transaction } from '../../services/transactions';
 
 export const PageMint = ({ index, page, goBack }) => {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [isMinted, setPageMinted] = useState<boolean>();
 
+    const { pendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
+
     // Init
     useEffect(() => {
-        init();
+        getState();
     }, []);
 
-    const init = async () => {
+    const getState = async () => {
+        setLoading(true);
         setPageMinted(await isPageMinted(index));
         setLoading(false);
     };
 
+    // Successful minting txs
+    useEffect(() => {
+        if (hasSuccessfulTransactions) {
+            const successfulSessionIds: string[] = _.intersection(
+                _.map(pendingTxs, (tx) => tx.sessionId),
+                _.map(successfulTransactionsArray, (array) => array[0])
+            );
+
+            const successfulMintingTxs = _.filter(
+                pendingTxs,
+                (tx: Transaction) => _.includes(successfulSessionIds, tx.sessionId) && tx.type === TransactionType.MintPage
+            );
+
+            if (!_.isEmpty(successfulMintingTxs)) {
+                getState();
+            }
+        }
+    }, [pendingTxs, hasSuccessfulTransactions]);
+
     return (
-        <Box height="100%" position="relative">
+        <Center height="100%" position="relative">
             <Flex position="absolute" top={0} left={0} py={1.5} alignItems="flex-start">
                 <Button colorScheme="blue" onClick={goBack}>
                     Go back
@@ -78,6 +104,6 @@ export const PageMint = ({ index, page, goBack }) => {
                     {!isMinted && <Interactor index={index} />}
                 </Stack>
             )}
-        </Box>
+        </Center>
     );
 };

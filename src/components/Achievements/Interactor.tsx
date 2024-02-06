@@ -13,7 +13,13 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import {
+    Transaction,
+    TransactionType,
+    TransactionsContextType,
+    TxResolution,
+    useTransactionsContext,
+} from '../../services/transactions';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
 import { LEVELS } from '../../services/xp';
 
@@ -23,6 +29,7 @@ export const Interactor = ({ index }) => {
     const { address } = useGetAccountInfo();
     const { stakingInfo } = useStoreContext() as StoreContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
+
     const { setPendingTxs, isMintPageTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -64,9 +71,21 @@ export const Interactor = ({ index }) => {
     };
 
     const verify = useMutation(() => verifyPage(address, index), {
-        onSuccess: async (data) => {
-            console.log('Response:', data);
-            setCanMint(await canMintPage(index));
+        onSuccess: async (response) => {
+            if (response.status === 200) {
+                setCanMint(await canMintPage(index));
+
+                toast({
+                    title: `${PAGE_HEADERS[index].title} verified successfully!`,
+                    status: 'success',
+                    variant: 'left-accent',
+                    position: 'top',
+                    isClosable: true,
+                    containerStyle: {
+                        marginTop: '1.25rem',
+                    },
+                });
+            }
         },
         onError: (error: any) => {
             console.error(error.response.data);
@@ -92,15 +111,26 @@ export const Interactor = ({ index }) => {
         setMintingLoading(true);
 
         const user = new Address(address);
+        const type = PAGE_HEADERS[index].type;
 
-        // TODO: Gas limit
+        let gasLimit: number;
+
+        switch (type) {
+            case 'main_staking':
+                gasLimit = 90000000;
+                break;
+
+            default:
+                gasLimit = 30000000;
+        }
+
         try {
             const tx = smartContract.methods
                 .mintPage([index])
                 .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, 3))
                 .withSender(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(100000000)
+                .withGasLimit(gasLimit)
                 .buildTransaction();
 
             await refreshAccount();
@@ -188,9 +218,13 @@ export const Interactor = ({ index }) => {
                 </Button>
             </Flex>
 
-            <Text fontSize="15px" textShadow="1px 1px 0px #222" color="#cbcbcb">
-                Verification required before minting
-            </Text>
+            <Stack direction="row" spacing={1.5} alignItems="center">
+                <InfoIcon color="#cbcbcb" />
+
+                <Text textShadow="1px 1px 0px #222" color="#cbcbcb">
+                    Verification required before minting (off-chain, aprox. 15 seconds)
+                </Text>
+            </Stack>
         </Stack>
     );
 

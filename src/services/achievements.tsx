@@ -45,6 +45,7 @@ export interface TravelersLogPageHeader {
     rarity: TravelersLogPageRarity;
     image: string;
     requiresVerification?: boolean;
+    type: string;
 }
 
 /**
@@ -74,6 +75,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-11-01'),
         rarity: TravelersLogPageRarity.Epic,
         image: CelestialsCustodian,
+        type: 'celestials_minters',
     },
     {
         index: getIndex(),
@@ -81,6 +83,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-11-01'),
         rarity: TravelersLogPageRarity.Legendary,
         image: CelestialsCurator,
+        type: 'celestials_minters',
     },
     {
         index: getIndex(),
@@ -89,6 +92,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         rarity: TravelersLogPageRarity.Rare,
         image: CelestialsCollector,
         requiresVerification: true,
+        type: 'celestials_owners',
     },
     {
         index: getIndex(),
@@ -97,6 +101,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         rarity: TravelersLogPageRarity.Rare,
         image: CelestialsHoarder,
         requiresVerification: true,
+        type: 'celestials_owners',
     },
     {
         index: getIndex(),
@@ -104,6 +109,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2023-12-29'),
         rarity: TravelersLogPageRarity.Common,
         image: BudgetTravelers,
+        type: 'main_staking',
     },
     {
         index: getIndex(),
@@ -111,6 +117,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2024-01-13'),
         rarity: TravelersLogPageRarity.Uncommon,
         image: RareTravelers,
+        type: 'main_staking',
     },
     {
         index: getIndex(),
@@ -118,6 +125,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2024-01-16'),
         rarity: TravelersLogPageRarity.Rare,
         image: VarietyHunter,
+        type: 'main_staking',
     },
 ];
 
