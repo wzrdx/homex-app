@@ -11,7 +11,7 @@ export const gameScAddress = getEnvValue(
 
 export const auxiliaryScAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk',
-    'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk'
+    'erd1qqqqqqqqqqqqqpgqq7xajhr5500sfmrrn0zxuvnglgyzwp3cdn7qmshd07'
 );
 
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
