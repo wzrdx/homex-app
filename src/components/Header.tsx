@@ -194,13 +194,13 @@ function Header() {
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
-                        {/* <HeaderButton
+                        <HeaderButton
                             type="Swords"
                             color="travelersLog"
                             backgroundColor="#182e4c"
                             text="Traveler's Log"
                             onClick={onLogOpen}
-                        /> */}
+                        />
 
                         <HeaderButton
                             type="Settings"

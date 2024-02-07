@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { API_KEY } from '../components/Settings';
 
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
-const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : devValue);
+const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 
 export const gameScAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgqc8s6t5594e4en4ffl60r6hn52hajkpkkukrqww29av',
@@ -11,7 +11,7 @@ export const gameScAddress = getEnvValue(
 
 export const auxiliaryScAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk',
-    'erd1qqqqqqqqqqqqqpgq24hdelr3nz6vdwnkvpu24fq24e49vhm4ukrqkt4cjk'
+    'erd1qqqqqqqqqqqqqpgqq7xajhr5500sfmrrn0zxuvnglgyzwp3cdn7qmshd07'
 );
 
 export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
