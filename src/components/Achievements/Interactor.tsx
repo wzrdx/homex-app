@@ -117,7 +117,7 @@ export const Interactor = ({ index }) => {
 
         switch (type) {
             case 'main_staking':
-                gasLimit = 90000000;
+                gasLimit = 200000000;
                 break;
 
             default:
