@@ -13,10 +13,13 @@ import { QuestsProvider } from './services/quests';
 import { StoreProvider } from './services/store';
 import { RewardsProvider } from './services/rewards';
 import ReactGA from 'react-ga4';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 ReactGA.initialize('G-0ZW6TBSBMG');
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const queryClient = new QueryClient();
+
 root.render(
     <BrowserRouter>
         <DappProvider
@@ -35,7 +38,10 @@ root.render(
                             <StoreProvider>
                                 <RewardsProvider>
                                     <ColorModeScript initialColorMode="dark" />
-                                    <App />
+
+                                    <QueryClientProvider client={queryClient}>
+                                        <App />
+                                    </QueryClientProvider>
                                 </RewardsProvider>
                             </StoreProvider>
                         </QuestsProvider>

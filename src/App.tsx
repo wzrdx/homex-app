@@ -150,8 +150,8 @@ function App() {
                         displayEnergyGain(tx?.hash);
                         break;
 
-                    case TransactionType.JoinRaffle:
-                        displayToast('Tickets sent', 'Successfully joined the raffle', 'green.500');
+                    case TransactionType.MintPage:
+                        displayToast('Minting successful', `Successfully minted the ${tx.data.name} page`, 'green.500');
                         break;
 
                     case TransactionType.ClaimReward:

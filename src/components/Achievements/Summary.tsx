@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { Spinner, Stack, Text, Center, Box, Flex } from '@chakra-ui/react';
-import { LogSummary, getLogSummary } from '../../blockchain/api/achievements/getLogSummary';
+import { LogSummary, getLogSummary } from '../../blockchain/game/api/achievements/getLogSummary';
 
 // const HEADER = [
 //     {

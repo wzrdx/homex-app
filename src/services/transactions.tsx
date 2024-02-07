@@ -1,13 +1,13 @@
 import { find, findIndex, includes } from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { isGamePausedQuery } from '../blockchain/api/isGamePaused';
+import { isGamePausedQuery } from '../blockchain/game/api/isGamePaused';
 
 export enum TransactionType {
     StartQuest,
     StartMultipleQuests,
     CompleteQuest,
     CompleteAllQuests,
-    JoinRaffle,
+    MintPage,
     Stake,
     Unstake,
     ClaimEnergy,
@@ -41,7 +41,7 @@ export interface TransactionsContextType {
     setPendingTxs: React.Dispatch<React.SetStateAction<Transaction[]>>;
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
     isTxPending: (type: TransactionType) => boolean;
-    isRaffleTxPending: (type: TransactionType, raffleId: number) => boolean;
+    isMintPageTxPending: (type: TransactionType, index: number) => boolean;
     isClaimRewardTxPending: (type: TransactionType, id: number) => boolean;
     isGamePaused: boolean;
     getGameState: () => Promise<boolean>;
@@ -74,8 +74,8 @@ export const TransactionsProvider = ({ children }) => {
         return findIndex(pendingTxs, (tx) => tx.type === type && tx.questId === questId) > -1;
     };
 
-    const isRaffleTxPending = (type: TransactionType, raffleId: number): boolean => {
-        return findIndex(pendingTxs, (tx) => tx.type === type && tx.data.id === raffleId) > -1;
+    const isMintPageTxPending = (type: TransactionType, index: number): boolean => {
+        return findIndex(pendingTxs, (tx) => tx.type === type && tx.data.index === index) > -1;
     };
 
     const isClaimRewardTxPending = (type: TransactionType, id: number): boolean => {
@@ -98,7 +98,7 @@ export const TransactionsProvider = ({ children }) => {
                 pendingTxs,
                 setPendingTxs,
                 isQuestTxPending,
-                isRaffleTxPending,
+                isMintPageTxPending,
                 isClaimRewardTxPending,
                 isTxPending,
                 isGamePaused,

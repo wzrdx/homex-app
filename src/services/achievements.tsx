@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import {
     getBudgetTravelersCommonAssets,
@@ -12,14 +13,21 @@ import {
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
-import _ from 'lodash';
-import { getPageCelestials } from '../blockchain/api/achievements/getPageCelestials';
+import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
 import { useStoreContext, StoreContextType } from './store';
-import { Stake } from '../blockchain/hooks/useGetStakingInfo';
-import { getRarityClasses } from '../blockchain/api/getRarityClasses';
+import { Stake } from '../blockchain/game/hooks/useGetStakingInfo';
+import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
 
-enum TravelersLogPageRarity {
+import BudgetTravelers from '../assets/log/pages/budget_travelers.png';
+import CelestialsCollector from '../assets/log/pages/celestials_collector.png';
+import CelestialsCurator from '../assets/log/pages/celestials_curator.png';
+import CelestialsCustodian from '../assets/log/pages/celestials_custodian.png';
+import CelestialsHoarder from '../assets/log/pages/celestials_hoarder.png';
+import RareTravelers from '../assets/log/pages/rare_travelers.png';
+import VarietyHunter from '../assets/log/pages/variety_hunter.png';
+
+export enum TravelersLogPageRarity {
     Common = 'Common',
     Uncommon = 'Uncommon',
     Rare = 'Rare',
@@ -35,6 +43,9 @@ export interface TravelersLogPageHeader {
     title: string;
     dateAdded: Date;
     rarity: TravelersLogPageRarity;
+    image: string;
+    requiresVerification?: boolean;
+    type: string;
 }
 
 /**
@@ -63,42 +74,58 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         title: 'Celestials Custodian',
         dateAdded: new Date('2023-11-01'),
         rarity: TravelersLogPageRarity.Epic,
+        image: CelestialsCustodian,
+        type: 'celestials_minters',
     },
     {
         index: getIndex(),
         title: 'Celestials Curator',
         dateAdded: new Date('2023-11-01'),
         rarity: TravelersLogPageRarity.Legendary,
+        image: CelestialsCurator,
+        type: 'celestials_minters',
     },
     {
         index: getIndex(),
         title: 'Celestials Collector',
         dateAdded: new Date('2023-12-01'),
         rarity: TravelersLogPageRarity.Rare,
+        image: CelestialsCollector,
+        requiresVerification: true,
+        type: 'celestials_owners',
     },
     {
         index: getIndex(),
         title: 'Celestials Hoarder',
         dateAdded: new Date('2023-12-01'),
         rarity: TravelersLogPageRarity.Rare,
+        image: CelestialsHoarder,
+        requiresVerification: true,
+        type: 'celestials_owners',
     },
     {
         index: getIndex(),
         title: 'Budget Travelers',
         dateAdded: new Date('2023-12-29'),
         rarity: TravelersLogPageRarity.Common,
+        image: BudgetTravelers,
+        type: 'main_staking',
     },
     {
         index: getIndex(),
         title: 'Rare Travelers',
         dateAdded: new Date('2024-01-13'),
         rarity: TravelersLogPageRarity.Uncommon,
+        image: RareTravelers,
+        type: 'main_staking',
     },
     {
         index: getIndex(),
         title: 'Variety Hunter',
         dateAdded: new Date('2024-01-16'),
         rarity: TravelersLogPageRarity.Rare,
+        image: VarietyHunter,
+        type: 'main_staking',
     },
 ];
 

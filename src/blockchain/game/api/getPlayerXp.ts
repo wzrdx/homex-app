@@ -1,34 +1,31 @@
-import { ResultsParser, ContractFunction, U32Value } from '@multiversx/sdk-core/out';
+import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
-import { API_URL } from '../config';
-import { map } from 'lodash';
+import { API_URL } from '../../config';
+import { getAddress } from '@multiversx/sdk-dapp/utils';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getRaffleHashes';
+const FUNCTION_NAME = 'getPlayerXp';
 
-export interface Trial {
-    index: number;
-    hashes: string[];
-}
-
-export const getRaffleHashes = async (id: number) => {
+export const getPlayerXp = async (): Promise<number> => {
     try {
+        const address = await getAddress();
+
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
-            args: [new U32Value(id)],
+            args: [new AddressValue(new Address(address))],
         });
 
         const queryResponse = await proxy.queryContract(query);
         const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
 
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-        const array = firstValue?.valueOf();
 
-        return map(array, (hash) => Buffer.from(hash).toString('hex'));
+        const value: number = firstValue?.valueOf()?.toNumber();
+        return value;
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);
-        return [];
+        return 1;
     }
 };

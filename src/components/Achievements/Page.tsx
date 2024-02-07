@@ -100,7 +100,7 @@ export const Page = ({ index, toggleMint }) => {
                         </Stack>
 
                         <Stack direction="row" spacing={3} alignItems="center" py={1.5}>
-                            <Stack direction="row" spacing={1} alignItems="center">
+                            <Stack direction="row" spacing={1} alignItems="center" minH="52px">
                                 {!_(badges)
                                     .filter((badge) => !badge.isUnlocked)
                                     .size() ? (
@@ -112,7 +112,7 @@ export const Page = ({ index, toggleMint }) => {
                                         </Box>
 
                                         <Text fontSize="15px" textShadow="1px 1px 0px #222" color="mintGreen">
-                                            Minting available
+                                            Minting unlocked
                                         </Text>
                                     </>
                                 ) : (
@@ -134,9 +134,13 @@ export const Page = ({ index, toggleMint }) => {
                                 )}
                             </Stack>
 
-                            <Button colorScheme="blue" onClick={toggleMint}>
-                                Mint page
-                            </Button>
+                            {!_(badges)
+                                .filter((badge) => !badge.isUnlocked)
+                                .size() && (
+                                <Button colorScheme="green" onClick={toggleMint}>
+                                    View
+                                </Button>
+                            )}
                         </Stack>
                     </Flex>
 

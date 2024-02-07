@@ -37,7 +37,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { ActionButton } from './ActionButton/ActionButton';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
-import { getRaffleHashes } from '../blockchain/api/getRaffleHashes';
+import { getRaffleHashes } from '../blockchain/game/api/getRaffleHashes';
 import { CompetitionType } from './CompetitionDetails';
 
 const COLUMNS = [

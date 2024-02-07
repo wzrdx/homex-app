@@ -7,7 +7,7 @@ import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
 import { useStoreContext, StoreContextType } from '../../services/store';
-import { useGetStakingInfo } from '../../blockchain/hooks/useGetStakingInfo';
+import { useGetStakingInfo } from '../../blockchain/game/hooks/useGetStakingInfo';
 
 function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
     const [duration, setDuration] = useState<Duration>({

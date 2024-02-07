@@ -6,13 +6,10 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
 import { ActionButton } from './ActionButton/ActionButton';
 import { getTicketsPrize } from '../services/rewards';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
-import { intervalToDuration } from 'date-fns';
-import { zeroPad } from '../services/helpers';
 
 function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }) {
     const { address } = useGetAccountInfo();
@@ -29,16 +26,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
         text: string;
     }>();
 
-    const [duration, setDuration] = useState<Duration>({
-        seconds: 0,
-        minutes: 0,
-        hours: 0,
-        days: 0,
-        months: 0,
-        years: 0,
-    });
-
-    const { isGamePaused, isClaimRewardTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
+    const { isClaimRewardTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
 
     // Init
     useEffect(() => {
@@ -46,13 +34,6 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
     }, []);
 
     const init = async () => {
-        const start = await getTrialTimestamp();
-        setDuration(
-            intervalToDuration({
-                start,
-                end: new Date(),
-            })
-        );
         setPrize(getTicketsPrize(ticketsAmount));
     };
 
@@ -107,9 +88,10 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
             border="2px solid #fdefce26"
             borderRadius="2px"
             overflow="hidden"
-            backgroundColor="#12121287"
+            backgroundColor="#181818"
             backdropFilter="blur(10px)"
             transition="all 0.1s ease-in"
+            minW="280px"
             _hover={{ border: '2px solid #fdefce40' }}
         >
             <Flex flexDir="column" width="100%" height="260px">
@@ -132,18 +114,8 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 </Flex>
             </Flex>
 
-            <Flex pt={2.5} pb={1} width="100%" alignItems="center" justifyContent="center">
+            <Flex py={3} width="100%" alignItems="center" justifyContent="center">
                 <Text layerStyle="header2">Elder Ticket Rewards</Text>
-            </Flex>
-
-            <Flex px={12} pb={2.5} width="100%" alignItems="center" justifyContent="center">
-                <Text textTransform="uppercase" fontSize="15px" fontWeight={500} userSelect="none">
-                    {`Expires in ${
-                        (duration.days as number) > 0 || (duration.months as number) > 0
-                            ? `${duration.days} day${(duration.days as number) > 1 ? 's' : ''}, `
-                            : ''
-                    } ${zeroPad(duration.hours)}:${zeroPad(duration.minutes)}:${zeroPad(duration.seconds)}`}
-                </Text>
             </Flex>
 
             <Box width="100%">

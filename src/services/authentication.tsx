@@ -1,11 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import { API_URL, contractAddress } from '../blockchain/config';
+import { API_URL, gameScAddress } from '../blockchain/config';
 import { NFT } from '../blockchain/types';
+import { getPlayerXp } from '../blockchain/game/api/getPlayerXp';
 
 export interface AuthenticationContextType {
     isAuthenticated: boolean;
     setAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
+    xp: number;
+    getXp: () => Promise<void>;
 }
 
 export const getNFTsCount = (address: string, collection: string): Promise<{ data: number }> =>
@@ -28,7 +31,7 @@ export const getWalletNonces = (address: string, collection: string, from = 0): 
     });
 
 export const getContractNFTs = (collection: string, identifiers: string): Promise<{ data: Array<NFT> }> =>
-    axios.get(`accounts/${contractAddress}/nfts`, {
+    axios.get(`accounts/${gameScAddress}/nfts`, {
         baseURL: API_URL,
         params: {
             identifiers,
@@ -43,9 +46,14 @@ export const useAuthenticationContext = () => useContext(AuthenticationContext);
 
 export const AuthenticationProvider = ({ children }) => {
     const [isAuthenticated, setAuthentication] = useState(false);
+    const [xp, setXp] = useState<number>(0);
+
+    const getXp = async () => {
+        setXp(await getPlayerXp());
+    };
 
     return (
-        <AuthenticationContext.Provider value={{ isAuthenticated, setAuthentication }}>
+        <AuthenticationContext.Provider value={{ isAuthenticated, setAuthentication, xp, getXp }}>
             {children}
         </AuthenticationContext.Provider>
     );

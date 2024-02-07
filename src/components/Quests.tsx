@@ -27,7 +27,7 @@ import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { Timer } from '../shared/Timer';
 import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
@@ -38,17 +38,14 @@ import { useLayout } from './Layout';
 import Separator from '../shared/Separator';
 import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import MultipleQuests from './MultipleQuests';
 
 const LARGE_FRAME_SIZE = 426;
 const MEDIUM_FRAME_SIZE = 350;
 
-const GRACE_PERIOD_INTERVAL = 24;
-
 function Quests() {
-    const { displayToast, closeToast } = useLayout();
+    const { displayToast } = useLayout();
     const navigate = useNavigate();
 
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
@@ -72,60 +69,19 @@ function Quests() {
     const [isFinishButtonLoading, setFinishButtonLoading] = useState(false);
     const [isCompleteAllButtonLoading, setCompleteAllLoading] = useState(false);
 
-    const [trialTimestamp, setTrialTimestamp] = useState<Date>();
-
     const isQuestDefault = (quest: Quest = currentQuest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
     const isQuestOngoing = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isBefore(new Date(), q.timestamp)) > -1;
     const isQuestComplete = () =>
         findIndex(ongoingQuests, (q) => q.id === currentQuest.id && isAfter(new Date(), q.timestamp)) > -1;
 
-    const canBeCompleted = (): boolean => {
-        if (!trialTimestamp) {
-            return false;
-        }
-
-        return isBefore(addMinutes(new Date(), currentQuest.duration), trialTimestamp);
-    };
-
     // Init
     useEffect(() => {
         init();
     }, []);
 
-    // Trial timestamp handling
-    useEffect(() => {
-        if (
-            trialTimestamp &&
-            differenceInHours(trialTimestamp, new Date()) < GRACE_PERIOD_INTERVAL &&
-            !isGamePaused &&
-            isBefore(new Date(), trialTimestamp)
-        ) {
-            const difference = differenceInHours(trialTimestamp, new Date());
-            const duration =
-                difference > 1 ? `about ${difference} hours` : difference === 1 ? `about one hour` : 'less than an hour';
-
-            displayToast(
-                'time',
-                `Trial ends in ${duration}`,
-                'Claim your quest rewards before the end or they will be lost',
-                'orangered',
-                7000,
-                'top-right',
-                {
-                    margin: '2rem',
-                }
-            );
-        }
-
-        return () => {
-            closeToast();
-        };
-    }, [trialTimestamp]);
-
     const init = async () => {
         getOngoingQuests();
-        setTrialTimestamp(await getTrialTimestamp());
     };
 
     const startQuest = async () => {
@@ -410,12 +366,12 @@ function Quests() {
                     </Flex>
                     <Box mb={2}>
                         {/* Normal - The quest hasn't started */}
-                        {isQuestDefault() && canBeCompleted() && (
+                        {isQuestDefault() && (
                             <ActionButton
                                 isLoading={
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
-                                disabled={isGamePaused || !meetsRequirements(resources, currentQuest.id) || !canBeCompleted()}
+                                disabled={isGamePaused || !meetsRequirements(resources, currentQuest.id)}
                                 onClick={startQuest}
                             >
                                 <Text>Start</Text>
@@ -440,13 +396,6 @@ function Quests() {
                             >
                                 <Text>Claim Rewards</Text>
                             </ActionButton>
-                        )}
-
-                        {!isGamePaused && trialTimestamp && isQuestDefault() && !canBeCompleted() && (
-                            <Alert status="error">
-                                <AlertIcon />
-                                Quest duration exceeds end of Trial
-                            </Alert>
                         )}
                     </Box>
 

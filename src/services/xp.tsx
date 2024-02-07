@@ -5,7 +5,7 @@ interface LevelInfo {
     xp: number;
 }
 
-const LEVELS = [
+export const LEVELS = [
     { level: 1, xp: 0 },
     { level: 2, xp: 83 },
     { level: 3, xp: 174 },

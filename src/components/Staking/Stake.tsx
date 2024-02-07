@@ -7,14 +7,14 @@ import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, isStakingDisabled } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/smartContract';
+import { smartContract } from '../../blockchain/game/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import { NFT } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Rarity, getRarityClasses } from '../../blockchain/api/getRarityClasses';
+import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 
 function Stake() {
     const { height, displayToast } = useStaking();

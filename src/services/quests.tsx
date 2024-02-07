@@ -34,7 +34,7 @@ import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
-import { smartContract } from '../blockchain/smartContract';
+import { smartContract } from '../blockchain/game/smartContract';
 import { BigNumber } from 'bignumber.js';
 
 const QUEST_IMAGES = [
