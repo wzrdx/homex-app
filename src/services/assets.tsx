@@ -84,6 +84,14 @@ import RareTravelersRoyal3 from '../assets/log/rare_travelers/royal_3.png';
 import EldersLocked from '../assets/log/elders/elders_locked.png';
 import EldersUnlocked from '../assets/log/elders/elders_unlocked.png';
 
+// Summary
+
+export const getSummaryAssets = (index: number, type: 'Occult' | 'Esoteric' | 'Magical'): [string, string] => {
+    let assets: [string, string] = [EmberheartLocked, EmberheartCustodian];
+
+    return assets;
+};
+
 // Celestials
 export const getCelestialsAssets = (
     type: 'Custodian' | 'Curator',

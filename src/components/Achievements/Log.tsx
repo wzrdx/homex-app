@@ -65,7 +65,7 @@ function Log() {
                 return <PageMint index={currentPage} page={PAGE_HEADERS[currentPage]} goBack={() => setView(View.Page)} />;
 
             case View.Tutorial:
-                return <LogTutorial goBack={() => setView(View.Page)} />;
+                return <LogTutorial goBack={() => setView(currentPage === -1 ? View.Summary : View.Page)} />;
 
             case View.Summary:
                 return <Summary />;

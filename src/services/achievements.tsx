@@ -9,6 +9,7 @@ import {
     getEldersAssets,
     getRareTravelersRareAssets,
     getRareTravelersRoyalAssets,
+    getSummaryAssets,
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -26,6 +27,7 @@ import CelestialsCustodian from '../assets/log/pages/celestials_custodian.png';
 import CelestialsHoarder from '../assets/log/pages/celestials_hoarder.png';
 import RareTravelers from '../assets/log/pages/rare_travelers.png';
 import VarietyHunter from '../assets/log/pages/variety_hunter.png';
+import { LogSummary, getLogSummary } from '../blockchain/game/api/achievements/getLogSummary';
 
 export enum TravelersLogPageRarity {
     Common = 'Common',
@@ -127,6 +129,31 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         image: VarietyHunter,
         type: 'main_staking',
     },
+    // TODO: Date, Image
+    {
+        index: getIndex(),
+        title: 'Occult Odyssey',
+        dateAdded: new Date('2024-03-08'),
+        rarity: TravelersLogPageRarity.Epic,
+        image: VarietyHunter,
+        type: 'summary',
+    },
+    {
+        index: getIndex(),
+        title: 'Esoteric Expedition',
+        dateAdded: new Date('2024-03-08'),
+        rarity: TravelersLogPageRarity.Rare,
+        image: VarietyHunter,
+        type: 'summary',
+    },
+    {
+        index: getIndex(),
+        title: 'Magical Journey',
+        dateAdded: new Date('2024-03-08'),
+        rarity: TravelersLogPageRarity.Uncommon,
+        image: VarietyHunter,
+        type: 'summary',
+    },
 ];
 
 export interface AchievementsSharedData {
@@ -139,6 +166,7 @@ export interface AchievementsSharedData {
     };
     celestialsBalance?: number[];
     rarityCount?: _.Dictionary<number>;
+    summary?: LogSummary;
 }
 
 export interface AchievementsContextType {
@@ -509,6 +537,174 @@ export const AchievementsProvider = ({ children }) => {
         };
     };
 
+    const getOccultOdyssey = (): TravelersLogPageMetadata => {
+        const keyword = 'Occult';
+        const limits = [200, 60, 60, 50, 18, 40000];
+
+        const badges = [
+            {
+                title: `${keyword} Mastery`,
+                text: `Complete ${limits[0]} total quests`,
+                assets: getSummaryAssets(0, keyword),
+            },
+            {
+                title: `${keyword} Herbalist`,
+                text: `Complete ${limits[1]} Herbalism quests`,
+                assets: getSummaryAssets(1, keyword),
+            },
+            {
+                title: `${keyword} Craftsman`,
+                text: `Complete ${limits[2]} Jewelcrafting quests`,
+                assets: getSummaryAssets(2, keyword),
+            },
+            {
+                title: `${keyword} Divinator`,
+                text: `Complete ${limits[3]} Divination quests`,
+                assets: getSummaryAssets(3, keyword),
+            },
+            {
+                title: `${keyword} Performer`,
+                text: `Earn ${limits[4]} Golden Tickets`,
+                assets: getSummaryAssets(4, keyword),
+            },
+            {
+                title: `${keyword} Industrialist`,
+                text: `Earn ${limits[5]} Energy`,
+                assets: getSummaryAssets(5, keyword),
+            },
+        ];
+
+        const getBadges = async (summary: LogSummary): Promise<TravelersLogBadge[]> => {
+            return _.map(badges, (badge, index) => {
+                const keys: string[] = Object.keys(summary);
+
+                return {
+                    ...badge,
+                    isUnlocked: summary[keys[index]] >= limits[index],
+                    value: summary[keys[index]],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getSummary,
+            dataKey: 'summary',
+        };
+    };
+
+    const getEsotericExpedition = (): TravelersLogPageMetadata => {
+        const keyword = 'Esoteric';
+        const limits = [100, 40, 40, 30, 12, 20000];
+
+        const badges = [
+            {
+                title: `${keyword} Mastery`,
+                text: `Complete ${limits[0]} total quests`,
+                assets: getSummaryAssets(0, keyword),
+            },
+            {
+                title: `${keyword} Herbalist`,
+                text: `Complete ${limits[1]} Herbalism quests`,
+                assets: getSummaryAssets(1, keyword),
+            },
+            {
+                title: `${keyword} Craftsman`,
+                text: `Complete ${limits[2]} Jewelcrafting quests`,
+                assets: getSummaryAssets(2, keyword),
+            },
+            {
+                title: `${keyword} Divinator`,
+                text: `Complete ${limits[3]} Divination quests`,
+                assets: getSummaryAssets(3, keyword),
+            },
+            {
+                title: `${keyword} Performer`,
+                text: `Earn ${limits[4]} Golden Tickets`,
+                assets: getSummaryAssets(4, keyword),
+            },
+            {
+                title: `${keyword} Industrialist`,
+                text: `Earn ${limits[5]} Energy`,
+                assets: getSummaryAssets(5, keyword),
+            },
+        ];
+
+        const getBadges = async (summary: LogSummary): Promise<TravelersLogBadge[]> => {
+            return _.map(badges, (badge, index) => {
+                const keys: string[] = Object.keys(summary);
+
+                return {
+                    ...badge,
+                    isUnlocked: summary[keys[index]] >= limits[index],
+                    value: summary[keys[index]],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getSummary,
+            dataKey: 'summary',
+        };
+    };
+
+    const getMagicalJourney = (): TravelersLogPageMetadata => {
+        const keyword = 'Magical';
+        const limits = [50, 20, 20, 12, 6, 8000];
+
+        const badges = [
+            {
+                title: `${keyword} Mastery`,
+                text: `Complete ${limits[0]} total quests`,
+                assets: getSummaryAssets(0, keyword),
+            },
+            {
+                title: `${keyword} Herbalist`,
+                text: `Complete ${limits[1]} Herbalism quests`,
+                assets: getSummaryAssets(1, keyword),
+            },
+            {
+                title: `${keyword} Craftsman`,
+                text: `Complete ${limits[2]} Jewelcrafting quests`,
+                assets: getSummaryAssets(2, keyword),
+            },
+            {
+                title: `${keyword} Divinator`,
+                text: `Complete ${limits[3]} Divination quests`,
+                assets: getSummaryAssets(3, keyword),
+            },
+            {
+                title: `${keyword} Performer`,
+                text: `Earn ${limits[4]} Golden Tickets`,
+                assets: getSummaryAssets(4, keyword),
+            },
+            {
+                title: `${keyword} Industrialist`,
+                text: `Earn ${limits[5]} Energy`,
+                assets: getSummaryAssets(5, keyword),
+            },
+        ];
+
+        const getBadges = async (summary: LogSummary): Promise<TravelersLogBadge[]> => {
+            return _.map(badges, (badge, index) => {
+                const keys: string[] = Object.keys(summary);
+
+                return {
+                    ...badge,
+                    isUnlocked: summary[keys[index]] >= limits[index],
+                    value: summary[keys[index]],
+                };
+            });
+        };
+
+        return {
+            getBadges,
+            getData: getSummary,
+            dataKey: 'summary',
+        };
+    };
+
     // Data functions
     const getCelestialsPage = async () => {
         setData({
@@ -552,6 +748,13 @@ export const AchievementsProvider = ({ children }) => {
         });
     };
 
+    const getSummary = async () => {
+        setData({
+            ...data,
+            summary: await getLogSummary(),
+        });
+    };
+
     // Helpers
     const getSFTBalance = async (id: string): Promise<number> => {
         try {
@@ -570,6 +773,9 @@ export const AchievementsProvider = ({ children }) => {
         getBudgetTravelers(),
         getRareTravelers(),
         getVarietyHunter(),
+        getOccultOdyssey(),
+        getEsotericExpedition(),
+        getMagicalJourney(),
     ]);
 
     return (

@@ -3,71 +3,6 @@ import { useEffect, useState } from 'react';
 import { Spinner, Stack, Text, Center, Box, Flex } from '@chakra-ui/react';
 import { LogSummary, getLogSummary } from '../../blockchain/game/api/achievements/getLogSummary';
 
-// const HEADER = [
-//     {
-//         title: (
-//             <Text layerStyle="header2">
-//                 <Text as="span" color="energyBright" fontWeight={600}>
-//                     Energy
-//                 </Text>{' '}
-//                 claimed
-//             </Text>
-//         ),
-//         key: 'energy',
-//     },
-//     {
-//         title: (
-//             <Text layerStyle="header2">
-//                 <Text as="span" color="ticketBright" fontWeight={600}>
-//                     Tickets
-//                 </Text>{' '}
-//                 earned
-//             </Text>
-//         ),
-//         key: 'tickets',
-//     },
-// ];
-
-// const QUESTS = [
-//     {
-//         title: <Text layerStyle="header2">Completed quests</Text>,
-//         key: 'questsCompleted',
-//     },
-//     {
-//         title: (
-//             <Text layerStyle="header2">
-//                 <Text as="span" color="resources.herbs" fontWeight={600}>
-//                     Herbalism
-//                 </Text>{' '}
-//                 quests
-//             </Text>
-//         ),
-//         key: 'herbalism',
-//     },
-//     {
-//         title: (
-//             <Text layerStyle="header2">
-//                 <Text as="span" color="resources.gems" fontWeight={600}>
-//                     Jewelcrafting
-//                 </Text>{' '}
-//                 quests
-//             </Text>
-//         ),
-//         key: 'jewelcrafting',
-//     },
-//     {
-//         title: (
-//             <Text layerStyle="header2">
-//                 <Text as="span" color="resources.essence" fontWeight={600}>
-//                     Divination
-//                 </Text>{' '}
-//                 quests
-//             </Text>
-//         ),
-//         key: 'divination',
-//     },
-// ];
-
 const HEADER = [
     {
         title: 'Energy claimed',
@@ -119,7 +54,7 @@ export const Summary = ({}) => {
             ) : (
                 <Stack spacing={4}>
                     <Stack>
-                        <Text fontSize="24px" letterSpacing="0.5px" color="#dcdcdc">
+                        <Text fontSize="24px" letterSpacing="0.25px" color="#e6e6e6">
                             Earnings
                         </Text>
 
@@ -133,7 +68,7 @@ export const Summary = ({}) => {
                     </Stack>
 
                     <Stack>
-                        <Text fontSize="24px" letterSpacing="0.5px" color="#dcdcdc">
+                        <Text fontSize="24px" letterSpacing="0.25px" color="#e6e6e6">
                             Quests
                         </Text>
 
@@ -162,7 +97,7 @@ const Card = ({ title, value, color }) => (
         </Text>
 
         <Text fontSize="26px" lineHeight="26px" fontWeight={500} color="black">
-            {value}
+            {value.toLocaleString()}
         </Text>
     </Stack>
 );
