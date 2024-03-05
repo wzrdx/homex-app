@@ -13,13 +13,7 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { TICKETS_TOKEN_ID, CHAIN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import {
-    Transaction,
-    TransactionType,
-    TransactionsContextType,
-    TxResolution,
-    useTransactionsContext,
-} from '../../services/transactions';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
 import { LEVELS } from '../../services/xp';
 

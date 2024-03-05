@@ -141,6 +141,11 @@ export const Page = ({ index, toggleMint }) => {
                                     View
                                 </Button>
                             )}
+
+                            {/* TODO: Remove */}
+                            <Button colorScheme="green" onClick={toggleMint}>
+                                View
+                            </Button>
                         </Stack>
                     </Flex>
 

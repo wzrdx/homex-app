@@ -136,7 +136,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2024-03-08'),
         rarity: TravelersLogPageRarity.Epic,
         image: VarietyHunter,
-        type: 'summary',
+        type: 'summary_full',
     },
     {
         index: getIndex(),
@@ -144,7 +144,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2024-03-08'),
         rarity: TravelersLogPageRarity.Rare,
         image: VarietyHunter,
-        type: 'summary',
+        type: 'summary_full',
     },
     {
         index: getIndex(),
@@ -152,7 +152,7 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         dateAdded: new Date('2024-03-08'),
         rarity: TravelersLogPageRarity.Uncommon,
         image: VarietyHunter,
-        type: 'summary',
+        type: 'summary_full',
     },
 ];
 
