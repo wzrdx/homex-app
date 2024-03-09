@@ -29,49 +29,6 @@
             "outputs": []
         },
         {
-            "name": "setAddressAuxiliary",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "sc_addr",
-                    "type": "Address"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "upgradeProperties",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "setSpecialRoles",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "sc_addr",
-                    "type": "Address"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "transferRole",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "sc_addr",
-                    "type": "Address"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "withdrawEgld",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -568,22 +525,6 @@
             ]
         },
         {
-            "name": "mint",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "amount",
-                    "type": "u32"
-                },
-                {
-                    "name": "nonce",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "getPageCelestials",
             "mutability": "readonly",
             "inputs": [
@@ -623,7 +564,7 @@
             ],
             "outputs": [
                 {
-                    "type": "List<PlayerXp>"
+                    "type": "List<PlayerInfo>"
                 }
             ]
         },
@@ -743,7 +684,7 @@
                 }
             ]
         },
-        "PlayerXp": {
+        "PlayerInfo": {
             "type": "struct",
             "fields": [
                 {
@@ -757,6 +698,10 @@
                 {
                     "name": "pages_minted",
                     "type": "u32"
+                },
+                {
+                    "name": "energy_claimed",
+                    "type": "BigUint"
                 }
             ]
         },

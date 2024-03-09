@@ -8,16 +8,14 @@ const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getXpLeaderboard';
 
-export const getXpLeaderboard = async (
-    start: number,
-    end: number
-): Promise<
-    {
-        address: string;
-        xp: number;
-        pagesMinted: number;
-    }[]
-> => {
+export interface PlayerInfo {
+    address: string;
+    xp: number;
+    pagesMinted: number;
+    energyClaimed: number;
+}
+
+export const getXpLeaderboard = async (start: number, end: number): Promise<PlayerInfo[]> => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
@@ -34,6 +32,7 @@ export const getXpLeaderboard = async (
             address: item?.address?.bech32(),
             xp: item?.xp?.toNumber(),
             pagesMinted: item?.pages_minted?.toNumber(),
+            energyClaimed: item?.energy_claimed?.toNumber(),
         }));
 
         return array;

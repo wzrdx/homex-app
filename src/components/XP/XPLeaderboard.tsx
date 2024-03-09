@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
-import { getUsername, pairwise } from '../../services/helpers';
+import { PlayerInfo, getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
+import { formatNumberWithK, getUsername, pairwise } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
 import { getXpLeaderboardSize } from '../../blockchain/game/api/getXpLeaderboardSize';
@@ -39,7 +39,12 @@ const COLUMNS: {
     {
         name: 'Pages',
         icon: <LiaScrollSolid fontSize="23px" />,
-        width: '48px',
+        width: '104px',
+    },
+    {
+        name: 'Energy',
+        icon: <></>,
+        width: '84px',
     },
 ];
 
@@ -53,6 +58,7 @@ function XPLeaderboard() {
             level: number;
             color: string;
             pagesMinted: number;
+            energyClaimed: number;
         }[]
     >();
 
@@ -68,15 +74,7 @@ function XPLeaderboard() {
             .fill(CHUNK_SIZE)
             .concat(leaderboardSize % CHUNK_SIZE);
 
-        const apiCalls: Array<
-            Promise<
-                {
-                    address: string;
-                    xp: number;
-                    pagesMinted: number;
-                }[]
-            >
-        > = [];
+        const apiCalls: Array<Promise<PlayerInfo[]>> = [];
 
         pairwise(
             _(chunks)
@@ -95,13 +93,7 @@ function XPLeaderboard() {
         parse(_.flatten(result));
     };
 
-    const parse = async (
-        players: {
-            address: string;
-            xp: number;
-            pagesMinted: number;
-        }[]
-    ) => {
+    const parse = async (players: PlayerInfo[]) => {
         const sorted = _(players).orderBy('xp', 'desc').take(LEADERBOARD_SIZE).value();
 
         const array = await Promise.all(
@@ -113,6 +105,7 @@ function XPLeaderboard() {
                         name: await getUsername(player.address),
                         xp: player.xp,
                         pagesMinted: player.pagesMinted,
+                        energyClaimed: player.energyClaimed,
                         level,
                         color,
                     };
@@ -121,6 +114,18 @@ function XPLeaderboard() {
         );
 
         setPlayers(array);
+    };
+
+    const getEnergyColor = (num: number): string => {
+        if (num > 1000000) {
+            return 'redClrs';
+        } else if (num >= 500000 && num < 1000000) {
+            return 'mirage';
+        } else if (num >= 100000 && num < 500000) {
+            return 'wheat';
+        } else {
+            return 'whitesmoke';
+        }
     };
 
     return (
@@ -141,10 +146,8 @@ function XPLeaderboard() {
                                     },
                                     index: number
                                 ) => (
-                                    <Stack key={index} direction="row" layerStyle="center" spacing={1}>
-                                        <Text layerStyle="header2" minWidth={column.width}>
-                                            {column.name}
-                                        </Text>
+                                    <Stack key={index} direction="row" layerStyle="center" spacing={1} minWidth={column.width}>
+                                        <Text layerStyle="header2">{column.name}</Text>
 
                                         {column.icon}
                                     </Stack>
@@ -169,6 +172,10 @@ function XPLeaderboard() {
                                 </Text>
 
                                 <Text width={COLUMNS[4].width}>{player.pagesMinted}</Text>
+
+                                <Text width={COLUMNS[5].width} color={getEnergyColor(player.energyClaimed)}>
+                                    {formatNumberWithK(player.energyClaimed)}
+                                </Text>
                             </Flex>
                         ))}
                     </Flex>
