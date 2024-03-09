@@ -220,16 +220,16 @@ body {
     font-weight: 500 !important;
 }
 
-// Scrollbar
-.Scrollbar-Gutter {
-    scrollbar-gutter: stable;
-}
+// // Scrollbar
+// .Scrollbar-Gutter {
+//     scrollbar-gutter: stable;
+// }
 
-/* Firefox */
-* {
-    scrollbar-width: none;
-    scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
-}
+// /* Firefox */
+// * {
+//     scrollbar-width: none;
+//     scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
+// }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {

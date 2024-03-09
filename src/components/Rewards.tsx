@@ -3,10 +3,14 @@ import { Alert, AlertIcon, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import RewardCard from '../shared/RewardCard';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
-import { addDays, addWeeks, format, isBefore, startOfWeek } from 'date-fns';
+import { addWeeks, format, isBefore } from 'date-fns';
 import { CalendarIcon } from '@chakra-ui/icons';
+import { ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { useStoreContext, StoreContextType } from '../services/store';
 
 function Rewards() {
+    const { stakingInfo } = useStoreContext() as StoreContextType;
+
     const [isLoading, setLoading] = useState<boolean>(true);
     const { ticketsAmount, getTicketsAmount } = useRewardsContext() as RewardsContextType;
 
@@ -36,16 +40,24 @@ function Rewards() {
         return formattedDate;
     };
 
+    const hasEldersStaked = (): boolean => {
+        return !_(stakingInfo?.tokens)
+            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+            .isEmpty();
+    };
+
     return (
         <Stack spacing={3}>
-            <Stack direction="row" justifyContent="center" alignItems="center">
-                <Text>Next rewards:</Text>
+            {!!hasEldersStaked() && (
+                <Stack direction="row" justifyContent="center" alignItems="center">
+                    <Text>Next rewards:</Text>
 
-                <Stack spacing={1.5} direction="row" justifyContent="center" alignItems="center">
-                    <CalendarIcon color="mirage" fontSize="14px" />
-                    <Text color="mirage">{getNextEventDate()}</Text>
+                    <Stack spacing={1.5} direction="row" justifyContent="center" alignItems="center">
+                        <CalendarIcon color="mirage" fontSize="14px" />
+                        <Text color="mirage">{getNextEventDate()}</Text>
+                    </Stack>
                 </Stack>
-            </Stack>
+            )}
 
             <Flex justifyContent="center">
                 {isLoading ? (

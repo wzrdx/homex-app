@@ -11,11 +11,12 @@ import { useMutation } from 'react-query';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { TICKETS_TOKEN_ID, CHAIN_ID } from '../../blockchain/config';
+import { TICKETS_TOKEN_ID, CHAIN_ID, TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
 import { LEVELS } from '../../services/xp';
+import _ from 'lodash';
 
 export const Interactor = ({ index }) => {
     const toast = useToast();
@@ -98,7 +99,7 @@ export const Interactor = ({ index }) => {
     });
 
     const mintPage = async () => {
-        if (!resources.tickets || !canMint) {
+        if (!resources.tickets || !canMint || !stakingInfo) {
             return;
         }
 
@@ -111,7 +112,26 @@ export const Interactor = ({ index }) => {
 
         switch (type) {
             case 'main_staking':
-                gasLimit = 90000000;
+                console.log(
+                    _(stakingInfo.tokens)
+                        .filter(
+                            (token) =>
+                                !token.timestamp &&
+                                (token.tokenId === TRAVELERS_COLLECTION_ID || token.tokenId === ELDERS_COLLECTION_ID)
+                        )
+                        .size()
+                );
+
+                gasLimit =
+                    40000000 +
+                    2000000 *
+                        _(stakingInfo.tokens)
+                            .filter(
+                                (token) =>
+                                    !token.timestamp &&
+                                    (token.tokenId === TRAVELERS_COLLECTION_ID || token.tokenId === ELDERS_COLLECTION_ID)
+                            )
+                            .size();
                 break;
 
             default:

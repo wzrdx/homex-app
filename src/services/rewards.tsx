@@ -915,8 +915,6 @@ export const RewardsProvider = ({ children }) => {
                 tickets: raffle?.tickets?.toNumber() as number,
             }));
 
-            console.log(functionName, parsedArray);
-
             return parsedArray;
         } catch (err) {
             console.error(`Unable to call ${functionName}`, err);
