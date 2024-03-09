@@ -143,9 +143,9 @@ export const Page = ({ index, toggleMint }) => {
                             )}
 
                             {/* TODO: Remove */}
-                            <Button colorScheme="green" onClick={toggleMint}>
+                            {/* <Button colorScheme="green" onClick={toggleMint}>
                                 View
-                            </Button>
+                            </Button> */}
                         </Stack>
                     </Flex>
 

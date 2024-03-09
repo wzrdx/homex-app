@@ -84,10 +84,130 @@ import RareTravelersRoyal3 from '../assets/log/rare_travelers/royal_3.png';
 import EldersLocked from '../assets/log/elders/elders_locked.png';
 import EldersUnlocked from '../assets/log/elders/elders_unlocked.png';
 
-// Summary
+import SummaryEnergyLocked from '../assets/log/summary/energy_locked.png';
+import SummaryEssenceLocked from '../assets/log/summary/essence_locked.png';
+import SummaryGemsLocked from '../assets/log/summary/gems_locked.png';
+import SummaryHerbsLocked from '../assets/log/summary/herbs_locked.png';
+import SummaryQuestsLocked from '../assets/log/summary/quests_locked.png';
+import SummaryTicketsLocked from '../assets/log/summary/tickets_locked.png';
 
+import OccultDivination from '../assets/log/summary/occult/divination.png';
+import OccultEnergy from '../assets/log/summary/occult/energy.png';
+import OccultHerbalism from '../assets/log/summary/occult/herbalism.png';
+import OccultJewelcrafting from '../assets/log/summary/occult/jewelcrafting.png';
+import OccultQuests from '../assets/log/summary/occult/quests.png';
+import OccultTickets from '../assets/log/summary/occult/tickets.png';
+
+import EsotericDivination from '../assets/log/summary/esoteric/divination.png';
+import EsotericEnergy from '../assets/log/summary/esoteric/energy.png';
+import EsotericHerbalism from '../assets/log/summary/esoteric/herbalism.png';
+import EsotericJewelcrafting from '../assets/log/summary/esoteric/jewelcrafting.png';
+import EsotericQuests from '../assets/log/summary/esoteric/quests.png';
+import EsotericTickets from '../assets/log/summary/esoteric/tickets.png';
+
+import MagicalDivination from '../assets/log/summary/magical/divination.png';
+import MagicalEnergy from '../assets/log/summary/magical/energy.png';
+import MagicalHerbalism from '../assets/log/summary/magical/herbalism.png';
+import MagicalJewelcrafting from '../assets/log/summary/magical/jewelcrafting.png';
+import MagicalQuests from '../assets/log/summary/magical/quests.png';
+import MagicalTickets from '../assets/log/summary/magical/tickets.png';
+
+// Summary
 export const getSummaryAssets = (index: number, type: 'Occult' | 'Esoteric' | 'Magical'): [string, string] => {
     let assets: [string, string] = [EmberheartLocked, EmberheartCustodian];
+
+    if (type === 'Occult') {
+        switch (index) {
+            case 0:
+                assets = [SummaryQuestsLocked, OccultQuests];
+                break;
+
+            case 1:
+                assets = [SummaryHerbsLocked, OccultHerbalism];
+                break;
+
+            case 2:
+                assets = [SummaryGemsLocked, OccultJewelcrafting];
+                break;
+
+            case 3:
+                assets = [SummaryEssenceLocked, OccultDivination];
+                break;
+
+            case 4:
+                assets = [SummaryTicketsLocked, OccultTickets];
+                break;
+
+            case 5:
+                assets = [SummaryEnergyLocked, OccultEnergy];
+                break;
+
+            default:
+                console.error('Unknown Summary badge');
+        }
+    }
+
+    if (type === 'Esoteric') {
+        switch (index) {
+            case 0:
+                assets = [SummaryQuestsLocked, EsotericQuests];
+                break;
+
+            case 1:
+                assets = [SummaryHerbsLocked, EsotericHerbalism];
+                break;
+
+            case 2:
+                assets = [SummaryGemsLocked, EsotericJewelcrafting];
+                break;
+
+            case 3:
+                assets = [SummaryEssenceLocked, EsotericDivination];
+                break;
+
+            case 4:
+                assets = [SummaryTicketsLocked, EsotericTickets];
+                break;
+
+            case 5:
+                assets = [SummaryEnergyLocked, EsotericEnergy];
+                break;
+
+            default:
+                console.error('Unknown Summary badge');
+        }
+    }
+
+    if (type === 'Magical') {
+        switch (index) {
+            case 0:
+                assets = [SummaryQuestsLocked, MagicalQuests];
+                break;
+
+            case 1:
+                assets = [SummaryHerbsLocked, MagicalHerbalism];
+                break;
+
+            case 2:
+                assets = [SummaryGemsLocked, MagicalJewelcrafting];
+                break;
+
+            case 3:
+                assets = [SummaryEssenceLocked, MagicalDivination];
+                break;
+
+            case 4:
+                assets = [SummaryTicketsLocked, MagicalTickets];
+                break;
+
+            case 5:
+                assets = [SummaryEnergyLocked, MagicalEnergy];
+                break;
+
+            default:
+                console.error('Unknown Summary badge');
+        }
+    }
 
     return assets;
 };
