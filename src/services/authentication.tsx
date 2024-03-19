@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import { API_URL, gameScAddress } from '../blockchain/config';
-import { NFT } from '../blockchain/types';
+import { NFT, SFT } from '../blockchain/types';
 import { getPlayerXp } from '../blockchain/game/api/getPlayerXp';
 
 export interface AuthenticationContextType {
@@ -16,6 +16,27 @@ export const getNFTsCount = (address: string, collection: string): Promise<{ dat
         baseURL: API_URL,
         params: {
             collection,
+        },
+    });
+
+export const getWalletSFTs = (
+    address: string,
+    collections: string[],
+    from = 0
+): Promise<{
+    data: Array<{
+        name: string;
+        nonce: number;
+        url: string;
+        balance: string;
+    }>;
+}> =>
+    axios.get(`accounts/${address}/nfts`, {
+        baseURL: API_URL,
+        params: {
+            collections: collections.join(','),
+            fields: 'nonce,name,url,balance',
+            from,
         },
     });
 

@@ -42,6 +42,14 @@ export interface NFT {
     timestamp?: Date;
 }
 
+export interface SFT {
+    name: string;
+    nonce: number;
+    url: string;
+    tokenId: string;
+    balance: number;
+}
+
 export enum RarityClass {
     Elder = 0,
     Common = 1,

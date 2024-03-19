@@ -2,11 +2,14 @@ import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
-import { NFT, StakingInfo } from '../blockchain/types';
-import { getNFTsCount, getWalletNonces } from './authentication';
+import { NFT, SFT, StakingInfo } from '../blockchain/types';
+import { getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
 import { pairwise } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID, AOM_COLLECTION_ID } from '../blockchain/config';
+import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
+
+const CHUNK_SIZE = 25;
 
 export interface StoreContextType {
     // Energy
@@ -17,7 +20,9 @@ export interface StoreContextType {
     getMazeStakingInfo: () => Promise<StakingInfo | undefined>;
     travelers: NFT[] | undefined;
     elders: NFT[] | undefined;
-    getWalletNFTs: () => Promise<void>;
+    getWalletMainNFTs: () => Promise<void>;
+    getWalletStakeableAoMSFTs: () => Promise<void>;
+    artTokens: SFT[] | undefined;
 }
 
 const StoreContext = createContext<StoreContextType | null>(null);
@@ -36,7 +41,11 @@ export const StoreProvider = ({ children }) => {
     const [travelers, setTravelers] = useState<NFT[]>();
     const [elders, setElders] = useState<NFT[]>();
 
-    const getWalletNFTs = async () => {
+    const [stakeableAoMNonces, setStakeableAoMNonces] = useState<number[]>([]);
+    const [artTokens, setArtTokens] = useState<SFT[]>();
+
+    // Fetches Travelers & Elders from the user's wallet
+    const getWalletMainNFTs = async () => {
         try {
             setTravelers(undefined);
             setElders(undefined);
@@ -44,14 +53,16 @@ export const StoreProvider = ({ children }) => {
             const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
             const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
 
-            const travelerChunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
+            const travelerChunks = new Array(Math.floor(travelersCount / CHUNK_SIZE))
+                .fill(CHUNK_SIZE)
+                .concat(travelersCount % CHUNK_SIZE);
             const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
             pairwise(
                 _(travelerChunks)
                     .filter(_.identity)
                     .map((chunk, index) => {
-                        return index * 25 + chunk;
+                        return index * CHUNK_SIZE + chunk;
                     })
                     .unshift(0)
                     .value(),
@@ -71,14 +82,16 @@ export const StoreProvider = ({ children }) => {
                 .orderBy('nonce', 'asc')
                 .value();
 
-            const elderChunks = new Array(Math.floor(elderscount / 25)).fill(25).concat(elderscount % 25);
+            const elderChunks = new Array(Math.floor(elderscount / CHUNK_SIZE))
+                .fill(CHUNK_SIZE)
+                .concat(elderscount % CHUNK_SIZE);
             const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
             pairwise(
                 _(elderChunks)
                     .filter(_.identity)
                     .map((chunk, index) => {
-                        return index * 25 + chunk;
+                        return index * CHUNK_SIZE + chunk;
                     })
                     .unshift(0)
                     .value(),
@@ -105,9 +118,78 @@ export const StoreProvider = ({ children }) => {
         }
     };
 
+    // Fetches the AoM SFTs which are stakeable from the user's wallet
+    const getWalletStakeableAoMSFTs = async () => {
+        try {
+            let nonces: number[];
+
+            if (_.isEmpty(stakeableAoMNonces)) {
+                nonces = await getStakeableNonces();
+                setStakeableAoMNonces(nonces);
+            } else {
+                nonces = stakeableAoMNonces;
+            }
+
+            const { data: count } = await getNFTsCount(address, AOM_COLLECTION_ID);
+
+            const chunks = new Array(Math.floor(count / CHUNK_SIZE)).fill(CHUNK_SIZE).concat(count % CHUNK_SIZE);
+            const apiCalls: Array<
+                Promise<{
+                    data: Array<{
+                        name: string;
+                        nonce: number;
+                        url: string;
+                        balance: string;
+                    }>;
+                }>
+            > = [];
+
+            pairwise(
+                _(chunks)
+                    .filter(_.identity)
+                    .map((chunk, index) => {
+                        return index * CHUNK_SIZE + chunk;
+                    })
+                    .unshift(0)
+                    .value(),
+                (from: number, _: number) => {
+                    apiCalls.push(getWalletSFTs(address, [AOM_COLLECTION_ID], from));
+                }
+            );
+
+            const tokens = _(await Promise.all(apiCalls))
+                .flatten()
+                .map((result) => result.data)
+                .flatten()
+                .filter((token) => _.includes(nonces, token.nonce))
+                .map((token) => ({
+                    ...token,
+                    balance: Number.parseInt(token.balance),
+                    tokenId: AOM_COLLECTION_ID,
+                }))
+                .orderBy('nonce', 'asc')
+                .value();
+
+            console.log(tokens);
+            setArtTokens(tokens);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <StoreContext.Provider
-            value={{ stakingInfo, getStakingInfo, mazeStakingInfo, getMazeStakingInfo, travelers, elders, getWalletNFTs }}
+            value={{
+                stakingInfo,
+                getStakingInfo,
+                mazeStakingInfo,
+                getMazeStakingInfo,
+                travelers,
+                elders,
+                getWalletMainNFTs,
+                getWalletStakeableAoMSFTs,
+                artTokens,
+            }}
         >
             {children}
         </StoreContext.Provider>

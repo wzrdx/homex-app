@@ -39,7 +39,7 @@ function App() {
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     const { getOngoingQuests, onQuestsModalClose } = useQuestsContext() as QuestsContextType;
-    const { getStakingInfo, getWalletNFTs } = useStoreContext() as StoreContextType;
+    const { getStakingInfo, getWalletMainNFTs } = useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
@@ -239,7 +239,7 @@ function App() {
                 break;
 
             case TxResolution.UpdateStakingAndNFTs:
-                getWalletNFTs();
+                getWalletMainNFTs();
                 getEnergy();
                 getStakingInfo();
                 break;

@@ -14,18 +14,16 @@ import { useStaking } from '../Staking';
 import { NFT } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 
 function Stake() {
     const { height, displayToast } = useStaking();
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
+    const { stakingInfo, artTokens, getWalletStakeableAoMSFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
-    const [rarities, setRarities] = useState<Rarity[]>();
 
     const [selectedTokens, setSelectedTokens] = useState<
         Array<{
@@ -35,20 +33,12 @@ function Stake() {
     >([]);
 
     useEffect(() => {
-        getWalletNFTs();
+        getWalletStakeableAoMSFTs();
     }, []);
 
     useEffect(() => {
         setSelectedTokens([]);
-
-        if (!_.isEmpty(travelers)) {
-            getRarities();
-        }
-    }, [travelers, elders]);
-
-    const getRarities = async () => {
-        setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
-    };
+    }, [artTokens]);
 
     const stake = async () => {
         if (!stakingInfo) {
@@ -110,12 +100,12 @@ function Stake() {
     };
 
     const selectAll = async () => {
-        if (!elders || !travelers) {
+        if (!artTokens) {
             return;
         }
 
         setSelectedTokens(
-            _([...elders, ...travelers])
+            _(artTokens)
                 .take(25)
                 .map((token) => ({
                     nonce: token.nonce,
@@ -162,7 +152,7 @@ function Stake() {
 
                     <Flex ml={4} alignItems="center">
                         <InfoOutlineIcon mr={1.5} color="almostWhite" />
-                        <Text color="almostWhite">Select some NFTs in order to stake</Text>
+                        <Text color="almostWhite">Select some SFTs in order to stake</Text>
                     </Flex>
                 </Flex>
 
@@ -172,18 +162,18 @@ function Stake() {
                 </Flex>
             </Flex>
 
-            {!(elders && travelers) ? (
+            {!artTokens ? (
                 <Flex alignItems="center" justifyContent="center" height="100%">
                     <Spinner size="md" />
                 </Flex>
             ) : (
                 <>
-                    {_.isEmpty(elders) && _.isEmpty(travelers) ? (
+                    {_.isEmpty(artTokens) ? (
                         <Flex py={4}>
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
                                     <AlertIcon />
-                                    You have no NFTs available for staking. View your staked NFT in the 'Staked' tab.
+                                    You have no SFTs available for staking. View your staked SFT in the 'Staked' tab.
                                 </Alert>
                             </Flex>
                         </Flex>
@@ -203,7 +193,7 @@ function Stake() {
                                 rowGap={4}
                                 columnGap={4}
                             >
-                                {_.map([...(elders as NFT[]), ...(travelers as NFT[])], (token, index) => (
+                                {_.map(artTokens, (token, index) => (
                                     <Box
                                         key={index}
                                         cursor="pointer"
@@ -247,10 +237,6 @@ function Stake() {
                                                 ) > -1
                                             }
                                             token={token}
-                                            rarity={
-                                                token?.tokenId === TRAVELERS_COLLECTION_ID &&
-                                                _.find(rarities, (rarity) => rarity.nonce === token.nonce)
-                                            }
                                         />
                                     </Box>
                                 ))}

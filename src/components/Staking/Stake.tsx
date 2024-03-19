@@ -21,7 +21,7 @@ function Stake() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, travelers, elders, getWalletNFTs } = useStoreContext() as StoreContextType;
+    const { stakingInfo, travelers, elders, getWalletMainNFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
@@ -35,7 +35,7 @@ function Stake() {
     >([]);
 
     useEffect(() => {
-        getWalletNFTs();
+        getWalletMainNFTs();
     }, []);
 
     useEffect(() => {

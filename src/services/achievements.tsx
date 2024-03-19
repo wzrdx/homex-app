@@ -13,7 +13,7 @@ import {
 } from './assets';
 import { getSFTDetails } from './resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { AOM_COLLECTION_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
 import { useStoreContext, StoreContextType } from './store';
@@ -719,7 +719,7 @@ export const AchievementsProvider = ({ children }) => {
         setData({
             ...data,
             celestialsBalance: await Promise.all(
-                Array.from({ length: 5 }, (_, index) => `${AOM_ID}-${zeroPad(index + 1)}`).map(async (id) => {
+                Array.from({ length: 5 }, (_, index) => `${AOM_COLLECTION_ID}-${zeroPad(index + 1)}`).map(async (id) => {
                     return await getSFTBalance(id);
                 })
             ),

@@ -58,7 +58,7 @@ function Gameplay() {
                         {Object.keys(RESOURCE_ELEMENTS)
                             .slice(1, 4)
                             .map((resource) => (
-                                <Flex width="72px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
+                                <Flex width="76px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
                                     <Image width="48px" src={RESOURCE_ELEMENTS[resource].icon} alt="Resource" />
                                     <Text mt={1} fontSize="16px" fontWeight={500} color={RESOURCE_ELEMENTS[resource].color}>
                                         {RESOURCE_ELEMENTS[resource].name}
@@ -71,12 +71,8 @@ function Gameplay() {
                         In-game fungible tokens
                     </Text>
 
-                    <Text mt={1} textAlign="center" maxWidth="330px">
-                        They are used only{' '}
-                        <Text as="span" color="brightBlue">
-                            in-game
-                        </Text>{' '}
-                        to complete quests and earn rewards
+                    <Text mt={1} textAlign="center">
+                        Used to complete quests and earn rewards
                     </Text>
                 </Flex>
             </Flex>
@@ -228,7 +224,7 @@ function Gameplay() {
 
                         <Flex mt={8} px={4} flexDir="column">
                             <Text mb={3} fontSize="18px" fontWeight={500} textAlign="center" color="orangered">
-                                Leaderboard
+                                Rewards
                             </Text>
 
                             <Flex alignItems="flex-start" mt={1}>
@@ -240,7 +236,7 @@ function Gameplay() {
                                     <Text as="span" color="orangered">
                                         Golden Tickets
                                     </Text>{' '}
-                                    to earn prizes
+                                    to earn rewards
                                 </Text>
                             </Flex>
                         </Flex>

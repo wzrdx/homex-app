@@ -105,8 +105,6 @@ export const Interactor = ({ index }) => {
 
         setMintingLoading(true);
 
-        console.log('mintPage', index);
-
         const user = new Address(address);
         const type = PAGE_HEADERS[index].type;
 
@@ -114,16 +112,6 @@ export const Interactor = ({ index }) => {
 
         switch (type) {
             case 'main_staking':
-                console.log(
-                    _(stakingInfo.tokens)
-                        .filter(
-                            (token) =>
-                                !token.timestamp &&
-                                (token.tokenId === TRAVELERS_COLLECTION_ID || token.tokenId === ELDERS_COLLECTION_ID)
-                        )
-                        .size()
-                );
-
                 gasLimit =
                     40000000 +
                     2000000 *
