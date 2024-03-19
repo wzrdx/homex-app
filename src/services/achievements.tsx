@@ -27,6 +27,9 @@ import CelestialsCustodian from '../assets/log/pages/celestials_custodian.png';
 import CelestialsHoarder from '../assets/log/pages/celestials_hoarder.png';
 import RareTravelers from '../assets/log/pages/rare_travelers.png';
 import VarietyHunter from '../assets/log/pages/variety_hunter.png';
+import OccultOdyssey from '../assets/log/pages/Occult_Odyssey.png';
+import EsotericExpedition from '../assets/log/pages/Esoteric_Expedition.png';
+import MagicalJourney from '../assets/log/pages/Magical_Journey.png';
 import { LogSummary, getLogSummary } from '../blockchain/game/api/achievements/getLogSummary';
 
 export enum TravelersLogPageRarity {
@@ -129,29 +132,28 @@ export const PAGE_HEADERS: TravelersLogPageHeader[] = [
         image: VarietyHunter,
         type: 'main_staking',
     },
-    // TODO: Date, Image
     {
         index: getIndex(),
         title: 'Occult Odyssey',
-        dateAdded: new Date('2024-03-08'),
+        dateAdded: new Date('2024-03-18'),
         rarity: TravelersLogPageRarity.Epic,
-        image: VarietyHunter,
+        image: OccultOdyssey,
         type: 'summary_full',
     },
     {
         index: getIndex(),
         title: 'Esoteric Expedition',
-        dateAdded: new Date('2024-03-08'),
+        dateAdded: new Date('2024-03-18'),
         rarity: TravelersLogPageRarity.Rare,
-        image: VarietyHunter,
+        image: EsotericExpedition,
         type: 'summary_full',
     },
     {
         index: getIndex(),
         title: 'Magical Journey',
-        dateAdded: new Date('2024-03-08'),
+        dateAdded: new Date('2024-03-18'),
         rarity: TravelersLogPageRarity.Uncommon,
-        image: VarietyHunter,
+        image: MagicalJourney,
         type: 'summary_full',
     },
 ];

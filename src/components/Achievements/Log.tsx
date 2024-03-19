@@ -82,7 +82,7 @@ function Log() {
         <Box position="relative">
             <Flex
                 position="relative"
-                width={{ md: '1240px', lg: '1280px', xl: '1486px' }}
+                width={{ md: '1320px', xl: '1486px' }}
                 height={{ md: '636px', lg: '768px', xl: '844px' }}
                 alignItems="stretch"
                 backgroundColor="#2b2b2b"

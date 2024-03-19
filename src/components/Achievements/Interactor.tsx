@@ -105,6 +105,8 @@ export const Interactor = ({ index }) => {
 
         setMintingLoading(true);
 
+        console.log('mintPage', index);
+
         const user = new Address(address);
         const type = PAGE_HEADERS[index].type;
 
