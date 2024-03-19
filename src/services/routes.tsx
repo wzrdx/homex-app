@@ -76,7 +76,7 @@ export const routes = [
                 isTabRoute: true,
             },
         ],
-        defaultChildRoute: routeNames.unstake,
+        defaultChildRoute: routeNames.altar,
     },
     // Staking
     {

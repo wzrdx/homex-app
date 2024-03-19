@@ -6,7 +6,7 @@ import { TransactionType, TransactionsContextType, TxResolution, useTransactions
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID, isStakingDisabled } from '../../blockchain/config';
+import { CHAIN_ID, TRAVELERS_COLLECTION_ID, isStakingDisabled } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/game/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';

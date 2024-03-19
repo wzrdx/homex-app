@@ -16,14 +16,13 @@ import {
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFT } from '../../blockchain/types';
+import { NFT, Stake } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/game/smartContract';
 import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
-import { Stake } from '../../blockchain/game/hooks/useGetStakingInfo';
 import { getUnixTime } from 'date-fns';
 
 function Unbond() {

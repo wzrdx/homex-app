@@ -14,6 +14,19 @@ export interface OngoingQuest {
     timestamp: Date;
 }
 
+export interface Stake {
+    tokenId: string;
+    nonce: number;
+    amount: number;
+    timestamp: Date | null;
+}
+
+export interface StakingInfo {
+    isStaked: boolean;
+    rewards: number;
+    timestamp: Date;
+    tokens: Stake[];
+}
 export interface Participant {
     address: string;
     ticketsCount: number;

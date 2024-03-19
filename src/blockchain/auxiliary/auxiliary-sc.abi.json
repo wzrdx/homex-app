@@ -52,9 +52,32 @@
                 {
                     "name": "tickets_id",
                     "type": "TokenIdentifier"
+                },
+                {
+                    "name": "travelers_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "elders_id",
+                    "type": "TokenIdentifier"
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "getMazeBalance",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
         },
         {
             "name": "getAOMTokenId",
@@ -73,6 +96,52 @@
             "outputs": [
                 {
                     "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getTravelersId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getEldersId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getPageNonce",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getStakeableNonces",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
                 }
             ]
         },
@@ -130,13 +199,6 @@
             ]
         },
         {
-            "name": "debug",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
             "name": "verifyPage",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -172,6 +234,10 @@
                 {
                     "name": "rarity",
                     "type": "u8"
+                },
+                {
+                    "name": "is_stakeable",
+                    "type": "bool"
                 }
             ],
             "outputs": []
@@ -187,9 +253,109 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "stake",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "restake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimRewards",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getStakingInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "StakingInfo"
+                }
+            ]
         }
     ],
     "esdtAttributes": [],
     "hasCallback": false,
-    "types": {}
+    "types": {
+        "Stake": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u16"
+                },
+                {
+                    "name": "amount",
+                    "type": "u16"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "Option<u64>"
+                }
+            ]
+        },
+        "StakingInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "rewards",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "tokens",
+                    "type": "List<Stake>"
+                }
+            ]
+        }
+    }
 }

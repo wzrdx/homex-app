@@ -17,7 +17,6 @@ import { AOM_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockc
 import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
 import { useStoreContext, StoreContextType } from './store';
-import { Stake } from '../blockchain/game/hooks/useGetStakingInfo';
 import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
 
 import BudgetTravelers from '../assets/log/pages/budget_travelers.png';
@@ -31,6 +30,7 @@ import OccultOdyssey from '../assets/log/pages/Occult_Odyssey.png';
 import EsotericExpedition from '../assets/log/pages/Esoteric_Expedition.png';
 import MagicalJourney from '../assets/log/pages/Magical_Journey.png';
 import { LogSummary, getLogSummary } from '../blockchain/game/api/achievements/getLogSummary';
+import { Stake } from '../blockchain/types';
 
 export enum TravelersLogPageRarity {
     Common = 'Common',

@@ -1,15 +1,20 @@
+import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { StakingInfo, useGetStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
-import { NFT } from '../blockchain/types';
+import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
+import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
+import { NFT, StakingInfo } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces } from './authentication';
 import { pairwise } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import _ from 'lodash';
 import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID } from '../blockchain/config';
 
 export interface StoreContextType {
+    // Energy
     stakingInfo: StakingInfo | undefined;
     getStakingInfo: () => Promise<StakingInfo | undefined>;
+    // Maze
+    mazeStakingInfo: StakingInfo | undefined;
+    getMazeStakingInfo: () => Promise<StakingInfo | undefined>;
     travelers: NFT[] | undefined;
     elders: NFT[] | undefined;
     getWalletNFTs: () => Promise<void>;
@@ -20,7 +25,12 @@ const StoreContext = createContext<StoreContextType | null>(null);
 export const useStoreContext = () => useContext(StoreContext);
 
 export const StoreProvider = ({ children }) => {
-    const { stakingInfo, getStakingInfo } = useGetStakingInfo();
+    // Energy
+    const { stakingInfo, getStakingInfo } = useGetEnergyStakingInfo();
+
+    // Maze
+    const { stakingInfo: mazeStakingInfo, getStakingInfo: getMazeStakingInfo } = useGetMazeStakingInfo();
+
     let { address } = useGetAccountInfo();
 
     const [travelers, setTravelers] = useState<NFT[]>();
@@ -96,7 +106,9 @@ export const StoreProvider = ({ children }) => {
     };
 
     return (
-        <StoreContext.Provider value={{ stakingInfo, getStakingInfo, travelers, elders, getWalletNFTs }}>
+        <StoreContext.Provider
+            value={{ stakingInfo, getStakingInfo, mazeStakingInfo, getMazeStakingInfo, travelers, elders, getWalletNFTs }}
+        >
             {children}
         </StoreContext.Provider>
     );
