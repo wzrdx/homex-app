@@ -156,7 +156,7 @@ function TokenCard({
 
                 {tokenType === TokenType.SFT && (
                     <Text
-                        color="#e89a3c"
+                        color={`blizzard${getArtRarityName((token as SFT).artRarityClass)}`}
                         bg="#2b1d11"
                         borderColor="#593815"
                         borderWidth="1px"
