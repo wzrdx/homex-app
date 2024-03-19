@@ -1,4 +1,4 @@
-import { Image, Flex, Text, Box } from '@chakra-ui/react';
+import { Image, Flex, Text, Box, useTheme } from '@chakra-ui/react';
 import { NFT, Rarity, MainRarityClass, SFT, ArtRarityClass } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -24,6 +24,8 @@ function TokenCard({
     rarity?: Rarity | false;
     tokenType?: TokenType;
 }) {
+    const theme = useTheme();
+
     // Used to force a re-render
     const [_mockState, setState] = useState<boolean>();
 
@@ -84,7 +86,7 @@ function TokenCard({
                 }
                 borderWidth={tokenType === TokenType.SFT ? '1px' : '0px'}
                 borderStyle="solid"
-                p="3px"
+                p="4px"
             >
                 {isSelected && (
                     <Flex
@@ -157,8 +159,8 @@ function TokenCard({
                 {tokenType === TokenType.SFT && (
                     <Text
                         color={`blizzard${getArtRarityName((token as SFT).artRarityClass)}`}
-                        bg="#2b1d11"
-                        borderColor="#593815"
+                        bg={theme.colors[`blizzard${getArtRarityName((token as SFT).artRarityClass)}`] + '30'}
+                        borderColor={`blizzard${getArtRarityName((token as SFT).artRarityClass)}`}
                         borderWidth="1px"
                         borderStyle="solid"
                         fontSize="15px"
