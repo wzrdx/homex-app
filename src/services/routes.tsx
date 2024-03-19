@@ -1,13 +1,21 @@
+// Energy
 import Staking from '../components/Staking';
+import EnergyStake from '../components/Staking/Stake';
+import EnergyUnstake from '../components/Staking/Unstake';
+import EnergyUnbond from '../components/Staking/Unbond';
+// Maze
+import Maze from '../components/Maze';
+import Altar from '../components/Maze/Altar';
+import MazeStake from '../components/Maze/Stake';
+import MazeUnstake from '../components/Maze/Unstake';
+import MazeUnbond from '../components/Maze/Unbond';
+// Others
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
 import Section from '../components/Section';
-import Stake from '../components/Staking/Stake';
-import Unstake from '../components/Staking/Unstake';
 import CompetitionDetails from '../shared/CompetitionDetails';
 import Raffles from '../components/Competitions/Raffles';
 import Rewards from '../components/Rewards';
-import Unbond from '../components/Staking/Unbond';
 import Shop from '../components/Shop';
 import Profile from '../components/XP/Profile';
 import XPLeaderboard from '../components/XP/XPLeaderboard';
@@ -30,6 +38,8 @@ export const routeNames = {
     shop: 'shop',
     profile: 'profile',
     xp: 'xp',
+    maze: 'maze',
+    altar: 'altar',
 };
 
 export const routes = [
@@ -37,29 +47,56 @@ export const routes = [
     {
         path: routeNames.gameplay,
         component: Gameplay,
-        authenticatedRoute: true,
         isMainRoute: false,
+    },
+    // Maze
+    {
+        path: routeNames.maze,
+        component: Maze,
+        isMainRoute: true,
+        children: [
+            {
+                path: routeNames.altar,
+                component: Altar,
+                isTabRoute: true,
+            },
+            {
+                path: routeNames.stake,
+                component: MazeStake,
+                isTabRoute: true,
+            },
+            {
+                path: routeNames.unstake,
+                component: MazeUnstake,
+                isTabRoute: true,
+            },
+            {
+                path: routeNames.unbond,
+                component: MazeUnbond,
+                isTabRoute: true,
+            },
+        ],
+        defaultChildRoute: routeNames.unstake,
     },
     // Staking
     {
         path: routeNames.staking,
         component: Staking,
-        authenticatedRoute: true,
         isMainRoute: true,
         children: [
             {
                 path: routeNames.stake,
-                component: Stake,
+                component: EnergyStake,
                 isTabRoute: true,
             },
             {
                 path: routeNames.unstake,
-                component: Unstake,
+                component: EnergyUnstake,
                 isTabRoute: true,
             },
             {
                 path: routeNames.unbond,
-                component: Unbond,
+                component: EnergyUnbond,
                 isTabRoute: true,
             },
         ],
@@ -69,14 +106,12 @@ export const routes = [
     {
         path: routeNames.quests,
         component: Quests,
-        authenticatedRoute: true,
         isMainRoute: true,
     },
     // Raffles
     {
         path: routeNames.raffles,
         component: Section,
-        authenticatedRoute: true,
         isMainRoute: true,
         children: [
             {
@@ -100,21 +135,18 @@ export const routes = [
     {
         path: routeNames.rewards,
         component: Rewards,
-        authenticatedRoute: true,
         isMainRoute: true,
     },
     // Shop
     {
         path: routeNames.shop,
         component: Shop,
-        authenticatedRoute: true,
         isMainRoute: true,
     },
     // XP
     {
         path: routeNames.xp,
         component: Section,
-        authenticatedRoute: true,
         isMainRoute: false,
         children: [
             {

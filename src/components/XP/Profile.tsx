@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getUsername } from '../../services/helpers';
@@ -45,45 +45,42 @@ function Profile() {
             ) : (
                 <Box mt={2} px={4} py={4} borderRadius={12} backgroundColor="#111" minW="400px">
                     <Stack spacing={4}>
-                        <Stack spacing={0} alignItems="center">
-                            <Text fontSize="19px" mb="-2px" mt="-5px" fontWeight={500}>
-                                {username}
-                            </Text>
+                        <Stack spacing={3}>
+                            <Flex alignItems="flex-start" justifyContent="space-between">
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    <Box mt="1px">
+                                        <IoWalletOutline color="whitesmoke" fontSize="15px" />
+                                    </Box>
+                                    <Text color="whitesmoke">{getShortAddress(address)}</Text>
+                                </Stack>
 
-                            <Stack direction="row" spacing={1} alignItems="center">
-                                <IoWalletOutline color="whitesmoke" fontSize="14px" />
-                                <Text color="whitesmoke">{getShortAddress(address)}</Text>
+                                <Button
+                                    colorScheme="red"
+                                    size="sm"
+                                    onClick={() => {
+                                        setAuthentication(false);
+
+                                        logout(`/unlock`, (callbackUrl) => {
+                                            navigate(callbackUrl as string);
+                                        });
+                                    }}
+                                >
+                                    Disconnect
+                                </Button>
+                            </Flex>
+
+                            <Stack spacing={0}>
+                                <Text fontSize="20px" textAlign="center" fontWeight={600}>
+                                    {username}
+                                </Text>
+
+                                <Text textAlign="center">
+                                    Level{' '}
+                                    <Text as="span" fontWeight={500} color={levelInfo.color}>
+                                        {levelInfo.level}
+                                    </Text>
+                                </Text>
                             </Stack>
-
-                            <Text>
-                                Level{' '}
-                                <Text as="span" fontWeight={500} color={levelInfo.color}>
-                                    {levelInfo.level}
-                                </Text>
-                            </Text>
-                            <Text fontSize="15px">
-                                <Text as="span">{xp}</Text>{' '}
-                                <Text as="span" fontWeight={800}>
-                                    XP
-                                </Text>
-                            </Text>
-
-                            <Text
-                                pt={2}
-                                color="redClrs"
-                                transition="all 0.05s ease-in"
-                                cursor="pointer"
-                                _hover={{ opacity: 0.75 }}
-                                onClick={() => {
-                                    setAuthentication(false);
-
-                                    logout(`/unlock`, (callbackUrl) => {
-                                        navigate(callbackUrl as string);
-                                    });
-                                }}
-                            >
-                                Disconnect
-                            </Text>
                         </Stack>
 
                         <Flex
@@ -123,6 +120,16 @@ function Profile() {
                         </Flex>
 
                         <Stack spacing={1}>
+                            <Flex alignItems="center" justifyContent="space-between">
+                                <Text fontSize="15px">Current XP</Text>
+                                <Text fontSize="15px">
+                                    <Text as="span">{xp}</Text>{' '}
+                                    <Text as="span" fontWeight={800}>
+                                        XP
+                                    </Text>
+                                </Text>
+                            </Flex>
+
                             <Flex alignItems="center" justifyContent="space-between">
                                 <Text fontSize="15px">Next Level</Text>
                                 <Text fontSize="15px">

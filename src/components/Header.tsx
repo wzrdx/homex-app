@@ -36,7 +36,7 @@ import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp'
 import { NewSymbol } from '../shared/NewSymbol';
 import { AchievementsProvider } from '../services/achievements';
 
-const ROUTE_WIDTH = 100;
+const ROUTE_WIDTH = 96;
 const BONUS_XP_END = new Date('2023-12-11T15:00:00.000Z');
 
 function Header() {
@@ -95,6 +95,18 @@ function Header() {
 
     const getCssPxValue = (value: number): string => `${value}px`;
 
+    const isSymbolVisible = (route: string): boolean => {
+        if (isArtDropOngoing && route === routeNames.shop) {
+            return true;
+        }
+
+        if (route === routeNames.maze) {
+            return true;
+        }
+
+        return false;
+    };
+
     return (
         <Flex flexDir="column">
             {/* Main header */}
@@ -104,7 +116,7 @@ function Header() {
                     <Flex className="Header-Menu" position="relative">
                         {routes.map((route: string, index: number) => (
                             <Flex key={index} flexDir="column" alignItems="center" width={getCssPxValue(ROUTE_WIDTH)}>
-                                <NewSymbol isVisible={isArtDropOngoing && route === routeNames.shop ? true : false} />
+                                <NewSymbol isVisible={isSymbolVisible(route)} />
 
                                 <NavLink
                                     to={route}
@@ -119,8 +131,7 @@ function Header() {
                                         fontSize={{ md: '18px', lg: '20px' }}
                                         lineHeight={{ md: '18px', lg: '20px ' }}
                                         transition="all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1)"
-                                        pt={3}
-                                        pb={4}
+                                        py={3.5}
                                         px={3}
                                         cursor="pointer"
                                         _hover={{ color: '#e3e3e3' }}
