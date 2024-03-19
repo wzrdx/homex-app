@@ -1,6 +1,5 @@
-import { Box, Text, Flex, Alert, AlertIcon } from '@chakra-ui/react';
-import { NFT, RarityClass } from '../blockchain/types';
-import { Rarity } from '../blockchain/game/api/getRarityClasses';
+import { Box, Text, Flex } from '@chakra-ui/react';
+import { NFT, Rarity, MainRarityClass } from '../blockchain/types';
 import { useEffect, useState } from 'react';
 import { getRarityClassInfo } from '../services/helpers';
 import _ from 'lodash';
@@ -42,7 +41,11 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
             let others: Array<YieldEntry> = [];
 
             if (!_.isEmpty(elders)) {
-                let { label: elderLabel, color: elderColor, energyYield: elderYield } = getRarityClassInfo(RarityClass.Elder);
+                let {
+                    label: elderLabel,
+                    color: elderColor,
+                    energyYield: elderYield,
+                } = getRarityClassInfo(MainRarityClass.Elder);
 
                 const elderEntry = {
                     count: _.size(elders),

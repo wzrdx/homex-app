@@ -7,7 +7,7 @@ import {
     TRAVELERS_COLLECTION_ID,
     TRAVELERS_PADDING,
 } from '../blockchain/config';
-import { NFT, RarityClass } from '../blockchain/types';
+import { NFT, MainRarityClass } from '../blockchain/types';
 import { Quest } from '../types';
 import _ from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
@@ -84,43 +84,43 @@ export const getTx = (hash: string) => {
 
 export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? TRAVELERS_PADDING : 2);
 
-export const getRarityClassInfo = (rarityClass: RarityClass): { label: string; color: string; energyYield: number } => {
+export const getRarityClassInfo = (rarityClass: MainRarityClass): { label: string; color: string; energyYield: number } => {
     let label: string;
     let color: string;
     let energyYield: number;
 
     switch (rarityClass) {
-        case RarityClass.Elder:
+        case MainRarityClass.Elder:
             label = 'Elder';
             color = 'redClrs';
             energyYield = 9;
             break;
 
-        case RarityClass.Common:
+        case MainRarityClass.Common:
             label = 'Common';
             color = 'gray';
             energyYield = 3;
             break;
 
-        case RarityClass.Uncommon:
+        case MainRarityClass.Uncommon:
             label = 'Uncommon';
             color = 'white';
             energyYield = 4;
             break;
 
-        case RarityClass.Rare:
+        case MainRarityClass.Rare:
             label = 'Rare';
             color = 'dodgerblue';
             energyYield = 6;
             break;
 
-        case RarityClass.Royal:
+        case MainRarityClass.Royal:
             label = 'Royal';
             color = '#fe3bff';
             energyYield = 8;
             break;
 
-        case RarityClass.OneOfOne:
+        case MainRarityClass.OneOfOne:
             label = '1/1';
             color = 'orange';
             energyYield = 10;

@@ -314,11 +314,37 @@
                     "type": "StakingInfo"
                 }
             ]
+        },
+        {
+            "name": "getArtRarities",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<Rarity>"
+                }
+            ]
         }
     ],
     "esdtAttributes": [],
     "hasCallback": false,
     "types": {
+        "Rarity": {
+            "type": "struct",
+            "docs": [
+                "* Traveler rarities\\n *\\n * Elder = 0,\\n * Common = 1,\\n * Uncommon = 2,\\n * Rare = 3,\\n * Royal = 4,\\n * OneOfOne = 5,\\n "
+            ],
+            "fields": [
+                {
+                    "name": "nonce",
+                    "type": "u16"
+                },
+                {
+                    "name": "rarity_class",
+                    "type": "u8"
+                }
+            ]
+        },
         "Stake": {
             "type": "struct",
             "fields": [

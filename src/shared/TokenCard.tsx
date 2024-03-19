@@ -1,15 +1,29 @@
 import { Image, Flex, Text, Box } from '@chakra-ui/react';
-import { NFT, RarityClass } from '../blockchain/types';
+import { NFT, Rarity, MainRarityClass, SFT, ArtRarityClass } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
 import { ELDERS_COLLECTION_ID } from '../blockchain/config';
-import { Rarity } from '../blockchain/game/api/getRarityClasses';
 import { addSeconds } from 'date-fns';
 import { Timer } from './Timer';
 import { useState } from 'react';
 
-function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: NFT; rarity?: Rarity | false }) {
+export enum TokenType {
+    NFT = 'NFT',
+    SFT = 'SFT',
+}
+
+function TokenCard({
+    isSelected,
+    token,
+    rarity,
+    tokenType = TokenType.NFT,
+}: {
+    isSelected: boolean;
+    token: NFT | SFT;
+    rarity?: Rarity | false;
+    tokenType?: TokenType;
+}) {
     // Used to force a re-render
     const [_mockState, setState] = useState<boolean>();
 
@@ -23,7 +37,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
         }
     };
 
-    const getRarityLabel = (rarityClass: RarityClass) => {
+    const getRarityLabel = (rarityClass: MainRarityClass) => {
         let { label, color } = getRarityClassInfo(rarityClass);
 
         return (
@@ -49,9 +63,29 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
         );
     };
 
+    const getArtRarityName = (value: number): string => {
+        for (const key in ArtRarityClass) {
+            if ((ArtRarityClass as any)[key] === value) {
+                return key;
+            }
+        }
+
+        return '';
+    };
+
     return (
         <Flex className="NFT" flexDir="column">
-            <Flex position="relative" minWidth="170px" minHeight="170px">
+            <Flex
+                position="relative"
+                minWidth="170px"
+                minHeight="170px"
+                borderColor={
+                    tokenType === TokenType.SFT ? `blizzard${getArtRarityName((token as SFT).artRarityClass)}` : 'transparent'
+                }
+                borderWidth={tokenType === TokenType.SFT ? '1px' : '0px'}
+                borderStyle="solid"
+                p="3px"
+            >
                 {isSelected && (
                     <Flex
                         justifyContent="center"
@@ -82,7 +116,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                     ></Flex>
                 )}
 
-                {!!token.timestamp && !hasFinishedUnbonding(token) && (
+                {tokenType === TokenType.NFT && (token as NFT).timestamp && !hasFinishedUnbonding(token) && (
                     <Flex
                         justifyContent="center"
                         alignItems="center"
@@ -95,7 +129,7 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                         p={1}
                     >
                         <Timer
-                            timestamp={addSeconds(token.timestamp as Date, getUnbondingDuration())}
+                            timestamp={addSeconds((token as NFT).timestamp as Date, getUnbondingDuration())}
                             callback={() => setState(true)}
                             displayClock={false}
                             customStyle={{ fontSize: '21px', fontWeight: 500, userSelect: 'none' }}
@@ -112,12 +146,30 @@ function TokenCard({ isSelected, token, rarity }: { isSelected: boolean; token: 
                     </Flex>
                 )}
 
-                <LazyLoadImage src={token.url} alt="NFT" loading="lazy" effect="opacity" />
+                <LazyLoadImage className="Lazy-Loaded-Token" src={token.url} alt="NFT" loading="lazy" effect="opacity" />
             </Flex>
 
-            <Text mt={1.5} fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>
-                {token.name}
-            </Text>
+            <Flex mt={1.5} alignItems="center" justifyContent="space-between">
+                <Text fontSize="15px" fontWeight={500} userSelect="none" color={getColor()}>
+                    {token.name}
+                </Text>
+
+                {tokenType === TokenType.SFT && (
+                    <Text
+                        color="#e89a3c"
+                        bg="#2b1d11"
+                        borderColor="#593815"
+                        borderWidth="1px"
+                        borderStyle="solid"
+                        fontSize="15px"
+                        padding="1px 8px"
+                        lineHeight="20px"
+                        borderRadius="2px"
+                    >
+                        {(token as SFT).balance}
+                    </Text>
+                )}
+            </Flex>
         </Flex>
     );
 }

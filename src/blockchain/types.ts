@@ -48,13 +48,27 @@ export interface SFT {
     url: string;
     tokenId: string;
     balance: number;
+    artRarityClass: ArtRarityClass;
 }
 
-export enum RarityClass {
+export enum MainRarityClass {
     Elder = 0,
     Common = 1,
     Uncommon = 2,
     Rare = 3,
     Royal = 4,
     OneOfOne = 5,
+}
+
+export enum ArtRarityClass {
+    Legendary = 1,
+    Epic = 2,
+    Rare = 3,
+    Uncommon = 4,
+    Common = 5,
+}
+
+export interface Rarity {
+    nonce: number;
+    rarityClass: number;
 }

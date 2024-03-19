@@ -11,10 +11,10 @@ import { smartContract } from '../../blockchain/game/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFT } from '../../blockchain/types';
+import { NFT, Rarity } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 
 function Stake() {
     const { height, displayToast } = useStaking();

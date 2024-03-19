@@ -30,13 +30,13 @@ import {
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFT, Stake } from '../../blockchain/types';
+import { NFT, Rarity, Stake } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/game/smartContract';
-import { Rarity, getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 import Yield from '../../shared/Yield';
 import { formatDistance } from 'date-fns';
 

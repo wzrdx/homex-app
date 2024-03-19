@@ -2,12 +2,13 @@ import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
-import { NFT, SFT, StakingInfo } from '../blockchain/types';
+import { NFT, Rarity, SFT, StakingInfo } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
 import { pairwise } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID, AOM_COLLECTION_ID } from '../blockchain/config';
 import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
+import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
 
 const CHUNK_SIZE = 25;
 
@@ -43,6 +44,7 @@ export const StoreProvider = ({ children }) => {
 
     const [stakeableAoMNonces, setStakeableAoMNonces] = useState<number[]>([]);
     const [artTokens, setArtTokens] = useState<SFT[]>();
+    const [artRarities, setArtRarities] = useState<Rarity[]>([]);
 
     // Fetches Travelers & Elders from the user's wallet
     const getWalletMainNFTs = async () => {
@@ -121,13 +123,20 @@ export const StoreProvider = ({ children }) => {
     // Fetches the AoM SFTs which are stakeable from the user's wallet
     const getWalletStakeableAoMSFTs = async () => {
         try {
-            let nonces: number[];
+            let nonces: number[], rarities: Rarity[];
 
             if (_.isEmpty(stakeableAoMNonces)) {
                 nonces = await getStakeableNonces();
                 setStakeableAoMNonces(nonces);
             } else {
                 nonces = stakeableAoMNonces;
+            }
+
+            if (_.isEmpty(artRarities)) {
+                rarities = await getArtRarities();
+                setArtRarities(rarities);
+            } else {
+                rarities = artRarities;
             }
 
             const { data: count } = await getNFTsCount(address, AOM_COLLECTION_ID);
@@ -165,6 +174,7 @@ export const StoreProvider = ({ children }) => {
                 .map((token) => ({
                     ...token,
                     balance: Number.parseInt(token.balance),
+                    artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
                     tokenId: AOM_COLLECTION_ID,
                 }))
                 .orderBy('nonce', 'asc')

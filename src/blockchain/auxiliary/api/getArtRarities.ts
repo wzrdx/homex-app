@@ -7,18 +7,12 @@ import { Rarity } from '../../types';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getRarityClasses';
+const FUNCTION_NAME = 'getArtRarities';
 
-export const getRarityClasses = async (nonces: number[]) => {
+export const getArtRarities = async (): Promise<Rarity[]> => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
-            args: [
-                new List(
-                    new U16Type(),
-                    map(nonces, (nonce) => new U16Value(nonce))
-                ),
-            ],
         });
 
         const queryResponse = await proxy.queryContract(query);
