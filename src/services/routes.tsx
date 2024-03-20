@@ -8,7 +8,6 @@ import Maze from '../components/Maze';
 import Altar from '../components/Maze/Altar';
 import MazeStake from '../components/Maze/Stake';
 import MazeUnstake from '../components/Maze/Unstake';
-import MazeUnbond from '../components/Maze/Unbond';
 // Others
 import Gameplay from '../components/Gameplay';
 import Quests from '../components/Quests';
@@ -68,11 +67,6 @@ export const routes = [
             {
                 path: routeNames.unstake,
                 component: MazeUnstake,
-                isTabRoute: true,
-            },
-            {
-                path: routeNames.unbond,
-                component: MazeUnbond,
                 isTabRoute: true,
             },
         ],

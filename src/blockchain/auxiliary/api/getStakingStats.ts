@@ -7,7 +7,12 @@ const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 10000 });
 const FUNCTION_NAME = 'getStakingStats';
 
-export const getStakingStats = async () => {
+export interface MazeStakingStats {
+    tokens: number;
+    wallets: number;
+}
+
+export const getStakingStats = async (): Promise<MazeStakingStats | undefined> => {
     try {
         const query = smartContract.createQuery({
             func: new ContractFunction(FUNCTION_NAME),
@@ -21,8 +26,8 @@ export const getStakingStats = async () => {
         const value = firstValue?.valueOf();
 
         return {
-            pages: value.field0.toNumber() as number,
-            items: value.field1.toNumber() as number,
+            tokens: value.field0.toNumber() as number,
+            wallets: value.field1.toNumber() as number,
         };
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);

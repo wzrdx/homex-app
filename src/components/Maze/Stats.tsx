@@ -3,14 +3,11 @@ import { Flex, Text, Stack, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { useStoreContext, StoreContextType } from '../../services/store';
-import { getStakingStats } from '../../blockchain/auxiliary/api/getStakingStats';
+import { MazeStakingStats, getStakingStats } from '../../blockchain/auxiliary/api/getStakingStats';
 
 function Stats() {
     const { mazeStakingInfo } = useStoreContext() as StoreContextType;
-    const [stats, setStats] = useState<{
-        pages: number;
-        items: number;
-    }>();
+    const [stats, setStats] = useState<MazeStakingStats | undefined>();
 
     useEffect(() => {
         (async () => setStats(await getStakingStats()))();
@@ -33,7 +30,8 @@ function Stats() {
                     <Text pt={5} layerStyle="header1">
                         Global Stats
                     </Text>
-                    <StatsEntry label="Total tokens staked" value={stats.pages} />
+                    <StatsEntry label="Total tokens staked" value={stats.tokens} />
+                    <StatsEntry label="Total wallets staked" value={stats.wallets} />
                 </Stack>
             )}
         </Flex>
