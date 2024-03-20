@@ -41,8 +41,6 @@ export const useGetStakingInfo = () => {
                 })),
             };
 
-            console.log(FUNCTION_NAME, info);
-
             setStakingInfo(info);
 
             return info;

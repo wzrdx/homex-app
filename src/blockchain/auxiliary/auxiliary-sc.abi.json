@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.71.0-nightly",
-            "commitHash": "a2b1646c597329d0a25efa3889b66650f65de1de",
-            "commitDate": "2023-05-25",
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
             "channel": "Nightly",
-            "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
         },
         "contractCrate": {
             "name": "auxiliary-sc",
@@ -120,6 +120,16 @@
             ]
         },
         {
+            "name": "getPagesCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
             "name": "getPageNonce",
             "mutability": "readonly",
             "inputs": [
@@ -197,6 +207,32 @@
                     "type": "u32"
                 }
             ]
+        },
+        {
+            "name": "getPageAttribute",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "debug",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
         },
         {
             "name": "verifyPage",
@@ -322,6 +358,16 @@
             "outputs": [
                 {
                     "type": "List<Rarity>"
+                }
+            ]
+        },
+        {
+            "name": "getStakingStats",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "tuple<u32,u32>"
                 }
             ]
         }

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Tab from '../shared/Tab';
 import { useLayout } from './Layout';
+import Stats from './Maze/Stats';
+import { useStoreContext, StoreContextType } from '../services/store';
 
 function Maze() {
     const { routes, routeNames, displayToast } = useLayout();
@@ -20,8 +22,10 @@ function Maze() {
     const [height, setHeight] = useState<number>(0);
     const ref = useRef(null);
 
+    const { getMazeStakingInfo } = useStoreContext() as StoreContextType;
+
     useEffect(() => {
-        (async () => {})();
+        getMazeStakingInfo();
     }, []);
 
     useEffect(() => {
@@ -46,7 +50,7 @@ function Maze() {
 
             <Flex layerStyle="layout" height="100%">
                 <Flex flex={1}>
-                    <Text>Stats</Text>
+                    <Stats />
                 </Flex>
 
                 <Flex flex={4}>
