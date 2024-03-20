@@ -347,7 +347,7 @@
             ],
             "outputs": [
                 {
-                    "type": "StakingInfo"
+                    "type": "tuple<StakingInfo,BigUint>"
                 }
             ]
         },

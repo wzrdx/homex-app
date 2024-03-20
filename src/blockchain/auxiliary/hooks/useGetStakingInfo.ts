@@ -5,16 +5,16 @@ import { smartContract } from '../smartContract';
 import { API_URL } from '../../config';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { map, size } from 'lodash';
-import { StakingInfo } from '../../types';
+import { MazeStakingInfo } from '../../types';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getStakingInfo';
 
 export const useGetStakingInfo = () => {
-    const [stakingInfo, setStakingInfo] = useState<StakingInfo>();
+    const [mazeStakingInfo, setMazeStakingInfo] = useState<MazeStakingInfo>();
 
-    const call = async (): Promise<StakingInfo | undefined> => {
+    const call = async (): Promise<MazeStakingInfo | undefined> => {
         try {
             const address = await getAddress();
 
@@ -28,26 +28,28 @@ export const useGetStakingInfo = () => {
 
             const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
             const value = firstValue?.valueOf();
+            const stakingInfo = value.field0;
+            const mazeBalance = value.field1;
 
-            const info = {
-                isStaked: size(value.tokens) > 0,
-                rewards: value.rewards.toNumber() / 1000000,
-                timestamp: new Date(value.timestamp.toNumber() * 1000),
-                tokens: map(value.tokens, (token) => ({
+            const info: MazeStakingInfo = {
+                isStaked: size(stakingInfo.tokens) > 0,
+                rewards: stakingInfo.rewards.toNumber(),
+                timestamp: new Date(stakingInfo.timestamp.toNumber() * 1000),
+                tokens: map(stakingInfo.tokens, (token) => ({
                     tokenId: token.token_id,
                     nonce: token.nonce.toNumber(),
                     amount: token.amount.toNumber(),
                     timestamp: !token?.timestamp ? null : new Date(token?.timestamp?.toNumber() * 1000),
                 })),
+                mazeBalance: mazeBalance.toNumber(),
             };
 
-            setStakingInfo(info);
-
+            setMazeStakingInfo(info);
             return info;
         } catch (err) {
             console.error(`Unable to call ${FUNCTION_NAME}`, err);
         }
     };
 
-    return { stakingInfo, getStakingInfo: call };
+    return { mazeStakingInfo, getMazeStakingInfo: call };
 };

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
-import { NFT, Rarity, SFT, StakingInfo } from '../blockchain/types';
+import { MazeStakingInfo, NFT, Rarity, SFT, StakingInfo } from '../blockchain/types';
 import { getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
 import { pairwise } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
@@ -17,7 +17,7 @@ export interface StoreContextType {
     stakingInfo: StakingInfo | undefined;
     getStakingInfo: () => Promise<StakingInfo | undefined>;
     // Maze
-    mazeStakingInfo: StakingInfo | undefined;
+    mazeStakingInfo: MazeStakingInfo | undefined;
     getMazeStakingInfo: () => Promise<StakingInfo | undefined>;
     travelers: NFT[] | undefined;
     elders: NFT[] | undefined;
@@ -35,7 +35,7 @@ export const StoreProvider = ({ children }) => {
     const { stakingInfo, getStakingInfo } = useGetEnergyStakingInfo();
 
     // Maze
-    const { stakingInfo: mazeStakingInfo, getStakingInfo: getMazeStakingInfo } = useGetMazeStakingInfo();
+    const { mazeStakingInfo, getMazeStakingInfo } = useGetMazeStakingInfo();
 
     let { address } = useGetAccountInfo();
 

@@ -27,6 +27,11 @@ export interface StakingInfo {
     timestamp: Date;
     tokens: Stake[];
 }
+
+export interface MazeStakingInfo extends StakingInfo {
+    mazeBalance: number;
+}
+
 export interface Participant {
     address: string;
     ticketsCount: number;
