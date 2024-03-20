@@ -30,7 +30,7 @@
         "util": "^0.12.5"
     },
     "scripts": {
-        "start": "GENERATE_SOURCEMAP=false react-scripts start",
+        "start": "react-scripts start",
         "build": "react-scripts build"
     },
     "eslintConfig": {

@@ -227,8 +227,8 @@ function Unstake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Unstake,
-                    resolution: TxResolution.UpdateStakingAndNFTs,
+                    type: TransactionType.UnstakeMain,
+                    resolution: TxResolution.UpdateMainStakingAndNFTs,
                     data: _.size(args),
                 },
             ]);
@@ -315,9 +315,9 @@ function Unstake() {
                                     isStakingDisabled ||
                                     !stakingInfo ||
                                     isTxPending(TransactionType.ClaimEnergy) ||
-                                    isTxPending(TransactionType.Stake)
+                                    isTxPending(TransactionType.StakeMain)
                                 }
-                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.Unstake)}
+                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.UnstakeMain)}
                                 colorScheme="blue"
                                 customStyle={{ width: '120px' }}
                                 onClick={unstake}
@@ -333,8 +333,8 @@ function Unstake() {
                                     disabled={
                                         !stakingInfo ||
                                         isTxPending(TransactionType.ClaimEnergy) ||
-                                        isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake)
+                                        isTxPending(TransactionType.UnstakeMain) ||
+                                        isTxPending(TransactionType.StakeMain)
                                     }
                                 >
                                     <Text>Select all</Text>
@@ -364,8 +364,8 @@ function Unstake() {
                                     disabled={
                                         _.isEmpty(rarities) ||
                                         isTxPending(TransactionType.ClaimEnergy) ||
-                                        isTxPending(TransactionType.Unstake) ||
-                                        isTxPending(TransactionType.Stake)
+                                        isTxPending(TransactionType.UnstakeMain) ||
+                                        isTxPending(TransactionType.StakeMain)
                                     }
                                 >
                                     <Flex alignItems="center">
@@ -379,8 +379,8 @@ function Unstake() {
                                         disabled={
                                             isStakingDisabled ||
                                             !stakingInfo ||
-                                            isTxPending(TransactionType.Stake) ||
-                                            isTxPending(TransactionType.Unstake)
+                                            isTxPending(TransactionType.StakeMain) ||
+                                            isTxPending(TransactionType.UnstakeMain)
                                         }
                                         isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
                                         colorScheme="blue"
@@ -424,7 +424,7 @@ function Unstake() {
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.StakeMain)) {
                                                 return;
                                             }
 

@@ -48,7 +48,7 @@ const colors = {
     page: '#fad28d',
     blizzardCommon: '#ffffff',
     blizzardUncommon: '#1eff00',
-    blizzardRare: '#0070dd',
+    blizzardRare: '#2392ff',
     blizzardEpic: '#a335ee',
     blizzardLegendary: '#ff8000',
 };

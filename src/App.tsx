@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
 import { routeNames, routes } from './services/routes';
-import { AuthenticationProvider } from './services/authentication';
+import { AuthenticationProvider, getWalletSFTs } from './services/authentication';
 import { TransactionsToastList, NotificationModal, SignTransactionsModals } from '@multiversx/sdk-dapp/UI';
 import { theme } from './theme';
 import { ProtectedRoute } from './shared/ProtectedRoute';
@@ -39,7 +39,8 @@ function App() {
     const { hasSuccessfulTransactions, successfulTransactionsArray } = useGetSuccessfulTransactions();
 
     const { getOngoingQuests, onQuestsModalClose } = useQuestsContext() as QuestsContextType;
-    const { getStakingInfo, getWalletMainNFTs } = useStoreContext() as StoreContextType;
+    const { getStakingInfo, getWalletMainNFTs, getMazeStakingInfo, getWalletStakeableAoMSFTs } =
+        useStoreContext() as StoreContextType;
 
     const { getEnergy, getHerbs, getGems, getEssence, getTickets, onTicketModalOpen } =
         useResourcesContext() as ResourcesContextType;
@@ -110,7 +111,7 @@ function App() {
                         );
                         break;
 
-                    case TransactionType.Stake:
+                    case TransactionType.StakeMain:
                         displayToast(
                             'Staking succesful',
                             `Successfully staked ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
@@ -120,7 +121,7 @@ function App() {
                         displayEnergyGain(tx?.hash);
                         break;
 
-                    case TransactionType.Unstake:
+                    case TransactionType.UnstakeMain:
                         displayToast(
                             'Unstaking succesful',
                             `Successfully unstaked ${tx.data} NFT${tx.data > 1 ? 's' : ''}`,
@@ -238,7 +239,7 @@ function App() {
                 forEach(calls, (call) => call());
                 break;
 
-            case TxResolution.UpdateStakingAndNFTs:
+            case TxResolution.UpdateMainStakingAndNFTs:
                 getWalletMainNFTs();
                 getEnergy();
                 getStakingInfo();
@@ -247,6 +248,11 @@ function App() {
             case TxResolution.UpdateStakingInfo:
                 getEnergy();
                 getStakingInfo();
+                break;
+
+            case TxResolution.UpdateArtStakingAndSFTs:
+                getWalletStakeableAoMSFTs();
+                getMazeStakingInfo();
                 break;
 
             default:

@@ -1,6 +1,7 @@
 import { CheckCircleIcon, InfoOutlineIcon, TimeIcon, WarningIcon } from '@chakra-ui/icons';
 import { FunctionComponent, PropsWithChildren } from 'react';
-import { Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
+import { MdErrorOutline } from 'react-icons/md';
 
 const ICON_SIZE = '19px';
 
@@ -17,7 +18,11 @@ export const CustomToast: FunctionComponent<
                 return <CheckCircleIcon fontSize={ICON_SIZE} color="green.500" />;
 
             case 'error':
-                return <WarningIcon fontSize={ICON_SIZE} color="redClrs" />;
+                return (
+                    <Box color={color} mb="1px">
+                        <MdErrorOutline fontSize="22px" />
+                    </Box>
+                );
 
             case 'time':
                 return <TimeIcon fontSize={ICON_SIZE} color="whiteAlpha.800" />;

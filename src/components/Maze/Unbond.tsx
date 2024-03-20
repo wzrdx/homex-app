@@ -213,7 +213,7 @@ function Unbond() {
                 {
                     sessionId,
                     type: TransactionType.Restake,
-                    resolution: TxResolution.UpdateStakingAndNFTs,
+                    resolution: TxResolution.UpdateMainStakingAndNFTs,
                     data: _.size(args),
                 },
             ]);
@@ -398,7 +398,7 @@ function Unbond() {
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isRestakeButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isRestakeButtonLoading || isTxPending(TransactionType.StakeMain)) {
                                                 return;
                                             }
 

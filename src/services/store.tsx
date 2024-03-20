@@ -180,7 +180,6 @@ export const StoreProvider = ({ children }) => {
                 .orderBy('nonce', 'asc')
                 .value();
 
-            console.log(tokens);
             setArtTokens(tokens);
         } catch (error) {
             console.error(error);

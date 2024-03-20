@@ -97,8 +97,8 @@ function Stake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Stake,
-                    resolution: TxResolution.UpdateStakingAndNFTs,
+                    type: TransactionType.StakeMain,
+                    resolution: TxResolution.UpdateMainStakingAndNFTs,
                     data: _.size(transfers),
                 },
             ]);
@@ -134,9 +134,9 @@ function Stake() {
                             isStakingDisabled ||
                             !stakingInfo ||
                             isTxPending(TransactionType.ClaimEnergy) ||
-                            isTxPending(TransactionType.Unstake)
+                            isTxPending(TransactionType.UnstakeMain)
                         }
-                        isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.StakeMain)}
                         colorScheme="red"
                         customStyle={{ width: '120px' }}
                         onClick={stake}
@@ -152,8 +152,8 @@ function Stake() {
                             disabled={
                                 !stakingInfo ||
                                 isTxPending(TransactionType.ClaimEnergy) ||
-                                isTxPending(TransactionType.Unstake) ||
-                                isTxPending(TransactionType.Stake)
+                                isTxPending(TransactionType.UnstakeMain) ||
+                                isTxPending(TransactionType.StakeMain)
                             }
                         >
                             <Text>Select all (25 max.)</Text>
@@ -208,7 +208,7 @@ function Stake() {
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isButtonLoading || isTxPending(TransactionType.StakeMain)) {
                                                 return;
                                             }
 

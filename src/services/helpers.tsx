@@ -7,7 +7,7 @@ import {
     TRAVELERS_COLLECTION_ID,
     TRAVELERS_PADDING,
 } from '../blockchain/config';
-import { NFT, MainRarityClass } from '../blockchain/types';
+import { NFT, MainRarityClass, ArtRarityClass } from '../blockchain/types';
 import { Quest } from '../types';
 import _ from 'lodash';
 import { addSeconds, isAfter, isBefore } from 'date-fns';
@@ -170,4 +170,14 @@ export const formatNumberWithK = (num: number): string => {
     } else {
         return (num / 1000000).toFixed(1) + 'M';
     }
+};
+
+export const getArtRarityName = (value: number): string => {
+    for (const key in ArtRarityClass) {
+        if ((ArtRarityClass as any)[key] === value) {
+            return key;
+        }
+    }
+
+    return '';
 };

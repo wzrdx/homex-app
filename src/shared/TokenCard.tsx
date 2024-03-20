@@ -2,7 +2,7 @@ import { Image, Flex, Text, Box, useTheme } from '@chakra-ui/react';
 import { NFT, Rarity, MainRarityClass, SFT, ArtRarityClass } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
+import { getArtRarityName, getRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
 import { ELDERS_COLLECTION_ID } from '../blockchain/config';
 import { addSeconds } from 'date-fns';
 import { Timer } from './Timer';
@@ -63,16 +63,6 @@ function TokenCard({
                 </Text>
             </Flex>
         );
-    };
-
-    const getArtRarityName = (value: number): string => {
-        for (const key in ArtRarityClass) {
-            if ((ArtRarityClass as any)[key] === value) {
-                return key;
-            }
-        }
-
-        return '';
     };
 
     return (

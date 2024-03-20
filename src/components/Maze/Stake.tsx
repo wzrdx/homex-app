@@ -1,21 +1,43 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    Text,
+    Spinner,
+    Alert,
+    AlertIcon,
+    Button,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    useDisclosure,
+    Stack,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, isStakingDisabled } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/game/smartContract';
+import { AOM_COLLECTION_ID, CHAIN_ID, isStakingDisabled } from '../../blockchain/config';
+import { smartContract } from '../../blockchain/auxiliary/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
 import TokenCard, { TokenType } from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { SFT } from '../../blockchain/types';
+import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
+import { getArtRarityName, sleep } from '../../services/helpers';
+import { BsGem } from 'react-icons/bs';
 
 function Stake() {
     const { height, displayToast } = useStaking();
+    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
     const { address } = useGetAccountInfo();
 
@@ -24,12 +46,10 @@ function Stake() {
 
     const [isButtonLoading, setButtonLoading] = useState(false);
 
-    const [selectedTokens, setSelectedTokens] = useState<
-        Array<{
-            nonce: number;
-            tokenId: string;
-        }>
-    >([]);
+    const [selectedTokens, setSelectedTokens] = useState<Array<SFT>>([]);
+    const [tokenBalances, setTokenBalances] = useState<{
+        [key: string]: number;
+    }>({});
 
     useEffect(() => {
         getWalletStakeableAoMSFTs();
@@ -44,21 +64,14 @@ function Stake() {
             return;
         }
 
-        if (_.isEmpty(selectedTokens)) {
-            displayToast('error', 'Nothing to stake', 'Please select some NFTs first', 'redClrs');
-
-            return;
-        }
-
+        onModalClose();
         setButtonLoading(true);
 
         const user = new Address(address);
 
-        const stakedNFTsCount = _.size(stakingInfo.tokens);
-
         try {
-            const transfers: TokenTransfer[] = _(selectedTokens)
-                .map((token) => TokenTransfer.nonFungible(token.tokenId, token.nonce))
+            const transfers: TokenTransfer[] = _(tokenBalances)
+                .map((value, key) => TokenTransfer.semiFungible(AOM_COLLECTION_ID, Number.parseInt(key), value))
                 .value();
 
             const tx = smartContract.methods
@@ -67,7 +80,7 @@ function Stake() {
                 .withSender(user)
                 .withExplicitReceiver(user)
                 .withChainID(CHAIN_ID)
-                .withGasLimit(90000000 + 750000 * stakedNFTsCount + 2150000 * _.size(transfers))
+                .withGasLimit(30000000 + 5000000 * _.size(transfers))
                 .buildTransaction();
 
             await refreshAccount();
@@ -86,8 +99,8 @@ function Stake() {
                 ...txs,
                 {
                     sessionId,
-                    type: TransactionType.Stake,
-                    resolution: TxResolution.UpdateStakingAndNFTs,
+                    type: TransactionType.StakeArt,
+                    resolution: TxResolution.UpdateArtStakingAndSFTs,
                     data: _.size(transfers),
                 },
             ]);
@@ -103,15 +116,21 @@ function Stake() {
             return;
         }
 
-        setSelectedTokens(
-            _(artTokens)
-                .take(25)
-                .map((token) => ({
-                    nonce: token.nonce,
-                    tokenId: token.tokenId,
-                }))
-                .value()
-        );
+        setSelectedTokens(_(artTokens).take(25).value());
+    };
+
+    const openStakingModal = () => {
+        if (!stakingInfo) {
+            return;
+        }
+
+        if (_.isEmpty(selectedTokens)) {
+            displayToast('error', 'Nothing selected', 'Select some SFTs in order to stake', 'redClrs');
+            return;
+        }
+
+        setTokenBalances({});
+        onModalOpen();
     };
 
     return (
@@ -119,16 +138,11 @@ function Stake() {
             <Flex pb={6} alignItems="center" justifyContent="space-between">
                 <Flex alignItems="center">
                     <ActionButton
-                        disabled={
-                            isStakingDisabled ||
-                            !stakingInfo ||
-                            isTxPending(TransactionType.ClaimEnergy) ||
-                            isTxPending(TransactionType.Unstake)
-                        }
-                        isLoading={isButtonLoading || isTxPending(TransactionType.Stake)}
+                        disabled={!stakingInfo || isTxPending(TransactionType.UnstakeArt)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.StakeArt)}
                         colorScheme="red"
                         customStyle={{ width: '120px' }}
-                        onClick={stake}
+                        onClick={openStakingModal}
                     >
                         <Text>Stake</Text>
                     </ActionButton>
@@ -139,10 +153,7 @@ function Stake() {
                             customStyle={{ width: '192px' }}
                             onClick={selectAll}
                             disabled={
-                                !stakingInfo ||
-                                isTxPending(TransactionType.ClaimEnergy) ||
-                                isTxPending(TransactionType.Unstake) ||
-                                isTxPending(TransactionType.Stake)
+                                !stakingInfo || isTxPending(TransactionType.UnstakeArt) || isTxPending(TransactionType.StakeArt)
                             }
                         >
                             <Text>Select all (25 max.)</Text>
@@ -191,13 +202,14 @@ function Stake() {
                                 gridTemplateColumns="1fr 1fr 1fr 1fr 1fr"
                                 rowGap={4}
                                 columnGap={4}
+                                pb="1px"
                             >
                                 {_.map(artTokens, (token, index) => (
                                     <Box
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isButtonLoading || isTxPending(TransactionType.Stake)) {
+                                            if (isButtonLoading || isTxPending(TransactionType.StakeArt)) {
                                                 return;
                                             }
 
@@ -212,13 +224,7 @@ function Stake() {
                                                         return tokens;
                                                     }
 
-                                                    return [
-                                                        ...tokens,
-                                                        {
-                                                            nonce: token.nonce,
-                                                            tokenId: token.tokenId,
-                                                        },
-                                                    ];
+                                                    return [...tokens, token];
                                                 } else {
                                                     return _.filter(
                                                         tokens,
@@ -245,6 +251,44 @@ function Stake() {
                     )}
                 </>
             )}
+
+            {/* Updates */}
+            <Modal size="xl" onClose={onModalClose} isOpen={isModalOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent backgroundColor="dark" width="446px">
+                    <ModalHeader>Select quantities</ModalHeader>
+
+                    <ModalCloseButton
+                        zIndex={1}
+                        color="white"
+                        _focusVisible={{ boxShadow: '0 0 transparent' }}
+                        borderRadius="3px"
+                    />
+                    <ModalBody>
+                        <Stack spacing={3}>
+                            {_.map(selectedTokens, (token, index) => (
+                                <Stack direction="row" alignItems="center" justifyContent="space-between" key={index}>
+                                    <Stack spacing={3} direction="row" alignItems="center">
+                                        <Box color={`blizzard${getArtRarityName((token as SFT).artRarityClass)}`} pt="2px">
+                                            <BsGem fontSize="21px" />
+                                        </Box>
+
+                                        <Text>{token.name}</Text>
+                                    </Stack>
+
+                                    <ArtTokenNumberInput token={token} updateFunction={setTokenBalances} />
+                                </Stack>
+                            ))}
+                        </Stack>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme="red" onClick={stake}>
+                            Stake
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }

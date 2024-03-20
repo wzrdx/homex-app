@@ -8,13 +8,15 @@ export enum TransactionType {
     CompleteQuest,
     CompleteAllQuests,
     MintPage,
-    Stake,
-    Unstake,
+    StakeMain,
+    UnstakeMain,
     ClaimEnergy,
     ClaimReward,
     ClaimUnbondedNFTs,
     Restake,
     MintArtDrop,
+    StakeArt,
+    UnstakeArt,
 }
 
 export enum TxResolution {
@@ -23,8 +25,9 @@ export enum TxResolution {
     UpdateTicketsAndRewards = 'UpdateTicketsAndRewards',
     UpdateTicketsAndRaffles = 'UpdateTicketsAndRaffles',
     UpdateStakingInfo = 'UpdateStakingInfo',
-    UpdateStakingAndNFTs = 'UpdateStakingAndNFTs',
+    UpdateMainStakingAndNFTs = 'UpdateMainStakingAndNFTs',
     UpdateTickets = 'UpdateTickets',
+    UpdateArtStakingAndSFTs = 'UpdateArtStakingAndSFTs',
 }
 
 export interface Transaction {
