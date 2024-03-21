@@ -21,6 +21,7 @@ import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Ty
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import {
+    AOM_COLLECTION_ID,
     CHAIN_ID,
     ELDERS_COLLECTION_ID,
     ELDERS_PADDING,
@@ -30,13 +31,12 @@ import {
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
-import { NFT, Rarity, Stake } from '../../blockchain/types';
+import { NFT, Rarity, SFT, Stake } from '../../blockchain/types';
 import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/game/smartContract';
-import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 import Yield from '../../shared/Yield';
 import { formatDistance } from 'date-fns';
 
@@ -46,75 +46,36 @@ function Unstake() {
 
     const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
 
-    const { stakingInfo } = useStoreContext() as StoreContextType;
+    const { mazeStakingInfo } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
-    const [isClaimButtonLoading, setClaimButtonLoading] = useState(false);
 
-    const [travelers, setTravelers] = useState<NFT[]>();
-    const [elders, setElders] = useState<NFT[]>();
+    const [tokens, setTokens] = useState<NFT[]>();
 
-    const [rarities, setRarities] = useState<Rarity[]>();
-
-    const [selectedTokens, setSelectedTokens] = useState<
-        Array<{
-            nonce: number;
-            tokenId: string;
-        }>
-    >([]);
+    const [selectedTokens, setSelectedTokens] = useState<Array<SFT>>([]);
 
     useEffect(() => {
         setSelectedTokens([]);
         getNFTs();
-    }, [stakingInfo]);
-
-    useEffect(() => {
-        if (!_.isEmpty(travelers)) {
-            getRarities();
-        }
-    }, [travelers, elders]);
-
-    const getRarities = async () => {
-        setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
-    };
+    }, [mazeStakingInfo]);
 
     const getNFTs = async () => {
-        if (!stakingInfo) {
+        if (!mazeStakingInfo) {
             return;
         }
 
-        const stakedTravelers: Stake[] = _.filter(
-            stakingInfo.tokens,
-            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
-        );
+        const nonces: number[] = _.map(mazeStakingInfo.tokens, (token) => token.nonce);
 
-        const stakedElders: Stake[] = _.filter(
-            stakingInfo.tokens,
-            (token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp
-        );
+        setTokens(undefined);
 
-        const filteredNonces = {
-            travelers: _.map(stakedTravelers, (token) => token.nonce),
-            elders: _.map(stakedElders, (token) => token.nonce),
-        };
+        const chunks = new Array(Math.floor(nonces.length / 25)).fill(25).concat(nonces.length % 25);
+        const apiCalls: Array<Promise<{ data: NFT[] }>> = [];
 
-        setTravelers(undefined);
-        setElders(undefined);
-
-        const travelersCount = _.size(filteredNonces?.travelers);
-        const eldersCount = _.size(filteredNonces?.elders);
-
-        const travelerChunks = new Array(Math.floor(travelersCount / 25)).fill(25).concat(travelersCount % 25);
-        const travelersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
-
-        const travelerIds = _.map(
-            filteredNonces?.travelers,
-            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
-        );
+        const ids = _.map(nonces, (nonce) => `${AOM_COLLECTION_ID}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
 
         pairwise(
-            _(travelerChunks)
+            _(chunks)
                 .filter(_.identity)
                 .map((chunk, index) => {
                     return index * 25 + chunk;
@@ -122,63 +83,29 @@ function Unstake() {
                 .unshift(0)
                 .value(),
             (from: number, to: number) => {
-                const slice = travelerIds.slice(from, to);
-                travelersApiCalls.push(getContractNFTs(TRAVELERS_COLLECTION_ID, slice.join(',')));
+                const slice = ids.slice(from, to);
+                apiCalls.push(getContractNFTs(AOM_COLLECTION_ID, slice.join(',')));
             }
         );
 
-        const travelers = _(await Promise.all(travelersApiCalls))
+        const contractTokens = _(await Promise.all(apiCalls))
             .flatten()
             .map((result) => result.data)
             .flatten()
-            .map((nft) => ({
-                ...nft,
-                timestamp: _.find(stakedTravelers, (token) => token.nonce === nft.nonce)?.timestamp as Date,
-                tokenId: TRAVELERS_COLLECTION_ID,
+            .map((sft) => ({
+                ...sft,
+                tokenId: AOM_COLLECTION_ID,
             }))
             .orderBy('nonce', 'asc')
             .value();
 
-        const elderChunks = new Array(Math.floor(eldersCount / 25)).fill(25).concat(eldersCount % 25);
-        const eldersApiCalls: Array<Promise<{ data: NFT[] }>> = [];
+        console.log(contractTokens);
 
-        const elderIds = _.map(
-            filteredNonces?.elders,
-            (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`
-        );
-
-        pairwise(
-            _(elderChunks)
-                .filter(_.identity)
-                .map((chunk, index) => {
-                    return index * 25 + chunk;
-                })
-                .unshift(0)
-                .value(),
-            (from: number, to: number) => {
-                const slice = elderIds.slice(from, to);
-                eldersApiCalls.push(getContractNFTs(ELDERS_COLLECTION_ID, slice.join(',')));
-            }
-        );
-
-        const elders = _(await Promise.all(eldersApiCalls))
-            .flatten()
-            .map((result) => result.data)
-            .flatten()
-            .map((nft) => ({
-                ...nft,
-                timestamp: _.find(stakedElders, (token) => token.nonce === nft.nonce)?.timestamp as Date,
-                tokenId: ELDERS_COLLECTION_ID,
-            }))
-            .orderBy('nonce', 'asc')
-            .value();
-
-        setTravelers(travelers);
-        setElders(elders);
+        setTokens(contractTokens);
     };
 
     const unstake = async () => {
-        if (!stakingInfo || !elders || !travelers) {
+        if (!mazeStakingInfo || !elders || !tokens) {
             return;
         }
 
@@ -186,7 +113,7 @@ function Unstake() {
 
         const user = new Address(address);
 
-        const args = _(stakingInfo.tokens)
+        const args = _(mazeStakingInfo.tokens)
             .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
             .map((token) => ({
                 token_id: new TokenIdentifierValue(token.tokenId),
@@ -196,7 +123,7 @@ function Unstake() {
             }))
             .value();
 
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
+        const stakedNFTsCount = _.size([...elders, ...tokens]);
 
         if (_.isEmpty(args)) {
             setUnstakeButtonLoading(false);
@@ -240,7 +167,7 @@ function Unstake() {
     };
 
     const claimStakingRewards = async () => {
-        if (!stakingInfo || !elders || !travelers) {
+        if (!mazeStakingInfo || !elders || !tokens) {
             return;
         }
 
@@ -252,7 +179,7 @@ function Unstake() {
 
         const user = new Address(address);
 
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
+        const stakedNFTsCount = _.size([...elders, ...tokens]);
 
         try {
             const tx = smartContract.methods
@@ -290,12 +217,12 @@ function Unstake() {
     };
 
     const selectAll = async () => {
-        if (!elders || !travelers) {
+        if (!elders || !tokens) {
             return;
         }
 
         setSelectedTokens(
-            _([...elders, ...travelers])
+            _([...elders, ...tokens])
                 .map((token) => ({
                     nonce: token.nonce,
                     tokenId: token.tokenId,
@@ -306,14 +233,14 @@ function Unstake() {
 
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
-            {elders && travelers ? (
+            {elders && tokens ? (
                 <>
                     <Flex pb={6} alignItems="center" justifyContent="space-between">
                         <Flex alignItems="center">
                             <ActionButton
                                 disabled={
                                     isStakingDisabled ||
-                                    !stakingInfo ||
+                                    !mazeStakingInfo ||
                                     isTxPending(TransactionType.ClaimEnergy) ||
                                     isTxPending(TransactionType.StakeMain)
                                 }
@@ -331,7 +258,7 @@ function Unstake() {
                                     customStyle={{ width: '142px' }}
                                     onClick={selectAll}
                                     disabled={
-                                        !stakingInfo ||
+                                        !mazeStakingInfo ||
                                         isTxPending(TransactionType.ClaimEnergy) ||
                                         isTxPending(TransactionType.UnstakeMain) ||
                                         isTxPending(TransactionType.StakeMain)
@@ -341,7 +268,7 @@ function Unstake() {
                                 </ActionButton>
                             </Box>
 
-                            {stakingInfo?.isStaked && (
+                            {mazeStakingInfo?.isStaked && (
                                 <Flex ml={4} alignItems="center">
                                     <InfoOutlineIcon mr={1.5} color="almostWhite" />
                                     <Text color="almostWhite">
@@ -356,7 +283,7 @@ function Unstake() {
                             )}
                         </Flex>
 
-                        {stakingInfo?.isStaked && (
+                        {mazeStakingInfo?.isStaked && (
                             <Flex>
                                 <ActionButton
                                     colorScheme="default"
@@ -378,7 +305,7 @@ function Unstake() {
                                     <ActionButton
                                         disabled={
                                             isStakingDisabled ||
-                                            !stakingInfo ||
+                                            !mazeStakingInfo ||
                                             isTxPending(TransactionType.StakeMain) ||
                                             isTxPending(TransactionType.UnstakeMain)
                                         }
@@ -394,7 +321,7 @@ function Unstake() {
                         )}
                     </Flex>
 
-                    {_.isEmpty(travelers) && _.isEmpty(elders) ? (
+                    {_.isEmpty(tokens) && _.isEmpty(elders) ? (
                         <Flex py={4}>
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
@@ -419,7 +346,7 @@ function Unstake() {
                                 rowGap={4}
                                 columnGap={4}
                             >
-                                {_.map([...elders, ...travelers], (token, index) => (
+                                {_.map([...elders, ...tokens], (token, index) => (
                                     <Box
                                         key={index}
                                         cursor="pointer"
@@ -489,7 +416,7 @@ function Unstake() {
 
                     <ModalBody>
                         <Flex pb={3} mt={-1}>
-                            {travelers && elders && <Yield travelers={travelers} elders={elders} rarities={rarities} />}
+                            {tokens && elders && <Yield travelers={tokens} elders={elders} rarities={rarities} />}
                         </Flex>
                     </ModalBody>
                 </ModalContent>
