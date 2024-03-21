@@ -84,8 +84,8 @@ function Layout() {
         duration = 6000,
         position: ToastPosition = 'top-right',
         containerStyle: StyleProps = {
-            marginTop: '2rem',
-            marginRight: '2rem',
+            marginTop: '1rem',
+            marginRight: '1rem',
         }
     ) => {
         toastIdRef.current = toast({

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import { API_URL, gameScAddress } from '../blockchain/config';
+import { AOM_COLLECTION_ID, API_URL, auxiliaryScAddress, gameScAddress } from '../blockchain/config';
 import { NFT, SFT } from '../blockchain/types';
 import { getPlayerXp } from '../blockchain/game/api/getPlayerXp';
 
@@ -58,6 +58,16 @@ export const getContractNFTs = (collection: string, identifiers: string): Promis
             identifiers,
             collections: collection,
             fields: 'nonce,name,url,rank',
+        },
+    });
+
+export const getContractArtSFTs = (identifiers: string): Promise<{ data: Array<SFT> }> =>
+    axios.get(`accounts/${auxiliaryScAddress}/nfts`, {
+        baseURL: API_URL,
+        params: {
+            identifiers,
+            collections: AOM_COLLECTION_ID,
+            fields: 'nonce,name,url',
         },
     });
 

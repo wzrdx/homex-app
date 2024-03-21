@@ -18,12 +18,11 @@ import {
     Stack,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { AOM_COLLECTION_ID, CHAIN_ID, isStakingDisabled } from '../../blockchain/config';
+import { AOM_COLLECTION_ID, CHAIN_ID } from '../../blockchain/config';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
@@ -41,14 +40,14 @@ function Stake() {
 
     const { address } = useGetAccountInfo();
 
-    const { stakingInfo, artTokens, getWalletStakeableAoMSFTs } = useStoreContext() as StoreContextType;
+    const { mazeStakingInfo, walletArtTokens, getWalletStakeableAoMSFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
     const [isButtonLoading, setButtonLoading] = useState(false);
 
     const [selectedTokens, setSelectedTokens] = useState<Array<SFT>>([]);
     const [tokenBalances, setTokenBalances] = useState<{
-        [key: string]: number;
+        [nonce: string]: number;
     }>({});
 
     useEffect(() => {
@@ -57,10 +56,10 @@ function Stake() {
 
     useEffect(() => {
         setSelectedTokens([]);
-    }, [artTokens]);
+    }, [walletArtTokens]);
 
     const stake = async () => {
-        if (!stakingInfo) {
+        if (!mazeStakingInfo) {
             return;
         }
 
@@ -101,26 +100,27 @@ function Stake() {
                     sessionId,
                     type: TransactionType.StakeArt,
                     resolution: TxResolution.UpdateArtStakingAndSFTs,
-                    data: _.size(transfers),
+                    data: _.sum(Object.values(tokenBalances)),
                 },
             ]);
 
             setButtonLoading(false);
         } catch (err) {
             console.error('Error occured while staking', err);
+            setButtonLoading(false);
         }
     };
 
     const selectAll = async () => {
-        if (!artTokens) {
+        if (!walletArtTokens) {
             return;
         }
 
-        setSelectedTokens(_(artTokens).take(25).value());
+        setSelectedTokens(_(walletArtTokens).take(25).value());
     };
 
-    const openStakingModal = () => {
-        if (!stakingInfo) {
+    const openBalancesModal = () => {
+        if (!mazeStakingInfo) {
             return;
         }
 
@@ -136,35 +136,31 @@ function Stake() {
     return (
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             <Flex pb={6} alignItems="center" justifyContent="space-between">
-                <Flex alignItems="center">
-                    <ActionButton
-                        disabled={!stakingInfo || isTxPending(TransactionType.UnstakeArt)}
-                        isLoading={isButtonLoading || isTxPending(TransactionType.StakeArt)}
+                <Stack direction="row" spacing={4} alignItems="center">
+                    <Button
                         colorScheme="red"
-                        customStyle={{ width: '120px' }}
-                        onClick={openStakingModal}
+                        onClick={openBalancesModal}
+                        isDisabled={!mazeStakingInfo || isTxPending(TransactionType.UnstakeArt)}
+                        isLoading={isButtonLoading || isTxPending(TransactionType.StakeArt)}
                     >
-                        <Text>Stake</Text>
-                    </ActionButton>
+                        Stake
+                    </Button>
 
-                    <Box ml={4}>
-                        <ActionButton
-                            colorScheme="default"
-                            customStyle={{ width: '192px' }}
-                            onClick={selectAll}
-                            disabled={
-                                !stakingInfo || isTxPending(TransactionType.UnstakeArt) || isTxPending(TransactionType.StakeArt)
-                            }
-                        >
-                            <Text>Select all (25 max.)</Text>
-                        </ActionButton>
-                    </Box>
+                    <Button
+                        colorScheme="orange"
+                        onClick={selectAll}
+                        isDisabled={
+                            !mazeStakingInfo || isTxPending(TransactionType.UnstakeArt) || isTxPending(TransactionType.StakeArt)
+                        }
+                    >
+                        Select all (25 max.)
+                    </Button>
 
                     <Flex ml={4} alignItems="center">
                         <InfoOutlineIcon mr={1.5} color="almostWhite" />
                         <Text color="almostWhite">Select some SFTs in order to stake</Text>
                     </Flex>
-                </Flex>
+                </Stack>
 
                 <Flex ml={4} alignItems="center">
                     <InfoIcon mr={1.5} color="brightWheat" />
@@ -172,13 +168,13 @@ function Stake() {
                 </Flex>
             </Flex>
 
-            {!artTokens ? (
+            {!walletArtTokens ? (
                 <Flex alignItems="center" justifyContent="center" height="100%">
                     <Spinner size="md" />
                 </Flex>
             ) : (
                 <>
-                    {_.isEmpty(artTokens) ? (
+                    {_.isEmpty(walletArtTokens) ? (
                         <Flex py={4}>
                             <Flex backgroundColor="#000000e3">
                                 <Alert status="info">
@@ -204,7 +200,7 @@ function Stake() {
                                 columnGap={4}
                                 pb="1px"
                             >
-                                {_.map(artTokens, (token, index) => (
+                                {_.map(walletArtTokens, (token, index) => (
                                     <Box
                                         key={index}
                                         cursor="pointer"

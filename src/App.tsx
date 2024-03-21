@@ -174,6 +174,23 @@ function App() {
                         );
                         break;
 
+                    case TransactionType.StakeArt:
+                        displayToast(
+                            'Staking succesful',
+                            `Successfully staked ${tx.data} SFT${tx.data > 1 ? 's' : ''}`,
+                            'green.500',
+                            'stake'
+                        );
+                        break;
+
+                    case TransactionType.UnstakeArt:
+                        displayToast(
+                            'Unstaking succesful',
+                            `Successfully unstaked ${tx.data} SFT${tx.data > 1 ? 's' : ''}`,
+                            'green.500'
+                        );
+                        break;
+
                     default:
                         console.error('Unknown TransactionType');
                 }

@@ -2,9 +2,9 @@ import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
-import { MazeStakingInfo, NFT, Rarity, SFT, StakingInfo } from '../blockchain/types';
-import { getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
-import { pairwise } from './helpers';
+import { MazeStakingInfo, NFT, Rarity, SFT, Stake, StakingInfo } from '../blockchain/types';
+import { getContractArtSFTs, getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
+import { pairwise, toHexNumber } from './helpers';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID, AOM_COLLECTION_ID } from '../blockchain/config';
 import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
@@ -23,7 +23,9 @@ export interface StoreContextType {
     elders: NFT[] | undefined;
     getWalletMainNFTs: () => Promise<void>;
     getWalletStakeableAoMSFTs: () => Promise<void>;
-    artTokens: SFT[] | undefined;
+    walletArtTokens: SFT[] | undefined;
+    getStakedAoMSFTs: () => Promise<void>;
+    stakedArtTokens: SFT[] | undefined;
 }
 
 const StoreContext = createContext<StoreContextType | null>(null);
@@ -43,7 +45,10 @@ export const StoreProvider = ({ children }) => {
     const [elders, setElders] = useState<NFT[]>();
 
     const [stakeableAoMNonces, setStakeableAoMNonces] = useState<number[]>([]);
-    const [artTokens, setArtTokens] = useState<SFT[]>();
+
+    const [walletArtTokens, setWalletArtTokens] = useState<SFT[]>();
+    const [stakedArtTokens, setStakedArtTokens] = useState<SFT[]>();
+
     const [artRarities, setArtRarities] = useState<Rarity[]>([]);
 
     // Fetches Travelers & Elders from the user's wallet
@@ -180,10 +185,67 @@ export const StoreProvider = ({ children }) => {
                 .orderBy('nonce', 'asc')
                 .value();
 
-            setArtTokens(tokens);
+            setWalletArtTokens(tokens);
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const getStakedAoMSFTs = async () => {
+        if (!mazeStakingInfo) {
+            return;
+        }
+
+        let rarities: Rarity[];
+
+        if (_.isEmpty(artRarities)) {
+            rarities = await getArtRarities();
+            setArtRarities(rarities);
+        } else {
+            rarities = artRarities;
+        }
+
+        console.log('getStakedAoMSFTs', mazeStakingInfo);
+
+        const nonces: number[] = _.map(mazeStakingInfo.tokens, (token) => token.nonce);
+
+        setStakedArtTokens(undefined);
+
+        const chunks = new Array(Math.floor(nonces.length / 25)).fill(25).concat(nonces.length % 25);
+        const apiCalls: Array<Promise<{ data: SFT[] }>> = [];
+
+        const ids = _.map(nonces, (nonce) => `${AOM_COLLECTION_ID}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
+
+        pairwise(
+            _(chunks)
+                .filter(_.identity)
+                .map((chunk, index) => {
+                    return index * 25 + chunk;
+                })
+                .unshift(0)
+                .value(),
+            (from: number, to: number) => {
+                const slice = ids.slice(from, to);
+                apiCalls.push(getContractArtSFTs(slice.join(',')));
+            }
+        );
+
+        const contractTokens = _(await Promise.all(apiCalls))
+            .flatten()
+            .map((result) => result.data)
+            .flatten()
+            .map((token) => ({
+                ...token,
+                balance: (_.find(mazeStakingInfo.tokens, (item) => item.nonce === token.nonce) as Stake).amount,
+                artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
+                tokenId: AOM_COLLECTION_ID,
+            }))
+            .orderBy('nonce', 'asc')
+            .value();
+
+        console.log(contractTokens);
+
+        setStakedArtTokens(contractTokens);
     };
 
     return (
@@ -197,7 +259,9 @@ export const StoreProvider = ({ children }) => {
                 elders,
                 getWalletMainNFTs,
                 getWalletStakeableAoMSFTs,
-                artTokens,
+                walletArtTokens,
+                getStakedAoMSFTs,
+                stakedArtTokens,
             }}
         >
             {children}
