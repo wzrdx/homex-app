@@ -33,6 +33,7 @@ import { smartContract } from '../../blockchain/auxiliary/smartContract';
 import { BsGem } from 'react-icons/bs';
 import { getArtRarityName } from '../../services/helpers';
 import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
+import MazeYield from '../../shared/MazeYield';
 
 function Unstake() {
     const { height, displayToast } = useStaking();
@@ -263,19 +264,18 @@ function Unstake() {
             <Modal onClose={onYieldClose} isOpen={isYieldOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Maze per hour</ModalHeader>
+                    <ModalHeader>Maze per day</ModalHeader>
                     <ModalCloseButton _focusVisible={{ outline: 0 }} />
 
                     <ModalBody>
-                        <Text>Custom Yield</Text>
-                        {/* <Flex pb={3} mt={-1}>
-                            {tokens && <Yield travelers={tokens} elders={elders} rarities={rarities} />}
-                        </Flex> */}
+                        <Flex pb={3} mt={-1}>
+                            {stakedArtTokens && <MazeYield stakedArtTokens={stakedArtTokens} />}
+                        </Flex>
                     </ModalBody>
                 </ModalContent>
             </Modal>
 
-            {/* Updates */}
+            {/* Balances modal */}
             <Modal size="xl" onClose={onModalClose} isOpen={isModalOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent backgroundColor="dark" width="446px">

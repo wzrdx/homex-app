@@ -84,7 +84,7 @@ export const getTx = (hash: string) => {
 
 export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? TRAVELERS_PADDING : 2);
 
-export const getRarityClassInfo = (rarityClass: MainRarityClass): { label: string; color: string; energyYield: number } => {
+export const getMainRarityClassInfo = (rarityClass: MainRarityClass): { label: string; color: string; energyYield: number } => {
     let label: string;
     let color: string;
     let energyYield: number;
@@ -132,6 +132,42 @@ export const getRarityClassInfo = (rarityClass: MainRarityClass): { label: strin
         color,
         energyYield,
     };
+};
+
+// export const getPageYield = (artRarityClass: number): number => {
+//     switch (artRarityClass) {
+//         case 5:
+//             return 0.2;
+//         case 4:
+//             return 0.4;
+//         case 3:
+//             return 0.7;
+//         case 2:
+//             return 1.2;
+//         case 1:
+//             return 2.2;
+//         default:
+//             console.error('Page rarity is not recognized', artRarityClass);
+//             return 0;
+//     }
+// };
+
+export const getPageYield = (artRarityClass: number): number => {
+    switch (artRarityClass) {
+        case 5:
+            return 2;
+        case 4:
+            return 4;
+        case 3:
+            return 7;
+        case 2:
+            return 12;
+        case 1:
+            return 22;
+        default:
+            console.error('Page rarity is not recognized', artRarityClass);
+            return 0;
+    }
 };
 
 export const getTotalQuestsRewards = (quests: Quest[]) => {

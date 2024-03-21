@@ -196,56 +196,56 @@ export const StoreProvider = ({ children }) => {
             return;
         }
 
-        let rarities: Rarity[];
+        try {
+            let rarities: Rarity[];
 
-        if (_.isEmpty(artRarities)) {
-            rarities = await getArtRarities();
-            setArtRarities(rarities);
-        } else {
-            rarities = artRarities;
-        }
-
-        console.log('getStakedAoMSFTs', mazeStakingInfo);
-
-        const nonces: number[] = _.map(mazeStakingInfo.tokens, (token) => token.nonce);
-
-        setStakedArtTokens(undefined);
-
-        const chunks = new Array(Math.floor(nonces.length / 25)).fill(25).concat(nonces.length % 25);
-        const apiCalls: Array<Promise<{ data: SFT[] }>> = [];
-
-        const ids = _.map(nonces, (nonce) => `${AOM_COLLECTION_ID}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
-
-        pairwise(
-            _(chunks)
-                .filter(_.identity)
-                .map((chunk, index) => {
-                    return index * 25 + chunk;
-                })
-                .unshift(0)
-                .value(),
-            (from: number, to: number) => {
-                const slice = ids.slice(from, to);
-                apiCalls.push(getContractArtSFTs(slice.join(',')));
+            if (_.isEmpty(artRarities)) {
+                rarities = await getArtRarities();
+                setArtRarities(rarities);
+            } else {
+                rarities = artRarities;
             }
-        );
 
-        const contractTokens = _(await Promise.all(apiCalls))
-            .flatten()
-            .map((result) => result.data)
-            .flatten()
-            .map((token) => ({
-                ...token,
-                balance: (_.find(mazeStakingInfo.tokens, (item) => item.nonce === token.nonce) as Stake).amount,
-                artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
-                tokenId: AOM_COLLECTION_ID,
-            }))
-            .orderBy('nonce', 'asc')
-            .value();
+            const nonces: number[] = _.map(mazeStakingInfo.tokens, (token) => token.nonce);
 
-        console.log(contractTokens);
+            setStakedArtTokens(undefined);
 
-        setStakedArtTokens(contractTokens);
+            const chunks = new Array(Math.floor(nonces.length / 25)).fill(25).concat(nonces.length % 25);
+            const apiCalls: Array<Promise<{ data: SFT[] }>> = [];
+
+            const ids = _.map(nonces, (nonce) => `${AOM_COLLECTION_ID}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
+
+            pairwise(
+                _(chunks)
+                    .filter(_.identity)
+                    .map((chunk, index) => {
+                        return index * 25 + chunk;
+                    })
+                    .unshift(0)
+                    .value(),
+                (from: number, to: number) => {
+                    const slice = ids.slice(from, to);
+                    apiCalls.push(getContractArtSFTs(slice.join(',')));
+                }
+            );
+
+            const contractTokens = _(await Promise.all(apiCalls))
+                .flatten()
+                .map((result) => result.data)
+                .flatten()
+                .map((token) => ({
+                    ...token,
+                    balance: (_.find(mazeStakingInfo.tokens, (item) => item.nonce === token.nonce) as Stake).amount,
+                    artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
+                    tokenId: AOM_COLLECTION_ID,
+                }))
+                .orderBy('nonce', 'asc')
+                .value();
+
+            setStakedArtTokens(contractTokens);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

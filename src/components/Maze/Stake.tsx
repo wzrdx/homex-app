@@ -248,7 +248,7 @@ function Stake() {
                 </>
             )}
 
-            {/* Updates */}
+            {/* Balances modal */}
             <Modal size="xl" onClose={onModalClose} isOpen={isModalOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent backgroundColor="dark" width="446px">

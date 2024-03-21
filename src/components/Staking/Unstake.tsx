@@ -37,7 +37,7 @@ import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
 import { smartContract } from '../../blockchain/game/smartContract';
 import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
-import Yield from '../../shared/Yield';
+import EnergyYield from '../../shared/EnergyYield';
 import { formatDistance } from 'date-fns';
 
 function Unstake() {
@@ -489,7 +489,7 @@ function Unstake() {
 
                     <ModalBody>
                         <Flex pb={3} mt={-1}>
-                            {travelers && elders && <Yield travelers={travelers} elders={elders} rarities={rarities} />}
+                            {travelers && elders && <EnergyYield travelers={travelers} elders={elders} rarities={rarities} />}
                         </Flex>
                     </ModalBody>
                 </ModalContent>

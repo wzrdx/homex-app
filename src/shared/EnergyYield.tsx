@@ -1,7 +1,7 @@
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { NFT, Rarity, MainRarityClass } from '../blockchain/types';
 import { useEffect, useState } from 'react';
-import { getRarityClassInfo } from '../services/helpers';
+import { getMainRarityClassInfo } from '../services/helpers';
 import _ from 'lodash';
 
 interface YieldEntry {
@@ -11,7 +11,7 @@ interface YieldEntry {
     label: string;
 }
 
-function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[]; rarities?: Rarity[] }) {
+function EnergyYield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[]; rarities?: Rarity[] }) {
     const [travelerEntries, setTravelerEntries] = useState<Array<YieldEntry>>();
     const [otherEntries, setOtherEntries] = useState<Array<YieldEntry>>();
 
@@ -26,7 +26,7 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
             const travelerEntries: Array<YieldEntry> = [];
 
             for (let [rarityClass, count] of Object.entries(rarityClassesCount)) {
-                let { label, color, energyYield } = getRarityClassInfo(Number.parseInt(rarityClass));
+                let { label, color, energyYield } = getMainRarityClassInfo(Number.parseInt(rarityClass));
                 travelerEntries.push({
                     count,
                     yield: energyYield,
@@ -45,7 +45,7 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
                     label: elderLabel,
                     color: elderColor,
                     energyYield: elderYield,
-                } = getRarityClassInfo(MainRarityClass.Elder);
+                } = getMainRarityClassInfo(MainRarityClass.Elder);
 
                 const elderEntry = {
                     count: _.size(elders),
@@ -79,7 +79,7 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
         return (
             <Flex flexDir="column" width="50%" backgroundColor="#b3daf50d" borderRadius="2px" px={3} py={1.5}>
                 {_.map(array, (item, index) => {
-                    let { label, color, energyYield } = getRarityClassInfo(item);
+                    let { label, color, energyYield } = getMainRarityClassInfo(item);
 
                     return (
                         <Flex key={index} justifyContent="space-between">
@@ -184,11 +184,11 @@ function Yield({ travelers, elders, rarities }: { travelers: NFT[]; elders: NFT[
                 Total Energy per hour
             </Text>
 
-            <Text fontSize="17px" fontWeight={500}>
+            <Text fontSize="17px" fontWeight={500} color="energyBright">
                 {getTotal()}
             </Text>
         </Flex>
     );
 }
 
-export default Yield;
+export default EnergyYield;
