@@ -1,10 +1,9 @@
-import { Box, Link, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Button, Stack } from '@chakra-ui/react';
 import { logout } from '@multiversx/sdk-dapp/utils';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { getShortAddress } from '../services/helpers';
 import { useNavigate } from 'react-router-dom';
 import { IoWalletOutline } from 'react-icons/io5';
-import { MdClose } from 'react-icons/md';
 import { AuthenticationContextType, useAuthenticationContext } from '../services/authentication';
 
 function Wallet({ callback }: { callback?: () => void }) {
@@ -14,15 +13,17 @@ function Wallet({ callback }: { callback?: () => void }) {
     const navigate = useNavigate();
 
     return (
-        <Flex alignItems="center" backgroundColor="#1f1f1f" borderRadius="9999px" padding="8px 16px">
-            <Box mr="0.6rem">
-                <IoWalletOutline color="whitesmoke" fontSize="18px" />
-            </Box>
-            <Text color="whitesmoke" fontSize="15px">
-                {getShortAddress(address)}
-            </Text>
-            <Link
-                color="whitesmoke"
+        <Stack direction="row" spacing={4} alignItems="center" backgroundColor="#1f1f1f" borderRadius="md" px={4} py={3}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+                <Box>
+                    <IoWalletOutline color="whitesmoke" fontSize="20px" />
+                </Box>
+                <Text>{getShortAddress(address)}</Text>
+            </Stack>
+
+            <Button
+                colorScheme="red"
+                size="sm"
                 onClick={() => {
                     if (callback) {
                         callback();
@@ -35,11 +36,9 @@ function Wallet({ callback }: { callback?: () => void }) {
                     });
                 }}
             >
-                <Box ml="0.5rem" mt="1px" mr="-2px" color="whitesmoke" _hover={{ color: '#ffffffad' }} cursor="pointer">
-                    <MdClose fontSize="17px" />
-                </Box>
-            </Link>
-        </Flex>
+                Disconnect
+            </Button>
+        </Stack>
     );
 }
 
