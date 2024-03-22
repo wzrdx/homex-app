@@ -193,7 +193,7 @@ function Quests() {
 
     const getRequiredResources = () => {
         const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const requirements = {};
+        const requirements = _.mapValues(_.pick(RESOURCE_ELEMENTS, _.keys(RESOURCE_ELEMENTS).slice(0, 4)), () => 0);
 
         _.forEach(quests, (quest) => {
             _.forEach(Object.keys(quest.requirements), (resource) => {
