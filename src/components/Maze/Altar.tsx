@@ -30,10 +30,6 @@ function Altar() {
             getLocalStakingInfo();
         }, MAZE_QUERYING_INTERVAL);
 
-        if (mazeStakingInfo) {
-            console.log(mazeStakingInfo);
-        }
-
         return () => {
             clearInterval(rewardsQueryingTimer);
         };
