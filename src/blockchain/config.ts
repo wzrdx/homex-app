@@ -19,6 +19,7 @@ export const walletConnectV2ProjectId = '323a2ff473ee6b636d89a1a83ec733e2';
 export const apiTimeout = 60000;
 export const EGLD_DENOMINATION = 1000000000000000000;
 export const TOKEN_DENOMINATION = 1000000;
+export const MAZE_DENOMINATION = 1000000;
 
 export const CHAIN_ID = getEnvValue('D', '1');
 
@@ -48,8 +49,9 @@ export const ESSENCE_TOKEN_ID = getEnvValue('ESSENCE-1318e1', 'ESSENCE-67531c');
 
 export const AOM_COLLECTION_ID = getEnvValue('AOM-edf5eb', 'AOM-f37bc5');
 
-export const REWARDS_QUERYING_INTERVAL = 15000;
-export const isStakingDisabled = false;
+export const ENERGY_QUERYING_INTERVAL = 30000;
+export const MAZE_QUERYING_INTERVAL = 12000;
+// export const MAZE_QUERYING_INTERVAL = 60000;
 
 export const TEAM = [
     'erd1za7d0lzgnee39p9sytre0mss76tnht70fem0pcv0zn4undcfukrqqkzcpl',

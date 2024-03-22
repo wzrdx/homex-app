@@ -1,12 +1,21 @@
 import _ from 'lodash';
-import { Flex, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Flex, Spinner, Stack, Text, Image, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { PlayerInfo, getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
-import { formatNumberWithK, getUsername, pairwise } from '../../services/helpers';
+import { getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
+import { formatNumberWithK, getUsername, pairwise, round } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
 import { getXpLeaderboardSize } from '../../blockchain/game/api/getXpLeaderboardSize';
 import { LiaScrollSolid } from 'react-icons/lia';
+import { PlayerInfo } from '../../blockchain/types';
+import { MAZE_DENOMINATION } from '../../blockchain/config';
+import { RESOURCE_ELEMENTS } from '../../services/resources';
+
+interface Player extends PlayerInfo {
+    name: string;
+    level: number;
+    color: string;
+}
 
 const CHUNK_SIZE = 50;
 const LEADERBOARD_SIZE = 100;
@@ -15,6 +24,7 @@ const COLUMNS: {
     name: string;
     icon: JSX.Element;
     width: string;
+    color?: string;
 }[] = [
     {
         name: 'Rank',
@@ -43,24 +53,30 @@ const COLUMNS: {
     },
     {
         name: 'Energy',
-        icon: <></>,
-        width: '84px',
+        icon: (
+            <Box mb="2px">
+                <Image width="24px" ml={0.5} src={RESOURCE_ELEMENTS.energy.icon} />
+            </Box>
+        ),
+        width: '120px',
+        color: 'resources.energy',
+    },
+    {
+        name: 'Maze',
+        icon: (
+            <Box mb="2px">
+                <Image width="24px" ml={0.5} src={RESOURCE_ELEMENTS.maze.icon} />
+            </Box>
+        ),
+        width: '116px',
+        color: 'mirage',
     },
 ];
 
 function XPLeaderboard() {
     const { height } = useSection();
 
-    const [players, setPlayers] = useState<
-        {
-            name: string;
-            xp: number;
-            level: number;
-            color: string;
-            pagesMinted: number;
-            energyClaimed: number;
-        }[]
-    >();
+    const [players, setPlayers] = useState<Player[]>();
 
     // Init
     useEffect(() => {
@@ -98,14 +114,14 @@ function XPLeaderboard() {
 
         const array = await Promise.all(
             _(sorted)
-                .map(async (player) => {
-                    const { level, color } = getLevel(player.xp);
+                .map(async (playerInfo) => {
+                    const { level, color } = getLevel(playerInfo.xp);
 
                     return {
-                        name: await getUsername(player.address),
-                        xp: player.xp,
-                        pagesMinted: player.pagesMinted,
-                        energyClaimed: player.energyClaimed,
+                        ...playerInfo,
+                        name: await getUsername(playerInfo.address),
+                        pagesMinted: playerInfo.pagesMinted,
+                        energyClaimed: playerInfo.energyClaimed,
                         level,
                         color,
                     };
@@ -143,11 +159,14 @@ function XPLeaderboard() {
                                         name: string;
                                         icon: JSX.Element;
                                         width: string;
+                                        color?: string;
                                     },
                                     index: number
                                 ) => (
                                     <Stack key={index} direction="row" layerStyle="center" spacing={1} minWidth={column.width}>
-                                        <Text layerStyle="header2">{column.name}</Text>
+                                        <Text layerStyle="header2" color={column.color}>
+                                            {column.name}
+                                        </Text>
 
                                         {column.icon}
                                     </Stack>
@@ -176,6 +195,8 @@ function XPLeaderboard() {
                                 <Text width={COLUMNS[5].width} color={getEnergyColor(player.energyClaimed)}>
                                     {formatNumberWithK(player.energyClaimed)}
                                 </Text>
+
+                                <Text width={COLUMNS[5].width}>{round(player.mazeBalance / MAZE_DENOMINATION, 2)}</Text>
                             </Flex>
                         ))}
                     </Flex>

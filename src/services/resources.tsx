@@ -5,6 +5,7 @@ import EnergyIcon from '../assets/resources/icons/energy.png';
 import HerbsIcon from '../assets/resources/icons/herbs.png';
 import GemsIcon from '../assets/resources/icons/gems.png';
 import EssenceIcon from '../assets/resources/icons/essence.png';
+import MazeIcon from '../assets/resources/icons/maze.png';
 
 import EnergyImage from '../assets/resources/images/energy.png';
 import HerbsImage from '../assets/resources/images/herbs.png';
@@ -64,6 +65,13 @@ export const RESOURCE_ELEMENTS: any = {
         image: EssenceImage,
         tokenId: ESSENCE_TOKEN_ID,
         color: '#cd3b95',
+    },
+    maze: {
+        name: 'Maze',
+        icon: MazeIcon,
+        image: null,
+        tokenId: '',
+        color: 'mirage',
     },
     tickets: {
         name: 'Tickets',

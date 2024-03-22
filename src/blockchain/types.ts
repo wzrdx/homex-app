@@ -77,3 +77,11 @@ export interface Rarity {
     nonce: number;
     rarityClass: number;
 }
+
+export interface PlayerInfo {
+    address: string;
+    xp: number;
+    pagesMinted: number;
+    energyClaimed: number;
+    mazeBalance: number;
+}

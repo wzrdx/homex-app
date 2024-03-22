@@ -3,17 +3,11 @@ import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { smartContract } from '../smartContract';
 import { API_URL } from '../../config';
 import { map } from 'lodash';
+import { PlayerInfo } from '../../types';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getXpLeaderboard';
-
-export interface PlayerInfo {
-    address: string;
-    xp: number;
-    pagesMinted: number;
-    energyClaimed: number;
-}
 
 export const getXpLeaderboard = async (start: number, end: number): Promise<PlayerInfo[]> => {
     try {
@@ -33,6 +27,7 @@ export const getXpLeaderboard = async (start: number, end: number): Promise<Play
             xp: item?.xp?.toNumber(),
             pagesMinted: item?.pages_minted?.toNumber(),
             energyClaimed: item?.energy_claimed?.toNumber(),
+            mazeBalance: item?.maze_balance?.toNumber(),
         }));
 
         return array;

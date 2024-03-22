@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { Flex, Text, Image } from '@chakra-ui/react';
+import { Flex, Text, Image, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
-import { COLLECTION_SIZE, REWARDS_QUERYING_INTERVAL } from '../../blockchain/config';
+import { COLLECTION_SIZE, ENERGY_QUERYING_INTERVAL } from '../../blockchain/config';
 import { round, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
@@ -19,7 +19,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
         years: 0,
     });
 
-    // Local staking info is used in order to fetch staking rewards without triggering a global update on the context
+    // Local staking info is used in order to fetch staking rewards without triggering an update on the parent component
     const { stakingInfo } = useStoreContext() as StoreContextType;
     const { stakingInfo: localStakingInfo, getStakingInfo: getLocalStakingInfo } = useGetStakingInfo();
 
@@ -28,7 +28,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
             getLocalStakingInfo();
-        }, REWARDS_QUERYING_INTERVAL);
+        }, ENERGY_QUERYING_INTERVAL);
 
         return () => {
             clearInterval(rewardsQueryingTimer);
@@ -78,11 +78,8 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
     return (
         <Flex justifyContent="center" height="100%">
-            <Flex flexDir="column">
-                {/* Local */}
-                <Text mb={3} layerStyle="header1">
-                    Your NFTs
-                </Text>
+            <Stack spacing={3}>
+                <Text layerStyle="header1">Your NFTs</Text>
 
                 <StatsEntry label="Travelers staked" value={travelersCount} />
                 <StatsEntry label="Elders staked" value={eldersCount} />
@@ -91,8 +88,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
                 </StatsEntry>
                 {stakingInfo?.isStaked && <StatsEntry label="Time staked" value={getTimestamp()} />}
 
-                {/* Global */}
-                <Text mt={5} mb={3} layerStyle="header1">
+                <Text pt={5} layerStyle="header1">
                     Global Stats
                 </Text>
 
@@ -100,7 +96,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
                     label="Total NFTs staked"
                     value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
                 />
-            </Flex>
+            </Stack>
         </Flex>
     );
 }

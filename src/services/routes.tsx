@@ -18,6 +18,7 @@ import Rewards from '../components/Rewards';
 import Shop from '../components/Shop';
 import Profile from '../components/XP/Profile';
 import XPLeaderboard from '../components/XP/XPLeaderboard';
+import Inventory from '../components/Maze/Inventory';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -39,6 +40,7 @@ export const routeNames = {
     xp: 'xp',
     maze: 'maze',
     altar: 'altar',
+    inventory: 'inventory',
 };
 
 export const routes = [
@@ -56,7 +58,13 @@ export const routes = [
         children: [
             {
                 path: routeNames.altar,
+                title: 'The Altar',
                 component: Altar,
+                isTabRoute: true,
+            },
+            {
+                path: routeNames.inventory,
+                component: Inventory,
                 isTabRoute: true,
             },
             {

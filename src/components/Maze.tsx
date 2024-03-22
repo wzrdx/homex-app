@@ -13,6 +13,7 @@ function Maze() {
         path: string;
         children: {
             path: string;
+            title?: string;
             component: () => JSX.Element;
             isTabRoute: boolean;
         }[];
@@ -42,7 +43,7 @@ function Maze() {
                 {_.map(ROUTE.children, (route, index) => (
                     <Box key={index}>
                         <NavLink to={route.path}>
-                            <Tab text={route.path} />
+                            <Tab text={route?.title || route.path} />
                         </NavLink>
                     </Box>
                 ))}

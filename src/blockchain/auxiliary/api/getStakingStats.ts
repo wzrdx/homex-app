@@ -10,6 +10,7 @@ const FUNCTION_NAME = 'getStakingStats';
 export interface MazeStakingStats {
     tokens: number;
     wallets: number;
+    supply: number;
 }
 
 export const getStakingStats = async (): Promise<MazeStakingStats | undefined> => {
@@ -28,6 +29,7 @@ export const getStakingStats = async (): Promise<MazeStakingStats | undefined> =
         return {
             tokens: value.field0.toNumber() as number,
             wallets: value.field1.toNumber() as number,
+            supply: value.field2.toNumber() as number,
         };
     } catch (err) {
         console.error(`Unable to call ${FUNCTION_NAME}`, err);

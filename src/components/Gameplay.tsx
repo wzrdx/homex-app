@@ -15,7 +15,7 @@ function Gameplay() {
                             <Text fontSize="17px" fontWeight={500} color={RESOURCE_ELEMENTS.energy.color}>
                                 $ENERGY
                             </Text>
-                            <Text>Fungible token</Text>
+                            <Text fontWeight={500}>Main fungible token</Text>
                         </Flex>
                     </Flex>
 
@@ -33,7 +33,7 @@ function Gameplay() {
                         <Flex alignItems="center">
                             <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                             <Text ml={1} whiteSpace="nowrap">
-                                Used in-game to complete quests
+                                Used to complete quests
                             </Text>
                         </Flex>
 
@@ -58,7 +58,7 @@ function Gameplay() {
                         {Object.keys(RESOURCE_ELEMENTS)
                             .slice(1, 4)
                             .map((resource) => (
-                                <Flex width="76px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
+                                <Flex width="86px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
                                     <Image width="48px" src={RESOURCE_ELEMENTS[resource].icon} alt="Resource" />
                                     <Text mt={1} fontSize="16px" fontWeight={500} color={RESOURCE_ELEMENTS[resource].color}>
                                         {RESOURCE_ELEMENTS[resource].name}
@@ -68,7 +68,7 @@ function Gameplay() {
                     </Flex>
 
                     <Text mt={4} fontWeight={500} fontSize="17px">
-                        In-game fungible tokens
+                        Secondary fungible tokens
                     </Text>
 
                     <Text mt={1} textAlign="center">
@@ -89,7 +89,7 @@ function Gameplay() {
                             height="32px"
                             borderRadius="50%"
                         >
-                            <Text fontWeight={500} fontSize="17px" color="black">
+                            <Text fontWeight={600} color="black">
                                 1
                             </Text>
                         </Flex>
@@ -139,9 +139,7 @@ function Gameplay() {
                             height="32px"
                             borderRadius="50%"
                         >
-                            <Text fontWeight={500} fontSize="17px">
-                                2
-                            </Text>
+                            <Text fontWeight={600}>2</Text>
                         </Flex>
                     </Flex>
 
@@ -172,11 +170,11 @@ function Gameplay() {
                                     <Text as="span" color="lightOrange">
                                         quests
                                     </Text>{' '}
-                                    and earn in-game tokens
+                                    and earn tokens
                                 </Text>
                             </Flex>
 
-                            <Flex alignItems="flex-start" mt={1}>
+                            <Flex alignItems="flex-start" mt={3}>
                                 <Flex alignItems="center" height="24px" mr={1}>
                                     <ArrowForwardIcon boxSize={4} color="whitesmoke" />
                                 </Flex>
@@ -203,9 +201,7 @@ function Gameplay() {
                             height="32px"
                             borderRadius="50%"
                         >
-                            <Text fontWeight={500} fontSize="17px">
-                                3
-                            </Text>
+                            <Text fontWeight={600}>3</Text>
                         </Flex>
                     </Flex>
 

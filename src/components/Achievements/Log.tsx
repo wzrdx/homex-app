@@ -216,8 +216,7 @@ function Log() {
                     {/* Background */}
                     <Flex
                         layerStyle="absoluteCentered"
-                        mt="0 !important"
-                        filter="saturate(0) opacity(0.15) brightness(0.8)"
+                        filter="saturate(0) opacity(0.25) brightness(1.1)"
                         mixBlendMode="exclusion"
                         style={getBackgroundStyle(getAlternateBackground())}
                         pointerEvents="none"

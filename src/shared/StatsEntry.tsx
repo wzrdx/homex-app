@@ -9,7 +9,7 @@ export const StatsEntry: FunctionComponent<
     }>
 > = ({ children, label, value, color = 'brightWheat' }) => {
     return (
-        <Flex mb={4} flexDir="column">
+        <Flex flexDir="column">
             <Text layerStyle="header2">{label}</Text>
 
             {value === undefined ? (

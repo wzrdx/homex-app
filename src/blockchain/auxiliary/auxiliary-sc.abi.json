@@ -291,6 +291,13 @@
             "outputs": []
         },
         {
+            "name": "clean",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "stake",
             "mutability": "mutable",
             "payableInTokens": ["*"],
@@ -309,29 +316,7 @@
             "outputs": []
         },
         {
-            "name": "claim",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "tokens",
-                    "type": "List<Stake>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "restake",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "tokens",
-                    "type": "List<Stake>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "claimRewards",
+            "name": "claimMaze",
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
@@ -367,7 +352,7 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "tuple<u32,u32>"
+                    "type": "tuple<u32,u32,BigUint>"
                 }
             ]
         }

@@ -6,13 +6,7 @@ import { TransactionType, TransactionsContextType, TxResolution, useTransactions
 import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import {
-    CHAIN_ID,
-    ELDERS_COLLECTION_ID,
-    ELDERS_PADDING,
-    TRAVELERS_COLLECTION_ID,
-    isStakingDisabled,
-} from '../../blockchain/config';
+import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { useStaking } from '../Staking';
@@ -320,12 +314,7 @@ function Unbond() {
                     <Flex pb={6} alignItems="center" justifyContent="space-between">
                         <Flex alignItems="center">
                             <ActionButton
-                                disabled={
-                                    isStakingDisabled ||
-                                    !stakingInfo ||
-                                    isTxPending(TransactionType.Restake) ||
-                                    !areSelectedNFTsClaimable()
-                                }
+                                disabled={!stakingInfo || isTxPending(TransactionType.Restake) || !areSelectedNFTsClaimable()}
                                 isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                                 colorScheme="blue"
                                 customStyle={{ width: '120px' }}
@@ -358,7 +347,7 @@ function Unbond() {
                         </Flex>
 
                         <ActionButton
-                            disabled={isStakingDisabled || !stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
+                            disabled={!stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                             isLoading={isRestakeButtonLoading || isTxPending(TransactionType.Restake)}
                             colorScheme="red"
                             customStyle={{ width: '120px' }}
