@@ -888,8 +888,6 @@ export const QUESTS: any[] = [
     },
 ];
 
-console.log(QUESTS);
-
 export const getQuest = (id = 1): Quest => {
     return QUESTS.find((m) => m.id === id);
 };
@@ -916,6 +914,9 @@ export interface QuestsContextType {
     isQuestsModalOpen: boolean;
     onQuestsModalOpen: () => void;
     onQuestsModalClose: () => void;
+    doubleXpTimestamp: Date | undefined;
+    getDoubleXpTimestamp: () => Promise<void>;
+    isDoubleXpActive: () => boolean;
 }
 
 const QuestsContext = createContext<QuestsContextType | null>(null);
@@ -926,6 +927,16 @@ export const QuestsProvider = ({ children }) => {
     const [quest, setQuest] = useState<Quest>(getQuest());
     const [ongoingQuests, setOngoingQuests] = useState<OngoingQuest[]>([]);
     const { isOpen: isQuestsModalOpen, onOpen: onQuestsModalOpen, onClose: onQuestsModalClose } = useDisclosure();
+
+    const [doubleXpTimestamp, setDoubleXpTimestamp] = useState<Date>();
+
+    const getDoubleXpTimestamp = async () => {
+        const doubleXpTimestamp = await getNumber('getDoubleXpTimestamp');
+
+        if (doubleXpTimestamp) {
+            setDoubleXpTimestamp(new Date(doubleXpTimestamp * 1000));
+        }
+    };
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
@@ -969,6 +980,9 @@ export const QuestsProvider = ({ children }) => {
                 isQuestsModalOpen,
                 onQuestsModalOpen,
                 onQuestsModalClose,
+                doubleXpTimestamp,
+                getDoubleXpTimestamp,
+                isDoubleXpActive,
             }}
         >
             {children}

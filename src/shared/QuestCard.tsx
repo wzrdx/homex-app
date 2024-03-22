@@ -1,6 +1,6 @@
 import { Flex, Box, Text, Image } from '@chakra-ui/react';
 import { getBackgroundStyle, timeDisplay } from '../services/helpers';
-import { getQuestImage } from '../services/quests';
+import { QuestsContextType, getQuestImage, useQuestsContext } from '../services/quests';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { differenceInSeconds, isBefore } from 'date-fns';
@@ -19,6 +19,8 @@ export const QuestCard: FunctionComponent<
         timestamp?: Date;
     }>
 > = ({ quest, callback, timestamp }) => {
+    const { isDoubleXpActive } = useQuestsContext() as QuestsContextType;
+
     const [widths, setWidths] = useState<[string, string]>(['0%', '100%']);
 
     // On timestamp change
@@ -75,7 +77,7 @@ export const QuestCard: FunctionComponent<
                         ) : (
                             <Image key={index} height={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
                         )}
-                        <Text ml={1.5}>{reward.value}</Text>
+                        <Text ml={1.5}>{(reward.name === 'XP' && isDoubleXpActive() ? 2 : 1) * reward.value}</Text>
                     </Flex>
                 ))}
             </Flex>
