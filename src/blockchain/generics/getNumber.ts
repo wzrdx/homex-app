@@ -5,23 +5,23 @@ import { API_URL } from '../config';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-const FUNCTION_NAME = 'getTrialTimestamp';
 
-export const getTrialTimestamp = async (): Promise<Date> => {
+export const getNumber = async (queryName: string): Promise<number | undefined> => {
     try {
         const query = smartContract.createQuery({
-            func: new ContractFunction(FUNCTION_NAME),
+            func: new ContractFunction(queryName),
+            args: [],
         });
 
         const queryResponse = await proxy.queryContract(query);
-        const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
+        const endpointDefinition = smartContract.getEndpoint(queryName);
 
         const { firstValue } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
 
         const value: number = firstValue?.valueOf()?.toNumber();
-        return new Date(value * 1000);
+        console.log(value);
+        return value;
     } catch (err) {
-        console.error(`Unable to call ${FUNCTION_NAME}`, err);
-        return new Date();
+        console.error(`Unable to call ${queryName}`, err);
     }
 };

@@ -14,16 +14,11 @@ import { TransactionType, TransactionsContextType, TxResolution, useTransactions
 import { useLayout } from './Layout';
 import { CHAIN_ID } from '../blockchain/config';
 import { getTotalQuestsRewards } from '../services/helpers';
-import { getTrialTimestamp } from '../blockchain/api/getTrialTimestamp';
 import { Quest } from '../types';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 
-const GRACE_PERIOD_INTERVAL = 24;
-
 function Quests() {
-    const { closeToast } = useLayout();
-
     const { address } = useGetAccountInfo();
 
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
@@ -34,7 +29,6 @@ function Quests() {
     const [isCompleteAllButtonLoading, setCompleteAllLoading] = useState(false);
     const [isStartButtonLoading, setStartButtonLoading] = useState(false);
 
-    const [trialTimestamp, setTrialTimestamp] = useState<Date>();
     const [selectedQuestIds, setSelectedQuestIds] = useState<string[]>([]);
 
     const isQuestDefault = (quest: Quest) => findIndex(ongoingQuests, (q) => q.id === quest.id) < 0;
@@ -54,7 +48,6 @@ function Quests() {
 
     const init = async () => {
         getOngoingQuests();
-        setTrialTimestamp(await getTrialTimestamp());
     };
 
     const startQuests = async () => {
@@ -315,56 +308,6 @@ function Quests() {
         return result;
     };
 
-    const getLongestQuestInfo = (): { longestQuest: Quest; isAfterEnd: boolean } => {
-        const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const longestQuest = _(quests).orderBy('duration', 'desc').first() as Quest;
-        const isAfterEnd = isAfter(addMinutes(new Date(), longestQuest.duration), trialTimestamp as Date);
-
-        return {
-            longestQuest,
-            isAfterEnd,
-        };
-    };
-
-    const canBeCompleted = (): boolean => {
-        if (!trialTimestamp) {
-            return false;
-        }
-
-        if (_.isEmpty(selectedQuestIds)) {
-            return true;
-        }
-
-        const { isAfterEnd } = getLongestQuestInfo();
-
-        return !isAfterEnd;
-    };
-
-    const checkCompletionTime = () => {
-        let result = <Flex></Flex>;
-
-        if (!trialTimestamp || _.isEmpty(selectedQuestIds)) {
-            return result;
-        }
-
-        const { longestQuest, isAfterEnd } = getLongestQuestInfo();
-
-        if (isAfterEnd) {
-            result = (
-                <Flex flexDir="column" mt={4}>
-                    <Flex alignItems="center" color="brightRed">
-                        <MdOutlineErrorOutline style={{ marginBottom: '1px' }} fontSize="19px" />
-                        <Text ml={1}>Quest duration exceeds end of Trial </Text>
-                    </Flex>
-
-                    <Text>{longestQuest.name}</Text>
-                </Flex>
-            );
-        }
-
-        return result;
-    };
-
     return (
         <Flex>
             <Flex zIndex={5} position="fixed" bottom={6} right={4} left={4} justifyContent="center">
@@ -377,7 +320,7 @@ function Quests() {
                     <Flex mb={1} justifyContent="space-between">
                         <ActionButton
                             colorScheme="blue"
-                            disabled={isGamePaused || !canStartMultipleQuests() || !canBeCompleted()}
+                            disabled={isGamePaused || !canStartMultipleQuests()}
                             customStyle={{ width: '148px' }}
                             isLoading={isStartButtonLoading || isTxPending(TransactionType.StartMultipleQuests)}
                             onClick={startQuests}
@@ -394,8 +337,6 @@ function Quests() {
                             <Text>Claim all rewards</Text>
                         </ActionButton>
                     </Flex>
-
-                    {checkCompletionTime()}
 
                     <Box mt={4}>
                         <CheckboxGroup

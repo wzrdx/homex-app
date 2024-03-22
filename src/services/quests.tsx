@@ -36,6 +36,8 @@ import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/smartContract';
 import { BigNumber } from 'bignumber.js';
+import { isBefore } from 'date-fns';
+import { getNumber } from '../blockchain/generics/getNumber';
 
 const QUEST_IMAGES = [
     Quest_1,
@@ -934,9 +936,12 @@ export const QuestsProvider = ({ children }) => {
         const doubleXpTimestamp = await getNumber('getDoubleXpTimestamp');
 
         if (doubleXpTimestamp) {
+            console.log(new Date(doubleXpTimestamp * 1000));
             setDoubleXpTimestamp(new Date(doubleXpTimestamp * 1000));
         }
     };
+
+    const isDoubleXpActive = (): boolean => !!doubleXpTimestamp && isBefore(new Date(), doubleXpTimestamp);
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();

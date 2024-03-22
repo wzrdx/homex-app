@@ -5,6 +5,7 @@ import { ResourcesContextType, useResourcesContext } from '../services/resources
 import Header from './Header';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
+import { QuestsContextType, useQuestsContext } from '../services/quests';
 
 type LayoutContext = {
     closeToast: () => void;
@@ -20,6 +21,7 @@ function Layout() {
     // Mobile bypasses Loading Screen
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { getGameState } = useTransactionsContext() as TransactionsContextType;
+    const { getDoubleXpTimestamp } = useQuestsContext() as QuestsContextType;
 
     const toast = useToast();
     const toastIdRef = useRef<ToastId>();
@@ -33,6 +35,7 @@ function Layout() {
         getTickets();
 
         getGameState();
+        getDoubleXpTimestamp();
     }, []);
 
     const closeToast = () => {

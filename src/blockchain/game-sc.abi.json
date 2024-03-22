@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.71.0-nightly",
-            "commitHash": "a2b1646c597329d0a25efa3889b66650f65de1de",
-            "commitDate": "2023-05-25",
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
             "channel": "Nightly",
-            "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
         },
         "contractCrate": {
             "name": "game-sc",
@@ -13,7 +13,7 @@
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.39.8"
+            "version": "0.45.2"
         }
     },
     "name": "GameScContract",
@@ -23,27 +23,16 @@
     },
     "endpoints": [
         {
-            "name": "addSpecialRole",
-            "onlyOwner": true,
+            "name": "upgrade",
             "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "sc_addr",
-                    "type": "Address"
-                }
-            ],
+            "inputs": [],
             "outputs": []
         },
         {
-            "name": "transferMirageFaire",
+            "name": "debug",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "sc_addr",
-                    "type": "Address"
-                }
-            ],
+            "inputs": [],
             "outputs": []
         },
         {
@@ -102,27 +91,10 @@
             "outputs": []
         },
         {
-            "name": "setTrialTimestamp",
+            "name": "refreshElderRewards",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "setTrial",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "trial",
-                    "type": "u16"
-                }
-            ],
+            "inputs": [],
             "outputs": []
         },
         {
@@ -245,6 +217,16 @@
             ]
         },
         {
+            "name": "getDoubleXpTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "getOngoingQuests",
             "mutability": "readonly",
             "inputs": [
@@ -261,16 +243,6 @@
             ]
         },
         {
-            "name": "getRaffleIndex",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u16"
-                }
-            ]
-        },
-        {
             "name": "getRaffleHashes",
             "mutability": "readonly",
             "inputs": [
@@ -283,60 +255,6 @@
                 {
                     "type": "variadic<array32<u8>>",
                     "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "getBattleSubmittedTickets",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getBattleHashes",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "variadic<array32<u8>>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "getCompletedQuests",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
                 }
             ]
         },
@@ -361,36 +279,6 @@
             ]
         },
         {
-            "name": "getTrialTimestamp",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getCurrentTrial",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u16"
-                }
-            ]
-        },
-        {
-            "name": "getMintedTickets",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
             "name": "getPlayerXp",
             "mutability": "readonly",
             "inputs": [
@@ -406,232 +294,12 @@
             ]
         },
         {
-            "name": "getEcobottleXp",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "changeBattleTimestamp",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "index",
-                    "type": "u32"
-                },
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "addBattle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "addRaffle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "copyOperatingVector",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "drawRaffleWinners",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "airdropRaffleTraveler",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "nonce",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "clearRaffle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "airdropBattlePrizes",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "winners",
-                    "type": "List<Address>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "clearBattle",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "joinRaffle",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "joinBattle",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "getOperatingVectorLength",
+            "name": "getTest",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleSubmittedTickets",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleParticipantsCount",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getRaffleParticipants",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "raffle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<Participant>"
                 }
             ]
         },
@@ -646,50 +314,17 @@
             ]
         },
         {
-            "name": "getBattleParticipantsCount",
+            "name": "getXp",
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "battle_id",
+                    "name": "id",
                     "type": "u32"
                 }
             ],
             "outputs": [
                 {
                     "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getBattleParticipants",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "battle_id",
-                    "type": "u32"
-                },
-                {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "List<BattleParticipant>"
-                }
-            ]
-        },
-        {
-            "name": "getBattles",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<Competition>"
                 }
             ]
         },
@@ -711,8 +346,20 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "multiplier",
-                    "type": "u32"
+                    "name": "values",
+                    "type": "List<u32>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setDoubleXpTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "date",
+                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -727,9 +374,7 @@
         {
             "name": "startQuest",
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
+            "payableInTokens": ["*"],
             "inputs": [
                 {
                     "name": "id",
@@ -741,9 +386,7 @@
         {
             "name": "startQuests",
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
+            "payableInTokens": ["*"],
             "inputs": [
                 {
                     "name": "ids",
@@ -772,9 +415,7 @@
         {
             "name": "stake",
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
+            "payableInTokens": ["*"],
             "inputs": [],
             "outputs": []
         },
@@ -818,6 +459,21 @@
             "outputs": []
         },
         {
+            "name": "getStakingSummary",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<StakingSummary>"
+                }
+            ]
+        },
+        {
             "name": "getStakedNFTsCount",
             "mutability": "readonly",
             "inputs": [],
@@ -843,21 +499,17 @@
             ]
         },
         {
-            "name": "getUserTokenNonces",
+            "name": "isWalletStaked",
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "user_address",
+                    "name": "address",
                     "type": "Address"
-                },
-                {
-                    "name": "token_id",
-                    "type": "TokenIdentifier"
                 }
             ],
             "outputs": [
                 {
-                    "type": "List<u64>"
+                    "type": "bool"
                 }
             ]
         },
@@ -883,21 +535,6 @@
             "outputs": [
                 {
                     "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "isWalletStaked",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "bool"
                 }
             ]
         },
@@ -942,63 +579,6 @@
             ]
         },
         {
-            "name": "setArtDropTimestamp",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "timestamp",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "mint",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
-            "inputs": [
-                {
-                    "name": "amount",
-                    "type": "u32"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueSFTCollection",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "createArtToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "royalties",
-                    "type": "BigUint"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "getPageCelestials",
             "mutability": "readonly",
             "inputs": [
@@ -1038,164 +618,27 @@
             ],
             "outputs": [
                 {
-                    "type": "List<PlayerXp>"
+                    "type": "List<PlayerInfo>"
                 }
             ]
         },
         {
-            "name": "getEcobottleLeaderboardSize",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "u32"
-                }
-            ]
-        },
-        {
-            "name": "getEcobottleLeaderboard",
+            "name": "getLogSummary",
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "start",
-                    "type": "u32"
-                },
-                {
-                    "name": "end",
-                    "type": "u32"
+                    "name": "user",
+                    "type": "Address"
                 }
             ],
             "outputs": [
                 {
-                    "type": "List<PlayerXp>"
+                    "type": "LogSummary"
                 }
             ]
-        },
-        {
-            "name": "setCollectionIds",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "travelers_id",
-                    "type": "TokenIdentifier"
-                },
-                {
-                    "name": "elders_id",
-                    "type": "TokenIdentifier"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueTicketsCollection",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "createTicketsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "royalties",
-                    "type": "BigUint"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueEnergyToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueHerbsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueGemsToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "issueEssenceToken",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [
-                {
-                    "name": "token_display_name",
-                    "type": "bytes"
-                },
-                {
-                    "name": "token_ticker",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
         }
     ],
-    "events": [],
+    "esdtAttributes": [],
     "hasCallback": true,
     "types": {
         "Airdrop": {
@@ -1208,23 +651,6 @@
                 {
                     "name": "tokens",
                     "type": "List<u64>"
-                }
-            ]
-        },
-        "BattleParticipant": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
-                    "name": "tickets_count",
-                    "type": "u32"
-                },
-                {
-                    "name": "quests",
-                    "type": "u32"
                 }
             ]
         },
@@ -1270,6 +696,35 @@
                 }
             ]
         },
+        "LogSummary": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "quests_completed",
+                    "type": "u32"
+                },
+                {
+                    "name": "type_1",
+                    "type": "u32"
+                },
+                {
+                    "name": "type_2",
+                    "type": "u32"
+                },
+                {
+                    "name": "type_3",
+                    "type": "u32"
+                },
+                {
+                    "name": "tickets",
+                    "type": "u32"
+                },
+                {
+                    "name": "energy",
+                    "type": "u64"
+                }
+            ]
+        },
         "OngoingQuest": {
             "type": "struct",
             "fields": [
@@ -1283,20 +738,7 @@
                 }
             ]
         },
-        "Participant": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
-                    "name": "tickets_count",
-                    "type": "u32"
-                }
-            ]
-        },
-        "PlayerXp": {
+        "PlayerInfo": {
             "type": "struct",
             "fields": [
                 {
@@ -1306,6 +748,18 @@
                 {
                     "name": "xp",
                     "type": "u32"
+                },
+                {
+                    "name": "pages_minted",
+                    "type": "u32"
+                },
+                {
+                    "name": "energy_claimed",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "maze_balance",
+                    "type": "BigUint"
                 }
             ]
         },
@@ -1331,6 +785,10 @@
                 {
                     "name": "rewards",
                     "type": "List<u64>"
+                },
+                {
+                    "name": "quest_type",
+                    "type": "u8"
                 }
             ]
         },
@@ -1382,6 +840,19 @@
                 {
                     "name": "tokens",
                     "type": "List<Stake>"
+                }
+            ]
+        },
+        "StakingSummary": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "has_elders",
+                    "type": "bool"
+                },
+                {
+                    "name": "amount",
+                    "type": "u32"
                 }
             ]
         }
