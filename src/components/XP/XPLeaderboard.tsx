@@ -2,13 +2,12 @@ import _ from 'lodash';
 import { Flex, Spinner, Stack, Text, Image, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getXpLeaderboard } from '../../blockchain/game/api/getXpLeaderboard';
-import { formatNumberWithK, getUsername, pairwise, round } from '../../services/helpers';
+import { formatMaze, formatNumberWithK, getUsername, pairwise } from '../../services/helpers';
 import { useSection } from '../Section';
 import { getLevel } from '../../services/xp';
 import { getXpLeaderboardSize } from '../../blockchain/game/api/getXpLeaderboardSize';
 import { LiaScrollSolid } from 'react-icons/lia';
 import { PlayerInfo } from '../../blockchain/types';
-import { MAZE_DENOMINATION } from '../../blockchain/config';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 
 interface Player extends PlayerInfo {
@@ -129,6 +128,8 @@ function XPLeaderboard() {
                 .value()
         );
 
+        console.log(array);
+
         setPlayers(array);
     };
 
@@ -196,7 +197,7 @@ function XPLeaderboard() {
                                     {formatNumberWithK(player.energyClaimed)}
                                 </Text>
 
-                                <Text width={COLUMNS[5].width}>{round(player.mazeBalance / MAZE_DENOMINATION, 2)}</Text>
+                                <Text width={COLUMNS[5].width}>{formatMaze(player.mazeBalance)}</Text>
                             </Flex>
                         ))}
                     </Flex>

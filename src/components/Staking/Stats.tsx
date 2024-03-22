@@ -3,7 +3,7 @@ import { Flex, Text, Image, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
 import { COLLECTION_SIZE, ENERGY_QUERYING_INTERVAL } from '../../blockchain/config';
-import { round, zeroPad } from '../../services/helpers';
+import { zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { intervalToDuration } from 'date-fns';
 import { useStoreContext, StoreContextType } from '../../services/store';
@@ -94,7 +94,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
                 <StatsEntry
                     label="Total NFTs staked"
-                    value={`${stakedNFTsCount} (${round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
+                    value={`${stakedNFTsCount} (${_.round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
                 />
             </Stack>
         </Flex>

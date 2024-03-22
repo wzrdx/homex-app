@@ -19,7 +19,7 @@ import _, { findIndex } from 'lodash';
 import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../services/quests';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
-import { getTotalQuestsRewards, round } from '../services/helpers';
+import { getTotalQuestsRewards } from '../services/helpers';
 import { Quest } from '../types';
 import { DetailedQuestCard } from '../shared/DetailedQuestCard';
 import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-core/out';
@@ -168,7 +168,7 @@ function MultipleQuests() {
                                     <Text
                                         color={requirements[resource] > resources[resource] ? 'redClrs' : 'availableResource'}
                                         as="span"
-                                    >{`${resources[resource] >= 10000 ? '10k+' : round(resources[resource], 1)}`}</Text>
+                                    >{`${resources[resource] >= 10000 ? '10k+' : _.round(resources[resource], 1)}`}</Text>
                                     <Text as="span" mx={0.5}>
                                         /
                                     </Text>

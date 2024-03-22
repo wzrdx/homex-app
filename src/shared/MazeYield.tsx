@@ -122,8 +122,15 @@ function MazeYield({ stakedArtTokens }: { stakedArtTokens: SFT[] }) {
                 Total Maze per day
             </Text>
 
-            <Text fontSize="17px" fontWeight={500} color="mirage">
-                {getTotal() / 10}
+            <Text fontSize="17px">
+                <Text as="span" fontWeight={500} color="mirage">
+                    {getTotal() / 10}
+                </Text>{' '}
+                (≈
+                <Text as="span" fontWeight={500} color="mirage">
+                    {`${_.round(getTotal() / 240, 2)}`}
+                </Text>{' '}
+                per hour)
             </Text>
         </Flex>
     );

@@ -1,18 +1,10 @@
 import axios from 'axios';
-import {
-    API_URL,
-    ELDERS_COLLECTION_ID,
-    EXPLORER_URL,
-    GATEWAY_URL,
-    TRAVELERS_COLLECTION_ID,
-    TRAVELERS_PADDING,
-} from '../blockchain/config';
+import { API_URL, EXPLORER_URL, GATEWAY_URL, MAZE_DENOMINATION, TRAVELERS_PADDING } from '../blockchain/config';
 import { NFT, MainRarityClass, ArtRarityClass } from '../blockchain/types';
 import { Quest } from '../types';
 import _ from 'lodash';
-import { addSeconds, isAfter, isBefore } from 'date-fns';
+import { addSeconds, isAfter } from 'date-fns';
 import { RESOURCE_ELEMENTS } from './resources';
-import { TravelersLogPageRarity } from './achievements';
 
 export const range = (length: number) => Array.from({ length }, (_, i) => i + 1);
 
@@ -22,10 +14,6 @@ export const getBackgroundStyle = (source: string, position = 'center') => ({
     backgroundPosition: position,
     backgroundRepeat: 'no-repeat',
 });
-
-export const round = (value, places) => {
-    return +(Math.round(Number.parseFloat(value + 'e+' + places)) + 'e-' + places);
-};
 
 export const getShortAddress = (address: string, size = 4) => `${address.slice(0, size)}...${address.slice(-size)}`;
 
@@ -134,24 +122,7 @@ export const getMainRarityClassInfo = (rarityClass: MainRarityClass): { label: s
     };
 };
 
-// export const getPageYield = (artRarityClass: number): number => {
-//     switch (artRarityClass) {
-//         case 5:
-//             return 0.2;
-//         case 4:
-//             return 0.4;
-//         case 3:
-//             return 0.7;
-//         case 2:
-//             return 1.2;
-//         case 1:
-//             return 2.2;
-//         default:
-//             console.error('Page rarity is not recognized', artRarityClass);
-//             return 0;
-//     }
-// };
-
+// Values are per day, and need to be multiplied with 10
 export const getPageYield = (artRarityClass: number): number => {
     switch (artRarityClass) {
         case 5:
@@ -167,6 +138,16 @@ export const getPageYield = (artRarityClass: number): number => {
         default:
             console.error('Page rarity is not recognized', artRarityClass);
             return 0;
+    }
+};
+
+export const formatMaze = (value: number): string => {
+    const withDenom = value / MAZE_DENOMINATION;
+
+    if (withDenom < 0.1) {
+        return '<0.1';
+    } else {
+        return _.round(withDenom, 8).toLocaleString();
     }
 };
 

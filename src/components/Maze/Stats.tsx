@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { StatsEntry } from '../../shared/StatsEntry';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { MazeStakingStats, getStakingStats } from '../../blockchain/auxiliary/api/getStakingStats';
-import { MAZE_DENOMINATION } from '../../blockchain/config';
 import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { formatMaze } from '../../services/helpers';
 
 function Stats() {
     const { mazeStakingInfo } = useStoreContext() as StoreContextType;
@@ -34,7 +34,7 @@ function Stats() {
                     </Text>
                     <StatsEntry label="Tokens staked" value={stats.tokens} />
                     <StatsEntry label="Wallets staked" value={stats.wallets} />
-                    <StatsEntry label="Maze supply" value={stats.supply / MAZE_DENOMINATION} color="mirage">
+                    <StatsEntry label="Maze supply" value={formatMaze(stats.supply)} color="mirage">
                         <Image width="22px" ml={1.5} src={RESOURCE_ELEMENTS.maze.icon} alt="Maze" />
                     </StatsEntry>
                 </Stack>

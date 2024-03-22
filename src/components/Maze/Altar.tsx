@@ -1,11 +1,11 @@
-import _ from 'lodash';
+import _, { round } from 'lodash';
 import { Text, Center, Stack, Spinner, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useStoreContext, StoreContextType } from '../../services/store';
 import { intervalToDuration } from 'date-fns';
-import { zeroPad } from '../../services/helpers';
+import { formatMaze, zeroPad } from '../../services/helpers';
 import { StatsEntry } from '../../shared/StatsEntry';
-import { MAZE_DENOMINATION, MAZE_QUERYING_INTERVAL } from '../../blockchain/config';
+import { MAZE_QUERYING_INTERVAL } from '../../blockchain/config';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../../blockchain/auxiliary/hooks/useGetStakingInfo';
 import AltarImage from '../../assets/images/the_altar.jpg';
 
@@ -29,6 +29,10 @@ function Altar() {
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
             getLocalStakingInfo();
         }, MAZE_QUERYING_INTERVAL);
+
+        if (mazeStakingInfo) {
+            console.log(mazeStakingInfo);
+        }
 
         return () => {
             clearInterval(rewardsQueryingTimer);
@@ -125,12 +129,8 @@ function Altar() {
                 ) : (
                     <Stack direction="row" spacing="74px">
                         <StatsEntry label="Time since last claim" value={getTimestamp()} />
-                        <StatsEntry label="Unclaimed rewards" value={localStakingInfo.rewards / MAZE_DENOMINATION} />
-                        <StatsEntry
-                            label="Maze balance"
-                            color="mirage"
-                            value={localStakingInfo.mazeBalance / MAZE_DENOMINATION}
-                        />
+                        <StatsEntry label="Unclaimed rewards" value={formatMaze(localStakingInfo.rewards)} />
+                        <StatsEntry label="Maze balance" color="mirage" value={formatMaze(localStakingInfo.mazeBalance)} />
                     </Stack>
                 )}
             </Stack>

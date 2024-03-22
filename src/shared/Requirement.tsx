@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text, calc } from '@chakra-ui/react';
-import { round } from '../services/helpers';
+import { round } from 'lodash';
 
 type RequirementProps = {
     elements: any;
