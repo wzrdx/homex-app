@@ -3,6 +3,7 @@ import { RESOURCE_ELEMENTS } from '../services/resources';
 import { map } from 'lodash';
 import { Quest } from '../types';
 import { timeDisplay } from '../services/helpers';
+import { useQuestsContext, QuestsContextType } from '../services/quests';
 
 type Props = {
     quest: Quest;
@@ -11,6 +12,8 @@ type Props = {
 const IMAGE_SIZE = '20px';
 
 export const DetailedQuestCard = ({ quest }: Props) => {
+    const { isDoubleXpActive } = useQuestsContext() as QuestsContextType;
+
     const getRequirements = (): JSX.Element => {
         return (
             <>
@@ -36,7 +39,8 @@ export const DetailedQuestCard = ({ quest }: Props) => {
                         ) : (
                             <Image key={index} width={IMAGE_SIZE} src={RESOURCE_ELEMENTS[reward.resource].icon} />
                         )}
-                        <Text ml={1.5}>{reward.value}</Text>
+
+                        <Text ml={1.5}>{(reward.name === 'XP' && isDoubleXpActive() ? 2 : 1) * reward.value}</Text>
                     </Flex>
                 ))}
             </Flex>

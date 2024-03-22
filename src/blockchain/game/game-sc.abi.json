@@ -217,6 +217,16 @@
             ]
         },
         {
+            "name": "getDoubleXpTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "getOngoingQuests",
             "mutability": "readonly",
             "inputs": [
@@ -313,6 +323,18 @@
                 {
                     "name": "values",
                     "type": "List<u32>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setDoubleXpTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "date",
+                    "type": "u64"
                 }
             ],
             "outputs": []

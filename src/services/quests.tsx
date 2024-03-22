@@ -36,6 +36,8 @@ import { map } from 'lodash';
 import { API_URL } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
 import { BigNumber } from 'bignumber.js';
+import { getNumber } from '../blockchain/game/generics/getNumber';
+import { isBefore } from 'date-fns';
 
 const QUEST_IMAGES = [
     Quest_1,
@@ -914,6 +916,9 @@ export interface QuestsContextType {
     isQuestsModalOpen: boolean;
     onQuestsModalOpen: () => void;
     onQuestsModalClose: () => void;
+    doubleXpTimestamp: Date | undefined;
+    getDoubleXpTimestamp: () => Promise<void>;
+    isDoubleXpActive: () => boolean;
 }
 
 const QuestsContext = createContext<QuestsContextType | null>(null);
@@ -924,6 +929,18 @@ export const QuestsProvider = ({ children }) => {
     const [quest, setQuest] = useState<Quest>(getQuest());
     const [ongoingQuests, setOngoingQuests] = useState<OngoingQuest[]>([]);
     const { isOpen: isQuestsModalOpen, onOpen: onQuestsModalOpen, onClose: onQuestsModalClose } = useDisclosure();
+
+    const [doubleXpTimestamp, setDoubleXpTimestamp] = useState<Date>();
+
+    const getDoubleXpTimestamp = async () => {
+        const doubleXpTimestamp = await getNumber('getDoubleXpTimestamp');
+
+        if (doubleXpTimestamp) {
+            setDoubleXpTimestamp(new Date(doubleXpTimestamp * 1000));
+        }
+    };
+
+    const isDoubleXpActive = (): boolean => !!doubleXpTimestamp && isBefore(new Date(), doubleXpTimestamp);
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
@@ -967,6 +984,9 @@ export const QuestsProvider = ({ children }) => {
                 isQuestsModalOpen,
                 onQuestsModalOpen,
                 onQuestsModalClose,
+                doubleXpTimestamp,
+                getDoubleXpTimestamp,
+                isDoubleXpActive,
             }}
         >
             {children}

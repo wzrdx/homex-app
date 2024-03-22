@@ -10,7 +10,6 @@ import {
     Text,
     Image,
     useDisclosure,
-    Spinner,
     Stack,
     ModalFooter,
 } from '@chakra-ui/react';
@@ -28,16 +27,16 @@ import Gameplay from './Gameplay';
 import _ from 'lodash';
 import Settings from './Settings';
 import Profile from '../assets/profile.png';
-import { differenceInSeconds, format, formatDistanceToNow, isBefore } from 'date-fns';
+import { formatDistanceToNow, isBefore } from 'date-fns';
 import Separator from '../shared/Separator';
 import { HeaderButton } from '../shared/HeaderButton';
 import Log from './Achievements/Log';
 import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
 import { NewSymbol } from '../shared/NewSymbol';
 import { AchievementsProvider } from '../services/achievements';
+import { useQuestsContext, QuestsContextType } from '../services/quests';
 
-const ROUTE_WIDTH = 96;
-const BONUS_XP_END = new Date('2023-12-11T15:00:00.000Z');
+const ROUTE_WIDTH = 94;
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -46,6 +45,7 @@ function Header() {
 
     const { areSoundsOn, isMusicOn, setAreSoundsOn, setIsMusicOn, playSound } = useSoundsContext() as SoundsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
+    const { doubleXpTimestamp, isDoubleXpActive } = useQuestsContext() as QuestsContextType;
 
     const location = useLocation();
 
@@ -72,7 +72,6 @@ function Header() {
         }
 
         const artDropTimestamp = await getArtDropTimestamp();
-
         setArtDropOngoing(isBefore(new Date(), artDropTimestamp));
     };
 
@@ -202,6 +201,23 @@ function Header() {
                                 onGameplayOpen();
                             }}
                         />
+
+                        <Flex ml={5}>
+                            <Text
+                                textTransform="uppercase"
+                                fontSize="15px"
+                                fontWeight="500"
+                                letterSpacing="0.25px"
+                                textShadow="0 0 4px rgb(0 0 0 / 30%)"
+                                textAlign="center"
+                            >
+                                Season{' '}
+                                <Text as="span" color="mirage" fontWeight={700}>
+                                    2
+                                </Text>{' '}
+                                is live!
+                            </Text>
+                        </Flex>
                     </Flex>
 
                     <Stack direction="row" spacing={3} alignItems="center" pointerEvents="all">
@@ -352,7 +368,7 @@ function Header() {
                         )}
                     </Flex>
 
-                    {differenceInSeconds(BONUS_XP_END, new Date()) > 0 && (
+                    {isDoubleXpActive() && (
                         <Flex alignItems="center" pointerEvents="all">
                             <Box mb="2px">
                                 <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
@@ -364,13 +380,13 @@ function Header() {
                                 </Text>
                             </Text>
 
-                            <Box mx={2.5}>
-                                <Separator type="vertical" width="1px" height="28px" />
+                            <Box mx={3}>
+                                <Separator type="vertical" width="1px" height="26px" />
                             </Box>
 
                             <TimeIcon boxSize={4} />
                             <Text ml={1.5} fontSize="15px">
-                                {formatDistanceToNow(BONUS_XP_END)} left
+                                {formatDistanceToNow(doubleXpTimestamp as Date)} left
                             </Text>
                         </Flex>
                     )}

@@ -1,8 +1,11 @@
 import { Flex, Image, Text } from '@chakra-ui/react';
 import InnerRing from '../assets/resources/images/ring_inner.png';
 import OuterRing from '../assets/resources/images/ring_outer.png';
+import { useQuestsContext, QuestsContextType } from '../services/quests';
 
 function Reward({ image, name, value, icon }) {
+    const { isDoubleXpActive } = useQuestsContext() as QuestsContextType;
+
     return (
         <Flex alignItems="center">
             <Flex justifyContent="center" alignItems="center" position="relative">
@@ -37,7 +40,7 @@ function Reward({ image, name, value, icon }) {
                             +
                         </Text>
                         <Text as="span" fontWeight={600}>
-                            {value}
+                            {(name === 'Experience' && isDoubleXpActive() ? 2 : 1) * value}
                         </Text>
                     </Text>
 

@@ -27,6 +27,7 @@ import { CustomToast } from '../shared/CustomToast';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
 import { Updates } from './Updates';
+import { QuestsContextType, useQuestsContext } from '../services/quests';
 
 type LayoutContext = {
     displayToast: (
@@ -51,6 +52,7 @@ function Layout() {
     const [isLoaded, setIsLoaded] = useState(false);
     const { getEnergy, getHerbs, getGems, getEssence, getTickets } = useResourcesContext() as ResourcesContextType;
     const { getGameState } = useTransactionsContext() as TransactionsContextType;
+    const { getDoubleXpTimestamp } = useQuestsContext() as QuestsContextType;
 
     const toast = useToast();
     const toastIdRef = useRef<ToastId>();
@@ -66,6 +68,7 @@ function Layout() {
         getTickets();
 
         getGameState();
+        getDoubleXpTimestamp();
     }, []);
 
     // Updates
