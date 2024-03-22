@@ -15,6 +15,7 @@ import {
     ModalHeader,
     ModalOverlay,
     Box,
+    Button,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../services/helpers';
@@ -35,7 +36,6 @@ import { useSection } from '../components/Section';
 import { getEldersLogo, getSmallLogo } from '../services/assets';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { ActionButton } from './ActionButton/ActionButton';
 import { useRewardsContext, RewardsContextType } from '../services/rewards';
 import { getRaffleHashes } from '../blockchain/game/api/getRaffleHashes';
 import { CompetitionType } from './CompetitionDetails';
@@ -301,12 +301,12 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
                 <Flex minW="782px">
                     <Flex flex={4} flexDir="column" overflowY="auto" pr={6}>
                         <Flex alignItems="flex-start" justifyContent="space-between">
-                            <ActionButton colorScheme="default" customStyle={{ width: '204px' }} onClick={onHashesOpen}>
+                            <Button colorScheme="orange" onClick={onHashesOpen}>
                                 <Flex alignItems="center">
                                     <InfoOutlineIcon />
                                     <Text ml={1.5}>View Transactions</Text>
                                 </Flex>
-                            </ActionButton>
+                            </Button>
 
                             <Flex alignItems="center">
                                 <CalendarIcon mr={2} fontSize="14px" color="whiteAlpha.900" />

@@ -13,9 +13,9 @@ import {
     ModalContent,
     ModalOverlay,
     ModalHeader,
+    Button,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
@@ -304,26 +304,24 @@ function Unstake() {
                 <>
                     <Flex pb={6} alignItems="center" justifyContent="space-between">
                         <Flex alignItems="center">
-                            <ActionButton
-                                disabled={
+                            <Button
+                                isDisabled={
                                     !stakingInfo ||
                                     isTxPending(TransactionType.ClaimEnergy) ||
                                     isTxPending(TransactionType.StakeMain)
                                 }
                                 isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.UnstakeMain)}
-                                colorScheme="blue"
-                                customStyle={{ width: '120px' }}
+                                colorScheme="red"
                                 onClick={unstake}
                             >
                                 <Text>Unstake</Text>
-                            </ActionButton>
+                            </Button>
 
                             <Box ml={4}>
-                                <ActionButton
-                                    colorScheme="default"
-                                    customStyle={{ width: '142px' }}
+                                <Button
+                                    colorScheme="orange"
                                     onClick={selectAll}
-                                    disabled={
+                                    isDisabled={
                                         !stakingInfo ||
                                         isTxPending(TransactionType.ClaimEnergy) ||
                                         isTxPending(TransactionType.UnstakeMain) ||
@@ -331,7 +329,7 @@ function Unstake() {
                                     }
                                 >
                                     <Text>Select all</Text>
-                                </ActionButton>
+                                </Button>
                             </Box>
 
                             {stakingInfo?.isStaked && (
@@ -351,10 +349,10 @@ function Unstake() {
 
                         {stakingInfo?.isStaked && (
                             <Flex>
-                                <ActionButton
-                                    colorScheme="default"
+                                <Button
+                                    colorScheme="orange"
                                     onClick={onYieldOpen}
-                                    disabled={
+                                    isDisabled={
                                         _.isEmpty(rarities) ||
                                         isTxPending(TransactionType.ClaimEnergy) ||
                                         isTxPending(TransactionType.UnstakeMain) ||
@@ -365,22 +363,21 @@ function Unstake() {
                                         <InfoOutlineIcon />
                                         <Text ml={1.5}>View Yield</Text>
                                     </Flex>
-                                </ActionButton>
+                                </Button>
 
                                 <Box ml={4}>
-                                    <ActionButton
-                                        disabled={
+                                    <Button
+                                        isDisabled={
                                             !stakingInfo ||
                                             isTxPending(TransactionType.StakeMain) ||
                                             isTxPending(TransactionType.UnstakeMain)
                                         }
                                         isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
                                         colorScheme="blue"
-                                        customStyle={{ width: '144px' }}
                                         onClick={claimStakingRewards}
                                     >
                                         <Text>Claim Energy</Text>
-                                    </ActionButton>
+                                    </Button>
                                 </Box>
                             </Flex>
                         )}

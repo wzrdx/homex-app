@@ -296,7 +296,7 @@ function Quests() {
             <Flex flex={5} justifyContent="center" overflowY="auto">
                 <Flex flexDir="column" width="100%" pl="2px">
                     <Flex mb={6} justifyContent="space-between" mr={8}>
-                        <Button colorScheme="purple" onClick={onQuestsModalOpen}>
+                        <Button colorScheme="orange" onClick={onQuestsModalOpen}>
                             <Text>Start multiple quests</Text>
                         </Button>
 

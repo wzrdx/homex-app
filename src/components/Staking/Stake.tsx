@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, Alert, AlertIcon, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
@@ -129,24 +128,22 @@ function Stake() {
         <Flex flexDir="column" height={`calc(100% - ${height}px)`} width="100%">
             <Flex pb={6} alignItems="center" justifyContent="space-between">
                 <Flex alignItems="center">
-                    <ActionButton
+                    <Button
                         disabled={
                             !stakingInfo || isTxPending(TransactionType.ClaimEnergy) || isTxPending(TransactionType.UnstakeMain)
                         }
                         isLoading={isButtonLoading || isTxPending(TransactionType.StakeMain)}
                         colorScheme="red"
-                        customStyle={{ width: '120px' }}
                         onClick={stake}
                     >
                         <Text>Stake</Text>
-                    </ActionButton>
+                    </Button>
 
                     <Box ml={4}>
-                        <ActionButton
-                            colorScheme="default"
-                            customStyle={{ width: '192px' }}
+                        <Button
+                            colorScheme="orange"
                             onClick={selectAll}
-                            disabled={
+                            isDisabled={
                                 !stakingInfo ||
                                 isTxPending(TransactionType.ClaimEnergy) ||
                                 isTxPending(TransactionType.UnstakeMain) ||
@@ -154,7 +151,7 @@ function Stake() {
                             }
                         >
                             <Text>Select all (25 max.)</Text>
-                        </ActionButton>
+                        </Button>
                     </Box>
 
                     <Flex ml={4} alignItems="center">

@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import { Box, Flex, Text, Spinner, AlertIcon, Alert } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, AlertIcon, Alert, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ActionButton } from '../../shared/ActionButton/ActionButton';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
@@ -313,29 +312,27 @@ function Unbond() {
                 <>
                     <Flex pb={6} alignItems="center" justifyContent="space-between">
                         <Flex alignItems="center">
-                            <ActionButton
-                                disabled={!stakingInfo || isTxPending(TransactionType.Restake) || !areSelectedNFTsClaimable()}
+                            <Button
+                                isDisabled={!stakingInfo || isTxPending(TransactionType.Restake) || !areSelectedNFTsClaimable()}
                                 isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimUnbondedNFTs)}
-                                colorScheme="blue"
-                                customStyle={{ width: '120px' }}
+                                colorScheme="red"
                                 onClick={claim}
                             >
                                 <Text>Claim</Text>
-                            </ActionButton>
+                            </Button>
 
                             <Box ml={4}>
-                                <ActionButton
-                                    colorScheme="default"
-                                    customStyle={{ width: '142px' }}
+                                <Button
+                                    colorScheme="orange"
                                     onClick={selectAll}
-                                    disabled={
+                                    isDisabled={
                                         !stakingInfo ||
                                         isTxPending(TransactionType.ClaimUnbondedNFTs) ||
                                         isTxPending(TransactionType.Restake)
                                     }
                                 >
                                     <Text>Select all</Text>
-                                </ActionButton>
+                                </Button>
                             </Box>
 
                             {stakingInfo?.isStaked && (
@@ -346,15 +343,14 @@ function Unbond() {
                             )}
                         </Flex>
 
-                        <ActionButton
-                            disabled={!stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
+                        <Button
+                            isDisabled={!stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                             isLoading={isRestakeButtonLoading || isTxPending(TransactionType.Restake)}
-                            colorScheme="red"
-                            customStyle={{ width: '120px' }}
+                            colorScheme="blue"
                             onClick={restake}
                         >
                             <Text>Restake</Text>
-                        </ActionButton>
+                        </Button>
                     </Flex>
 
                     {_.isEmpty(travelers) && _.isEmpty(elders) ? (
