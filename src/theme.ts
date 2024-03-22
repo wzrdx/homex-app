@@ -125,6 +125,9 @@ const layerStyles = {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
     },
+    faustina: {
+        fontFamily: '"Faustina", serif',
+    },
 };
 
 const breakpoints = {

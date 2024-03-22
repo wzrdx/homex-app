@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Faustina:wght@600..800&display=swap');
 
 $scrollbar-thumb-color: #d29835;
 $scrollbar-track-color: #d4d4d466;
@@ -79,18 +80,23 @@ body {
 
 // Mvx
 .Login-Button {
-    margin: 0 0 1rem !important;
-    padding: 13px 17px !important;
+    width: 100%;
+    margin: 0 !important;
+    padding: 18px 18px !important;
     border: 0 !important;
     outline: none !important;
-    background-color: #871412 !important;
+    background-color: #7638ac !important;
 
     &:hover {
-        background-color: #a51815 !important;
+        background-color: #8830d5 !important;
     }
 
     &:focus {
-        box-shadow: 0 0 0 0.15rem rgb(255 38 38 / 40%) !important;
+        box-shadow: 0 0 0 0.15rem #8a27e066 !important;
+    }
+
+    &:not(:last-child) {
+        margin: 0 0 12px !important;
     }
 }
 

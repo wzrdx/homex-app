@@ -194,8 +194,8 @@ function Header() {
 
                         <HeaderButton
                             type="Gameplay"
-                            color="#f97316"
-                            backgroundColor="#3c180d"
+                            color="mirage"
+                            backgroundColor="#443056"
                             text="Gameplay"
                             onClick={() => {
                                 playSound('mystery');
@@ -215,8 +215,8 @@ function Header() {
 
                         <HeaderButton
                             type="Settings"
-                            color="#f97316"
-                            backgroundColor="#3c180d"
+                            color="mirage"
+                            backgroundColor="#443056"
                             text="Settings"
                             onClick={onSettingsOpen}
                         />

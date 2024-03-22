@@ -4,7 +4,7 @@ import {
     LedgerLoginButton,
     WalletConnectLoginButton,
 } from '@multiversx/sdk-dapp/UI';
-import { Box, Text, Spinner, Flex, Stack, Image } from '@chakra-ui/react';
+import { Box, Text, Spinner, Flex, Stack, Image, Center } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,9 +16,12 @@ import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
 import { ELDERS_COLLECTION_ID, TEAM, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
-import { getUnlockBackground } from '../services/assets';
+import { getAlternateBackground, getUnlockBackground } from '../services/assets';
 import { getBackgroundStyle } from '../services/helpers';
 import { useStoreContext, StoreContextType } from '../services/store';
+import { RESOURCE_ELEMENTS } from '../services/resources';
+import MazeMask from '../assets/images/maze_mask.png';
+import LogoMirage from '../assets/logo_mirage.png';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
@@ -99,42 +102,53 @@ const Unlock = () => {
             alignItems="center"
             color="whitesmoke"
         >
-            <Box
+            <Center
                 position="relative"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
                 flexDirection="column"
-                width="394px"
+                alignItems="center"
                 borderRadius="md"
                 overflow="hidden"
                 py="6"
                 px="8"
             >
                 {!error && !isUserLoggedIn() && (
-                    <Text
-                        textTransform="uppercase"
-                        fontSize="22px"
-                        fontWeight="500"
-                        letterSpacing="0.5px"
-                        mb="1.5rem"
-                        color="whitesmoke"
-                        textShadow="0 0 4px rgb(0 0 0 / 30%)"
-                    >
-                        Connect wallet
-                    </Text>
+                    <Stack spacing={3} mb={4}>
+                        <Image src={LogoMirage} maxW="106px" margin="0 auto" />
+
+                        <Text
+                            layerStyle="faustina"
+                            textTransform="uppercase"
+                            fontSize="32px"
+                            fontWeight="600"
+                            letterSpacing="1px"
+                            textShadow="0 0 4px rgb(0 0 0 / 30%)"
+                            textAlign="center"
+                        >
+                            Season{' '}
+                            <Text as="span" color="mirage" fontWeight={800}>
+                                2
+                            </Text>
+                        </Text>
+                    </Stack>
                 )}
 
-                <Stack width="100%">
+                <Stack width="282px">
                     {!isUserLoggedIn() ? (
-                        <>
+                        <Stack
+                            position="relative"
+                            style={{
+                                maskImage: `url(${MazeMask})`,
+                                maskSize: '282px',
+                                maskRepeat: 'no-repeat',
+                            }}
+                        >
                             <ExtensionLoginButton buttonClassName="Login-Button" {...commonProps}>
                                 <Box display="flex" alignItems="center" justifyContent="space-between">
                                     <Box display="flex" alignItems="center">
                                         <Box mb="1px" pl="2px" width="36px">
                                             <MdExtension fontSize="19px" />
                                         </Box>
-                                        <Text fontSize="16px">Browser Extension</Text>
+                                        <Text fontSize="17px">Browser Extension</Text>
                                     </Box>
 
                                     <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
@@ -147,7 +161,7 @@ const Unlock = () => {
                                         <Box width="36px">
                                             <MdWeb fontSize="21px" />
                                         </Box>
-                                        <Text fontSize="16px">MultiversX Web Wallet</Text>
+                                        <Text fontSize="17px">MultiversX Web Wallet</Text>
                                     </Box>
 
                                     <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
@@ -168,7 +182,7 @@ const Unlock = () => {
                                         <Box width="36px" pl="2px">
                                             <Image src={MultiversX} alt="MultiversX" width="18px" height="18px" />
                                         </Box>
-                                        <Text fontSize="16px">xPortal App</Text>
+                                        <Text fontSize="17px">xPortal App</Text>
                                     </Box>
 
                                     <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
@@ -181,13 +195,13 @@ const Unlock = () => {
                                         <Box width="36px" pl="3px">
                                             <Image src={Ledger} alt="Ledger" width="16px" height="16px" />
                                         </Box>
-                                        <Text fontSize="16px">Ledger</Text>
+                                        <Text fontSize="17px">Ledger</Text>
                                     </Box>
 
                                     <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
                                 </Box>
                             </LedgerLoginButton>
-                        </>
+                        </Stack>
                     ) : (
                         <Box display="flex" flexDir="column" alignItems="center">
                             {/* {error === AuthenticationError.ContestNotStarted && getText('Waiting for the game to start', true)} */}
@@ -199,7 +213,7 @@ const Unlock = () => {
                         </Box>
                     )}
                 </Stack>
-            </Box>
+            </Center>
         </Flex>
     );
 };
