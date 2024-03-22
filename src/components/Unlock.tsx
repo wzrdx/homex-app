@@ -215,7 +215,7 @@ const Unlock = () => {
                     <Box display="flex" flexDir="column" alignItems="center">
                         {error === AuthenticationError.NotHolder && getError()}
 
-                        {!error && <Spinner thickness="3px" emptyColor="gray.200" color="red.600" size="lg" />}
+                        {!error && <Spinner thickness="3px" emptyColor="gray.200" color="mirage" size="lg" />}
                     </Box>
                 )}
             </Center>

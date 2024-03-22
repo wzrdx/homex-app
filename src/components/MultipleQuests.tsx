@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
     Alert,
     AlertIcon,
+    Button,
     Checkbox,
     CheckboxGroup,
     Flex,
@@ -18,7 +19,6 @@ import _, { findIndex } from 'lodash';
 import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../services/quests';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
-import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { getTotalQuestsRewards, round } from '../services/helpers';
 import { Quest } from '../types';
 import { DetailedQuestCard } from '../shared/DetailedQuestCard';
@@ -30,7 +30,6 @@ import { CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
-import { addMinutes, isAfter } from 'date-fns';
 
 function MultipleQuests() {
     const { ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
@@ -135,7 +134,7 @@ function MultipleQuests() {
 
     const getRequiredResources = () => {
         const quests: Quest[] = _.map(selectedQuestIds, (questId) => getQuest(Number.parseInt(questId)));
-        const requirements = {};
+        const requirements = _.mapValues(_.pick(RESOURCE_ELEMENTS, _.keys(RESOURCE_ELEMENTS).slice(0, 4)), () => 0);
 
         _.forEach(quests, (quest) => {
             _.forEach(Object.keys(quest.requirements), (resource) => {
@@ -312,15 +311,14 @@ function MultipleQuests() {
 
             <ModalFooter>
                 <Flex width="100%" justifyContent="space-between" alignItems="center" minH="48px">
-                    <ActionButton
-                        colorScheme="blue"
-                        customStyle={{ width: '142px' }}
-                        disabled={isGamePaused || !canStartQuests()}
+                    <Button
+                        colorScheme="orange"
+                        isDisabled={isGamePaused || !canStartQuests()}
                         isLoading={isButtonLoading || isTxPending(TransactionType.StartMultipleQuests)}
                         onClick={startQuests}
                     >
                         <Text>Start Quests</Text>
-                    </ActionButton>
+                    </Button>
                 </Flex>
             </ModalFooter>
         </ModalContent>

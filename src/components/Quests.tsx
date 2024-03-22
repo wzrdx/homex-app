@@ -3,6 +3,7 @@ import {
     Alert,
     AlertIcon,
     Box,
+    Button,
     Flex,
     Image,
     Modal,
@@ -23,7 +24,6 @@ import QuestCard from '../shared/QuestCard';
 import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import Requirement from '../shared/Requirement';
 import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
-import { ActionButton } from '../shared/ActionButton/ActionButton';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
@@ -296,17 +296,17 @@ function Quests() {
             <Flex flex={5} justifyContent="center" overflowY="auto">
                 <Flex flexDir="column" width="100%" pl="2px">
                     <Flex mb={6} justifyContent="space-between" mr={8}>
-                        <ActionButton colorScheme="blue" customStyle={{ width: '198px' }} onClick={onQuestsModalOpen}>
+                        <Button colorScheme="purple" onClick={onQuestsModalOpen}>
                             <Text>Start multiple quests</Text>
-                        </ActionButton>
+                        </Button>
 
-                        <ActionButton
+                        <Button
                             colorScheme="green"
                             isLoading={isCompleteAllButtonLoading || isTxPending(TransactionType.CompleteAllQuests)}
                             onClick={completeAllQuests}
                         >
                             <Text>Claim all rewards</Text>
-                        </ActionButton>
+                        </Button>
                     </Flex>
 
                     <Text layerStyle="header1">Herbalism</Text>
@@ -367,27 +367,29 @@ function Quests() {
                     <Box mb={2}>
                         {/* Normal - The quest hasn't started */}
                         {isQuestDefault() && (
-                            <ActionButton
+                            <Button
+                                colorScheme="orange"
                                 isLoading={
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
-                                disabled={isGamePaused || !meetsRequirements(resources, currentQuest.id)}
+                                isDisabled={isGamePaused || !meetsRequirements(resources, currentQuest.id)}
                                 onClick={startQuest}
+                                minW="108px"
                             >
                                 <Text>Start</Text>
-                            </ActionButton>
+                            </Button>
                         )}
 
                         {/* Ongoing - A quest is ongoing but is not completed */}
                         {isQuestOngoing() && (
-                            <ActionButton disabled>
+                            <Button colorScheme="orange" minW="108px" isDisabled>
                                 <Text>Ongoing</Text>
-                            </ActionButton>
+                            </Button>
                         )}
 
                         {/* Complete - A quest is completed and its rewards must be claimed */}
                         {isQuestComplete() && (
-                            <ActionButton
+                            <Button
                                 isLoading={
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
@@ -395,7 +397,7 @@ function Quests() {
                                 onClick={completeQuest}
                             >
                                 <Text>Claim Rewards</Text>
-                            </ActionButton>
+                            </Button>
                         )}
                     </Box>
 
@@ -494,8 +496,8 @@ function Quests() {
                             </Text>
 
                             <Flex mt={3.5}>
-                                <ActionButton
-                                    colorScheme="lore"
+                                <Button
+                                    colorScheme="orange"
                                     onClick={() => {
                                         playSound('mystery');
                                         onVisionOpen();
@@ -505,7 +507,7 @@ function Quests() {
                                         <AiOutlineEye fontSize="18px" />
                                         <Text ml="1">Vision</Text>
                                     </Flex>
-                                </ActionButton>
+                                </Button>
                             </Flex>
                         </>
                     )}
