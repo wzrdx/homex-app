@@ -3,9 +3,11 @@ import { map } from 'lodash';
 import { getResourceElements } from '../services/resources';
 import { Flex, Image, Text } from '@chakra-ui/react';
 import { CustomToast } from './CustomToast';
+import { useQuestsContext, QuestsContextType } from '../services/quests';
 
 function ResourcesToast({ title, rewards }) {
     const [questRewards, setQuestRewards] = useState<any[]>([]);
+    const { isDoubleXpActive } = useQuestsContext() as QuestsContextType;
 
     useEffect(() => {
         setQuestRewards(
@@ -44,7 +46,7 @@ function ResourcesToast({ title, rewards }) {
                                 +
                             </Text>
                             <Text as="span" fontWeight={600}>
-                                {reward.value}
+                                {(reward.resource === 'xp' && isDoubleXpActive() ? 2 : 1) * reward.value}
                             </Text>
                         </Text>
                     </Flex>
