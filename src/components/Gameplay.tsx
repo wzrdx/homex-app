@@ -1,11 +1,11 @@
-import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { RESOURCE_ELEMENTS } from '../services/resources';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import Separator from '../shared/Separator';
 
 function Gameplay() {
     return (
-        <Box pb={4}>
+        <Stack spacing={10} pb={4}>
             <Flex alignItems="center">
                 <Flex flex={1} flexDir="column">
                     <Flex alignItems="center">
@@ -56,11 +56,16 @@ function Gameplay() {
                 <Flex flex={1} flexDir="column" alignItems="center">
                     <Flex>
                         {Object.keys(RESOURCE_ELEMENTS)
-                            .slice(1, 4)
+                            .slice(1, 5)
                             .map((resource) => (
                                 <Flex width="86px" flexDir="column" justifyContent="center" alignItems="center" key={resource}>
                                     <Image width="48px" src={RESOURCE_ELEMENTS[resource].icon} alt="Resource" />
                                     <Text mt={1} fontSize="16px" fontWeight={500} color={RESOURCE_ELEMENTS[resource].color}>
+                                        {RESOURCE_ELEMENTS[resource].name === 'Maze' && (
+                                            <Text as="span" color="whitesmoke" mr="1px">
+                                                *
+                                            </Text>
+                                        )}
                                         {RESOURCE_ELEMENTS[resource].name}
                                     </Text>
                                 </Flex>
@@ -77,7 +82,33 @@ function Gameplay() {
                 </Flex>
             </Flex>
 
-            <Flex justifyContent="center" alignItems="stretch" mx={-3} mt={12}>
+            <Stack maxW="964px">
+                <Text>
+                    <Text as="span" color="whitesmoke" mr="1px">
+                        *
+                    </Text>
+                    The{' '}
+                    <Text as="span" color="mirage" fontWeight={500}>
+                        Maze
+                    </Text>{' '}
+                    token will only exist in-game until its launch, after which players will be able to mint their in-game
+                    balances into fungible tokens.
+                </Text>
+
+                <Text>
+                    <Text as="span" color="whitesmoke" mr="1px">
+                        *
+                    </Text>
+                    The{' '}
+                    <Text as="span" color="mirage" fontWeight={500}>
+                        Maze
+                    </Text>{' '}
+                    token can be earned through staking, with additional earning methods to be introduced, such as airdrops,
+                    exchanging Golden Tickets, and others.
+                </Text>
+            </Stack>
+
+            <Stack spacing={5} direction="row" justifyContent="center" alignItems="stretch">
                 {/* Step 1 */}
                 <Box flex={1} position="relative">
                     <Flex position="absolute" top={0} right={0} left={0} justifyContent="center" alignItems="center">
@@ -99,7 +130,6 @@ function Gameplay() {
                         mt="16px"
                         width="308px"
                         pb={0.5}
-                        mx={3}
                         flexDir="column"
                         height="100%"
                         backgroundColor="#272727"
@@ -147,7 +177,6 @@ function Gameplay() {
                         mt="16px"
                         width="308px"
                         pb={0.5}
-                        mx={3}
                         flexDir="column"
                         height="100%"
                         backgroundColor="#272727"
@@ -209,7 +238,6 @@ function Gameplay() {
                         mt="16px"
                         width="308px"
                         pb={0.5}
-                        mx={3}
                         flexDir="column"
                         height="100%"
                         backgroundColor="#272727"
@@ -238,8 +266,8 @@ function Gameplay() {
                         </Flex>
                     </Flex>
                 </Box>
-            </Flex>
-        </Box>
+            </Stack>
+        </Stack>
     );
 }
 
