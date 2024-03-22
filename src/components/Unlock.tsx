@@ -121,13 +121,13 @@ const Unlock = () => {
         >
             <Center position="relative" flexDirection="column" py="6" px="8">
                 {!error && !isUserLoggedIn() && (
-                    <Stack spacing={3} mb={4}>
-                        <Image src={LogoMirage} maxW="106px" margin="0 auto" />
+                    <Stack spacing={3.5} mb={5}>
+                        <Image src={LogoMirage} maxW="94px" margin="0 auto" />
 
                         <Text
                             layerStyle="faustina"
                             textTransform="uppercase"
-                            fontSize="32px"
+                            fontSize="29px"
                             fontWeight="600"
                             letterSpacing="1px"
                             textShadow="0 0 4px rgb(0 0 0 / 30%)"
