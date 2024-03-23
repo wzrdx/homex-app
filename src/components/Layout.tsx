@@ -22,7 +22,7 @@ import { getBackgroundStyle } from '../services/helpers';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
 import LoadingScreen from './LoadingScreen';
 import Header from './Header';
-import { getLayoutBackground } from '../services/assets';
+import { getBackground1080p, getBackgroundQHD } from '../services/assets';
 import { CustomToast } from '../shared/CustomToast';
 import { routes, routeNames } from '../services/routes';
 import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
@@ -113,7 +113,15 @@ function Layout() {
         <>
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
-            <Flex style={getBackgroundStyle(getLayoutBackground())} position="relative" height="100vh" flexDir="column">
+            <Flex
+                backgroundImage={{ lg: `url(${getBackground1080p()})`, xl: `url(${getBackgroundQHD()})` }}
+                backgroundSize="cover"
+                backgroundPosition="center"
+                backgroundRepeat="no-repeat"
+                position="relative"
+                height="100vh"
+                flexDir="column"
+            >
                 <Box height={{ md: '18%', lg: '14%' }}>
                     <Header />
                 </Box>

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { Box, Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAlternateBackground } from '../../services/assets';
 import { LuSwords } from 'react-icons/lu';
 import { RxDashboard } from 'react-icons/rx';
 import { IoMdStats } from 'react-icons/io';
@@ -212,16 +211,6 @@ function Log() {
                 {/* Right */}
                 <Box flex={7} position="relative" py={{ md: 6, lg: 8 }} px={{ md: 8, lg: 10 }}>
                     {getView()}
-
-                    {/* Background */}
-                    <Flex
-                        layerStyle="absoluteCentered"
-                        filter="saturate(0) opacity(0.25) brightness(1.1)"
-                        mixBlendMode="exclusion"
-                        style={getBackgroundStyle(getAlternateBackground())}
-                        pointerEvents="none"
-                        userSelect="none"
-                    ></Flex>
                 </Box>
             </Flex>
 

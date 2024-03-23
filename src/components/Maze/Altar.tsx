@@ -81,9 +81,9 @@ function Altar() {
             height="100%"
             maxH="600px"
             width="100%"
-            backgroundColor="#dba5d11f"
+            backgroundColor="#dba5d130"
             borderRadius="3px"
-            border="2px solid #dba5d108"
+            border="2px solid #dba5d110"
             position="relative"
         >
             <Stack p={[4, 4, 6, 6, 8, 12]} height="476px" justifyContent="space-between" alignItems="center">

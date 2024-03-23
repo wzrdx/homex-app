@@ -16,8 +16,7 @@ import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
 import { ELDERS_COLLECTION_ID, TEAM, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
 import Wallet from '../shared/Wallet';
-import { getUnlockBackground } from '../services/assets';
-import { getBackgroundStyle } from '../services/helpers';
+import { getBackground1080p, getBackgroundQHD } from '../services/assets';
 import { useStoreContext, StoreContextType } from '../services/store';
 import MazeMask from '../assets/images/maze_mask.png';
 import LogoMirage from '../assets/logo_mirage.png';
@@ -112,7 +111,10 @@ const Unlock = () => {
     return (
         <Flex
             backgroundColor="dark"
-            style={getBackgroundStyle(getUnlockBackground())}
+            backgroundImage={{ lg: `url(${getBackground1080p()})`, xl: `url(${getBackgroundQHD()})` }}
+            backgroundSize="cover"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
             height="100vh"
             width="100vw"
             justifyContent="center"
