@@ -111,7 +111,12 @@ const Unlock = () => {
     return (
         <Flex
             backgroundColor="dark"
-            backgroundImage={{ lg: `url(${getBackground1080p()})`, xl: `url(${getBackgroundQHD()})` }}
+            backgroundImage={[
+                `url(${getBackground1080p()})`,
+                `url(${getBackground1080p()})`,
+                `url(${getBackground1080p()})`,
+                `url(${getBackgroundQHD()})`,
+            ]}
             backgroundSize="cover"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"

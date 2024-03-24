@@ -114,7 +114,12 @@ function Layout() {
             {!isLoaded && <LoadingScreen setIsLoaded={setIsLoaded} />}
 
             <Flex
-                backgroundImage={{ lg: `url(${getBackground1080p()})`, xl: `url(${getBackgroundQHD()})` }}
+                backgroundImage={[
+                    `url(${getBackground1080p()})`,
+                    `url(${getBackground1080p()})`,
+                    `url(${getBackground1080p()})`,
+                    `url(${getBackgroundQHD()})`,
+                ]}
                 backgroundSize="cover"
                 backgroundPosition="center"
                 backgroundRepeat="no-repeat"
