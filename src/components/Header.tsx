@@ -46,7 +46,7 @@ function Header({}) {
     return (
         <Flex flexDir="column">
             {/* Main header */}
-            <Flex flex={1} px={3} py={4} justifyContent="space-between" position="relative">
+            <Flex flex={1} px={3} py={4} justifyContent="space-between" position="relative" zIndex={9999}>
                 <Box ml="1px">
                     <Resource imageSrc={RESOURCE_ELEMENTS['tickets'].icon} value={resources.tickets} height="46px" />
                 </Box>
