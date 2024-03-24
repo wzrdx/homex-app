@@ -29,10 +29,15 @@
             "outputs": []
         },
         {
-            "name": "debug",
+            "name": "mintTickets",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "u32"
+                }
+            ],
             "outputs": []
         },
         {

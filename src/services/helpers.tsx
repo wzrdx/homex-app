@@ -144,7 +144,9 @@ export const getPageYield = (artRarityClass: number): number => {
 export const formatMaze = (value: number): string => {
     const withDenom = value / MAZE_DENOMINATION;
 
-    if (withDenom < 0.1) {
+    if (withDenom === 0) {
+        return '0';
+    } else if (withDenom < 0.1) {
         return '<0.1';
     } else {
         return _.round(withDenom, 8).toLocaleString();
