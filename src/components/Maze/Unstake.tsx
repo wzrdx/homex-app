@@ -47,7 +47,8 @@ function Unstake() {
     const { mazeStakingInfo, stakedArtTokens, getStakedAoMSFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
 
-    const [isButtonLoading, setButtonLoading] = useState(false);
+    const [isUnstakeButtonLoading, setUnstakeButtonLoading] = useState(false);
+    const [isClaimButtonLoading, setClaimButtonLoading] = useState(false);
 
     const [selectedTokens, setSelectedTokens] = useState<SFT[]>([]);
     const [tokenBalances, setTokenBalances] = useState<{
@@ -65,7 +66,7 @@ function Unstake() {
         }
 
         onModalClose();
-        setButtonLoading(true);
+        setUnstakeButtonLoading(true);
 
         const user = new Address(address);
 
@@ -77,7 +78,7 @@ function Unstake() {
         }));
 
         if (_.isEmpty(args)) {
-            setButtonLoading(false);
+            setUnstakeButtonLoading(false);
             return;
         }
 
@@ -111,10 +112,58 @@ function Unstake() {
                 },
             ]);
 
-            setButtonLoading(false);
+            setUnstakeButtonLoading(false);
         } catch (err) {
             console.error('Error occured ', err);
-            setButtonLoading(false);
+            setUnstakeButtonLoading(false);
+        }
+    };
+
+    const claimStakingRewards = async () => {
+        if (!mazeStakingInfo || !stakedArtTokens) {
+            return;
+        }
+
+        if (isClaimButtonLoading) {
+            return;
+        }
+
+        setClaimButtonLoading(true);
+
+        const user = new Address(address);
+
+        try {
+            const tx = smartContract.methods
+                .claimMaze()
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(15000000 + 500000 * stakedArtTokens.length)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.ClaimMaze,
+                    resolution: TxResolution.UpdateArtStakingAndSFTs,
+                },
+            ]);
+
+            setClaimButtonLoading(false);
+        } catch (err) {
+            console.error('Error occured while sending tx', err);
         }
     };
 
@@ -149,8 +198,12 @@ function Unstake() {
                             <Button
                                 colorScheme="red"
                                 onClick={openBalancesModal}
-                                isDisabled={!mazeStakingInfo || isTxPending(TransactionType.StakeArt)}
-                                isLoading={isButtonLoading || isTxPending(TransactionType.UnstakeArt)}
+                                isDisabled={
+                                    !mazeStakingInfo ||
+                                    isTxPending(TransactionType.StakeArt) ||
+                                    isTxPending(TransactionType.ClaimMaze)
+                                }
+                                isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.UnstakeArt)}
                             >
                                 Unstake
                             </Button>
@@ -160,25 +213,52 @@ function Unstake() {
                                 onClick={selectAll}
                                 isDisabled={
                                     !mazeStakingInfo ||
+                                    isTxPending(TransactionType.StakeArt) ||
                                     isTxPending(TransactionType.UnstakeArt) ||
-                                    isTxPending(TransactionType.StakeArt)
+                                    isTxPending(TransactionType.ClaimMaze)
                                 }
                             >
                                 Select all
                             </Button>
+
+                            {mazeStakingInfo?.isStaked && (
+                                <Flex ml={4} alignItems="center">
+                                    <InfoOutlineIcon mr={1.5} color="almostWhite" />
+                                    <Text color="almostWhite">Maze can only be claimed in-game</Text>
+                                </Flex>
+                            )}
                         </Stack>
 
                         {mazeStakingInfo?.isStaked && (
-                            <Button
-                                colorScheme="orange"
-                                onClick={onYieldOpen}
-                                isDisabled={isTxPending(TransactionType.UnstakeArt) || isTxPending(TransactionType.StakeArt)}
-                            >
-                                <Flex alignItems="center">
-                                    <InfoOutlineIcon />
-                                    <Text ml={1.5}>View Yield</Text>
-                                </Flex>
-                            </Button>
+                            <Stack direction="row" spacing={4}>
+                                <Button
+                                    colorScheme="orange"
+                                    onClick={onYieldOpen}
+                                    isDisabled={
+                                        isTxPending(TransactionType.UnstakeArt) ||
+                                        isTxPending(TransactionType.StakeArt) ||
+                                        isTxPending(TransactionType.ClaimMaze)
+                                    }
+                                >
+                                    <Flex alignItems="center">
+                                        <InfoOutlineIcon />
+                                        <Text ml={1.5}>View Yield</Text>
+                                    </Flex>
+                                </Button>
+
+                                <Button
+                                    isDisabled={
+                                        !mazeStakingInfo ||
+                                        isTxPending(TransactionType.StakeArt) ||
+                                        isTxPending(TransactionType.UnstakeArt)
+                                    }
+                                    isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimMaze)}
+                                    colorScheme="purple"
+                                    onClick={claimStakingRewards}
+                                >
+                                    <Text>Claim Maze</Text>
+                                </Button>
+                            </Stack>
                         )}
                     </Flex>
 
@@ -213,7 +293,7 @@ function Unstake() {
                                         key={index}
                                         cursor="pointer"
                                         onClick={() => {
-                                            if (isButtonLoading || isTxPending(TransactionType.StakeArt)) {
+                                            if (isUnstakeButtonLoading || isTxPending(TransactionType.StakeArt)) {
                                                 return;
                                             }
 

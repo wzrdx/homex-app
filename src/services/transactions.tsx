@@ -17,6 +17,7 @@ export enum TransactionType {
     MintArtDrop,
     StakeArt,
     UnstakeArt,
+    ClaimMaze,
 }
 
 export enum TxResolution {

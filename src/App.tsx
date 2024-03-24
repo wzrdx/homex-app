@@ -191,6 +191,10 @@ function App() {
                         );
                         break;
 
+                    case TransactionType.ClaimMaze:
+                        displayToast('Claiming succesful', `Successfully claimed your in-game Maze`, 'mirage');
+                        break;
+
                     default:
                         console.error('Unknown TransactionType');
                 }

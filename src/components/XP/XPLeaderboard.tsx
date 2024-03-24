@@ -16,7 +16,7 @@ interface Player extends PlayerInfo {
     color: string;
 }
 
-const CHUNK_SIZE = 25;
+const CHUNK_SIZE = 10;
 const LEADERBOARD_SIZE = 100;
 
 const COLUMNS: {
