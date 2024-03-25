@@ -32,7 +32,7 @@ import { TransactionType, TransactionsContextType, TxResolution, useTransactions
 import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
 
 function MultipleQuests() {
-    const { ongoingQuests, getOngoingQuests } = useQuestsContext() as QuestsContextType;
+    const { ongoingQuests, getOngoingQuests, isDoubleXpActive } = useQuestsContext() as QuestsContextType;
     const { resources } = useResourcesContext() as ResourcesContextType;
     const { isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
 
@@ -204,7 +204,12 @@ function MultipleQuests() {
                                 ) : (
                                     <Image width="20px" src={RESOURCE_ELEMENTS[resource].icon} />
                                 )}
-                                <Text ml={1.5}>{rewards[resource]}</Text>
+
+                                {!RESOURCE_ELEMENTS[resource].icon ? (
+                                    <Text ml={1.5}>{(isDoubleXpActive() ? 2 : 1) * rewards[resource]}</Text>
+                                ) : (
+                                    <Text ml={1.5}>{rewards[resource]}</Text>
+                                )}
                             </Flex>
                         ))}
                     </Flex>

@@ -940,7 +940,10 @@ export const QuestsProvider = ({ children }) => {
         }
     };
 
-    const isDoubleXpActive = (): boolean => !!doubleXpTimestamp && isBefore(new Date(), doubleXpTimestamp);
+    const isDoubleXpActive = (): boolean => {
+        const isActive = !!doubleXpTimestamp && isBefore(new Date(), doubleXpTimestamp);
+        return isActive;
+    };
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
