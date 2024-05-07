@@ -1,12 +1,12 @@
-import _ from 'lodash';
 import { Alert, AlertIcon, Box, Center, Flex, Spinner, Stack } from '@chakra-ui/react';
-import RaffleCard from '../../shared/RaffleCard';
-import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { isAfter, isBefore } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Competition, RewardsContextType, useRewardsContext } from '../../services/rewards';
 import { routeNames } from '../../services/routes';
-import { useRewardsContext, RewardsContextType, Competition } from '../../services/rewards';
 import { Pagination } from '../../shared/Pagination';
+import RaffleCard from '../../shared/RaffleCard';
 
 function Raffles() {
     const location = useLocation();
@@ -78,7 +78,12 @@ function Raffles() {
                             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" rowGap={8} columnGap={6}>
                                 {_.map(displayedCompetitions, (raffle, index) => (
                                     <Box key={index}>
-                                        <RaffleCard id={raffle.id} timestamp={raffle.timestamp} tickets={raffle.tickets} />
+                                        <RaffleCard
+                                            id={raffle.id}
+                                            timestamp={raffle.timestamp}
+                                            tickets={raffle.tickets}
+                                            _raffles={raffles}
+                                        />
                                     </Box>
                                 ))}
                             </Box>

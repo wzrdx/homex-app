@@ -1,33 +1,33 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { ChakraBaseProvider, useToast, Text } from '@chakra-ui/react';
-import { routeNames, routes } from './services/routes';
-import { AuthenticationProvider, getWalletSFTs } from './services/authentication';
-import { TransactionsToastList, NotificationModal, SignTransactionsModals } from '@multiversx/sdk-dapp/UI';
-import { theme } from './theme';
-import { ProtectedRoute } from './shared/ProtectedRoute';
+import { ChakraBaseProvider, Text, useToast } from '@chakra-ui/react';
+import { NotificationModal, SignTransactionsModals, TransactionsToastList } from '@multiversx/sdk-dapp/UI';
+import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
+import { cloneDeep, find, forEach, head, includes, isEmpty, map, remove, size } from 'lodash';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
-import { ResourcesContextType, useResourcesContext } from './services/resources';
-import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { map, head, includes, find, cloneDeep, remove, forEach, isEmpty, size } from 'lodash';
-import { useEffect } from 'react';
-import {
-    useTransactionsContext,
-    TransactionsContextType,
-    TransactionType,
-    Transaction,
-    TxResolution,
-} from './services/transactions';
-import { useSoundsContext, SoundsContextType } from './services/sounds';
-import ResourcesToast from './shared/ResourcesToast';
-import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
-import { Quest } from './types';
-import { CustomToast } from './shared/CustomToast';
-import { useStoreContext, StoreContextType } from './services/store';
-import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
+import { AuthenticationProvider } from './services/authentication';
 import { getTx } from './services/helpers';
-import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
-import { useRewardsContext, RewardsContextType } from './services/rewards';
+import { QuestsContextType, getQuest, useQuestsContext } from './services/quests';
+import { ResourcesContextType, useResourcesContext } from './services/resources';
+import { RewardsContextType, useRewardsContext } from './services/rewards';
+import { routeNames, routes } from './services/routes';
+import { SoundsContextType, useSoundsContext } from './services/sounds';
+import { StoreContextType, useStoreContext } from './services/store';
+import {
+    Transaction,
+    TransactionType,
+    TransactionsContextType,
+    TxResolution,
+    useTransactionsContext,
+} from './services/transactions';
+import { CustomToast } from './shared/CustomToast';
+import { ProtectedRoute } from './shared/ProtectedRoute';
+import ResourcesToast from './shared/ResourcesToast';
+import { theme } from './theme';
+import { Quest } from './types';
 
 function App() {
     const toast = useToast();
@@ -193,6 +193,10 @@ function App() {
 
                     case TransactionType.ClaimMaze:
                         displayToast('Claiming succesful', `Successfully claimed your in-game Maze`, 'mirage');
+                        break;
+
+                    case TransactionType.JoinRaffle:
+                        displayToast('Tickets sent', 'Successfully joined the raffle', 'green.500');
                         break;
 
                     default:

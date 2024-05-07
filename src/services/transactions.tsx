@@ -18,6 +18,7 @@ export enum TransactionType {
     StakeArt,
     UnstakeArt,
     ClaimMaze,
+    JoinRaffle,
 }
 
 export enum TxResolution {

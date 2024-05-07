@@ -1,11 +1,21 @@
-import _ from 'lodash';
-import { Flex, Text, Image } from '@chakra-ui/react';
-import { AiOutlineEye } from 'react-icons/ai';
-import { Timer } from './Timer';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { format, isAfter } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { RAFFLES, RewardType } from '../services/rewards';
+import { CHAIN_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
+import { smartContract } from '../blockchain/game/smartContract';
 import { getBackgroundStyle } from '../services/helpers';
+import { ResourcesContextType, useResourcesContext } from '../services/resources';
+import { RAFFLES, RewardType } from '../services/rewards';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { ActionButton } from './ActionButton/ActionButton';
+import { Timer } from './Timer';
 
 function RaffleCard({
     id,
@@ -23,7 +33,74 @@ function RaffleCard({
           }[]
         | undefined;
 }) {
+    const [amount, setAmount] = useState(0);
+    const { resources } = useResourcesContext() as ResourcesContextType;
+
+    const [isButtonLoading, setButtonLoading] = useState(false);
+    const [myTickets, setMyTickets] = useState<number>();
+
+    const { isRaffleTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
+    const { address } = useGetAccountInfo();
+
+    // Init
+    useEffect(() => {
+        init();
+    }, [id, _raffles]);
+
+    const init = async () => {
+        setAmount(resources.tickets > 0 ? 1 : 0);
+        setMyTickets(await getRaffleSubmittedTickets(id));
+    };
+
     const isCompleted = (): boolean => isAfter(new Date(), timestamp);
+
+    const joinRaffle = async () => {
+        if (!amount && amount > resources.tickets) {
+            return;
+        }
+
+        setButtonLoading(true);
+
+        const user = new Address(address);
+
+        try {
+            const tx = smartContract.methods
+                .joinRaffle([id])
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
+                .withSender(user)
+                .withChainID(CHAIN_ID)
+                .withGasLimit(11000000 + tickets * 125000)
+                .buildTransaction();
+
+            await refreshAccount();
+
+            const { sessionId } = await sendTransactions({
+                transactions: tx,
+                transactionsDisplayInfo: {
+                    processingMessage: 'Processing transaction',
+                    errorMessage: 'Error',
+                    successMessage: 'Transaction successful',
+                },
+                redirectAfterSign: false,
+            });
+
+            setButtonLoading(false);
+
+            setPendingTxs((txs) => [
+                ...txs,
+                {
+                    sessionId,
+                    type: TransactionType.JoinRaffle,
+                    data: {
+                        id,
+                    },
+                    resolution: TxResolution.UpdateTicketsAndRaffles,
+                },
+            ]);
+        } catch (err) {
+            console.error('Error occured during joinRaffle', err);
+        }
+    };
 
     const getContent = (): JSX.Element => {
         const raffle = RAFFLES[id - 1];
@@ -175,6 +252,66 @@ function RaffleCard({
                         displayDays
                     />
                 </Flex>
+            )}
+
+            {!isCompleted() && (
+                <Flex pt={1} pb={2} alignItems="center">
+                    <Box
+                        px="1"
+                        cursor="pointer"
+                        transition="all 0.1s ease-in"
+                        _hover={{ color: '#b8b8b8' }}
+                        onClick={() => {
+                            if (amount > 1) {
+                                setAmount(amount - 1);
+                            }
+                        }}
+                    >
+                        <Box fontSize="17px">
+                            <AiOutlineMinus />
+                        </Box>
+                    </Box>
+
+                    <Box width="22px" mx={1.5} display="flex" alignItems="center" justifyContent="center">
+                        <Text textAlign="center" fontSize="17px" fontWeight={500} userSelect="none">
+                            {amount}
+                        </Text>
+                    </Box>
+
+                    <Box
+                        px="1"
+                        cursor="pointer"
+                        transition="all 0.1s ease-in"
+                        _hover={{ color: '#b8b8b8' }}
+                        onClick={() => {
+                            if (myTickets === undefined) {
+                                return;
+                            }
+
+                            if (amount < resources.tickets) {
+                                setAmount(amount + 1);
+                            }
+                        }}
+                    >
+                        <Box fontSize="17px">
+                            <AiOutlinePlus />
+                        </Box>
+                    </Box>
+                </Flex>
+            )}
+
+            {!isCompleted() && (
+                <Box width="100%">
+                    <ActionButton
+                        disabled={isGamePaused || !resources.tickets || !timestamp || isAfter(new Date(), timestamp)}
+                        isLoading={isButtonLoading || isRaffleTxPending(TransactionType.JoinRaffle, id)}
+                        colorScheme="red"
+                        onClick={joinRaffle}
+                        customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}
+                    >
+                        <Text userSelect="none">Join Raffle</Text>
+                    </ActionButton>
+                </Box>
             )}
         </Flex>
     );
