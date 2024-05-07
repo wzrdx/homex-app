@@ -1,21 +1,23 @@
 import Background1080p from '../assets/backgrounds/bg_1080p.png';
 import BackgroundQHD from '../assets/backgrounds/bg_qhd.png';
 
-import Ticket from '../assets/ticket_small.png';
-import TicketSFT from '../assets/ticket_sft.jpg';
+import AOMLogo from '../assets/aom.png';
 import Frame from '../assets/frame.png';
 import Vision from '../assets/images/vision.png';
+import EldersLogo from '../assets/logo_elders.png';
+import Logo from '../assets/logo_small.png';
+import TravelersLogo from '../assets/logo_travelers.png';
+import TicketSFT from '../assets/ticket_sft.jpg';
+import Ticket from '../assets/ticket_small.png';
 import FrameGlow from '../assets/videos/glow.webm';
 import SpinningTicket from '../assets/videos/spinning_ticket.webm';
-import Logo from '../assets/logo_small.png';
-import EldersLogo from '../assets/logo_elders.png';
-import TravelersLogo from '../assets/logo_travelers.png';
-import AOMLogo from '../assets/aom.png';
 
-import MvxImage from '../assets/multiversx.jpg';
+import FLIPiXLogo from '../assets/flipix.png';
 import MvxLogo from '../assets/logo_x.png';
-import LogoBox from '../assets/logo_box.png';
+import MvxImage from '../assets/multiversx.jpg';
+
 import EmptyPNG from '../assets/empty.png';
+import LogoBox from '../assets/logo_box.png';
 
 import EXOTicket from '../assets/images/exo.png';
 
@@ -24,29 +26,29 @@ import RaffleHomeX from '../assets/images/raffles/2HomeX.jpg';
 import RaffleRektNerds from '../assets/images/raffles/2RektNerds.jpg';
 import RaffleSuperVictor from '../assets/images/raffles/2SuperVictor.jpg';
 
-import AuroraLocked from '../assets/log/celestials_minters/aurora_locked.png';
-import AuroraCustodian from '../assets/log/celestials_minters/aurora_custodian.png';
 import AuroraCurator from '../assets/log/celestials_minters/aurora_curator.png';
+import AuroraCustodian from '../assets/log/celestials_minters/aurora_custodian.png';
+import AuroraLocked from '../assets/log/celestials_minters/aurora_locked.png';
 
-import VerdantLocked from '../assets/log/celestials_minters/verdant_locked.png';
-import VerdantCustodian from '../assets/log/celestials_minters/verdant_custodian.png';
 import VerdantCurator from '../assets/log/celestials_minters/verdant_curator.png';
+import VerdantCustodian from '../assets/log/celestials_minters/verdant_custodian.png';
+import VerdantLocked from '../assets/log/celestials_minters/verdant_locked.png';
 
-import SolaraLocked from '../assets/log/celestials_minters/solara_locked.png';
-import SolaraCustodian from '../assets/log/celestials_minters/solara_custodian.png';
 import SolaraCurator from '../assets/log/celestials_minters/solara_curator.png';
+import SolaraCustodian from '../assets/log/celestials_minters/solara_custodian.png';
+import SolaraLocked from '../assets/log/celestials_minters/solara_locked.png';
 
-import EmberheartLocked from '../assets/log/celestials_minters/emberheart_locked.png';
-import EmberheartCustodian from '../assets/log/celestials_minters/emberheart_custodian.png';
 import EmberheartCurator from '../assets/log/celestials_minters/emberheart_curator.png';
+import EmberheartCustodian from '../assets/log/celestials_minters/emberheart_custodian.png';
+import EmberheartLocked from '../assets/log/celestials_minters/emberheart_locked.png';
 
-import AetherisLocked from '../assets/log/celestials_minters/aetheris_locked.png';
-import AetherisCustodian from '../assets/log/celestials_minters/aetheris_custodian.png';
 import AetherisCurator from '../assets/log/celestials_minters/aetheris_curator.png';
+import AetherisCustodian from '../assets/log/celestials_minters/aetheris_custodian.png';
+import AetherisLocked from '../assets/log/celestials_minters/aetheris_locked.png';
 
-import CelestialsLocked from '../assets/log/celestials_minters/celestials_locked.png';
-import CelestialsCustodian from '../assets/log/celestials_minters/celestials_custodian.png';
 import CelestialsCurator from '../assets/log/celestials_minters/celestials_curator.png';
+import CelestialsCustodian from '../assets/log/celestials_minters/celestials_custodian.png';
+import CelestialsLocked from '../assets/log/celestials_minters/celestials_locked.png';
 
 import CelestialsHoarder1Locked from '../assets/log/celestials_hoarder/celestials_hoarder_1_locked.png';
 import CelestialsHoarder1Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_1_unlocked.png';
@@ -55,30 +57,30 @@ import CelestialsHoarder2Unlocked from '../assets/log/celestials_hoarder/celesti
 import CelestialsHoarder3Locked from '../assets/log/celestials_hoarder/celestials_hoarder_3_locked.png';
 import CelestialsHoarder3Unlocked from '../assets/log/celestials_hoarder/celestials_hoarder_3_unlocked.png';
 
-import CelestialsCollectorLocked from '../assets/log/celestials_collector/locked.png';
 import CelestialsCollector1 from '../assets/log/celestials_collector/1.png';
 import CelestialsCollector2 from '../assets/log/celestials_collector/2.png';
 import CelestialsCollector3 from '../assets/log/celestials_collector/3.png';
+import CelestialsCollectorLocked from '../assets/log/celestials_collector/locked.png';
 
-import BudgetTravelersCommonLocked from '../assets/log/budget_travelers/common_locked.png';
 import BudgetTravelersCommon1 from '../assets/log/budget_travelers/common_1.png';
 import BudgetTravelersCommon2 from '../assets/log/budget_travelers/common_2.png';
 import BudgetTravelersCommon3 from '../assets/log/budget_travelers/common_3.png';
+import BudgetTravelersCommonLocked from '../assets/log/budget_travelers/common_locked.png';
 
-import BudgetTravelersUncommonLocked from '../assets/log/budget_travelers/uncommon_locked.png';
 import BudgetTravelersUncommon1 from '../assets/log/budget_travelers/uncommon_1.png';
 import BudgetTravelersUncommon2 from '../assets/log/budget_travelers/uncommon_2.png';
 import BudgetTravelersUncommon3 from '../assets/log/budget_travelers/uncommon_3.png';
+import BudgetTravelersUncommonLocked from '../assets/log/budget_travelers/uncommon_locked.png';
 
-import RareTravelersRareLocked from '../assets/log/rare_travelers/rare_locked.png';
 import RareTravelersRare1 from '../assets/log/rare_travelers/rare_1.png';
 import RareTravelersRare2 from '../assets/log/rare_travelers/rare_2.png';
 import RareTravelersRare3 from '../assets/log/rare_travelers/rare_3.png';
+import RareTravelersRareLocked from '../assets/log/rare_travelers/rare_locked.png';
 
-import RareTravelersRoyalLocked from '../assets/log/rare_travelers/royal_locked.png';
 import RareTravelersRoyal1 from '../assets/log/rare_travelers/royal_1.png';
 import RareTravelersRoyal2 from '../assets/log/rare_travelers/royal_2.png';
 import RareTravelersRoyal3 from '../assets/log/rare_travelers/royal_3.png';
+import RareTravelersRoyalLocked from '../assets/log/rare_travelers/royal_locked.png';
 
 import EldersLocked from '../assets/log/elders/elders_locked.png';
 import EldersUnlocked from '../assets/log/elders/elders_unlocked.png';
@@ -424,6 +426,7 @@ export const getAOMLogo = () => AOMLogo;
 
 export const getMvxImage = () => MvxImage;
 export const getMvxLogo = () => MvxLogo;
+export const getFLIPiXLogo = () => FLIPiXLogo;
 
 export const getEmptyPNG = () => EmptyPNG;
 

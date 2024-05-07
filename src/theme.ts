@@ -51,6 +51,7 @@ const colors = {
     blizzardRare: '#2392ff',
     blizzardEpic: '#a335ee',
     blizzardLegendary: '#ff8000',
+    flipix: '#d0ff00',
 };
 
 const fonts = {

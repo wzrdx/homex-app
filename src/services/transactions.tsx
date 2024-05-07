@@ -44,6 +44,7 @@ export interface Transaction {
 export interface TransactionsContextType {
     pendingTxs: Array<Transaction>;
     setPendingTxs: React.Dispatch<React.SetStateAction<Transaction[]>>;
+    isRaffleTxPending: (type: TransactionType, raffleId: number) => boolean;
     isQuestTxPending: (type: TransactionType, questId: number) => boolean;
     isTxPending: (type: TransactionType) => boolean;
     isMintPageTxPending: (type: TransactionType, index: number) => boolean;
@@ -60,6 +61,10 @@ export const TransactionsProvider = ({ children }) => {
     const [isGamePaused, setGamePaused] = useState<boolean>(false);
 
     const [pendingTxs, setPendingTxs] = useState<Transaction[]>([]);
+
+    const isRaffleTxPending = (type: TransactionType, raffleId: number): boolean => {
+        return findIndex(pendingTxs, (tx) => tx.type === type && tx.data.id === raffleId) > -1;
+    };
 
     const isQuestTxPending = (type: TransactionType, questId: number): boolean => {
         // StartMultipleQuests
@@ -102,6 +107,7 @@ export const TransactionsProvider = ({ children }) => {
             value={{
                 pendingTxs,
                 setPendingTxs,
+                isRaffleTxPending,
                 isQuestTxPending,
                 isMintPageTxPending,
                 isClaimRewardTxPending,

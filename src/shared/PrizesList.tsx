@@ -1,24 +1,26 @@
-import _ from 'lodash';
+import { CalendarIcon, ExternalLinkIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-    Flex,
-    Spinner,
-    Text,
-    Link,
-    Image,
     Alert,
     AlertIcon,
-    useDisclosure,
+    Box,
+    Button,
+    Flex,
+    Image,
+    Link,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    Box,
-    Button,
+    Spinner,
+    Text,
+    useDisclosure,
 } from '@chakra-ui/react';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { format } from 'date-fns';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../services/helpers';
 import {
     EGLD_DENOMINATION,
     ELDERS_COLLECTION_ID,
@@ -30,15 +32,12 @@ import {
     TOKEN_DENOMINATION,
     TRAVELERS_COLLECTION_ID,
 } from '../blockchain/config';
-import { ExternalLinkIcon, CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { format } from 'date-fns';
+import { getRaffleHashes } from '../blockchain/game/api/getRaffleHashes';
 import { useSection } from '../components/Section';
 import { getEldersLogo, getSmallLogo } from '../services/assets';
+import { getShortAddress, getTx, getTxExplorerURL, getUsername } from '../services/helpers';
 import { RESOURCE_ELEMENTS } from '../services/resources';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useRewardsContext, RewardsContextType } from '../services/rewards';
-import { getRaffleHashes } from '../blockchain/game/api/getRaffleHashes';
-import { CompetitionType } from './CompetitionDetails';
+import { RewardsContextType, useRewardsContext } from '../services/rewards';
 
 const COLUMNS = [
     {
@@ -68,7 +67,7 @@ interface Winner {
     prizes: Array<JSX.Element>;
 }
 
-function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
+function PrizesList({ id }: { id: number }) {
     const { height } = useSection();
     const { isOpen: isHashesOpen, onOpen: onHashesOpen, onClose: onHashesClose } = useDisclosure();
 
@@ -88,7 +87,7 @@ function PrizesList({ id, type }: { id: number; type: CompetitionType }) {
     const { address: userAddress } = useGetAccountInfo();
 
     useEffect(() => {
-        if (type === CompetitionType.Raffle && !_.isEmpty(raffles)) {
+        if (!_.isEmpty(raffles)) {
             setCompetition(_.find(raffles, (raffle) => raffle.id == id));
         }
     }, [raffles]);

@@ -248,6 +248,16 @@
             ]
         },
         {
+            "name": "getRaffleIndex",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u16"
+                }
+            ]
+        },
+        {
             "name": "getRaffleHashes",
             "mutability": "readonly",
             "inputs": [
@@ -295,6 +305,111 @@
             "outputs": [
                 {
                     "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "addRaffle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "drawRaffleWinners",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearRaffle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "joinRaffle",
+            "mutability": "mutable",
+            "payableInTokens": ["*"],
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getRaffleSubmittedTickets",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleParticipantsCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getRaffleParticipants",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "raffle_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "start",
+                    "type": "u32"
+                },
+                {
+                    "name": "end",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<Participant>"
                 }
             ]
         },
@@ -715,6 +830,19 @@
                 {
                     "name": "end_timestamp",
                     "type": "u64"
+                }
+            ]
+        },
+        "Participant": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "tickets_count",
+                    "type": "u32"
                 }
             ]
         },

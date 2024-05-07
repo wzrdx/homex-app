@@ -41,6 +41,8 @@ function Raffles() {
         setCompetitions(competitions);
         setDisplayedCompetitions(competitions.slice(0, 8));
 
+        console.log(competitions.slice(0, 8));
+
         setLoading(false);
     };
 
@@ -82,7 +84,7 @@ function Raffles() {
                                             id={raffle.id}
                                             timestamp={raffle.timestamp}
                                             tickets={raffle.tickets}
-                                            _raffles={raffles}
+                                            raffles={raffles}
                                         />
                                     </Box>
                                 ))}

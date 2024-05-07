@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 import { AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { CHAIN_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
+import { getRaffleSubmittedTickets } from '../blockchain/game/api/getRaffleSubmittedTickets';
 import { smartContract } from '../blockchain/game/smartContract';
 import { getBackgroundStyle } from '../services/helpers';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
-import { RAFFLES, RewardType } from '../services/rewards';
+import { Competition, RAFFLES, RewardType } from '../services/rewards';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 import { ActionButton } from './ActionButton/ActionButton';
 import { Timer } from './Timer';
@@ -21,17 +22,12 @@ function RaffleCard({
     id,
     timestamp,
     tickets,
+    raffles,
 }: {
     id: number;
     timestamp: Date;
     tickets: number;
-    _raffles?:
-        | {
-              id: number;
-              timestamp: Date;
-              tickets: number;
-          }[]
-        | undefined;
+    raffles: Competition[] | undefined;
 }) {
     const [amount, setAmount] = useState(0);
     const { resources } = useResourcesContext() as ResourcesContextType;
@@ -45,7 +41,7 @@ function RaffleCard({
     // Init
     useEffect(() => {
         init();
-    }, [id, _raffles]);
+    }, [id, raffles]);
 
     const init = async () => {
         setAmount(resources.tickets > 0 ? 1 : 0);
@@ -132,7 +128,8 @@ function RaffleCard({
                                     </Flex>
 
                                     <Text
-                                        ml={2.5}
+                                        ml={3}
+                                        mt="2.5px"
                                         textTransform="uppercase"
                                         color={prize.textColor}
                                         fontWeight={600}
@@ -219,6 +216,21 @@ function RaffleCard({
                     </Flex>
                 </Flex>
 
+                {!isCompleted() && RAFFLES[id - 1]?.eligibilityRequired && (
+                    <Box px={3} pb={2.5}>
+                        <Text
+                            py={2.5}
+                            textAlign="center"
+                            color="flipix"
+                            backgroundColor="#d0ff0022"
+                            fontSize="15px"
+                            lineHeight="18px"
+                        >
+                            Min. FLIPiX trading volume of 20$ is required to be eligible for prizes.
+                        </Text>
+                    </Box>
+                )}
+
                 <Flex width="100%" justifyContent="center">
                     <Link to={`/raffles/${id}?completed=${isCompleted()}`}>
                         <Flex
@@ -239,7 +251,7 @@ function RaffleCard({
             </Flex>
 
             {!isCompleted() && timestamp && (
-                <Flex pt={2.5} borderTop="2px solid #fdefce26" width="100%" alignItems="center" justifyContent="center">
+                <Flex pt={2.5} pl={1} borderTop="2px solid #fdefce26" width="100%" alignItems="center" justifyContent="center">
                     <Text textTransform="uppercase" mr={1} fontSize="15px" fontWeight={500} userSelect="none">
                         Ends in
                     </Text>
@@ -267,7 +279,7 @@ function RaffleCard({
                             }
                         }}
                     >
-                        <Box fontSize="17px">
+                        <Box fontSize="18px" mb="1px">
                             <AiOutlineMinus />
                         </Box>
                     </Box>
@@ -293,7 +305,7 @@ function RaffleCard({
                             }
                         }}
                     >
-                        <Box fontSize="17px">
+                        <Box fontSize="18px" mb="1px">
                             <AiOutlinePlus />
                         </Box>
                     </Box>
