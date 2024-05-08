@@ -1,40 +1,39 @@
+import { TimeIcon } from '@chakra-ui/icons';
 import {
     Box,
     Button,
     Flex,
+    Image,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalOverlay,
-    Text,
-    Image,
-    useDisclosure,
-    Stack,
     ModalFooter,
+    ModalOverlay,
+    Stack,
+    Text,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { routeNames, routes as serviceRoutes } from '../services/routes';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import { findIndex } from 'lodash';
-import { TimeIcon } from '@chakra-ui/icons';
-import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
-import { TbMusic, TbMusicOff, TbArrowBigUpLinesFilled } from 'react-icons/tb';
-import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
-import Resource from '../shared/Resource';
-import Gameplay from './Gameplay';
-import _ from 'lodash';
-import Settings from './Settings';
-import Profile from '../assets/profile.png';
 import { formatDistanceToNow, isBefore } from 'date-fns';
-import Separator from '../shared/Separator';
-import { HeaderButton } from '../shared/HeaderButton';
-import Log from './Achievements/Log';
+import _, { findIndex } from 'lodash';
+import { useEffect, useState } from 'react';
+import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
+import { TbArrowBigUpLinesFilled, TbMusic, TbMusicOff } from 'react-icons/tb';
+import { NavLink, useLocation } from 'react-router-dom';
+import Profile from '../assets/profile.png';
 import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
-import { NewSymbol } from '../shared/NewSymbol';
 import { AchievementsProvider } from '../services/achievements';
-import { useQuestsContext, QuestsContextType } from '../services/quests';
+import { QuestsContextType, useQuestsContext } from '../services/quests';
+import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
+import { routeNames, routes as serviceRoutes } from '../services/routes';
+import { SoundsContextType, useSoundsContext } from '../services/sounds';
+import { HeaderButton } from '../shared/HeaderButton';
+import { NewSymbol } from '../shared/NewSymbol';
+import Resource from '../shared/Resource';
+import Separator from '../shared/Separator';
+import Log from './Achievements/Log';
+import Gameplay from './Gameplay';
+import Settings from './Settings';
 
 const ROUTE_WIDTH = 94;
 
@@ -99,7 +98,7 @@ function Header() {
             return true;
         }
 
-        if (route === routeNames.maze) {
+        if (route === routeNames.raffles) {
             return true;
         }
 
