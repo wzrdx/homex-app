@@ -39,7 +39,11 @@ function Raffles() {
             .value();
 
         setCompetitions(competitions);
-        setDisplayedCompetitions(competitions.slice(0, 8));
+
+        const slice = competitions.slice(0, 8);
+        console.log(slice);
+
+        setDisplayedCompetitions(slice);
 
         setLoading(false);
     };
