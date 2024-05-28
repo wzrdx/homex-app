@@ -28,12 +28,6 @@ import { Text, useDisclosure } from '@chakra-ui/react';
 import { createContext, useContext } from 'react';
 import { Quest } from '../types';
 
-import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
-import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { BigNumber } from 'bignumber.js';
-import { map } from 'lodash';
-import { API_URL } from '../blockchain/config';
-import { smartContract } from '../blockchain/game/smartContract';
 import { OngoingQuest } from '../blockchain/types';
 
 const QUEST_IMAGES = [
@@ -938,32 +932,49 @@ export const QuestsProvider = ({ children }) => {
     };
 
     const getOngoingQuests = async () => {
-        const resultsParser = new ResultsParser();
-        const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
-
         try {
-            const address = 'erd16a569s4gyrf4ngdy0fgh7l3ma0hhh5klak33eql8ran7zpvqdn7q0gu7es';
-
-            const query = smartContract.createQuery({
-                func: new ContractFunction('getOngoingQuests'),
-                args: [new AddressValue(new Address(address))],
-            });
-
-            const queryResponse = await proxy.queryContract(query);
-            const endpointDefinition = smartContract.getEndpoint('getOngoingQuests');
-
-            const { firstValue: amount } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-            const quests: Array<{
-                id: BigNumber;
-                end_timestamp: BigNumber;
-            }> = amount?.valueOf();
-
-            setOngoingQuests(
-                map(quests, (quest) => ({
-                    id: quest.id.toNumber(),
-                    timestamp: new Date(quest.end_timestamp.toNumber() * 1000),
-                }))
-            );
+            setOngoingQuests([
+                {
+                    id: 1,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 2,
+                    timestamp: new Date('2024-04-03T10:19:50.000Z'),
+                },
+                {
+                    id: 6,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 8,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 9,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 12,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 15,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 18,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 19,
+                    timestamp: new Date('2024-04-03T10:16:50.000Z'),
+                },
+                {
+                    id: 22,
+                    timestamp: new Date('2024-04-03T10:23:50.000Z'),
+                },
+            ]);
         } catch (err) {
             console.error('Unable to call getOngoingQuests', err);
         }

@@ -1,11 +1,5 @@
-import { ResultsParser, ContractFunction } from '@multiversx/sdk-core/out';
-import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { useState } from 'react';
-import { smartContract } from '../smartContract';
-import { API_URL } from '../../config';
 
-const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 const FUNCTION_NAME = 'getStakedNFTsCount';
 
 export const useGetStakedNFTsCount = () => {
@@ -13,16 +7,7 @@ export const useGetStakedNFTsCount = () => {
 
     const call = async (): Promise<number | undefined> => {
         try {
-            const query = smartContract.createQuery({
-                func: new ContractFunction(FUNCTION_NAME),
-                args: [],
-            });
-
-            const queryResponse = await proxy.queryContract(query);
-            const endpointDefinition = smartContract.getEndpoint(FUNCTION_NAME);
-
-            const { firstValue: amount } = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
-            const value = amount?.valueOf()?.toNumber();
+            const value = 3333;
 
             setCount(value);
             return value;

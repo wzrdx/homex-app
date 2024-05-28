@@ -4,10 +4,9 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { addDays } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { CHAIN_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
-import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
 import { smartContract } from '../blockchain/game/smartContract';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
@@ -18,8 +17,6 @@ const PRICE = 3;
 const XP = 1500;
 
 function Shop() {
-    const [timestamp, setTimestamp] = useState<Date>();
-
     const [amount, setAmount] = useState(1);
     const [isButtonLoading, setButtonLoading] = useState(false);
 
@@ -27,14 +24,6 @@ function Shop() {
     const { isTxPending, setPendingTxs } = useTransactionsContext() as TransactionsContextType;
 
     const { address } = useGetAccountInfo();
-
-    useEffect(() => {
-        init();
-    }, []);
-
-    const init = async () => {
-        setTimestamp(await getArtDropTimestamp());
-    };
 
     const mint = async () => {
         if (!amount || amount > resources.tickets) {
@@ -93,7 +82,7 @@ function Shop() {
                         Aetheris Art Drop
                     </Text>
 
-                    <LargeTimer timestamp={addDays(new Date(), 2)} callback={() => init()} />
+                    <LargeTimer timestamp={addDays(new Date(), 2)} callback={() => {}} />
                 </Flex>
 
                 <Stack direction="row" spacing={4} alignItems="center">

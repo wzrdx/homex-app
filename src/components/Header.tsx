@@ -14,14 +14,12 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { isBefore } from 'date-fns';
 import _, { findIndex } from 'lodash';
 import { useEffect, useState } from 'react';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
 import { TbArrowBigUpLinesFilled, TbMusic, TbMusicOff } from 'react-icons/tb';
 import { NavLink, useLocation } from 'react-router-dom';
 import Profile from '../assets/profile.png';
-import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
 import { AchievementsProvider } from '../services/achievements';
 import { QuestsContextType, useQuestsContext } from '../services/quests';
 import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
@@ -35,7 +33,7 @@ import Log from './Achievements/Log';
 import Gameplay from './Gameplay';
 import Settings from './Settings';
 
-const ROUTE_WIDTH = 94;
+const ROUTE_WIDTH = 102;
 
 function Header() {
     const { isOpen: isGameplayOpen, onOpen: onGameplayOpen, onClose: onGameplayClose } = useDisclosure();
@@ -70,8 +68,7 @@ function Header() {
             setIsMusicOn(true);
         }
 
-        const artDropTimestamp = await getArtDropTimestamp();
-        setArtDropOngoing(isBefore(new Date(), artDropTimestamp));
+        setArtDropOngoing(true);
     };
 
     useEffect(() => {
@@ -95,10 +92,6 @@ function Header() {
 
     const isSymbolVisible = (route: string): boolean => {
         if (isArtDropOngoing && route === routeNames.shop) {
-            return true;
-        }
-
-        if (route === routeNames.raffles) {
             return true;
         }
 

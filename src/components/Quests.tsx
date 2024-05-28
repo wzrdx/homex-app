@@ -13,22 +13,17 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { isAfter, isBefore } from 'date-fns';
 import _, { find, findIndex, map } from 'lodash';
 import { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/game/smartContract';
 import { getFrame, getSpinningTicket, getVisionImage } from '../services/assets';
-import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
+import { getBackgroundStyle, timeDisplay } from '../services/helpers';
 import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
 import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
 import { SoundsContextType, useSoundsContext } from '../services/sounds';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../services/transactions';
 import QuestCard from '../shared/QuestCard';
 import Requirement from '../shared/Requirement';
 import Reward from '../shared/Reward';
@@ -46,8 +41,6 @@ function Quests() {
     const navigate = useNavigate();
 
     const { isOpen: isVisionOpen, onOpen: onVisionOpen, onClose: onVisionClose } = useDisclosure();
-
-    const address = 'erd16a569s4gyrf4ngdy0fgh7l3ma0hhh5klak33eql8ran7zpvqdn7q0gu7es';
 
     const { isQuestTxPending, isTxPending, setPendingTxs, isGamePaused } = useTransactionsContext() as TransactionsContextType;
     const { playSound } = useSoundsContext() as SoundsContextType;
@@ -79,185 +72,6 @@ function Quests() {
 
     const init = async () => {
         getOngoingQuests();
-    };
-
-    const startQuest = async () => {
-        setStartButtonLoading(true);
-
-        const user = new Address(address);
-        const requiredResources: string[] = Object.keys(currentQuest.requirements);
-
-        try {
-            const tx = smartContract.methods
-                .startQuest([currentQuest.id])
-                .withMultiESDTNFTTransfer(
-                    requiredResources.map((resource) =>
-                        TokenTransfer.fungibleFromAmount(
-                            RESOURCE_ELEMENTS[resource].tokenId,
-                            currentQuest.requirements[resource],
-                            6
-                        )
-                    )
-                )
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(14000000 + requiredResources.length * 750000)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setStartButtonLoading(false);
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.StartQuest,
-                    questId: currentQuest.id,
-                    resolution: TxResolution.UpdateQuestsAndResources,
-                    data: {
-                        resources: Object.keys(currentQuest.requirements),
-                    },
-                },
-            ]);
-        } catch (err) {
-            console.error('Error occured during startQuest', err);
-        }
-    };
-
-    const completeQuest = async () => {
-        setFinishButtonLoading(true);
-
-        const user = new Address(address);
-
-        const rewardsCount: number = currentQuest.rewards.length;
-        const isMission: boolean = currentQuest.type === 'final';
-        const gasLimit: number = 24000000 + rewardsCount * 950000 + (isMission ? 2500000 : 0);
-
-        try {
-            const tx = smartContract.methods
-                .completeQuest([currentQuest.id])
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(gasLimit)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setFinishButtonLoading(false);
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.CompleteQuest,
-                    questId: currentQuest.id,
-                    resolution: TxResolution.UpdateQuestsAndResources,
-                    data: {
-                        resources: map(currentQuest.rewards, (reward) => reward.resource),
-                    },
-                },
-            ]);
-        } catch (err) {
-            console.error('Error occured during completeQuest', err);
-        }
-    };
-
-    const completeAllQuests = async () => {
-        setCompleteAllLoading(true);
-
-        const user = new Address(address);
-
-        const completedQuestsIds = _(ongoingQuests)
-            .filter((quest) => isAfter(new Date(), quest.timestamp))
-            .map((quest) => quest.id)
-            .value();
-
-        const otherOngoingQuestsCount = _(ongoingQuests)
-            .filter((quest) => !isAfter(new Date(), quest.timestamp))
-            .size();
-
-        if (_.isEmpty(completedQuestsIds)) {
-            displayToast('error', `Unable to claim rewards`, 'No quests can be completed yet', 'orangered');
-            setCompleteAllLoading(false);
-            return;
-        }
-
-        const completedQuests: Quest[] = _.filter(QUESTS, (quest) => _.includes(completedQuestsIds, quest.id));
-
-        const rewards = getTotalQuestsRewards(completedQuests);
-        const rewardedResources = Object.keys(rewards);
-
-        const gains = _.map(rewardedResources, (resource) => ({
-            resource,
-            value: rewards[resource],
-        }));
-
-        const gasLimit: number =
-            75000000 +
-            500000 * otherOngoingQuestsCount +
-            (rewardedResources.includes('tickets') ? 2500000 : 0) +
-            500000 * _.size(rewardedResources) +
-            500000 * _.size(completedQuests);
-
-        try {
-            const tx = smartContract.methods
-                .completeAllQuests()
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(gasLimit)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setCompleteAllLoading(false);
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.CompleteAllQuests,
-                    resolution: TxResolution.UpdateQuestsAndResources,
-                    data: {
-                        resources: rewardedResources,
-                        completedQuestsIds,
-                        gains,
-                    },
-                },
-            ]);
-        } catch (err) {
-            console.error('Error occured during completeAllQuests', err);
-        }
     };
 
     const onQuestClick = (id: number | undefined) => {
@@ -300,7 +114,6 @@ function Quests() {
                         <Button
                             colorScheme="green"
                             isLoading={isCompleteAllButtonLoading || isTxPending(TransactionType.CompleteAllQuests)}
-                            onClick={completeAllQuests}
                         >
                             <Text>Claim all rewards</Text>
                         </Button>
@@ -370,7 +183,6 @@ function Quests() {
                                     isStartButtonLoading || isQuestTxPending(TransactionType.StartQuest, currentQuest.id)
                                 }
                                 isDisabled={isGamePaused || !meetsRequirements(resources, currentQuest.id)}
-                                onClick={startQuest}
                                 minW="108px"
                             >
                                 <Text>Start</Text>
@@ -391,7 +203,6 @@ function Quests() {
                                     isFinishButtonLoading || isQuestTxPending(TransactionType.CompleteQuest, currentQuest.id)
                                 }
                                 colorScheme="green"
-                                onClick={completeQuest}
                             >
                                 <Text>Claim Rewards</Text>
                             </Button>
