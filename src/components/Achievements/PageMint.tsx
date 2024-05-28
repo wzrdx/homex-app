@@ -1,13 +1,13 @@
-import _ from 'lodash';
-import { Stack, Flex, Button, Center, Text, Box, Image, Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { PAGE_HEADERS } from '../../services/achievements';
-import { BsGem } from 'react-icons/bs';
-import { Interactor } from './Interactor';
-import { isPageMinted } from '../../blockchain/auxiliary/api/isPageMinted';
-import { getAOMLogo } from '../../services/assets';
+import { Box, Button, Center, Flex, Image, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { useTransactionsContext, TransactionsContextType, TransactionType, Transaction } from '../../services/transactions';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { BsGem } from 'react-icons/bs';
+import { isPageMinted } from '../../blockchain/auxiliary/api/isPageMinted';
+import { PAGE_HEADERS } from '../../services/achievements';
+import { getAOMLogo } from '../../services/assets';
+import { Transaction, TransactionType, TransactionsContextType, useTransactionsContext } from '../../services/transactions';
+import { Interactor } from './Interactor';
 
 export const PageMint = ({ index, page, goBack }) => {
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -22,6 +22,7 @@ export const PageMint = ({ index, page, goBack }) => {
     }, []);
 
     const getState = async () => {
+        console.log(index);
         setLoading(true);
         setPageMinted(await isPageMinted(index));
         setLoading(false);

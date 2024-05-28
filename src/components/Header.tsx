@@ -14,7 +14,7 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { formatDistanceToNow, isBefore } from 'date-fns';
+import { isBefore } from 'date-fns';
 import _, { findIndex } from 'lodash';
 import { useEffect, useState } from 'react';
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from 'react-icons/io5';
@@ -283,91 +283,9 @@ function Header() {
                 >
                     <Flex alignItems="center">
                         <Resource imageSrc={RESOURCE_ELEMENTS['tickets'].icon} value={resources.tickets} height="46px" />
-
-                        {process.env.NODE_ENV === 'development' && (
-                            <Flex alignItems="center" zIndex={4}>
-                                <Box
-                                    display={{
-                                        base: 'block',
-                                        sm: 'none',
-                                        md: 'none',
-                                        lg: 'none',
-                                        xl: 'none',
-                                        '2xl': 'none',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"Base"' }} ml={6}></Text>
-                                </Box>
-
-                                <Box
-                                    display={{
-                                        base: 'none',
-                                        sm: 'block',
-                                        md: 'none',
-                                        lg: 'none',
-                                        xl: 'none',
-                                        '2xl': 'none',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"Small"' }} ml={6}></Text>
-                                </Box>
-
-                                <Box
-                                    display={{
-                                        base: 'none',
-                                        sm: 'none',
-                                        md: 'block',
-                                        lg: 'none',
-                                        xl: 'none',
-                                        '2xl': 'none',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"Medium"' }} ml={6}></Text>
-                                </Box>
-
-                                <Box
-                                    display={{
-                                        base: 'none',
-                                        sm: 'none',
-                                        md: 'none',
-                                        lg: 'block',
-                                        xl: 'none',
-                                        '2xl': 'none',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"Large"' }} ml={6}></Text>
-                                </Box>
-
-                                <Box
-                                    display={{
-                                        base: 'none',
-                                        sm: 'none',
-                                        md: 'none',
-                                        lg: 'none',
-                                        xl: 'block',
-                                        '2xl': 'none',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"XL"' }} ml={6}></Text>
-                                </Box>
-
-                                <Box
-                                    display={{
-                                        base: 'none',
-                                        sm: 'none',
-                                        md: 'none',
-                                        lg: 'none',
-                                        xl: 'none',
-                                        '2xl': 'block',
-                                    }}
-                                >
-                                    <Text layerStyle="responsive" _before={{ content: '"2XL"' }} ml={6}></Text>
-                                </Box>
-                            </Flex>
-                        )}
                     </Flex>
 
-                    {isDoubleXpActive() && (
+                    {isDoubleXpActive() && doubleXpTimestamp && (
                         <Flex alignItems="center" pointerEvents="all">
                             <Box mb="2px">
                                 <TbArrowBigUpLinesFilled fontSize="20px" color="#5ff070" />
@@ -385,7 +303,7 @@ function Header() {
 
                             <TimeIcon boxSize={4} />
                             <Text ml={1.5} fontSize="15px">
-                                {formatDistanceToNow(doubleXpTimestamp as Date)} left
+                                5 days left
                             </Text>
                         </Flex>
                     )}

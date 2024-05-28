@@ -1,33 +1,22 @@
-import React, { useState } from 'react';
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import EnergyIcon from '../assets/resources/icons/energy.png';
-import HerbsIcon from '../assets/resources/icons/herbs.png';
-import GemsIcon from '../assets/resources/icons/gems.png';
 import EssenceIcon from '../assets/resources/icons/essence.png';
+import GemsIcon from '../assets/resources/icons/gems.png';
+import HerbsIcon from '../assets/resources/icons/herbs.png';
 import MazeIcon from '../assets/resources/icons/maze.png';
 
 import EnergyImage from '../assets/resources/images/energy.png';
-import HerbsImage from '../assets/resources/images/herbs.png';
-import GemsImage from '../assets/resources/images/gems.png';
 import EssenceImage from '../assets/resources/images/essence.png';
+import GemsImage from '../assets/resources/images/gems.png';
+import HerbsImage from '../assets/resources/images/herbs.png';
 
 import TicketsIcon from '../assets/resources/icons/tickets.png';
 import TicketsImage from '../assets/resources/images/tickets.png';
 import XpImage from '../assets/resources/images/xp.png';
 
-import {
-    API_URL,
-    ENERGY_TOKEN_ID,
-    ESSENCE_TOKEN_ID,
-    GEMS_TOKEN_ID,
-    HERBS_TOKEN_ID,
-    TICKETS_TOKEN_ID,
-} from '../blockchain/config';
-import axios from 'axios';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useDisclosure } from '@chakra-ui/react';
-import _ from 'lodash';
+import { ENERGY_TOKEN_ID, ESSENCE_TOKEN_ID, GEMS_TOKEN_ID, HERBS_TOKEN_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
 
 export const INITIAL_RESOURCES_STATE = {
     energy: 0,
@@ -85,10 +74,9 @@ export const RESOURCE_ELEMENTS: any = {
     },
 };
 
-export const getSFTDetails = (address: string, tokenId: string): Promise<{ data: { balance: string } }> =>
-    axios.get(`accounts/${address}/nfts/${tokenId}`, {
-        baseURL: API_URL,
-    });
+export const getSFTDetails = (address: string, tokenId: string): { data: { balance: string } } => {
+    return { data: { balance: '1' } };
+};
 
 export const getResourceElements = (key: string) => RESOURCE_ELEMENTS[key];
 
@@ -120,121 +108,41 @@ export const useResourcesContext = () => useContext(ResourcesContext);
 export const ResourcesProvider = ({ children }) => {
     const [resources, setResources] = useState(INITIAL_RESOURCES_STATE);
 
-    let { address } = useGetAccountInfo();
-
     const { isOpen: isTicketModalOpen, onOpen: onTicketModalOpen, onClose: onTicketModalClose } = useDisclosure();
 
     const getEnergy = async () => {
-        try {
-            const result = await axios.get(`accounts/${address}/tokens/${ENERGY_TOKEN_ID}`, {
-                baseURL: API_URL,
-            });
-
-            if (result.data) {
-                setResources((state) => ({
-                    ...state,
-                    energy: Number.parseInt(result.data.balance) / 1000000,
-                }));
-            }
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                setResources((state) => ({
-                    ...state,
-                    energy: 0,
-                }));
-            }
-            console.error('getEnergy', error.message);
-        }
+        setResources((state) => ({
+            ...state,
+            energy: 2500,
+        }));
     };
 
     const getHerbs = async () => {
-        try {
-            const result = await axios.get(`accounts/${address}/tokens/${HERBS_TOKEN_ID}`, {
-                baseURL: API_URL,
-            });
-
-            if (result.data) {
-                setResources((state) => ({
-                    ...state,
-                    herbs: Number.parseInt(result.data.balance) / 1000000,
-                }));
-            }
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                setResources((state) => ({
-                    ...state,
-                    herbs: 0,
-                }));
-            }
-            console.error('getHerbs', error.message);
-        }
+        setResources((state) => ({
+            ...state,
+            herbs: 1024,
+        }));
     };
 
     const getGems = async () => {
-        try {
-            const result = await axios.get(`accounts/${address}/tokens/${GEMS_TOKEN_ID}`, {
-                baseURL: API_URL,
-            });
-
-            if (result.data) {
-                setResources((state) => ({
-                    ...state,
-                    gems: Number.parseInt(result.data.balance) / 1000000,
-                }));
-            }
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                setResources((state) => ({
-                    ...state,
-                    gems: 0,
-                }));
-            }
-            console.error('getGems', error.message);
-        }
+        setResources((state) => ({
+            ...state,
+            gems: 420,
+        }));
     };
 
     const getEssence = async () => {
-        try {
-            const result = await axios.get(`accounts/${address}/tokens/${ESSENCE_TOKEN_ID}`, {
-                baseURL: API_URL,
-            });
-
-            if (result.data) {
-                setResources((state) => ({
-                    ...state,
-                    essence: Number.parseInt(result.data.balance) / 1000000,
-                }));
-            }
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                setResources((state) => ({
-                    ...state,
-                    essence: 0,
-                }));
-            }
-            console.error('getEssence', error.message);
-        }
+        setResources((state) => ({
+            ...state,
+            essence: 100,
+        }));
     };
 
     const getTickets = async () => {
-        try {
-            const result = await getSFTDetails(address, `${TICKETS_TOKEN_ID}-01`);
-
-            if (result.data) {
-                setResources((state) => ({
-                    ...state,
-                    tickets: Number.parseInt(result.data.balance),
-                }));
-            }
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                setResources((state) => ({
-                    ...state,
-                    tickets: 0,
-                }));
-            }
-            console.error('getTickets', error.message);
-        }
+        setResources((state) => ({
+            ...state,
+            tickets: 25,
+        }));
     };
 
     return (

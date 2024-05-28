@@ -86,6 +86,9 @@ body {
     border: 0 !important;
     outline: none !important;
     background-color: #7638ac !important;
+    border-radius: 0.25rem !important;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
 
     &:hover {
         background-color: #8830d5 !important;

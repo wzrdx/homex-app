@@ -1,10 +1,9 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import useImagePreloader from '../services/preload';
 import Unlocker from '../assets/videos/unlocker.webm';
-import { getBackground1080p, getFrame, getVisionImage, getTicketSFT } from '../services/assets';
+import { getBackground1080p, getFrame, getTicketSFT, getVisionImage } from '../services/assets';
+import useImagePreloader from '../services/preload';
 import { getQuestImage } from '../services/quests';
-import { isAfter } from 'date-fns';
 
 function LoadingScreen({ setIsLoaded }) {
     const [isReady, setIsReady] = useState(false);

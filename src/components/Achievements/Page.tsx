@@ -1,12 +1,12 @@
+import { Box, Button, Center, Flex, Image, Spinner, Stack, Text } from '@chakra-ui/react';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { Box, Button, Flex, Image, Spinner, Stack, Text, Center } from '@chakra-ui/react';
-import { IconWithShadow } from '../../shared/IconWithShadow';
 import { BiInfoCircle } from 'react-icons/bi';
-import { FaRegCheckCircle } from 'react-icons/fa';
 import { BsGem } from 'react-icons/bs';
+import { FaRegCheckCircle } from 'react-icons/fa';
 import { GoTrophy } from 'react-icons/go';
 import { AchievementsContextType, PAGE_HEADERS, TravelersLogBadge, useAchievementsContext } from '../../services/achievements';
+import { IconWithShadow } from '../../shared/IconWithShadow';
 
 export const Page = ({ index, toggleMint }) => {
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -141,11 +141,6 @@ export const Page = ({ index, toggleMint }) => {
                                     View
                                 </Button>
                             )}
-
-                            {/* TODO: Remove */}
-                            {/* <Button colorScheme="green" onClick={toggleMint}>
-                                View
-                            </Button> */}
                         </Stack>
                     </Flex>
 
@@ -158,7 +153,14 @@ export const Page = ({ index, toggleMint }) => {
                         columnGap={8}
                     >
                         {badges.map((badge, index) => (
-                            <Stack key={index} spacing={4} position="relative" alignItems="center" px={6} minH="224px">
+                            <Stack
+                                key={`${badge.title}-${index}`}
+                                spacing={4}
+                                position="relative"
+                                alignItems="center"
+                                px={6}
+                                minH="224px"
+                            >
                                 <Image
                                     src={badge.isUnlocked ? badge.assets[1] : badge.assets[0]}
                                     maxH={{ md: '120px', lg: '168px', xl: '206px' }}
