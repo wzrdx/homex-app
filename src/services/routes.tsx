@@ -1,24 +1,24 @@
 // Energy
 import Staking from '../components/Staking';
 import EnergyStake from '../components/Staking/Stake';
-import EnergyUnstake from '../components/Staking/Unstake';
 import EnergyUnbond from '../components/Staking/Unbond';
+import EnergyUnstake from '../components/Staking/Unstake';
 // Maze
 import Maze from '../components/Maze';
 import Altar from '../components/Maze/Altar';
 import MazeStake from '../components/Maze/Stake';
 import MazeUnstake from '../components/Maze/Unstake';
 // Others
-import Gameplay from '../components/Gameplay';
-import Quests from '../components/Quests';
-import Section from '../components/Section';
-import CompetitionDetails from '../shared/CompetitionDetails';
 import Raffles from '../components/Competitions/Raffles';
+import Gameplay from '../components/Gameplay';
+import Inventory from '../components/Maze/Inventory';
+import Quests from '../components/Quests';
 import Rewards from '../components/Rewards';
+import Section from '../components/Section';
 import Shop from '../components/Shop';
 import Profile from '../components/XP/Profile';
 import XPLeaderboard from '../components/XP/XPLeaderboard';
-import Inventory from '../components/Maze/Inventory';
+import CompetitionDetails from '../shared/CompetitionDetails';
 
 export const routeNames = {
     unlock: 'unlock',
@@ -131,7 +131,7 @@ export const routes = [
                 component: CompetitionDetails,
             },
         ],
-        defaultChildRoute: routeNames.current,
+        defaultChildRoute: routeNames.past,
     },
     // Rewards
     {

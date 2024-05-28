@@ -1,4 +1,4 @@
-import { AbiRegistry, SmartContract, Address } from '@multiversx/sdk-core';
+import { AbiRegistry, Address, SmartContract } from '@multiversx/sdk-core';
 import { gameScAddress } from '../config';
 import json from './game-sc.abi.json';
 

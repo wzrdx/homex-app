@@ -40,10 +40,7 @@ function Raffles() {
 
         setCompetitions(competitions);
 
-        const slice = competitions.slice(0, 8);
-        console.log(slice);
-
-        setDisplayedCompetitions(slice);
+        setDisplayedCompetitions((competitions as Competition[]).slice((16 - 1) * 8, 16 * 8));
 
         setLoading(false);
     };

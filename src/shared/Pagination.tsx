@@ -6,7 +6,7 @@ import { range } from '../services/helpers';
 export const Pagination: FunctionComponent<
     PropsWithChildren<{ total: number; pageSize: number; onPageChange: (page: number) => void }>
 > = ({ total, pageSize, onPageChange }) => {
-    const [currentPage, setPage] = useState<number>(1);
+    const [currentPage, setPage] = useState<number>(16);
 
     return (
         <Stack direction="row">

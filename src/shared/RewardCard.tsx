@@ -1,15 +1,14 @@
-import _ from 'lodash';
-import { Box, Flex, Text, Image } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { Address } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useEffect, useState } from 'react';
 import { CHAIN_ID } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
-import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
-import { ActionButton } from './ActionButton/ActionButton';
 import { getTicketsPrize } from '../services/rewards';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { ActionButton } from './ActionButton/ActionButton';
 
 function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }) {
     const { address } = useGetAccountInfo();
@@ -114,7 +113,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 </Flex>
             </Flex>
 
-            <Flex py={3} width="100%" alignItems="center" justifyContent="center">
+            <Flex py={4} width="100%" alignItems="center" justifyContent="center">
                 <Text layerStyle="header2">Elder Ticket Rewards</Text>
             </Flex>
 
@@ -122,10 +121,9 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
                 <ActionButton
                     isLoading={isButtonLoading || isClaimRewardTxPending(TransactionType.ClaimReward, id)}
                     colorScheme="red"
-                    onClick={claimReward}
                     customStyle={{ width: '100%', borderRadius: 0, padding: '0.75rem' }}
                 >
-                    <Text userSelect="none">Claim</Text>
+                    <Text userSelect="none">Claim rewards</Text>
                 </ActionButton>
             </Box>
         </Flex>

@@ -29,7 +29,6 @@ import { createContext, useContext } from 'react';
 import { Quest } from '../types';
 
 import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { BigNumber } from 'bignumber.js';
 import { map } from 'lodash';
@@ -943,7 +942,7 @@ export const QuestsProvider = ({ children }) => {
         const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
 
         try {
-            const address = await getAddress();
+            const address = 'erd16a569s4gyrf4ngdy0fgh7l3ma0hhh5klak33eql8ran7zpvqdn7q0gu7es';
 
             const query = smartContract.createQuery({
                 func: new ContractFunction('getOngoingQuests'),
