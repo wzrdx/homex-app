@@ -1,9 +1,8 @@
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { AOM_COLLECTION_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { AOM_COLLECTION_ID } from '../blockchain/config';
 import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
-import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
 import {
     getBudgetTravelersCommonAssets,
     getBudgetTravelersUncommonAssets,
@@ -30,7 +29,6 @@ import CelestialsHoarder from '../assets/log/pages/celestials_hoarder.png';
 import RareTravelers from '../assets/log/pages/rare_travelers.png';
 import VarietyHunter from '../assets/log/pages/variety_hunter.png';
 import { LogSummary, getLogSummary } from '../blockchain/game/api/achievements/getLogSummary';
-import { Stake } from '../blockchain/types';
 
 export enum TravelersLogPageRarity {
     Common = 'Common',
@@ -727,22 +725,13 @@ export const AchievementsProvider = ({ children }) => {
     };
 
     const getRarityCount = async () => {
-        if (!stakingInfo) {
-            return;
-        }
-
-        const stakedTravelers: Stake[] = _.filter(
-            stakingInfo.tokens,
-            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
-        );
-
-        const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
-        const rarityCount = _.countBy(rarities, 'rarityClass');
-
-        // Elders
-        rarityCount[0] = _(stakingInfo.tokens)
-            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
-            .size();
+        const rarityCount = {
+            0: 5,
+            1: 5,
+            2: 2,
+            3: 4,
+            4: 1,
+        };
 
         setData({
             ...data,

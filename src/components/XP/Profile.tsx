@@ -1,16 +1,14 @@
 import { Box, Button, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useEffect, useState } from 'react';
-import { getShortAddress, getUsername } from '../../services/helpers';
-import { getLevel } from '../../services/xp';
-import { IoWalletOutline } from 'react-icons/io5';
 import { logout } from '@multiversx/sdk-dapp/utils';
-import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
+import { useEffect, useState } from 'react';
+import { IoWalletOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import { AuthenticationContextType, useAuthenticationContext } from '../../services/authentication';
+import { getShortAddress } from '../../services/helpers';
+import { getLevel } from '../../services/xp';
 
 function Profile() {
-    let { address } = useGetAccountInfo();
-
+    const address = 'erd16a569s4gyrf4ngdy0fgh7l3ma0hhh5klak33eql8ran7zpvqdn7q0gu7es';
     const { xp, getXp, setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
     const navigate = useNavigate();
 
@@ -35,7 +33,7 @@ function Profile() {
 
     const init = async () => {
         getXp();
-        setUsername(await getUsername(address));
+        setUsername('homex');
     };
 
     return (
