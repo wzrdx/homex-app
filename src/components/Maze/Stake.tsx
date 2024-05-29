@@ -1,12 +1,10 @@
-import _ from 'lodash';
+import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Flex,
-    Text,
-    Spinner,
     Alert,
     AlertIcon,
+    Box,
     Button,
+    Flex,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -14,25 +12,27 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useDisclosure,
+    Spinner,
     Stack,
+    Text,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { AOM_COLLECTION_ID, CHAIN_ID } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
-import TokenCard, { TokenType } from '../../shared/TokenCard';
-import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { SFT } from '../../blockchain/types';
-import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
-import { getArtRarityName, sleep } from '../../services/helpers';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import { BsGem } from 'react-icons/bs';
+import { smartContract } from '../../blockchain/auxiliary/smartContract';
+import { AOM_COLLECTION_ID, CHAIN_ID } from '../../blockchain/config';
+import { SFT } from '../../blockchain/types';
+import { getArtRarityName } from '../../services/helpers';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
+import TokenCard, { TokenType } from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Stake() {
     const { height, displayToast } = useStaking();
@@ -191,6 +191,7 @@ function Stake() {
                             overflowY="auto"
                             pr={4}
                             mr="calc(-1rem - 6px)"
+                            height="100%"
                         >
                             <Box
                                 display="grid"

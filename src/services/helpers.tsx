@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { API_URL, EXPLORER_URL, GATEWAY_URL, MAZE_DENOMINATION, TRAVELERS_PADDING } from '../blockchain/config';
-import { NFT, MainRarityClass, ArtRarityClass } from '../blockchain/types';
-import { Quest } from '../types';
-import _ from 'lodash';
 import { addSeconds, isAfter } from 'date-fns';
+import _ from 'lodash';
+import { API_URL, EXPLORER_URL, GATEWAY_URL, MAZE_DENOMINATION, TRAVELERS_PADDING } from '../blockchain/config';
+import { ArtRarityClass, MainRarityClass, NFT } from '../blockchain/types';
+import { Quest } from '../types';
 import { RESOURCE_ELEMENTS } from './resources';
 
 export const range = (length: number) => Array.from({ length }, (_, i) => i + 1);

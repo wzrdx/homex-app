@@ -1,14 +1,14 @@
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
+import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
+import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
+import { AOM_COLLECTION_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { MazeStakingInfo, NFT, Rarity, SFT, Stake, StakingInfo } from '../blockchain/types';
 import { getContractArtSFTs, getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
 import { pairwise, toHexNumber } from './helpers';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID, AOM_COLLECTION_ID } from '../blockchain/config';
-import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
-import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
 
 const CHUNK_SIZE = 25;
 
