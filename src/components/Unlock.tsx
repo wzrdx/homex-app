@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Center, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import Ledger from '../assets/icons/Ledger.png';
@@ -15,6 +16,11 @@ const Unlock = () => {
     const { getStakingInfo } = useStoreContext() as StoreContextType;
 
     const navigate = useNavigate();
+
+    // Init
+    useEffect(() => {
+        console.log('demo');
+    }, []);
 
     const login = async () => {
         // stakingInfo is required by child components
