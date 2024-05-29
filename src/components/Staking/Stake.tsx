@@ -1,19 +1,15 @@
-import _ from 'lodash';
-import { Box, Flex, Text, Spinner, Alert, AlertIcon, Button } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/game/smartContract';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
-import { NFT, Rarity } from '../../blockchain/types';
-import TokenCard from '../../shared/TokenCard';
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { Alert, AlertIcon, Box, Button, Flex, Spinner, Text } from '@chakra-ui/react';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { NFT, Rarity } from '../../blockchain/types';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../../services/transactions';
+import TokenCard from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Stake() {
     const { height, displayToast } = useStaking();
@@ -49,65 +45,6 @@ function Stake() {
         setRarities(await getRarityClasses(_.map(travelers, (traveler) => traveler.nonce)));
     };
 
-    const stake = async () => {
-        if (!stakingInfo) {
-            return;
-        }
-
-        if (_.isEmpty(selectedTokens)) {
-            displayToast('error', 'Nothing to stake', 'Please select some NFTs first', 'redClrs');
-
-            return;
-        }
-
-        setButtonLoading(true);
-
-        const user = new Address(address);
-
-        const stakedNFTsCount = _.size(stakingInfo.tokens);
-
-        try {
-            const transfers: TokenTransfer[] = _(selectedTokens)
-                .map((token) => TokenTransfer.nonFungible(token.tokenId, token.nonce))
-                .value();
-
-            const tx = smartContract.methods
-                .stake()
-                .withMultiESDTNFTTransfer(transfers)
-                .withSender(user)
-                .withExplicitReceiver(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(90000000 + 750000 * stakedNFTsCount + 2150000 * _.size(transfers))
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.StakeMain,
-                    resolution: TxResolution.UpdateMainStakingAndNFTs,
-                    data: _.size(transfers),
-                },
-            ]);
-
-            setButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured while staking', err);
-        }
-    };
-
     const selectAll = async () => {
         if (!elders || !travelers) {
             return;
@@ -134,7 +71,6 @@ function Stake() {
                         }
                         isLoading={isButtonLoading || isTxPending(TransactionType.StakeMain)}
                         colorScheme="red"
-                        onClick={stake}
                     >
                         <Text>Stake</Text>
                     </Button>
@@ -189,6 +125,7 @@ function Stake() {
                             overflowY="auto"
                             pr={4}
                             mr="calc(-1rem - 6px)"
+                            height="100%"
                         >
                             <Box
                                 display="grid"

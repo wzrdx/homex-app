@@ -1,22 +1,22 @@
-import _ from 'lodash';
-import { Box, Flex, Text, Spinner, AlertIcon, Alert, Button } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { Alert, AlertIcon, Box, Button, Flex, Spinner, Text } from '@chakra-ui/react';
 import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { getUnixTime } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
+import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { smartContract } from '../../blockchain/game/smartContract';
 import { NFT, Rarity, Stake } from '../../blockchain/types';
-import TokenCard from '../../shared/TokenCard';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
-import { smartContract } from '../../blockchain/game/smartContract';
-import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
-import { getUnixTime } from 'date-fns';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import TokenCard from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Unbond() {
     const { height } = useStaking();
@@ -370,6 +370,7 @@ function Unbond() {
                             overflowY="auto"
                             pr={4}
                             mr="calc(-1rem - 6px)"
+                            height="100%"
                         >
                             <Box
                                 display="grid"
