@@ -1,12 +1,10 @@
-import _ from 'lodash';
+import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Flex,
-    Text,
-    Spinner,
     Alert,
     AlertIcon,
+    Box,
     Button,
+    Flex,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -14,31 +12,25 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useDisclosure,
+    Spinner,
     Stack,
+    Text,
+    useDisclosure,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { AOM_COLLECTION_ID, CHAIN_ID } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
-import TokenCard, { TokenType } from '../../shared/TokenCard';
-import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { SFT } from '../../blockchain/types';
-import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
-import { getArtRarityName, sleep } from '../../services/helpers';
 import { BsGem } from 'react-icons/bs';
+import { SFT } from '../../blockchain/types';
+import { getArtRarityName } from '../../services/helpers';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../../services/transactions';
+import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
+import TokenCard, { TokenType } from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Stake() {
     const { height, displayToast } = useStaking();
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
-
-    const { address } = useGetAccountInfo();
 
     const { mazeStakingInfo, walletArtTokens, getWalletStakeableAoMSFTs } = useStoreContext() as StoreContextType;
     const { setPendingTxs, isTxPending } = useTransactionsContext() as TransactionsContextType;
@@ -57,59 +49,6 @@ function Stake() {
     useEffect(() => {
         setSelectedTokens([]);
     }, [walletArtTokens]);
-
-    const stake = async () => {
-        if (!mazeStakingInfo) {
-            return;
-        }
-
-        onModalClose();
-        setButtonLoading(true);
-
-        const user = new Address(address);
-
-        try {
-            const transfers: TokenTransfer[] = _(tokenBalances)
-                .map((value, key) => TokenTransfer.semiFungible(AOM_COLLECTION_ID, Number.parseInt(key), value))
-                .value();
-
-            const tx = smartContract.methods
-                .stake()
-                .withMultiESDTNFTTransfer(transfers)
-                .withSender(user)
-                .withExplicitReceiver(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(20000000 + 5000000 * _.size(transfers))
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.StakeArt,
-                    resolution: TxResolution.UpdateArtStakingAndSFTs,
-                    data: _.sum(Object.values(tokenBalances)),
-                },
-            ]);
-
-            setButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured while staking', err);
-            setButtonLoading(false);
-        }
-    };
 
     const selectAll = async () => {
         if (!walletArtTokens) {
@@ -279,9 +218,7 @@ function Stake() {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" onClick={stake}>
-                            Stake
-                        </Button>
+                        <Button colorScheme="red">Stake</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

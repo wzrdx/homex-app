@@ -1,11 +1,10 @@
-import { ResultsParser, ContractFunction, Address, AddressValue } from '@multiversx/sdk-core/out';
+import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { useState } from 'react';
-import { smartContract } from '../smartContract';
-import { API_URL } from '../../config';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { map, size } from 'lodash';
+import { useState } from 'react';
+import { API_URL, mockAddress } from '../../config';
 import { MazeStakingInfo } from '../../types';
+import { smartContract } from '../smartContract';
 
 const resultsParser = new ResultsParser();
 const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
@@ -16,7 +15,7 @@ export const useGetStakingInfo = () => {
 
     const call = async (): Promise<MazeStakingInfo | undefined> => {
         try {
-            const address = await getAddress();
+            const address = mockAddress;
 
             const query = smartContract.createQuery({
                 func: new ContractFunction(FUNCTION_NAME),

@@ -8,6 +8,6 @@ export const getStakingStats = async (): Promise<MazeStakingStats | undefined> =
     return {
         tokens: 356,
         wallets: 100,
-        supply: 212420,
+        supply: 2124200000000,
     };
 };

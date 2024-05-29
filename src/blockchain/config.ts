@@ -4,6 +4,8 @@ import { API_KEY } from '../components/Settings';
 // (process.env.NODE_ENV === 'development' ? devValue : prodValue);
 export const getEnvValue = (devValue, prodValue) => (process.env.NODE_ENV === 'development' ? prodValue : prodValue);
 
+export const mockAddress = 'erd108y6gghjzqev3mrc3m7csnz37eq0ls7q9n8elmxjualgu53rdh8qp232yu';
+
 export const gameScAddress = getEnvValue(
     'erd1qqqqqqqqqqqqqpgqc8s6t5594e4en4ffl60r6hn52hajkpkkukrqww29av',
     'erd1qqqqqqqqqqqqqpgqpt68cy4cde6ff2wzcfsfncjv6gxjxda8dn7q9ekje9'
