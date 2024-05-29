@@ -1,22 +1,17 @@
-import _ from 'lodash';
-import { Box, Flex, Text, Spinner, AlertIcon, Alert, Button } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type, U64Value } from '@multiversx/sdk-core/out';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
-import { NFT, Rarity, Stake } from '../../blockchain/types';
-import TokenCard from '../../shared/TokenCard';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { Alert, AlertIcon, Box, Button, Flex, Spinner, Text } from '@chakra-ui/react';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
+import { NFT, Rarity, Stake } from '../../blockchain/types';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, hasFinishedUnbonding, pairwise, toHexNumber } from '../../services/helpers';
-import { smartContract } from '../../blockchain/game/smartContract';
-import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
-import { getUnixTime } from 'date-fns';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../../services/transactions';
+import TokenCard from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Unbond() {
     const { height } = useStaking();
@@ -155,129 +150,6 @@ function Unbond() {
         setElders(elders);
     };
 
-    const restake = async () => {
-        if (!stakingInfo || !elders || !travelers) {
-            return;
-        }
-
-        setRestakeButtonLoading(true);
-
-        const user = new Address(address);
-
-        const args = _(stakingInfo.tokens)
-            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
-            .map((token) => ({
-                token_id: new TokenIdentifierValue(token.tokenId),
-                nonce: new U16Value(token.nonce),
-                amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
-            }))
-            .value();
-
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
-
-        if (_.isEmpty(args)) {
-            setRestakeButtonLoading(false);
-            return;
-        }
-
-        try {
-            const tx = smartContract.methods
-                .restake([args])
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(16000000 + 300000 * stakedNFTsCount + 1600000 * _.size(args))
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.Restake,
-                    resolution: TxResolution.UpdateMainStakingAndNFTs,
-                    data: _.size(args),
-                },
-            ]);
-
-            setRestakeButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured ', err);
-        }
-    };
-
-    const claim = async () => {
-        if (_.isEmpty(selectedTokens) || !stakingInfo || !elders || !travelers) {
-            return;
-        }
-
-        if (isClaimButtonLoading) {
-            return;
-        }
-
-        setClaimButtonLoading(true);
-
-        const user = new Address(address);
-
-        const args = _(stakingInfo.tokens)
-            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
-            .map((token) => ({
-                token_id: new TokenIdentifierValue(token.tokenId),
-                nonce: new U16Value(token.nonce),
-                amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), new U64Value(getUnixTime(token.timestamp as Date))),
-            }))
-            .value();
-
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
-
-        try {
-            const tx = smartContract.methods
-                .claim([args])
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(8000000 + 500000 * stakedNFTsCount + 1000000 * args.length)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.ClaimUnbondedNFTs,
-                    resolution: TxResolution.UpdateStakingInfo,
-                    data: _.size(args),
-                },
-            ]);
-
-            setClaimButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured while sending tx', err);
-        }
-    };
-
     const selectAll = async () => {
         if (!elders || !travelers) {
             return;
@@ -316,7 +188,6 @@ function Unbond() {
                                 isDisabled={!stakingInfo || isTxPending(TransactionType.Restake) || !areSelectedNFTsClaimable()}
                                 isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                                 colorScheme="red"
-                                onClick={claim}
                             >
                                 <Text>Claim</Text>
                             </Button>
@@ -347,7 +218,6 @@ function Unbond() {
                             isDisabled={!stakingInfo || isTxPending(TransactionType.ClaimUnbondedNFTs)}
                             isLoading={isRestakeButtonLoading || isTxPending(TransactionType.Restake)}
                             colorScheme="blue"
-                            onClick={restake}
                         >
                             <Text>Restake</Text>
                         </Button>

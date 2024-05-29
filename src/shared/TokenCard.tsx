@@ -1,12 +1,12 @@
-import { Image, Flex, Text, Box, useTheme } from '@chakra-ui/react';
-import { NFT, Rarity, MainRarityClass, SFT, ArtRarityClass } from '../blockchain/types';
-import { getSmallLogo } from '../services/assets';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { getArtRarityName, getMainRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
-import { ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { Box, Flex, Image, Text, useTheme } from '@chakra-ui/react';
 import { addSeconds } from 'date-fns';
-import { Timer } from './Timer';
 import { useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { MainRarityClass, NFT, Rarity, SFT } from '../blockchain/types';
+import { getSmallLogo } from '../services/assets';
+import { getArtRarityName, getMainRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
+import { Timer } from './Timer';
 
 export enum TokenType {
     NFT = 'NFT',
@@ -133,7 +133,7 @@ function TokenCard({
                 )}
 
                 {rarity && (
-                    <Flex position="absolute" right={0} bottom={0}>
+                    <Flex position="absolute" right="4px" bottom="4px">
                         {getRarityLabel(rarity.rarityClass)}
                     </Flex>
                 )}

@@ -8,12 +8,18 @@ import MazeMask from '../assets/images/maze_mask.png';
 import LogoMirage from '../assets/logo_mirage.png';
 import { getBackground1080p, getBackgroundQHD } from '../services/assets';
 import { AuthenticationContextType, useAuthenticationContext } from '../services/authentication';
+import { StoreContextType, useStoreContext } from '../services/store';
 
 const Unlock = () => {
     const { setAuthentication } = useAuthenticationContext() as AuthenticationContextType;
+    const { getStakingInfo } = useStoreContext() as StoreContextType;
+
     const navigate = useNavigate();
 
-    const login = () => {
+    const login = async () => {
+        // stakingInfo is required by child components
+        await getStakingInfo();
+
         setAuthentication(true);
         setTimeout(() => navigate('/'), 0);
     };

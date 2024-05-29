@@ -15,28 +15,22 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { formatDistance } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import { ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
 import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
-import { smartContract } from '../../blockchain/game/smartContract';
 import { NFT, Rarity, Stake } from '../../blockchain/types';
 import { getContractNFTs } from '../../services/authentication';
 import { getTravelersPadding, getUnbondingDuration, pairwise, toHexNumber } from '../../services/helpers';
 import { StoreContextType, useStoreContext } from '../../services/store';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import { TransactionType, TransactionsContextType, useTransactionsContext } from '../../services/transactions';
 import EnergyYield from '../../shared/EnergyYield';
 import TokenCard from '../../shared/TokenCard';
 import { useStaking } from '../Staking';
 
 function Unstake() {
     const { height } = useStaking();
-    const { address } = useGetAccountInfo();
 
     const { isOpen: isYieldOpen, onOpen: onYieldOpen, onClose: onYieldClose } = useDisclosure();
 
@@ -74,8 +68,6 @@ function Unstake() {
     };
 
     const getNFTs = async () => {
-        console.log('getNFTs', stakingInfo);
-
         if (!stakingInfo) {
             return;
         }
@@ -175,118 +167,6 @@ function Unstake() {
         setElders(elders);
     };
 
-    const unstake = async () => {
-        if (!stakingInfo || !elders || !travelers) {
-            return;
-        }
-
-        setUnstakeButtonLoading(true);
-
-        const user = new Address(address);
-
-        const args = _(stakingInfo.tokens)
-            .filter((token) => _.findIndex(selectedTokens, (t) => t.nonce === token.nonce && t.tokenId === token.tokenId) > -1)
-            .map((token) => ({
-                token_id: new TokenIdentifierValue(token.tokenId),
-                nonce: new U16Value(token.nonce),
-                amount: new U16Value(token.amount),
-                timestamp: new OptionValue(new OptionType(new U64Type()), null),
-            }))
-            .value();
-
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
-
-        if (_.isEmpty(args)) {
-            setUnstakeButtonLoading(false);
-            return;
-        }
-
-        try {
-            const tx = smartContract.methods
-                .unstake([args])
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(80000000 + 500000 * stakedNFTsCount + 2000000 * _.size(args))
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.UnstakeMain,
-                    resolution: TxResolution.UpdateMainStakingAndNFTs,
-                    data: _.size(args),
-                },
-            ]);
-
-            setUnstakeButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured ', err);
-        }
-    };
-
-    const claimStakingRewards = async () => {
-        if (!stakingInfo || !elders || !travelers) {
-            return;
-        }
-
-        if (isClaimButtonLoading) {
-            return;
-        }
-
-        setClaimButtonLoading(true);
-
-        const user = new Address(address);
-
-        const stakedNFTsCount = _.size([...elders, ...travelers]);
-
-        try {
-            const tx = smartContract.methods
-                .claimStakingRewards()
-                .withSender(user)
-                .withChainID(CHAIN_ID)
-                .withGasLimit(75000000 + 750000 * stakedNFTsCount)
-                .buildTransaction();
-
-            await refreshAccount();
-
-            const { sessionId } = await sendTransactions({
-                transactions: tx,
-                transactionsDisplayInfo: {
-                    processingMessage: 'Processing transaction',
-                    errorMessage: 'Error',
-                    successMessage: 'Transaction successful',
-                },
-                redirectAfterSign: false,
-            });
-
-            setPendingTxs((txs) => [
-                ...txs,
-                {
-                    sessionId,
-                    type: TransactionType.ClaimEnergy,
-                    resolution: TxResolution.UpdateStakingInfo,
-                },
-            ]);
-
-            setClaimButtonLoading(false);
-        } catch (err) {
-            console.error('Error occured while sending tx', err);
-        }
-    };
-
     const selectAll = async () => {
         if (!elders || !travelers) {
             return;
@@ -316,7 +196,6 @@ function Unstake() {
                                 }
                                 isLoading={isUnstakeButtonLoading || isTxPending(TransactionType.UnstakeMain)}
                                 colorScheme="red"
-                                onClick={unstake}
                             >
                                 <Text>Unstake</Text>
                             </Button>
@@ -378,7 +257,6 @@ function Unstake() {
                                         }
                                         isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimEnergy)}
                                         colorScheme="blue"
-                                        onClick={claimStakingRewards}
                                     >
                                         <Text>Claim Energy</Text>
                                     </Button>
