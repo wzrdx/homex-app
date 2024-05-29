@@ -1,39 +1,39 @@
-import _ from 'lodash';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Flex,
-    Text,
-    Spinner,
-    AlertIcon,
     Alert,
-    useDisclosure,
+    AlertIcon,
+    Box,
+    Button,
+    Flex,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalOverlay,
-    ModalHeader,
-    Button,
-    Stack,
     ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Spinner,
+    Stack,
+    Text,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID } from '../../blockchain/config';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useStoreContext, StoreContextType } from '../../services/store';
-import { useStaking } from '../Staking';
-import { SFT } from '../../blockchain/types';
-import TokenCard, { TokenType } from '../../shared/TokenCard';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { smartContract } from '../../blockchain/auxiliary/smartContract';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import { BsGem } from 'react-icons/bs';
+import { smartContract } from '../../blockchain/auxiliary/smartContract';
+import { CHAIN_ID } from '../../blockchain/config';
+import { SFT } from '../../blockchain/types';
 import { getArtRarityName } from '../../services/helpers';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
 import { ArtTokenNumberInput } from '../../shared/ArtTokenNumberInput';
 import MazeYield from '../../shared/MazeYield';
+import TokenCard, { TokenType } from '../../shared/TokenCard';
+import { useStaking } from '../Staking';
 
 function Unstake() {
     const { height, displayToast } = useStaking();
@@ -254,7 +254,6 @@ function Unstake() {
                                     }
                                     isLoading={isClaimButtonLoading || isTxPending(TransactionType.ClaimMaze)}
                                     colorScheme="purple"
-                                    onClick={claimStakingRewards}
                                 >
                                     <Text>Claim Maze</Text>
                                 </Button>
@@ -279,6 +278,7 @@ function Unstake() {
                             overflowY="auto"
                             pr={4}
                             mr="calc(-1rem - 6px)"
+                            height="100%"
                         >
                             <Box
                                 display="grid"
@@ -386,9 +386,7 @@ function Unstake() {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" onClick={unstake}>
-                            Unstake
-                        </Button>
+                        <Button colorScheme="red">Unstake</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

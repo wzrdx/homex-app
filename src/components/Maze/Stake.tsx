@@ -130,6 +130,7 @@ function Stake() {
                             overflowY="auto"
                             pr={4}
                             mr="calc(-1rem - 6px)"
+                            height="100%"
                         >
                             <Box
                                 display="grid"

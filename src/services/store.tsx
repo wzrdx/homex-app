@@ -2,12 +2,11 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
-import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
 import { AOM_COLLECTION_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
 import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { MazeStakingInfo, NFT, Rarity, SFT, Stake, StakingInfo } from '../blockchain/types';
-import { getContractArtSFTs, getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
+import { getContractArtSFTs, getNFTsCount, getWalletNonces } from './authentication';
 import { pairwise, toHexNumber } from './helpers';
 
 const CHUNK_SIZE = 25;
@@ -128,62 +127,24 @@ export const StoreProvider = ({ children }) => {
     // Fetches the AoM SFTs which are stakeable from the user's wallet
     const getWalletStakeableAoMSFTs = async () => {
         try {
-            let nonces: number[], rarities: Rarity[];
-
-            if (_.isEmpty(stakeableAoMNonces)) {
-                nonces = await getStakeableNonces();
-                setStakeableAoMNonces(nonces);
-            } else {
-                nonces = stakeableAoMNonces;
-            }
-
-            if (_.isEmpty(artRarities)) {
-                rarities = await getArtRarities();
-                setArtRarities(rarities);
-            } else {
-                rarities = artRarities;
-            }
-
-            const { data: count } = await getNFTsCount(address, AOM_COLLECTION_ID);
-
-            const chunks = new Array(Math.floor(count / CHUNK_SIZE)).fill(CHUNK_SIZE).concat(count % CHUNK_SIZE);
-            const apiCalls: Array<
-                Promise<{
-                    data: Array<{
-                        name: string;
-                        nonce: number;
-                        url: string;
-                        balance: string;
-                    }>;
-                }>
-            > = [];
-
-            pairwise(
-                _(chunks)
-                    .filter(_.identity)
-                    .map((chunk, index) => {
-                        return index * CHUNK_SIZE + chunk;
-                    })
-                    .unshift(0)
-                    .value(),
-                (from: number, _: number) => {
-                    apiCalls.push(getWalletSFTs(address, [AOM_COLLECTION_ID], from));
-                }
-            );
-
-            const tokens = _(await Promise.all(apiCalls))
-                .flatten()
-                .map((result) => result.data)
-                .flatten()
-                .filter((token) => _.includes(nonces, token.nonce))
-                .map((token) => ({
-                    ...token,
-                    balance: Number.parseInt(token.balance),
-                    artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
-                    tokenId: AOM_COLLECTION_ID,
-                }))
-                .orderBy('nonce', 'asc')
-                .value();
+            const tokens = [
+                {
+                    nonce: 10,
+                    name: 'Celestials Custodian',
+                    url: 'https://devnet-media.elrond.com/nfts/asset/QmXnQtWEkjRCPQey8BNZ8BMk9JC8ZKA4FAiz4iNWC1yTf7',
+                    balance: 1,
+                    artRarityClass: 1,
+                    tokenId: 'AOM-edf5eb',
+                },
+                {
+                    nonce: 15,
+                    name: 'Rare Travelers',
+                    url: 'https://devnet-media.elrond.com/nfts/asset/QmXb4JJKngL5qJcXFpcmYQfyiTkd3BQUKvR95NtAd5YAzr',
+                    balance: 1,
+                    artRarityClass: 4,
+                    tokenId: 'AOM-edf5eb',
+                },
+            ];
 
             setWalletArtTokens(tokens);
         } catch (error) {
