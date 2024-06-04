@@ -12,7 +12,6 @@ function Raffles() {
     const location = useLocation();
 
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [route, setRoute] = useState<string>();
 
     const [displayedCompetitions, setDisplayedCompetitions] = useState<Competition[]>();
     const [competitions, setCompetitions] = useState<Competition[]>();
@@ -31,7 +30,6 @@ function Raffles() {
 
         const isDisplayingPastRaffles = pathname.includes(routeNames.past);
         const predicate = isDisplayingPastRaffles ? isAfter : isBefore;
-        setRoute(isDisplayingPastRaffles ? routeNames.past : routeNames.current);
 
         const competitions = _(raffles)
             .filter((raffle) => predicate(new Date(), raffle.timestamp))
