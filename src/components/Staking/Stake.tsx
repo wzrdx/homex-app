@@ -134,6 +134,7 @@ function Stake() {
                         }
                         isLoading={isButtonLoading || isTxPending(TransactionType.StakeMain)}
                         colorScheme="red"
+                        onClick={stake}
                     >
                         <Text>Stake</Text>
                     </Button>
