@@ -39,9 +39,11 @@ function Raffles() {
             .value();
 
         setCompetitions(competitions);
-        setDisplayedCompetitions(competitions.slice(0, 8));
 
-        console.log(competitions.slice(0, 8));
+        const slice = competitions.slice(0, 8);
+        console.log(slice);
+
+        setDisplayedCompetitions(slice);
 
         setLoading(false);
     };
@@ -63,7 +65,7 @@ function Raffles() {
                         </Flex>
                     ) : (
                         <Stack spacing={6}>
-                            {route === routeNames.past && (
+                            {_.size(competitions) > 8 && (
                                 <Center>
                                     <Pagination
                                         total={_.size(competitions)}
