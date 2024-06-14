@@ -1,10 +1,5 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Center, Flex, Image, Stack, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { MdExtension, MdWeb } from 'react-icons/md';
+import { Center, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import Ledger from '../assets/icons/Ledger.png';
-import MultiversX from '../assets/icons/MultiversX.png';
 import MazeMask from '../assets/images/maze_mask.png';
 import LogoMirage from '../assets/logo_mirage.png';
 import { getBackground1080p, getBackgroundQHD } from '../services/assets';
@@ -16,11 +11,6 @@ const Unlock = () => {
     const { getStakingInfo } = useStoreContext() as StoreContextType;
 
     const navigate = useNavigate();
-
-    // Init
-    useEffect(() => {
-        console.log('demo');
-    }, []);
 
     const login = async () => {
         // stakingInfo is required by child components
@@ -70,56 +60,16 @@ const Unlock = () => {
 
                 <Stack
                     position="relative"
-                    width="276px"
+                    width="226px"
                     style={{
                         maskImage: `url(${MazeMask})`,
-                        maskSize: '276px',
+                        maskSize: '226px',
                         maskRepeat: 'no-repeat',
                     }}
                 >
-                    <Flex className="Login-Button" alignItems="center" justifyContent="space-between" onClick={login}>
-                        <Flex alignItems="center">
-                            <Box mb="2px" pl="2px" width="36px">
-                                <MdExtension fontSize="19px" />
-                            </Box>
-                            <Text>Browser Extension</Text>
-                        </Flex>
-
-                        <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
-                    </Flex>
-
-                    <Flex className="Login-Button" alignItems="center" justifyContent="space-between" onClick={login}>
-                        <Flex alignItems="center">
-                            <Box width="36px">
-                                <MdWeb fontSize="21px" />
-                            </Box>
-                            <Text>MultiversX Web Wallet</Text>
-                        </Flex>
-
-                        <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
-                    </Flex>
-
-                    <Flex className="Login-Button" alignItems="center" justifyContent="space-between" onClick={login}>
-                        <Flex alignItems="center">
-                            <Box width="36px" pl="2px">
-                                <Image src={MultiversX} alt="MultiversX" width="18px" height="18px" />
-                            </Box>
-                            <Text>xPortal App</Text>
-                        </Flex>
-
-                        <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
-                    </Flex>
-
-                    <Flex className="Login-Button" alignItems="center" justifyContent="space-between" onClick={login}>
-                        <Flex alignItems="center">
-                            <Box mb="1px" width="36px" pl="3px">
-                                <Image src={Ledger} alt="Ledger" width="16px" height="16px" />
-                            </Box>
-                            <Text>Ledger</Text>
-                        </Flex>
-
-                        <ChevronRightIcon color="#f5f5f5db" boxSize={6} />
-                    </Flex>
+                    <Center className="Login-Button" onClick={login}>
+                        <Text fontSize="20px">Play</Text>
+                    </Center>
                 </Stack>
             </Center>
         </Flex>
