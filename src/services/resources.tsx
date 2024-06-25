@@ -78,7 +78,7 @@ export const RESOURCE_ELEMENTS: any = {
 
 export const getSFTDetails = (address: string, tokenId: string): Promise<{ data: { balance: string } }> =>
     axios.get(`accounts/${address}/nfts/${tokenId}`, {
-        baseURL: config.baseUrl,
+        baseURL: config.apiUrl,
     });
 
 export const getResourceElements = (key: string) => RESOURCE_ELEMENTS[key];

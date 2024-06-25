@@ -6,7 +6,7 @@ const verifyPage = (wallet: string, index: number): Promise<any> =>
         'verifyPage',
         { wallet, index },
         {
-            baseURL: config.baseUrl,
+            baseURL: config.questApi,
         }
     );
 

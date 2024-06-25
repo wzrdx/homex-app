@@ -18,7 +18,6 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
-import { config } from '../blockchain/config';
 import { getBackground1080p, getBackgroundQHD } from '../services/assets';
 import { QuestsContextType, useQuestsContext } from '../services/quests';
 import { ResourcesContextType, useResourcesContext } from '../services/resources';
@@ -69,9 +68,6 @@ function Layout() {
 
         getGameState();
         getDoubleXpTimestamp();
-
-        // TODO:
-        console.log(config);
     }, []);
 
     // Updates

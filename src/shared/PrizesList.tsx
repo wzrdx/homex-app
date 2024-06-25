@@ -109,8 +109,6 @@ function PrizesList({ id }: { id: number }) {
             };
         });
 
-        console.log(winners);
-
         setWinners(winners as Winner[]);
         setLoading(false);
     };
@@ -131,7 +129,7 @@ function PrizesList({ id }: { id: number }) {
                     if (operation.type === 'egld') {
                         prize = (
                             <Text color="brightBlue" fontWeight={500}>
-                                {Number.parseInt(operation.value) / config.egldDenomination} $EGLD
+                                {(BigInt(operation.value) / config.egldDenomination).toString()} $EGLD
                             </Text>
                         );
                     }
