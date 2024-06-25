@@ -25,7 +25,7 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { BsGem } from 'react-icons/bs';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { AOM_COLLECTION_ID, CHAIN_ID } from '../../blockchain/config';
+import { config } from '../../blockchain/config';
 import { SFT } from '../../blockchain/types';
 import { getArtRarityName } from '../../services/helpers';
 import { StoreContextType, useStoreContext } from '../../services/store';
@@ -70,7 +70,7 @@ function Stake() {
 
         try {
             const transfers: TokenTransfer[] = _(tokenBalances)
-                .map((value, key) => TokenTransfer.semiFungible(AOM_COLLECTION_ID, Number.parseInt(key), value))
+                .map((value, key) => TokenTransfer.semiFungible(config.aomCollectionId, Number.parseInt(key), value))
                 .value();
 
             const tx = smartContract.methods
@@ -78,7 +78,7 @@ function Stake() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withExplicitReceiver(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(20000000 + 5000000 * _.size(transfers))
                 .buildTransaction();
 

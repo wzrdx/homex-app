@@ -7,7 +7,7 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import { getUnixTime } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { CHAIN_ID, ELDERS_COLLECTION_ID, ELDERS_PADDING, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import { config } from '../../blockchain/config';
 import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 import { smartContract } from '../../blockchain/game/smartContract';
 import { NFT, Rarity, Stake } from '../../blockchain/types';
@@ -62,12 +62,12 @@ function Unbond() {
 
         const unbondedTravelers: Stake[] = _.filter(
             stakingInfo.tokens,
-            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !!token.timestamp
+            (token) => token.tokenId === config.travelersCollectionId && !!token.timestamp
         );
 
         const unbondedElders: Stake[] = _.filter(
             stakingInfo.tokens,
-            (token) => token.tokenId === ELDERS_COLLECTION_ID && !!token.timestamp
+            (token) => token.tokenId === config.eldersCollectionId && !!token.timestamp
         );
 
         const filteredNonces = {
@@ -86,7 +86,7 @@ function Unbond() {
 
         const travelerIds = _.map(
             filteredNonces?.travelers,
-            (nonce) => `${TRAVELERS_COLLECTION_ID}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
+            (nonce) => `${config.travelersCollectionId}-${toHexNumber(nonce, getTravelersPadding(nonce))}`
         );
 
         pairwise(
@@ -99,7 +99,7 @@ function Unbond() {
                 .value(),
             (from: number, to: number) => {
                 const slice = travelerIds.slice(from, to);
-                travelersApiCalls.push(getContractNFTs(TRAVELERS_COLLECTION_ID, slice.join(',')));
+                travelersApiCalls.push(getContractNFTs(config.travelersCollectionId, slice.join(',')));
             }
         );
 
@@ -110,7 +110,7 @@ function Unbond() {
             .map((nft) => ({
                 ...nft,
                 timestamp: _.find(unbondedTravelers, (token) => token.nonce === nft.nonce)?.timestamp as Date,
-                tokenId: TRAVELERS_COLLECTION_ID,
+                tokenId: config.travelersCollectionId,
             }))
             .orderBy('nonce', 'asc')
             .value();
@@ -120,7 +120,7 @@ function Unbond() {
 
         const elderIds = _.map(
             filteredNonces?.elders,
-            (nonce) => `${ELDERS_COLLECTION_ID}-${toHexNumber(nonce, ELDERS_PADDING)}`
+            (nonce) => `${config.eldersCollectionId}-${toHexNumber(nonce, config.eldersPadding)}`
         );
 
         pairwise(
@@ -133,7 +133,7 @@ function Unbond() {
                 .value(),
             (from: number, to: number) => {
                 const slice = elderIds.slice(from, to);
-                eldersApiCalls.push(getContractNFTs(ELDERS_COLLECTION_ID, slice.join(',')));
+                eldersApiCalls.push(getContractNFTs(config.eldersCollectionId, slice.join(',')));
             }
         );
 
@@ -144,7 +144,7 @@ function Unbond() {
             .map((nft) => ({
                 ...nft,
                 timestamp: _.find(unbondedElders, (token) => token.nonce === nft.nonce)?.timestamp as Date,
-                tokenId: ELDERS_COLLECTION_ID,
+                tokenId: config.eldersCollectionId,
             }))
             .orderBy('nonce', 'asc')
             .value();
@@ -185,7 +185,7 @@ function Unbond() {
             const tx = smartContract.methods
                 .restake([args])
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(16000000 + 300000 * stakedNFTsCount + 1600000 * _.size(args))
                 .buildTransaction();
 
@@ -246,7 +246,7 @@ function Unbond() {
             const tx = smartContract.methods
                 .claim([args])
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(8000000 + 500000 * stakedNFTsCount + 1000000 * args.length)
                 .buildTransaction();
 
@@ -424,7 +424,7 @@ function Unbond() {
                                             }
                                             token={token}
                                             rarity={
-                                                token?.tokenId === TRAVELERS_COLLECTION_ID &&
+                                                token?.tokenId === config.travelersCollectionId &&
                                                 _.find(rarities, (rarity) => rarity.nonce === token.nonce)
                                             }
                                         />

@@ -1,12 +1,12 @@
-import _ from 'lodash';
-import { Alert, AlertIcon, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import RewardCard from '../shared/RewardCard';
-import { useRewardsContext, RewardsContextType } from '../services/rewards';
-import { addWeeks, format, isBefore } from 'date-fns';
 import { CalendarIcon } from '@chakra-ui/icons';
-import { ELDERS_COLLECTION_ID } from '../blockchain/config';
-import { useStoreContext, StoreContextType } from '../services/store';
+import { Alert, AlertIcon, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
+import { addWeeks, format, isBefore } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { config } from '../blockchain/config';
+import { RewardsContextType, useRewardsContext } from '../services/rewards';
+import { StoreContextType, useStoreContext } from '../services/store';
+import RewardCard from '../shared/RewardCard';
 
 function Rewards() {
     const { stakingInfo } = useStoreContext() as StoreContextType;
@@ -42,7 +42,7 @@ function Rewards() {
 
     const hasEldersStaked = (): boolean => {
         return !_(stakingInfo?.tokens)
-            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+            .filter((token) => token.tokenId === config.eldersCollectionId && !token.timestamp)
             .isEmpty();
     };
 

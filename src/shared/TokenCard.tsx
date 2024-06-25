@@ -2,7 +2,7 @@ import { Box, Flex, Image, Text, useTheme } from '@chakra-ui/react';
 import { addSeconds } from 'date-fns';
 import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { ELDERS_COLLECTION_ID } from '../blockchain/config';
+import { config } from '../blockchain/config';
 import { MainRarityClass, NFT, Rarity, SFT } from '../blockchain/types';
 import { getSmallLogo } from '../services/assets';
 import { getArtRarityName, getMainRarityClassInfo, getUnbondingDuration, hasFinishedUnbonding } from '../services/helpers';
@@ -31,7 +31,7 @@ function TokenCard({
 
     const getColor = () => {
         switch (token.tokenId) {
-            case ELDERS_COLLECTION_ID:
+            case config.eldersCollectionId:
                 return 'redClrs';
 
             default:

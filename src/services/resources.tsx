@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import EnergyIcon from '../assets/resources/icons/energy.png';
-import HerbsIcon from '../assets/resources/icons/herbs.png';
-import GemsIcon from '../assets/resources/icons/gems.png';
 import EssenceIcon from '../assets/resources/icons/essence.png';
+import GemsIcon from '../assets/resources/icons/gems.png';
+import HerbsIcon from '../assets/resources/icons/herbs.png';
 import MazeIcon from '../assets/resources/icons/maze.png';
 
 import EnergyImage from '../assets/resources/images/energy.png';
-import HerbsImage from '../assets/resources/images/herbs.png';
-import GemsImage from '../assets/resources/images/gems.png';
 import EssenceImage from '../assets/resources/images/essence.png';
+import GemsImage from '../assets/resources/images/gems.png';
+import HerbsImage from '../assets/resources/images/herbs.png';
 
 import TicketsIcon from '../assets/resources/icons/tickets.png';
 import TicketsImage from '../assets/resources/images/tickets.png';
 import XpImage from '../assets/resources/images/xp.png';
 
-import {
-    API_URL,
-    ENERGY_TOKEN_ID,
-    ESSENCE_TOKEN_ID,
-    GEMS_TOKEN_ID,
-    HERBS_TOKEN_ID,
-    TICKETS_TOKEN_ID,
-} from '../blockchain/config';
-import axios from 'axios';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { useDisclosure } from '@chakra-ui/react';
-import _ from 'lodash';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import axios from 'axios';
+import { config } from '../blockchain/config';
 
 export const INITIAL_RESOURCES_STATE = {
     energy: 0,
@@ -42,28 +33,28 @@ export const RESOURCE_ELEMENTS: any = {
         name: 'Energy',
         icon: EnergyIcon,
         image: EnergyImage,
-        tokenId: ENERGY_TOKEN_ID,
+        tokenId: config.energyTokenId,
         color: '#287ece',
     },
     herbs: {
         name: 'Herbs',
         icon: HerbsIcon,
         image: HerbsImage,
-        tokenId: HERBS_TOKEN_ID,
+        tokenId: config.herbsTokenId,
         color: '#20b361',
     },
     gems: {
         name: 'Gems',
         icon: GemsIcon,
         image: GemsImage,
-        tokenId: GEMS_TOKEN_ID,
+        tokenId: config.gemsTokenId,
         color: '#e24e06',
     },
     essence: {
         name: 'Essence',
         icon: EssenceIcon,
         image: EssenceImage,
-        tokenId: ESSENCE_TOKEN_ID,
+        tokenId: config.essenceTokenId,
         color: '#cd3b95',
     },
     maze: {
@@ -77,7 +68,7 @@ export const RESOURCE_ELEMENTS: any = {
         name: 'Tickets',
         image: TicketsImage,
         icon: TicketsIcon,
-        tokenId: TICKETS_TOKEN_ID,
+        tokenId: config.ticketsTokenId,
     },
     xp: {
         name: 'Experience',
@@ -87,7 +78,7 @@ export const RESOURCE_ELEMENTS: any = {
 
 export const getSFTDetails = (address: string, tokenId: string): Promise<{ data: { balance: string } }> =>
     axios.get(`accounts/${address}/nfts/${tokenId}`, {
-        baseURL: API_URL,
+        baseURL: config.baseUrl,
     });
 
 export const getResourceElements = (key: string) => RESOURCE_ELEMENTS[key];
@@ -126,8 +117,8 @@ export const ResourcesProvider = ({ children }) => {
 
     const getEnergy = async () => {
         try {
-            const result = await axios.get(`accounts/${address}/tokens/${ENERGY_TOKEN_ID}`, {
-                baseURL: API_URL,
+            const result = await axios.get(`accounts/${address}/tokens/${config.energyTokenId}`, {
+                baseURL: config.apiUrl,
             });
 
             if (result.data) {
@@ -149,8 +140,8 @@ export const ResourcesProvider = ({ children }) => {
 
     const getHerbs = async () => {
         try {
-            const result = await axios.get(`accounts/${address}/tokens/${HERBS_TOKEN_ID}`, {
-                baseURL: API_URL,
+            const result = await axios.get(`accounts/${address}/tokens/${config.herbsTokenId}`, {
+                baseURL: config.apiUrl,
             });
 
             if (result.data) {
@@ -172,8 +163,8 @@ export const ResourcesProvider = ({ children }) => {
 
     const getGems = async () => {
         try {
-            const result = await axios.get(`accounts/${address}/tokens/${GEMS_TOKEN_ID}`, {
-                baseURL: API_URL,
+            const result = await axios.get(`accounts/${address}/tokens/${config.gemsTokenId}`, {
+                baseURL: config.apiUrl,
             });
 
             if (result.data) {
@@ -195,8 +186,8 @@ export const ResourcesProvider = ({ children }) => {
 
     const getEssence = async () => {
         try {
-            const result = await axios.get(`accounts/${address}/tokens/${ESSENCE_TOKEN_ID}`, {
-                baseURL: API_URL,
+            const result = await axios.get(`accounts/${address}/tokens/${config.essenceTokenId}`, {
+                baseURL: config.apiUrl,
             });
 
             if (result.data) {
@@ -218,7 +209,7 @@ export const ResourcesProvider = ({ children }) => {
 
     const getTickets = async () => {
         try {
-            const result = await getSFTDetails(address, `${TICKETS_TOKEN_ID}-01`);
+            const result = await getSFTDetails(address, `${config.ticketsTokenId}-01`);
 
             if (result.data) {
                 setResources((state) => ({

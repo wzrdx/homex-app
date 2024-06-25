@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
 import Quest_1 from '../assets/quests/1.png';
-import Quest_2 from '../assets/quests/2.png';
-import Quest_3 from '../assets/quests/3.png';
-import Quest_4 from '../assets/quests/4.png';
-import Quest_5 from '../assets/quests/5.png';
-import Quest_6 from '../assets/quests/6.png';
-import Quest_7 from '../assets/quests/7.png';
-import Quest_8 from '../assets/quests/8.png';
-import Quest_9 from '../assets/quests/9.png';
 import Quest_10 from '../assets/quests/10.png';
 import Quest_11 from '../assets/quests/11.png';
 import Quest_12 from '../assets/quests/12.png';
@@ -18,26 +10,34 @@ import Quest_16 from '../assets/quests/16.png';
 import Quest_17 from '../assets/quests/17.png';
 import Quest_18 from '../assets/quests/18.png';
 import Quest_19 from '../assets/quests/19.png';
+import Quest_2 from '../assets/quests/2.png';
 import Quest_20 from '../assets/quests/20.png';
 import Quest_21 from '../assets/quests/21.png';
 import Quest_22 from '../assets/quests/22.png';
 import Quest_23 from '../assets/quests/23.png';
 import Quest_24 from '../assets/quests/24.png';
+import Quest_3 from '../assets/quests/3.png';
+import Quest_4 from '../assets/quests/4.png';
+import Quest_5 from '../assets/quests/5.png';
+import Quest_6 from '../assets/quests/6.png';
+import Quest_7 from '../assets/quests/7.png';
+import Quest_8 from '../assets/quests/8.png';
+import Quest_9 from '../assets/quests/9.png';
 
-import { createContext, useContext } from 'react';
 import { Text, useDisclosure } from '@chakra-ui/react';
+import { createContext, useContext } from 'react';
 import { Quest } from '../types';
 
-import { OngoingQuest } from '../blockchain/types';
-import { ResultsParser, ContractFunction, AddressValue, Address } from '@multiversx/sdk-core/out';
+import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { map } from 'lodash';
-import { API_URL } from '../blockchain/config';
-import { smartContract } from '../blockchain/game/smartContract';
 import { BigNumber } from 'bignumber.js';
-import { getNumber } from '../blockchain/game/generics/getNumber';
 import { isBefore } from 'date-fns';
+import { map } from 'lodash';
+import { config } from '../blockchain/config';
+import { getNumber } from '../blockchain/game/generics/getNumber';
+import { smartContract } from '../blockchain/game/smartContract';
+import { OngoingQuest } from '../blockchain/types';
 
 const QUEST_IMAGES = [
     Quest_1,
@@ -947,7 +947,7 @@ export const QuestsProvider = ({ children }) => {
 
     const getOngoingQuests = async () => {
         const resultsParser = new ResultsParser();
-        const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
+        const proxy = new ProxyNetworkProvider(config.apiUrl, { timeout: 20000 });
 
         try {
             const address = await getAddress();

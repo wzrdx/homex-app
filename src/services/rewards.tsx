@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from 'react';
 import CPALogo from '../assets/images/cpa.png';
 import CPAChest from '../assets/images/cpa_chest.jpg';
 import CPANFT from '../assets/images/cpa_nft.png';
-import { API_URL, getEnvValue } from '../blockchain/config';
+import { config } from '../blockchain/config';
 import { getElderRewards } from '../blockchain/game/api/getElderRewards';
 import { smartContract } from '../blockchain/game/smartContract';
 import {
@@ -26,6 +26,8 @@ export enum RewardType {
     SingleImage,
     NFT,
 }
+
+export const getEnvValue = (development, production) => (process.env.NODE_ENV === 'development' ? development : production);
 
 const getNFTPrize = (amount: number, type: 'Elders' | 'Travelers') => ({
     backgroundColor: '#421218',
@@ -1014,7 +1016,7 @@ export const RAFFLES: any[] = getEnvValue(
 );
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
+const proxy = new ProxyNetworkProvider(config.apiUrl, { timeout: 20000 });
 
 const RAFFLES_FUNCTION_NAME = 'getRaffles';
 

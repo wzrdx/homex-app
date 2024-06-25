@@ -1,12 +1,12 @@
-import { ResultsParser, ContractFunction, List, U16Type, U16Value } from '@multiversx/sdk-core/out';
+import { ContractFunction, List, ResultsParser, U16Type, U16Value } from '@multiversx/sdk-core/out';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { smartContract } from '../smartContract';
-import { API_URL } from '../../config';
 import { map } from 'lodash';
+import { config } from '../../config';
 import { Rarity } from '../../types';
+import { smartContract } from '../smartContract';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
+const proxy = new ProxyNetworkProvider(config.apiUrl, { timeout: 20000 });
 const FUNCTION_NAME = 'getRarityClasses';
 
 export const getRarityClasses = async (nonces: number[]) => {

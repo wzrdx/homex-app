@@ -1,22 +1,22 @@
-import { Stack, Flex, Button, Center, Text, Box, Image, Spinner, useToast } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { canMintPage } from '../../blockchain/auxiliary/api/canMintPage';
-import { PAGE_HEADERS } from '../../services/achievements';
-import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../../services/resources';
-import { useStoreContext, StoreContextType } from '../../services/store';
 import { InfoIcon } from '@chakra-ui/icons';
-import { verifyPage } from '../../services/api';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useMutation } from 'react-query';
+import { Button, Center, Flex, Image, Spinner, Stack, Text, useToast } from '@chakra-ui/react';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { TICKETS_TOKEN_ID, CHAIN_ID, TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID } from '../../blockchain/config';
-import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
-import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
-import { LEVELS } from '../../services/xp';
 import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
+import { canMintPage } from '../../blockchain/auxiliary/api/canMintPage';
+import { smartContract } from '../../blockchain/auxiliary/smartContract';
+import { config } from '../../blockchain/config';
+import { PAGE_HEADERS } from '../../services/achievements';
+import { verifyPage } from '../../services/api';
+import { AuthenticationContextType, useAuthenticationContext } from '../../services/authentication';
+import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../../services/resources';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../../services/transactions';
+import { LEVELS } from '../../services/xp';
 
 export const Interactor = ({ index }) => {
     const toast = useToast();
@@ -119,7 +119,8 @@ export const Interactor = ({ index }) => {
                             .filter(
                                 (token) =>
                                     !token.timestamp &&
-                                    (token.tokenId === TRAVELERS_COLLECTION_ID || token.tokenId === ELDERS_COLLECTION_ID)
+                                    (token.tokenId === config.travelersCollectionId ||
+                                        token.tokenId === config.eldersCollectionId)
                             )
                             .size();
                 break;
@@ -131,9 +132,9 @@ export const Interactor = ({ index }) => {
         try {
             const tx = smartContract.methods
                 .mintPage([index])
-                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, 3))
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(config.ticketsTokenId, 1, 3))
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(gasLimit)
                 .buildTransaction();
 

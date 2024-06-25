@@ -1,15 +1,14 @@
-import _ from 'lodash';
-import { Flex, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useResourcesContext, ResourcesContextType } from '../services/resources';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { Alert, AlertIcon, Flex, Spinner } from '@chakra-ui/react';
 import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { TICKETS_TOKEN_ID, CHAIN_ID } from '../blockchain/config';
-import { smartContract } from '../blockchain/game/smartContract';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useEffect, useState } from 'react';
+import { config } from '../blockchain/config';
 import { getArtDropTimestamp } from '../blockchain/game/api/getArtDropTimestamp';
+import { smartContract } from '../blockchain/game/smartContract';
+import { ResourcesContextType, useResourcesContext } from '../services/resources';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
 
 const PRICE = 3;
 const XP = 1500;
@@ -45,9 +44,9 @@ function Shop() {
         try {
             const tx = smartContract.methods
                 .mint([amount])
-                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount * PRICE))
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(config.ticketsTokenId, 1, amount * PRICE))
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(9000000 + 250000 * amount)
                 .buildTransaction();
 

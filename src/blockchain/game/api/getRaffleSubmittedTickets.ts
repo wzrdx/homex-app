@@ -1,11 +1,11 @@
 import { Address, AddressValue, ContractFunction, ResultsParser, U32Value } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
 import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
-import { API_URL } from '../../config';
+import { config } from '../../config';
 import { smartContract } from '../smartContract';
 
 const resultsParser = new ResultsParser();
-const proxy = new ProxyNetworkProvider(API_URL, { timeout: 20000 });
+const proxy = new ProxyNetworkProvider(config.apiUrl, { timeout: 20000 });
 const FUNCTION_NAME = 'getRaffleSubmittedTickets';
 
 export const getRaffleSubmittedTickets = async (raffleId: number) => {

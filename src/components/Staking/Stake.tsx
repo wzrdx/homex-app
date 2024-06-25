@@ -6,7 +6,7 @@ import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { CHAIN_ID, TRAVELERS_COLLECTION_ID } from '../../blockchain/config';
+import { config } from '../../blockchain/config';
 import { getRarityClasses } from '../../blockchain/game/api/getRarityClasses';
 import { smartContract } from '../../blockchain/game/smartContract';
 import { NFT, Rarity } from '../../blockchain/types';
@@ -76,7 +76,7 @@ function Stake() {
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
                 .withExplicitReceiver(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(90000000 + 750000 * stakedNFTsCount + 2150000 * _.size(transfers))
                 .buildTransaction();
 
@@ -243,7 +243,7 @@ function Stake() {
                                             }
                                             token={token}
                                             rarity={
-                                                token?.tokenId === TRAVELERS_COLLECTION_ID &&
+                                                token?.tokenId === config.travelersCollectionId &&
                                                 _.find(rarities, (rarity) => rarity.nonce === token.nonce)
                                             }
                                         />

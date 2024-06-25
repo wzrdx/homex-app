@@ -1,5 +1,9 @@
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
+import { config } from '../blockchain/config';
+import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
+import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
 import {
     getBudgetTravelersCommonAssets,
     getBudgetTravelersUncommonAssets,
@@ -11,14 +15,13 @@ import {
     getRareTravelersRoyalAssets,
     getSummaryAssets,
 } from './assets';
-import { getSFTDetails } from './resources';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { AOM_COLLECTION_ID, ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
-import { getPageCelestials } from '../blockchain/game/api/achievements/getPageCelestials';
 import { zeroPad } from './helpers';
-import { useStoreContext, StoreContextType } from './store';
-import { getRarityClasses } from '../blockchain/game/api/getRarityClasses';
+import { getSFTDetails } from './resources';
+import { StoreContextType, useStoreContext } from './store';
 
+import EsotericExpedition from '../assets/log/pages/Esoteric_Expedition.png';
+import MagicalJourney from '../assets/log/pages/Magical_Journey.png';
+import OccultOdyssey from '../assets/log/pages/Occult_Odyssey.png';
 import BudgetTravelers from '../assets/log/pages/budget_travelers.png';
 import CelestialsCollector from '../assets/log/pages/celestials_collector.png';
 import CelestialsCurator from '../assets/log/pages/celestials_curator.png';
@@ -26,9 +29,6 @@ import CelestialsCustodian from '../assets/log/pages/celestials_custodian.png';
 import CelestialsHoarder from '../assets/log/pages/celestials_hoarder.png';
 import RareTravelers from '../assets/log/pages/rare_travelers.png';
 import VarietyHunter from '../assets/log/pages/variety_hunter.png';
-import OccultOdyssey from '../assets/log/pages/Occult_Odyssey.png';
-import EsotericExpedition from '../assets/log/pages/Esoteric_Expedition.png';
-import MagicalJourney from '../assets/log/pages/Magical_Journey.png';
 import { LogSummary, getLogSummary } from '../blockchain/game/api/achievements/getLogSummary';
 import { Stake } from '../blockchain/types';
 
@@ -719,7 +719,7 @@ export const AchievementsProvider = ({ children }) => {
         setData({
             ...data,
             celestialsBalance: await Promise.all(
-                Array.from({ length: 5 }, (_, index) => `${AOM_COLLECTION_ID}-${zeroPad(index + 1)}`).map(async (id) => {
+                Array.from({ length: 5 }, (_, index) => `${config.aomCollectionId}-${zeroPad(index + 1)}`).map(async (id) => {
                     return await getSFTBalance(id);
                 })
             ),
@@ -733,7 +733,7 @@ export const AchievementsProvider = ({ children }) => {
 
         const stakedTravelers: Stake[] = _.filter(
             stakingInfo.tokens,
-            (token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp
+            (token) => token.tokenId === config.travelersCollectionId && !token.timestamp
         );
 
         const rarities = await getRarityClasses(_.map(stakedTravelers, (token) => token.nonce));
@@ -741,7 +741,7 @@ export const AchievementsProvider = ({ children }) => {
 
         // Elders
         rarityCount[0] = _(stakingInfo.tokens)
-            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+            .filter((token) => token.tokenId === config.eldersCollectionId && !token.timestamp)
             .size();
 
         setData({

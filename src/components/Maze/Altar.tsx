@@ -1,13 +1,12 @@
-import _, { round } from 'lodash';
-import { Text, Center, Stack, Spinner, Image } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useStoreContext, StoreContextType } from '../../services/store';
+import { Center, Image, Spinner, Stack, Text } from '@chakra-ui/react';
 import { intervalToDuration } from 'date-fns';
-import { formatMaze, zeroPad } from '../../services/helpers';
-import { StatsEntry } from '../../shared/StatsEntry';
-import { MAZE_QUERYING_INTERVAL } from '../../blockchain/config';
-import { useGetStakingInfo as useGetMazeStakingInfo } from '../../blockchain/auxiliary/hooks/useGetStakingInfo';
+import { useEffect, useState } from 'react';
 import AltarImage from '../../assets/images/the_altar.jpg';
+import { useGetStakingInfo as useGetMazeStakingInfo } from '../../blockchain/auxiliary/hooks/useGetStakingInfo';
+import { config } from '../../blockchain/config';
+import { formatMaze, zeroPad } from '../../services/helpers';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { StatsEntry } from '../../shared/StatsEntry';
 
 function Altar() {
     const [duration, setDuration] = useState<Duration>({
@@ -28,7 +27,7 @@ function Altar() {
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
             getLocalStakingInfo();
-        }, MAZE_QUERYING_INTERVAL);
+        }, config.mazeQueryingInterval);
 
         return () => {
             clearInterval(rewardsQueryingTimer);

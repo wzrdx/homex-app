@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { API_URL, EXPLORER_URL, GATEWAY_URL, MAZE_DENOMINATION, TRAVELERS_PADDING } from '../blockchain/config';
-import { NFT, MainRarityClass, ArtRarityClass } from '../blockchain/types';
-import { Quest } from '../types';
-import _ from 'lodash';
 import { addSeconds, isAfter } from 'date-fns';
+import _ from 'lodash';
+import { config } from '../blockchain/config';
+import { ArtRarityClass, MainRarityClass, NFT } from '../blockchain/types';
+import { Quest } from '../types';
 import { RESOURCE_ELEMENTS } from './resources';
 
 export const range = (length: number) => Array.from({ length }, (_, i) => i + 1);
@@ -33,7 +33,7 @@ export const getUsername = async (address: string): Promise<string> => {
     let result = getShortAddress(address);
 
     const response = await axios.get(`address/${address}/username`, {
-        baseURL: GATEWAY_URL,
+        baseURL: config.gatewayUrl,
     });
 
     const username: string | undefined = response?.data?.data?.username;
@@ -53,24 +53,24 @@ export const pairwise = (arr, func) => {
 
 export function toTitleCase(str: string) {
     return str.replace(/\w\S*/g, function (txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
     });
 }
 
-export const getTxExplorerURL = (hash: string) => `${EXPLORER_URL}/transactions/${hash}`;
+export const getTxExplorerURL = (hash: string) => `${config.explorerUrl}/transactions/${hash}`;
 
 export const toHexNumber = (value: number, padding: number) => value.toString(16).padStart(padding, '0');
 
 export const getTx = (hash: string) => {
     return axios.get(`transactions/${hash}`, {
-        baseURL: API_URL,
+        baseURL: config.apiUrl,
         params: {
             fields: 'operations,timestamp',
         },
     });
 };
 
-export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? TRAVELERS_PADDING : 2);
+export const getTravelersPadding = (nonce: number) => (nonce >= 256 ? config.travelersPadding : 2);
 
 export const getMainRarityClassInfo = (rarityClass: MainRarityClass): { label: string; color: string; energyYield: number } => {
     let label: string;
@@ -142,7 +142,7 @@ export const getPageYield = (artRarityClass: number): number => {
 };
 
 export const formatMaze = (value: number): string => {
-    const withDenom = value / MAZE_DENOMINATION;
+    const withDenom = value / config.mazeDenomination;
 
     if (withDenom === 0) {
         return '0';

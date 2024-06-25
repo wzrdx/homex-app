@@ -21,17 +21,7 @@ import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import {
-    EGLD_DENOMINATION,
-    ELDERS_COLLECTION_ID,
-    ENERGY_TOKEN_ID,
-    ESSENCE_TOKEN_ID,
-    GEMS_TOKEN_ID,
-    HERBS_TOKEN_ID,
-    TICKETS_TOKEN_ID,
-    TOKEN_DENOMINATION,
-    TRAVELERS_COLLECTION_ID,
-} from '../blockchain/config';
+import { config } from '../blockchain/config';
 import { getRaffleHashes } from '../blockchain/game/api/getRaffleHashes';
 import { useSection } from '../components/Section';
 import { getEldersLogo, getSmallLogo } from '../services/assets';
@@ -141,14 +131,14 @@ function PrizesList({ id }: { id: number }) {
                     if (operation.type === 'egld') {
                         prize = (
                             <Text color="brightBlue" fontWeight={500}>
-                                {Number.parseInt(operation.value) / EGLD_DENOMINATION} $EGLD
+                                {Number.parseInt(operation.value) / config.egldDenomination} $EGLD
                             </Text>
                         );
                     }
 
                     // NFTs
                     if (operation.type === 'nft' && operation.esdtType === 'NonFungibleESDT') {
-                        if (operation.collection === ELDERS_COLLECTION_ID) {
+                        if (operation.collection === config.eldersCollectionId) {
                             prize = (
                                 <Flex alignItems="center">
                                     <Image src={getEldersLogo()} height="22px" mr={1.5} alt="Elder" />
@@ -157,7 +147,7 @@ function PrizesList({ id }: { id: number }) {
                                     </Text>
                                 </Flex>
                             );
-                        } else if (operation.collection === TRAVELERS_COLLECTION_ID) {
+                        } else if (operation.collection === config.travelersCollectionId) {
                             prize = (
                                 <Flex alignItems="center">
                                     <Image src={getSmallLogo()} height="22px" mr={1.5} alt="NFT" />
@@ -179,7 +169,7 @@ function PrizesList({ id }: { id: number }) {
 
                     // SFTs
                     if (operation.type === 'nft' && operation.esdtType === 'SemiFungibleESDT') {
-                        if (operation.ticker === TICKETS_TOKEN_ID) {
+                        if (operation.ticker === config.ticketsTokenId) {
                             prize = (
                                 <Flex alignItems="center">
                                     <Text mr={1} fontWeight={500} color="brightWheat" minWidth="20px" textAlign="center">
@@ -202,44 +192,44 @@ function PrizesList({ id }: { id: number }) {
                     // Tokens
                     if (operation.type === 'esdt' && operation.esdtType === 'FungibleESDT') {
                         switch (operation.identifier) {
-                            case ENERGY_TOKEN_ID:
+                            case config.energyTokenId:
                                 prize = (
                                     <Flex alignItems="center">
                                         <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.energy.color} minWidth="20px">
-                                            {operation.value / TOKEN_DENOMINATION}
+                                            {operation.value / config.tokenDenomination}
                                         </Text>
                                         <Image height="24px" src={RESOURCE_ELEMENTS.energy.icon} />
                                     </Flex>
                                 );
                                 break;
 
-                            case HERBS_TOKEN_ID:
+                            case config.herbsTokenId:
                                 prize = (
                                     <Flex alignItems="center">
                                         <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.herbs.color} minWidth="20px">
-                                            {operation.value / TOKEN_DENOMINATION}
+                                            {operation.value / config.tokenDenomination}
                                         </Text>
                                         <Image height="24px" src={RESOURCE_ELEMENTS.herbs.icon} />
                                     </Flex>
                                 );
                                 break;
 
-                            case GEMS_TOKEN_ID:
+                            case config.gemsTokenId:
                                 prize = (
                                     <Flex alignItems="center">
                                         <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.gems.color} minWidth="20px">
-                                            {operation.value / TOKEN_DENOMINATION}
+                                            {operation.value / config.tokenDenomination}
                                         </Text>
                                         <Image height="24px" src={RESOURCE_ELEMENTS.gems.icon} />
                                     </Flex>
                                 );
                                 break;
 
-                            case ESSENCE_TOKEN_ID:
+                            case config.essenceTokenId:
                                 prize = (
                                     <Flex alignItems="center">
                                         <Text mr={1.5} fontWeight={500} color={RESOURCE_ELEMENTS.essence.color} minWidth="20px">
-                                            {operation.value / TOKEN_DENOMINATION}
+                                            {operation.value / config.tokenDenomination}
                                         </Text>
                                         <Image height="24px" src={RESOURCE_ELEMENTS.essence.icon} />
                                     </Flex>

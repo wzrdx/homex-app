@@ -5,7 +5,7 @@ import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
 import { cloneDeep, find, forEach, head, includes, isEmpty, map, remove, size } from 'lodash';
 import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ENERGY_TOKEN_ID, TOKEN_DENOMINATION } from './blockchain/config';
+import { config } from './blockchain/config';
 import Layout from './components/Layout';
 import Unlock from './components/Unlock';
 import { AuthenticationProvider } from './services/authentication';
@@ -370,14 +370,14 @@ function App() {
             if (result.data) {
                 const operation = find(
                     result.data.operations,
-                    (op) => op.action === 'transfer' && op.identifier === ENERGY_TOKEN_ID
+                    (op) => op.action === 'transfer' && op.identifier === config.energyTokenId
                 );
 
                 if (!operation) {
                     return;
                 }
 
-                const gain: number = operation.value / TOKEN_DENOMINATION;
+                const gain: number = operation.value / config.tokenDenomination;
 
                 if (!gain || Number.isNaN(gain) || gain === 0) {
                     return;

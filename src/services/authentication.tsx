@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import { AOM_COLLECTION_ID, API_URL, auxiliaryScAddress, gameScAddress } from '../blockchain/config';
-import { NFT, SFT } from '../blockchain/types';
+import { createContext, useContext, useState } from 'react';
+import { config } from '../blockchain/config';
 import { getPlayerXp } from '../blockchain/game/api/getPlayerXp';
+import { NFT, SFT } from '../blockchain/types';
 
 export interface AuthenticationContextType {
     isAuthenticated: boolean;
@@ -13,7 +13,7 @@ export interface AuthenticationContextType {
 
 export const getNFTsCount = (address: string, collection: string): Promise<{ data: number }> =>
     axios.get(`accounts/${address}/nfts/count`, {
-        baseURL: API_URL,
+        baseURL: config.apiUrl,
         params: {
             collection,
         },
@@ -32,7 +32,7 @@ export const getWalletSFTs = (
     }>;
 }> =>
     axios.get(`accounts/${address}/nfts`, {
-        baseURL: API_URL,
+        baseURL: config.apiUrl,
         params: {
             collections: collections.join(','),
             fields: 'nonce,name,url,balance',
@@ -42,7 +42,7 @@ export const getWalletSFTs = (
 
 export const getWalletNonces = (address: string, collection: string, from = 0): Promise<{ data: Array<NFT> }> =>
     axios.get(`accounts/${address}/nfts`, {
-        baseURL: API_URL,
+        baseURL: config.apiUrl,
         params: {
             search: collection,
             type: 'NonFungibleESDT',
@@ -52,8 +52,8 @@ export const getWalletNonces = (address: string, collection: string, from = 0): 
     });
 
 export const getContractNFTs = (collection: string, identifiers: string): Promise<{ data: Array<NFT> }> =>
-    axios.get(`accounts/${gameScAddress}/nfts`, {
-        baseURL: API_URL,
+    axios.get(`accounts/${config.gameScAddress}/nfts`, {
+        baseURL: config.apiUrl,
         params: {
             identifiers,
             collections: collection,
@@ -62,11 +62,11 @@ export const getContractNFTs = (collection: string, identifiers: string): Promis
     });
 
 export const getContractArtSFTs = (identifiers: string): Promise<{ data: Array<SFT> }> =>
-    axios.get(`accounts/${auxiliaryScAddress}/nfts`, {
-        baseURL: API_URL,
+    axios.get(`accounts/${config.auxiliaryScAddress}/nfts`, {
+        baseURL: config.apiUrl,
         params: {
             identifiers,
-            collections: AOM_COLLECTION_ID,
+            collections: config.aomCollectionId,
             fields: 'nonce,name,url',
         },
     });

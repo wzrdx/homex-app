@@ -1,13 +1,13 @@
-import _ from 'lodash';
-import { Flex, Text, Image, Stack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { RESOURCE_ELEMENTS } from '../../services/resources';
-import { COLLECTION_SIZE, ENERGY_QUERYING_INTERVAL } from '../../blockchain/config';
-import { zeroPad } from '../../services/helpers';
-import { StatsEntry } from '../../shared/StatsEntry';
+import { Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { intervalToDuration } from 'date-fns';
-import { useStoreContext, StoreContextType } from '../../services/store';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { config } from '../../blockchain/config';
 import { useGetStakingInfo } from '../../blockchain/game/hooks/useGetStakingInfo';
+import { zeroPad } from '../../services/helpers';
+import { RESOURCE_ELEMENTS } from '../../services/resources';
+import { StoreContextType, useStoreContext } from '../../services/store';
+import { StatsEntry } from '../../shared/StatsEntry';
 
 function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
     const [duration, setDuration] = useState<Duration>({
@@ -28,7 +28,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
         let rewardsQueryingTimer: NodeJS.Timer = setInterval(() => {
             getLocalStakingInfo();
-        }, ENERGY_QUERYING_INTERVAL);
+        }, config.energyQueryingInterval);
 
         return () => {
             clearInterval(rewardsQueryingTimer);
@@ -94,7 +94,7 @@ function Stats({ stakedNFTsCount, travelersCount, eldersCount }) {
 
                 <StatsEntry
                     label="Total NFTs staked"
-                    value={`${stakedNFTsCount} (${_.round((100 * stakedNFTsCount) / COLLECTION_SIZE, 1)}%)`}
+                    value={`${stakedNFTsCount} (${_.round((100 * stakedNFTsCount) / config.collectionSize, 1)}%)`}
                 />
             </Stack>
         </Flex>

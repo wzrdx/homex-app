@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
 import {
     Alert,
     AlertIcon,
@@ -15,21 +15,21 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import _, { findIndex } from 'lodash';
-import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../services/quests';
-import { MdOutlineErrorOutline } from 'react-icons/md';
-import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
-import { getTotalQuestsRewards } from '../services/helpers';
-import { Quest } from '../types';
-import { DetailedQuestCard } from '../shared/DetailedQuestCard';
 import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-core/out';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { CHAIN_ID } from '../blockchain/config';
+import _, { findIndex } from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
+import { MdOutlineErrorOutline } from 'react-icons/md';
+import { config } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
+import { getTotalQuestsRewards } from '../services/helpers';
+import { QUESTS, QuestsContextType, getQuest, useQuestsContext } from '../services/quests';
+import { RESOURCE_ELEMENTS, ResourcesContextType, useResourcesContext } from '../services/resources';
 import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
-import { InfoOutlineIcon, TimeIcon } from '@chakra-ui/icons';
+import { DetailedQuestCard } from '../shared/DetailedQuestCard';
+import { Quest } from '../types';
 
 function MultipleQuests() {
     const { ongoingQuests, getOngoingQuests, isDoubleXpActive } = useQuestsContext() as QuestsContextType;
@@ -80,7 +80,7 @@ function MultipleQuests() {
                 .startQuests([args])
                 .withMultiESDTNFTTransfer(transfers)
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(26000000 + 250000 * _.size(transfers) + 1500000 * _.size(selectedQuestIds))
                 .buildTransaction();
 

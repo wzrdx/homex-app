@@ -1,25 +1,25 @@
+import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Box, Center, Flex, Image, Link, Spinner, Stack, Text } from '@chakra-ui/react';
 import {
     ExtensionLoginButton,
-    WebWalletLoginButton,
     LedgerLoginButton,
     WalletConnectLoginButton,
+    WebWalletLoginButton,
 } from '@multiversx/sdk-dapp/UI';
-import { Box, Text, Spinner, Flex, Stack, Image, Center, Link } from '@chakra-ui/react';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthenticationContextType, getNFTsCount, useAuthenticationContext } from '../services/authentication';
 import { logout } from '@multiversx/sdk-dapp/utils';
-import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useEffect, useState } from 'react';
 import { MdExtension, MdWeb } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import Ledger from '../assets/icons/Ledger.png';
 import MultiversX from '../assets/icons/MultiversX.png';
-import { ELDERS_COLLECTION_ID, TEAM, TRAVELERS_COLLECTION_ID, walletConnectV2ProjectId } from '../blockchain/config';
-import Wallet from '../shared/Wallet';
-import { getBackground1080p, getBackgroundQHD } from '../services/assets';
-import { useStoreContext, StoreContextType } from '../services/store';
 import MazeMask from '../assets/images/maze_mask.png';
 import LogoMirage from '../assets/logo_mirage.png';
+import { config } from '../blockchain/config';
+import { getBackground1080p, getBackgroundQHD } from '../services/assets';
+import { AuthenticationContextType, getNFTsCount, useAuthenticationContext } from '../services/authentication';
+import { StoreContextType, useStoreContext } from '../services/store';
+import Wallet from '../shared/Wallet';
 
 enum AuthenticationError {
     NotHolder = 'NotHolder',
@@ -57,11 +57,11 @@ const Unlock = () => {
             // stakingInfo is required by child components
             const stakingInfo = await getStakingInfo();
 
-            if ((stakingInfo && stakingInfo.isStaked) || TEAM.includes(address)) {
+            if ((stakingInfo && stakingInfo.isStaked) || config.team.includes(address)) {
                 console.warn('Bypassing authentication');
             } else {
-                const { data: travelerTokens } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-                const { data: elderTokens } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+                const { data: travelerTokens } = await getNFTsCount(address, config.travelersCollectionId);
+                const { data: elderTokens } = await getNFTsCount(address, config.eldersCollectionId);
 
                 if (travelerTokens + elderTokens === 0) {
                     setError(AuthenticationError.NotHolder);
@@ -187,7 +187,7 @@ const Unlock = () => {
                         <WalletConnectLoginButton
                             buttonClassName="Login-Button"
                             {...commonProps}
-                            {...(walletConnectV2ProjectId
+                            {...(config.walletConnectV2ProjectId
                                 ? {
                                       isWalletConnectV2: true,
                                   }

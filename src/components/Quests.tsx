@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
+import { CheckIcon, TimeIcon } from '@chakra-ui/icons';
 import {
-    Alert,
-    AlertIcon,
     Box,
     Button,
     Flex,
@@ -15,30 +13,30 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { isAfter, isBefore } from 'date-fns';
 import _, { find, findIndex, map } from 'lodash';
-import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
+import { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { useSoundsContext, SoundsContextType } from '../services/sounds';
-import QuestCard from '../shared/QuestCard';
-import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
-import Requirement from '../shared/Requirement';
-import { TimeIcon, CheckIcon } from '@chakra-ui/icons';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { config } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { Timer } from '../shared/Timer';
-import { addMinutes, differenceInHours, isAfter, isBefore } from 'date-fns';
-import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
-import Reward from '../shared/Reward';
 import { getFrame, getSpinningTicket, getVisionImage } from '../services/assets';
-import { useLayout } from './Layout';
-import Separator from '../shared/Separator';
-import { CHAIN_ID } from '../blockchain/config';
 import { getBackgroundStyle, getTotalQuestsRewards, timeDisplay } from '../services/helpers';
+import { QUESTS, QuestsContextType, getQuest, getQuestImage, meetsRequirements, useQuestsContext } from '../services/quests';
+import { RESOURCE_ELEMENTS, ResourcesContextType, getResourceElements, useResourcesContext } from '../services/resources';
+import { SoundsContextType, useSoundsContext } from '../services/sounds';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import QuestCard from '../shared/QuestCard';
+import Requirement from '../shared/Requirement';
+import Reward from '../shared/Reward';
+import Separator from '../shared/Separator';
+import { Timer } from '../shared/Timer';
 import { Quest } from '../types';
+import { useLayout } from './Layout';
 import MultipleQuests from './MultipleQuests';
 
 const LARGE_FRAME_SIZE = 426;
@@ -103,7 +101,7 @@ function Quests() {
                     )
                 )
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(14000000 + requiredResources.length * 750000)
                 .buildTransaction();
 
@@ -151,7 +149,7 @@ function Quests() {
             const tx = smartContract.methods
                 .completeQuest([currentQuest.id])
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(gasLimit)
                 .buildTransaction();
 
@@ -227,7 +225,7 @@ function Quests() {
             const tx = smartContract.methods
                 .completeAllQuests()
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(gasLimit)
                 .buildTransaction();
 

@@ -1,13 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
-import { useLayout } from './Layout';
 import _ from 'lodash';
-import { StoreContextType, useStoreContext } from '../services/store';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
-import Tab from '../shared/Tab';
-import Stats from './Staking/Stats';
+import { config } from '../blockchain/config';
 import { useGetStakedNFTsCount } from '../blockchain/game/hooks/useGetStakedNFTsCount';
-import { ELDERS_COLLECTION_ID, TRAVELERS_COLLECTION_ID } from '../blockchain/config';
+import { StoreContextType, useStoreContext } from '../services/store';
+import Tab from '../shared/Tab';
+import { useLayout } from './Layout';
+import Stats from './Staking/Stats';
 
 type StakingContext = {
     height: number;
@@ -63,10 +63,10 @@ function Staking() {
                     <Stats
                         stakedNFTsCount={stakedNFTsCount}
                         travelersCount={_(stakingInfo?.tokens)
-                            .filter((token) => token.tokenId === TRAVELERS_COLLECTION_ID && !token.timestamp)
+                            .filter((token) => token.tokenId === config.travelersCollectionId && !token.timestamp)
                             .size()}
                         eldersCount={_(stakingInfo?.tokens)
-                            .filter((token) => token.tokenId === ELDERS_COLLECTION_ID && !token.timestamp)
+                            .filter((token) => token.tokenId === config.eldersCollectionId && !token.timestamp)
                             .size()}
                     />
                 </Flex>

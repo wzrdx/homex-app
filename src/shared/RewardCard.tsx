@@ -1,15 +1,14 @@
-import _ from 'lodash';
-import { Box, Flex, Text, Image } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { Address } from '@multiversx/sdk-core/out';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { CHAIN_ID } from '../blockchain/config';
+import { useEffect, useState } from 'react';
+import { config } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';
-import { useTransactionsContext, TransactionsContextType, TransactionType, TxResolution } from '../services/transactions';
-import { ActionButton } from './ActionButton/ActionButton';
 import { getTicketsPrize } from '../services/rewards';
+import { TransactionType, TransactionsContextType, TxResolution, useTransactionsContext } from '../services/transactions';
+import { ActionButton } from './ActionButton/ActionButton';
 
 function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }) {
     const { address } = useGetAccountInfo();
@@ -46,7 +45,7 @@ function RewardCard({ id, ticketsAmount }: { id: number; ticketsAmount: number }
             const tx = smartContract.methods
                 .claimReward()
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(80000000 + 1000000 * ticketsAmount)
                 .buildTransaction();
 

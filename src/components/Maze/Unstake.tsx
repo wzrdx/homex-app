@@ -25,7 +25,7 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { BsGem } from 'react-icons/bs';
 import { smartContract } from '../../blockchain/auxiliary/smartContract';
-import { CHAIN_ID } from '../../blockchain/config';
+import { config } from '../../blockchain/config';
 import { SFT } from '../../blockchain/types';
 import { getArtRarityName } from '../../services/helpers';
 import { StoreContextType, useStoreContext } from '../../services/store';
@@ -86,7 +86,7 @@ function Unstake() {
             const tx = smartContract.methods
                 .unstake([args])
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(20000000 + 500000 * stakedArtTokens.length + 2000000 * _.size(args))
                 .buildTransaction();
 
@@ -136,7 +136,7 @@ function Unstake() {
             const tx = smartContract.methods
                 .claimMaze()
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(15000000 + 500000 * stakedArtTokens.length)
                 .buildTransaction();
 

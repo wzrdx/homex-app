@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { CHAIN_ID, TICKETS_TOKEN_ID } from '../blockchain/config';
+import { config } from '../blockchain/config';
 import { getRaffleSubmittedTickets } from '../blockchain/game/api/getRaffleSubmittedTickets';
 import { smartContract } from '../blockchain/game/smartContract';
 import { getBackgroundStyle } from '../services/helpers';
@@ -62,9 +62,9 @@ function RaffleCard({
         try {
             const tx = smartContract.methods
                 .joinRaffle([id])
-                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(TICKETS_TOKEN_ID, 1, amount))
+                .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(config.ticketsTokenId, 1, amount))
                 .withSender(user)
-                .withChainID(CHAIN_ID)
+                .withChainID(config.chainId)
                 .withGasLimit(11000000 + tickets * 125000)
                 .buildTransaction();
 

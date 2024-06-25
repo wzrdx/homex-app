@@ -18,16 +18,16 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
-import { getBackgroundStyle } from '../services/helpers';
-import { ResourcesContextType, useResourcesContext } from '../services/resources';
-import LoadingScreen from './LoadingScreen';
-import Header from './Header';
+import { config } from '../blockchain/config';
 import { getBackground1080p, getBackgroundQHD } from '../services/assets';
-import { CustomToast } from '../shared/CustomToast';
-import { routes, routeNames } from '../services/routes';
-import { useTransactionsContext, TransactionsContextType } from '../services/transactions';
-import { Updates } from './Updates';
 import { QuestsContextType, useQuestsContext } from '../services/quests';
+import { ResourcesContextType, useResourcesContext } from '../services/resources';
+import { routeNames, routes } from '../services/routes';
+import { TransactionsContextType, useTransactionsContext } from '../services/transactions';
+import { CustomToast } from '../shared/CustomToast';
+import Header from './Header';
+import LoadingScreen from './LoadingScreen';
+import { Updates } from './Updates';
 
 type LayoutContext = {
     displayToast: (
@@ -69,6 +69,9 @@ function Layout() {
 
         getGameState();
         getDoubleXpTimestamp();
+
+        // TODO:
+        console.log(config);
     }, []);
 
     // Updates

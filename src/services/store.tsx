@@ -1,14 +1,14 @@
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
-import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
+import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
+import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
 import { useGetStakingInfo as useGetMazeStakingInfo } from '../blockchain/auxiliary/hooks/useGetStakingInfo';
+import { config } from '../blockchain/config';
+import { useGetStakingInfo as useGetEnergyStakingInfo } from '../blockchain/game/hooks/useGetStakingInfo';
 import { MazeStakingInfo, NFT, Rarity, SFT, Stake, StakingInfo } from '../blockchain/types';
 import { getContractArtSFTs, getNFTsCount, getWalletNonces, getWalletSFTs } from './authentication';
 import { pairwise, toHexNumber } from './helpers';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { TRAVELERS_COLLECTION_ID, ELDERS_COLLECTION_ID, AOM_COLLECTION_ID } from '../blockchain/config';
-import { getStakeableNonces } from '../blockchain/auxiliary/api/getStakeableNonces';
-import { getArtRarities } from '../blockchain/auxiliary/api/getArtRarities';
 
 const CHUNK_SIZE = 25;
 
@@ -57,8 +57,8 @@ export const StoreProvider = ({ children }) => {
             setTravelers(undefined);
             setElders(undefined);
 
-            const { data: travelersCount } = await getNFTsCount(address, TRAVELERS_COLLECTION_ID);
-            const { data: elderscount } = await getNFTsCount(address, ELDERS_COLLECTION_ID);
+            const { data: travelersCount } = await getNFTsCount(address, config.travelersCollectionId);
+            const { data: elderscount } = await getNFTsCount(address, config.eldersCollectionId);
 
             const travelerChunks = new Array(Math.floor(travelersCount / CHUNK_SIZE))
                 .fill(CHUNK_SIZE)
@@ -74,7 +74,7 @@ export const StoreProvider = ({ children }) => {
                     .unshift(0)
                     .value(),
                 (from: number, _: number) => {
-                    travelersApiCalls.push(getWalletNonces(address, TRAVELERS_COLLECTION_ID, from));
+                    travelersApiCalls.push(getWalletNonces(address, config.travelersCollectionId, from));
                 }
             );
 
@@ -84,7 +84,7 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    tokenId: TRAVELERS_COLLECTION_ID,
+                    tokenId: config.travelersCollectionId,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
@@ -103,7 +103,7 @@ export const StoreProvider = ({ children }) => {
                     .unshift(0)
                     .value(),
                 (from: number, _: number) => {
-                    eldersApiCalls.push(getWalletNonces(address, ELDERS_COLLECTION_ID, from));
+                    eldersApiCalls.push(getWalletNonces(address, config.eldersCollectionId, from));
                 }
             );
 
@@ -113,7 +113,7 @@ export const StoreProvider = ({ children }) => {
                 .flatten()
                 .map((nft) => ({
                     ...nft,
-                    tokenId: ELDERS_COLLECTION_ID,
+                    tokenId: config.eldersCollectionId,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
@@ -144,7 +144,7 @@ export const StoreProvider = ({ children }) => {
                 rarities = artRarities;
             }
 
-            const { data: count } = await getNFTsCount(address, AOM_COLLECTION_ID);
+            const { data: count } = await getNFTsCount(address, config.aomCollectionId);
 
             const chunks = new Array(Math.floor(count / CHUNK_SIZE)).fill(CHUNK_SIZE).concat(count % CHUNK_SIZE);
             const apiCalls: Array<
@@ -167,7 +167,7 @@ export const StoreProvider = ({ children }) => {
                     .unshift(0)
                     .value(),
                 (from: number, _: number) => {
-                    apiCalls.push(getWalletSFTs(address, [AOM_COLLECTION_ID], from));
+                    apiCalls.push(getWalletSFTs(address, [config.aomCollectionId], from));
                 }
             );
 
@@ -180,7 +180,7 @@ export const StoreProvider = ({ children }) => {
                     ...token,
                     balance: Number.parseInt(token.balance),
                     artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
-                    tokenId: AOM_COLLECTION_ID,
+                    tokenId: config.aomCollectionId,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
@@ -213,7 +213,7 @@ export const StoreProvider = ({ children }) => {
             const chunks = new Array(Math.floor(nonces.length / 25)).fill(25).concat(nonces.length % 25);
             const apiCalls: Array<Promise<{ data: SFT[] }>> = [];
 
-            const ids = _.map(nonces, (nonce) => `${AOM_COLLECTION_ID}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
+            const ids = _.map(nonces, (nonce) => `${config.aomCollectionId}-${toHexNumber(nonce, nonce >= 256 ? 4 : 2)}`);
 
             pairwise(
                 _(chunks)
@@ -237,7 +237,7 @@ export const StoreProvider = ({ children }) => {
                     ...token,
                     balance: (_.find(mazeStakingInfo.tokens, (item) => item.nonce === token.nonce) as Stake).amount,
                     artRarityClass: (_.find(rarities, (item) => item.nonce === token.nonce) as Rarity).rarityClass,
-                    tokenId: AOM_COLLECTION_ID,
+                    tokenId: config.aomCollectionId,
                 }))
                 .orderBy('nonce', 'asc')
                 .value();
