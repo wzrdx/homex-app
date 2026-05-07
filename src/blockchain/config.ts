@@ -53,5 +53,8 @@ export const config: Config = {
     mazeDenomination: 1000000000000000000n,
     energyQueryingInterval: 30000,
     mazeQueryingInterval: 60000,
-    team: ['erd1za7d0lzgnee39p9sytre0mss76tnht70fem0pcv0zn4undcfukrqqkzcpl'],
+    team: [
+        'erd1za7d0lzgnee39p9sytre0mss76tnht70fem0pcv0zn4undcfukrqqkzcpl',
+        'erd16a569s4gyrf4ngdy0fgh7l3ma0hhh5klak33eql8ran7zpvqdn7q0gu7es',
+    ],
 };
