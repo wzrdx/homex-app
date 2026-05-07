@@ -1,6 +1,6 @@
 import { Address, AddressValue, ContractFunction, ResultsParser, U8Value } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
-import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
+import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { config } from '../../config';
 import { smartContract } from '../smartContract';
 

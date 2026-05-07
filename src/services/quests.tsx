@@ -30,7 +30,7 @@ import { Quest } from '../types';
 
 import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
 import { getAddress } from '@multiversx/sdk-dapp/utils';
-import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
+import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { BigNumber } from 'bignumber.js';
 import { isBefore } from 'date-fns';
 import { map } from 'lodash';

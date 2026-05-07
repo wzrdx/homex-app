@@ -1,5 +1,5 @@
 import { ContractFunction, ResultsParser, U32Value } from '@multiversx/sdk-core/out';
-import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
+import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { map } from 'lodash';
 import { config } from '../../config';
 import { smartContract } from '../smartContract';
