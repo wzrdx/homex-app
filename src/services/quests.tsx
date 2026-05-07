@@ -28,8 +28,8 @@ import { Text, useDisclosure } from '@chakra-ui/react';
 import { createContext, useContext } from 'react';
 import { Quest } from '../types';
 
-import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { Address, AddressValue, ContractFunction, ResultsParser } from 'services/sdkCore';
+import { getAddress } from 'services/dapp';
 import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { BigNumber } from 'bignumber.js';
 import { isBefore } from 'date-fns';

@@ -6,7 +6,7 @@ import { BsGem } from 'react-icons/bs';
 import { Interactor } from './Interactor';
 import { isPageMinted } from '../../blockchain/auxiliary/api/isPageMinted';
 import { getAOMLogo } from '../../services/assets';
-import { useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
+import { useGetSuccessfulTransactions } from 'services/dapp';
 import { useTransactionsContext, TransactionsContextType, TransactionType, Transaction } from '../../services/transactions';
 
 export const PageMint = ({ index, page, goBack }) => {

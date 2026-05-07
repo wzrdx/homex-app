@@ -15,10 +15,10 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import { Address, List, TokenTransfer, U8Type, U8Value } from '@multiversx/sdk-core/out';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { Address, List, TokenTransfer, U8Type, U8Value } from 'services/sdkCore';
+import { useGetAccountInfo } from 'services/dapp';
+import { sendTransactions } from 'services/dapp';
+import { refreshAccount } from 'services/dapp';
 import _, { findIndex } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { MdOutlineErrorOutline } from 'react-icons/md';

@@ -1,4 +1,4 @@
-import { ContractFunction, List, ResultsParser, U16Type, U16Value } from '@multiversx/sdk-core/out';
+import { ContractFunction, List, ResultsParser, U16Type, U16Value } from 'services/sdkCore';
 import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { map } from 'lodash';
 import { config } from '../../config';

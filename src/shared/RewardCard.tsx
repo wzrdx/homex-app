@@ -1,8 +1,8 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import { Address } from '@multiversx/sdk-core/out';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { Address } from 'services/sdkCore';
+import { useGetAccountInfo } from 'services/dapp';
+import { sendTransactions } from 'services/dapp';
+import { refreshAccount } from 'services/dapp';
 import { useEffect, useState } from 'react';
 import { config } from '../blockchain/config';
 import { smartContract } from '../blockchain/game/smartContract';

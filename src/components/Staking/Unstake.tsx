@@ -15,10 +15,10 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from '@multiversx/sdk-core/out';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { Address, OptionType, OptionValue, TokenIdentifierValue, U16Value, U64Type } from 'services/sdkCore';
+import { useGetAccountInfo } from 'services/dapp';
+import { sendTransactions } from 'services/dapp';
+import { refreshAccount } from 'services/dapp';
 import { formatDistance } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';

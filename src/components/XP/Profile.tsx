@@ -1,10 +1,10 @@
 import { Box, Button, Flex, Spinner, Stack, Text } from '@chakra-ui/react';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from 'services/dapp';
 import { useEffect, useState } from 'react';
 import { getShortAddress, getUsername } from '../../services/helpers';
 import { getLevel } from '../../services/xp';
 import { IoWalletOutline } from 'react-icons/io5';
-import { logout } from '@multiversx/sdk-dapp/utils';
+import { logout } from 'services/dapp';
 import { useAuthenticationContext, AuthenticationContextType } from '../../services/authentication';
 import { useNavigate } from 'react-router-dom';
 

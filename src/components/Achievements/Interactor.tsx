@@ -1,9 +1,9 @@
 import { InfoIcon } from '@chakra-ui/icons';
 import { Button, Center, Flex, Image, Spinner, Stack, Text, useToast } from '@chakra-ui/react';
-import { Address, TokenTransfer } from '@multiversx/sdk-core/out';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { sendTransactions } from '@multiversx/sdk-dapp/services';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+import { Address, TokenTransfer } from 'services/sdkCore';
+import { useGetAccountInfo } from 'services/dapp';
+import { sendTransactions } from 'services/dapp';
+import { refreshAccount } from 'services/dapp';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';

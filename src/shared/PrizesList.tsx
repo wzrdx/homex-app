@@ -17,7 +17,7 @@ import {
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from 'services/dapp';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';

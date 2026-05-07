@@ -1,7 +1,7 @@
 import { ChakraBaseProvider, Text, useToast } from '@chakra-ui/react';
-import { NotificationModal, SignTransactionsModals, TransactionsToastList } from '@multiversx/sdk-dapp/UI';
-import { useGetFailedTransactions, useGetSuccessfulTransactions } from '@multiversx/sdk-dapp/hooks';
-import { SignedTransactionsBodyType } from '@multiversx/sdk-dapp/types';
+import { NotificationModal, SignTransactionsModals, TransactionsToastList } from 'services/dapp';
+import { useGetFailedTransactions, useGetSuccessfulTransactions } from 'services/dapp';
+import { SignedTransactionsBodyType } from 'services/dapp';
 import { cloneDeep, find, forEach, head, includes, isEmpty, map, remove, size } from 'lodash';
 import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';

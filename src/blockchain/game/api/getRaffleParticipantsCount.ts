@@ -1,4 +1,4 @@
-import { ContractFunction, ResultsParser, U32Value } from '@multiversx/sdk-core/out';
+import { ContractFunction, ResultsParser, U32Value } from 'services/sdkCore';
 import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { config } from '../../config';
 import { smartContract } from '../smartContract';

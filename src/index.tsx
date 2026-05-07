@@ -1,6 +1,5 @@
 import { ColorModeScript } from '@chakra-ui/react';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
+import { EnvironmentsEnum, initApp } from 'services/dapp';
 import ReactDOM from 'react-dom/client';
 import ReactGA from 'react-ga4';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -20,17 +19,24 @@ ReactGA.initialize('G-0ZW6TBSBMG');
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const queryClient = new QueryClient();
 
-root.render(
-    <BrowserRouter>
-        <DappProvider
-            environment={EnvironmentsEnum.devnet}
-            customNetworkConfig={{
-                name: 'customConfig',
-                apiTimeout: config.apiTimeout,
+initApp({
+    dAppConfig: {
+        environment: EnvironmentsEnum.devnet,
+        network: {
+            name: 'customConfig',
+            apiTimeout: String(config.apiTimeout),
+            apiAddress: config.apiUrl,
+        },
+        providers: {
+            walletConnect: {
                 walletConnectV2ProjectId: config.walletConnectV2ProjectId,
-                apiAddress: config.apiUrl,
-            }}
-        >
+            },
+        },
+        nativeAuth: true,
+    },
+}).then(() => {
+    root.render(
+        <BrowserRouter>
             <TransactionsProvider>
                 <SoundsProvider>
                     <ResourcesProvider>
@@ -48,6 +54,6 @@ root.render(
                     </ResourcesProvider>
                 </SoundsProvider>
             </TransactionsProvider>
-        </DappProvider>
-    </BrowserRouter>
-);
+        </BrowserRouter>
+    );
+});

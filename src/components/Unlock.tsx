@@ -5,9 +5,9 @@ import {
     LedgerLoginButton,
     WalletConnectLoginButton,
     WebWalletLoginButton,
-} from '@multiversx/sdk-dapp/UI';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { logout } from '@multiversx/sdk-dapp/utils';
+} from 'services/dapp';
+import { useGetAccountInfo } from 'services/dapp';
+import { logout } from 'services/dapp';
 import { useEffect, useState } from 'react';
 import { MdExtension, MdWeb } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';

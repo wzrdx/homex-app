@@ -1,4 +1,4 @@
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from 'services/dapp';
 import _ from 'lodash';
 import { createContext, useContext, useState } from 'react';
 import { config } from '../blockchain/config';

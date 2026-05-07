@@ -1,5 +1,5 @@
-import { Address, AddressValue, ContractFunction, ResultsParser } from '@multiversx/sdk-core/out';
-import { getAddress } from '@multiversx/sdk-dapp/utils';
+import { Address, AddressValue, ContractFunction, ResultsParser } from 'services/sdkCore';
+import { getAddress } from 'services/dapp';
 import { ProxyNetworkProvider } from '@multiversx/sdk-core/out/networkProviders';
 import { map, size } from 'lodash';
 import { useState } from 'react';

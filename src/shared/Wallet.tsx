@@ -1,6 +1,6 @@
 import { Box, Text, Button, Stack } from '@chakra-ui/react';
-import { logout } from '@multiversx/sdk-dapp/utils';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { logout } from 'services/dapp';
+import { useGetAccountInfo } from 'services/dapp';
 import { getShortAddress } from '../services/helpers';
 import { useNavigate } from 'react-router-dom';
 import { IoWalletOutline } from 'react-icons/io5';

@@ -16,7 +16,7 @@ import TicketsImage from '../assets/resources/images/tickets.png';
 import XpImage from '../assets/resources/images/xp.png';
 
 import { useDisclosure } from '@chakra-ui/react';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { useGetAccountInfo } from 'services/dapp';
 import axios from 'axios';
 import { config } from '../blockchain/config';
 
